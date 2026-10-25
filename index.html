@@ -73,16 +73,16 @@
     .header-actions { display: grid; grid-template-columns: 62px 1fr; gap: 8px; }
     .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 62px; min-width: 62px; padding: 4px; }
     .theme-switch-track { position: relative; display: block; flex: 0 0 50px; width: 50px; height: 28px; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--muted); }
-    .theme-switch-icon { position: absolute; z-index: 3; top: 6px; display: grid; place-items: center; width: 16px; height: 16px; }
-    .theme-switch-icon:first-child { left: 5px; }
-    .theme-switch-icon:nth-child(2) { right: 5px; }
+    .theme-switch-icon { position: absolute; z-index: 1; top: 6px; display: grid; place-items: center; width: 16px; height: 16px; }
+    .theme-switch-static-moon { left: 5px; }
+    .theme-switch-static-sun { right: 5px; }
     .theme-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .theme-switch-thumb { position: absolute; z-index: 2; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); transition: transform .2s ease; }
     .theme-toggle.is-dark .theme-switch-thumb { transform: translateX(24px); }
-    .theme-toggle.is-dark .theme-switch-icon:first-child { color: var(--muted); }
-    .theme-toggle.is-dark .theme-switch-icon:nth-child(2) { color: var(--accent-strong); }
-    .theme-toggle:not(.is-dark) .theme-switch-icon:first-child { color: var(--accent-strong); }
-    .theme-toggle:not(.is-dark) .theme-switch-icon:nth-child(2) { color: var(--muted); }
+    .theme-toggle.is-dark .theme-switch-static-moon { color: var(--muted); }
+    .theme-toggle.is-dark .theme-thumb-icon { color: var(--accent-strong); }
+    .theme-toggle:not(.is-dark) .theme-switch-static-sun { color: var(--muted); }
+    .theme-toggle:not(.is-dark) .theme-thumb-icon { color: var(--accent-strong); }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
     .header-status .quiet-button:not(.theme-toggle) { width: 100%; }
     .header-status .theme-toggle { width: 62px; min-width: 62px; padding: 4px; }
@@ -247,9 +247,12 @@
       <div class="header-actions">
          <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
            <span class="theme-switch-track" aria-hidden="true">
-             <span class="theme-switch-icon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
-             <span class="theme-switch-icon"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
-             <span class="theme-switch-thumb"></span>
+             <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+             <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+             <span class="theme-switch-thumb">
+               <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+               <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+             </span>
            </span>
         </button>
         <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
@@ -376,6 +379,10 @@
         button.setAttribute('aria-pressed', String(dark));
         button.setAttribute('aria-label', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
         button.setAttribute('title', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện Dracula');
+        $('#themeThumbMoon').hidden = dark;
+        $('#themeThumbSun').hidden = !dark;
+        $('.theme-switch-static-moon').hidden = !dark;
+        $('.theme-switch-static-sun').hidden = dark;
         try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
       }
 
