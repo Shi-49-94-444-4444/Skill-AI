@@ -72,7 +72,7 @@
     .header-status strong { color: var(--ink); font-weight: 600; }
     .header-actions { display: grid; grid-template-columns: 62px 1fr; gap: 8px; }
     .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 62px; min-width: 62px; padding: 4px; }
-    .theme-switch-track { position: relative; display: block; width: 50px; height: 28px; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--muted); }
+    .theme-switch-track { position: relative; display: block; flex: 0 0 50px; width: 50px; height: 28px; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--muted); }
     .theme-switch-icon { position: absolute; z-index: 3; top: 6px; display: grid; place-items: center; width: 16px; height: 16px; }
     .theme-switch-icon:first-child { left: 5px; }
     .theme-switch-icon:nth-child(2) { right: 5px; }
@@ -125,7 +125,13 @@
     .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
     /* taste-skill-ignore: table frame is a real data surface */
     .catalogue { overflow-anchor: none; }
-    .table-wrap { overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
+    .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
+    .table-progress { position: absolute; z-index: 2; inset: 0 0 auto; height: 3px; overflow: hidden; background: var(--soft); opacity: 0; pointer-events: none; transition: opacity .12s ease; }
+    .table-progress::after { content: ""; display: block; width: 24%; height: 100%; background: var(--accent-strong); transform: translateX(-120%); }
+    .table-wrap.is-updating .table-progress { opacity: 1; }
+    .table-wrap.is-updating .table-progress::after { animation: table-progress-sweep .8s ease-in-out infinite; }
+    .table-wrap.is-updating table { opacity: .72; transition: opacity .12s ease; }
+    @keyframes table-progress-sweep { to { transform: translateX(520%); } }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
     th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
@@ -303,7 +309,8 @@
           <select id="pageSize" aria-label="Số dòng mỗi trang"><option>25</option><option selected>50</option><option>100</option></select>
         </label>
       </div>
-      <div class="table-wrap">
+      <div class="table-wrap" id="tableWrap">
+        <div class="table-progress" id="tableProgress" aria-hidden="true"></div>
         <table>
           <colgroup><col class="skill"><col class="description"><col class="when"><col class="how"><col class="category"><col class="domain"></colgroup>
           <thead><tr>
@@ -347,6 +354,8 @@
       const $ = (selector) => document.querySelector(selector);
       const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
       let toastTimer;
+      let renderFrame = 0;
+      let updatingTimer = 0;
 
       const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
       const compact = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
@@ -438,6 +447,22 @@
         updateFilterLabels();
       }
 
+      function setTableUpdating(updating) {
+        const tableWrap = $('#tableWrap');
+        tableWrap.classList.toggle('is-updating', updating);
+        tableWrap.setAttribute('aria-busy', String(updating));
+      }
+
+      function queueRender() {
+        setTableUpdating(true);
+        cancelAnimationFrame(renderFrame);
+        clearTimeout(updatingTimer);
+        renderFrame = requestAnimationFrame(() => {
+          render();
+          updatingTimer = window.setTimeout(() => setTableUpdating(false), 140);
+        });
+      }
+
       function renderMarkdown(value) {
         const source = String(value || '');
         if (!source.trim()) return '<p class="muted-cell">Chưa có hướng dẫn.</p>';
@@ -482,7 +507,7 @@
       function clearFilters() {
         state.query = ''; state.categories.clear(); state.domains.clear(); state.page = 1; $('#searchInput').value = '';
         document.querySelectorAll('.filter-options input').forEach((input) => { input.checked = false; });
-        render();
+        queueRender();
       }
 
       function setLoadingChrome(loading) {
@@ -505,6 +530,7 @@
           $('#sourceDetail').textContent = `${result.sheetName} · ${result.sourceRecordCount.toLocaleString('vi-VN')} dòng, gộp ${result.duplicatesRemoved.toLocaleString('vi-VN')} dòng trùng · nhánh ${window.SKILL_AI_CONFIG.dataBranch}`;
           $('#datasetStatus').textContent = 'Đã cập nhật';
           setLoadingChrome(false);
+          setTableUpdating(false);
           render();
         } catch (error) {
           setLoadingChrome(false);
@@ -515,12 +541,12 @@
         }
       }
 
-      document.addEventListener('input', (event) => { if (event.target.id === 'searchInput') { state.query = event.target.value; state.page = 1; render(); } });
+      document.addEventListener('input', (event) => { if (event.target.id === 'searchInput') { state.query = event.target.value; state.page = 1; queueRender(); } });
       document.addEventListener('change', (event) => {
         if (event.target.closest('#categoryOptions')) state.categories = selectedValues('categoryOptions');
         if (event.target.closest('#domainOptions')) state.domains = selectedValues('domainOptions');
         if (event.target.id === 'pageSize') state.pageSize = Number(event.target.value);
-        state.page = 1; render();
+        state.page = 1; queueRender();
       });
       document.addEventListener('click', (event) => {
         const copy = event.target.closest('[data-copy-skill]');
@@ -528,13 +554,13 @@
         const sort = event.target.closest('[data-sort]');
         if (copy) { event.stopPropagation(); copyText(copy.dataset.copySkill, 'Đã sao chép Skill.'); return; }
         if (open) openDetail(open.dataset.open);
-        if (sort) { state.sortDirection = state.sortKey === sort.dataset.sort && state.sortDirection === 'asc' ? 'desc' : 'asc'; state.sortKey = sort.dataset.sort; render(); }
+        if (sort) { state.sortDirection = state.sortKey === sort.dataset.sort && state.sortDirection === 'asc' ? 'desc' : 'asc'; state.sortKey = sort.dataset.sort; queueRender(); }
       });
       $('#clearButton').addEventListener('click', clearFilters);
       $('#refreshButton').addEventListener('click', loadData);
       $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
-      $('#previousButton').addEventListener('click', () => { state.page -= 1; render(); });
-      $('#nextButton').addEventListener('click', () => { state.page += 1; render(); });
+      $('#previousButton').addEventListener('click', () => { state.page -= 1; queueRender(); });
+      $('#nextButton').addEventListener('click', () => { state.page += 1; queueRender(); });
       $('#closeDialog').addEventListener('click', () => $('#detailDialog').close());
       $('#copyAllButton').addEventListener('click', () => state.current && copyText(state.current.howToUse, 'Đã sao chép toàn bộ cách dùng.'));
       $('#detailDialog').addEventListener('click', (event) => { if (event.target === $('#detailDialog')) $('#detailDialog').close(); });
