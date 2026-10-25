@@ -240,7 +240,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    (() => {
+    window.addEventListener('DOMContentLoaded', () => { (() => {
       const $ = (selector) => document.querySelector(selector);
       const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
       let toastTimer;
@@ -401,7 +401,7 @@
       $('#detailDialog').addEventListener('click', (event) => { if (event.target === $('#detailDialog')) $('#detailDialog').close(); });
       loadData();
       window.setInterval(loadData, window.SKILL_AI_CONFIG.refreshMs || 300000);
-    })();
+    })(); });
   </script>
 </body>
 </html>
