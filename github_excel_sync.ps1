@@ -15,12 +15,12 @@ $StopFile = Join-Path $Root '.skill-ai-sync.stop'
 
 function Invoke-Git([string[]]$Arguments) {
   & git @Arguments
-  if ($LASTEXITCODE -ne 0) { throw "Git thất bại: git $($Arguments -join ' ')" }
+  if ($LASTEXITCODE -ne 0) { throw "Git failed: git $($Arguments -join ' ')" }
 }
 
 function Sync-Workbook {
-  if (-not (Test-Path -LiteralPath $Workbook)) { throw "Không tìm thấy workbook: $Workbook" }
-  if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'Không tìm thấy Git trong PATH.' }
+  if (-not (Test-Path -LiteralPath $Workbook)) { throw "Workbook not found: $Workbook" }
+  if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'Git was not found in PATH.' }
 
   if (-not (Test-Path -LiteralPath (Join-Path $SyncRoot '.git'))) {
     New-Item -ItemType Directory -Force -Path $SyncRoot | Out-Null
@@ -43,14 +43,14 @@ function Sync-Workbook {
   $sourceHash = (Get-FileHash -LiteralPath $Workbook -Algorithm SHA256).Hash
   if (Test-Path -LiteralPath $target) {
     $targetHash = (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash
-    if ($sourceHash -eq $targetHash) { Write-Host "Không có thay đổi: $WorkbookName"; return }
+    if ($sourceHash -eq $targetHash) { Write-Host "No changes: $WorkbookName"; return }
   }
 
   Copy-Item -LiteralPath $Workbook -Destination $target -Force
   Invoke-Git @('-C', $SyncRoot, 'add', '--', $WorkbookName)
   Invoke-Git @('-C', $SyncRoot, 'commit', '-m', "Update $WorkbookName")
   Invoke-Git @('-C', $SyncRoot, 'push', 'origin', $DataBranch)
-  Write-Host "Đã đồng bộ $WorkbookName lên nhánh $DataBranch."
+  Write-Host "Synced $WorkbookName to branch $DataBranch."
 }
 
 do {
