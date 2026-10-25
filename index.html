@@ -124,7 +124,8 @@
     .page-size { color: var(--muted); font-size: 12px; }
     .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
     /* taste-skill-ignore: table frame is a real data surface */
-    .table-wrap { overflow-x: auto; overflow-y: hidden; scrollbar-gutter: stable both-edges; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); }
+    .catalogue { overflow-anchor: none; }
+    .table-wrap { overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
     th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
@@ -148,9 +149,9 @@
     .empty-state.is-visible { display: block; }
     .empty-state strong { display: block; margin-bottom: 6px; font-size: 16px; }
     .empty-state p { margin: 0; color: var(--muted); }
-    .loading-row td { height: 430px; color: var(--muted); text-align: left; padding: 24px 12px; }
-    .skeleton-stack { display: grid; gap: 12px; }
-    .skeleton-grid { display: grid; grid-template-columns: 16% 20% 21% 21% 12% 10%; gap: 12px; }
+    .loading-row td { height: 620px; color: var(--muted); text-align: left; padding: 0; }
+    .skeleton-stack { display: grid; gap: 0; min-height: 620px; }
+    .skeleton-grid { display: grid; grid-template-columns: 16% 20% 21% 21% 12% 10%; gap: 12px; min-height: 84px; align-items: start; padding: 18px 12px; border-bottom: 1px solid var(--line); /* taste-skill-ignore: loading rows mirror table separators */ }
     .skeleton-line { display: block; height: 14px; border-radius: 3px; background: var(--soft); animation: skeleton-pulse 1.15s ease-in-out infinite; }
     .skeleton-line:nth-child(2n) { animation-delay: .15s; }
     .skeleton-line:nth-child(3n) { animation-delay: .3s; }
@@ -161,8 +162,6 @@
     #sourceSummary.loading-copy { width: min(280px, 100%); }
     #sourceDetail.loading-copy { width: min(300px, 100%); min-height: 2.4em; }
     #filterSummary.loading-copy { width: 220px; }
-    .result-row { animation: row-reveal .42s ease both; animation-delay: calc(var(--row-index) * 18ms); }
-    @keyframes row-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .skeleton-line, .loading-copy, .loading-value { animation: none; opacity: .7; } }
     .error-line { color: var(--danger); }
     .pagination { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 18px 0 0; }
@@ -208,13 +207,15 @@
       .guide-strip { grid-template-columns: 1fr 1fr; gap: 14px; }
       .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
       .table-wrap { overflow: visible; border-top-width: 1px; }
+      .loading-row td { height: 620px; }
+      .skeleton-stack { min-height: 620px; }
+      .skeleton-grid { grid-template-columns: 1fr 1fr; min-height: 88px; }
       table, tbody, tr, td { display: block; min-width: 0; width: 100%; } table { table-layout: auto; } thead { display: none; }
       tr { padding: 15px 14px 10px; border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; }
       td { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; padding: 5px 0; border: 0; }
       td::before { content: attr(data-label); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
       td[data-field="skill"] { display: block; padding-bottom: 9px; } td[data-field="skill"]::before { display: none; }
       .cell-preview { -webkit-line-clamp: 4; } .dialog-header, .dialog-body { padding: 18px; }
-      .loading-row td { height: 360px; }
     }
     @media (prefers-reduced-motion: reduce) { .result-row { animation: none; } }
   </style>
@@ -313,7 +314,7 @@
             <th><button data-sort="category" type="button">Category</button></th>
             <th><button data-sort="domain" type="button">Lĩnh vực</button></th>
           </tr></thead>
-          <tbody id="resultBody"><tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Đang đọc workbook"><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div></div></td></tr></tbody>
+          <tbody id="resultBody"><tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Đang đọc workbook"><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div></div></td></tr></tbody>
         </table>
       </div>
       <div class="empty-state" id="emptyState"><strong>Không tìm thấy skill phù hợp</strong><p>Thử bỏ bớt từ khóa hoặc xóa một bộ lọc.</p></div>
@@ -355,7 +356,7 @@
       const skeletonRow = '<div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div>';
       function showLoadingState() {
         $('#emptyState').classList.remove('is-visible');
-        $('#resultBody').innerHTML = `<tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Đang đọc workbook">${skeletonRow.repeat(3)}</div></td></tr>`;
+        $('#resultBody').innerHTML = `<tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Đang đọc workbook">${skeletonRow.repeat(7)}</div></td></tr>`;
       }
 
       function setTheme(theme) {
