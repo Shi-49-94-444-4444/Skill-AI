@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thư viện Skill AI: tìm kiếm, lọc và đọc hướng dẫn sử dụng skill.">
+  <title>Skill AI — Thư viện tra cứu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+  <script defer src="dashboard-config.js"></script>
+  <script defer src="excel-data-loader.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231f;
+      --muted: #65716c;
+      --line: #e2e2e2;
+      --ground: #f8f8f8;
+      --paper: #ffffff;
+      --soft: #eeeeee;
+      --accent: #141414;
+      --accent-strong: #0a0a0a;
+      --danger: #a43f3f;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--ground); }
+    body { margin: 0; color: var(--ink); background: var(--ground); font-family: "Geist", "Segoe UI", sans-serif; font-size: 14px; line-height: 1.55; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid rgba(18, 105, 94, .22); outline-offset: 2px; }
+    /* taste-skill-ignore: structural boundary for the app header */
+    .site-header { min-height: 76px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ background: var(--paper); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(18px, 4vw, 64px); }
+    .brand { color: var(--ink); display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark { display: inline-grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--ink); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: -.05em; }
+    .brand-name { display: block; font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
+    .brand-subtitle { display: block; color: var(--muted); font-size: 11px; }
+    .header-status { color: var(--muted); display: flex; align-items: center; gap: 18px; font-size: 12px; }
+    .header-status strong { color: var(--ink); font-weight: 600; }
+    .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
+    .quiet-button:hover { border-color: var(--accent); color: var(--accent-strong); }
+    .primary-button { border-color: var(--accent); background: var(--accent); color: white; font-weight: 600; }
+    .primary-button:hover { background: var(--accent-strong); }
+    .page-shell { width: min(1440px, 100%); margin: 0 auto; padding: 40px clamp(18px, 4vw, 64px) 64px; }
+    /* taste-skill-ignore: structural boundary for the catalogue introduction */
+    .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: 40px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
+    h1 { max-width: 680px; margin: 0; font-size: clamp(30px, 4vw, 52px); line-height: 1.07; letter-spacing: -.055em; font-weight: 700; }
+    .intro-copy { color: var(--muted); margin: 14px 0 0; max-width: 650px; }
+    .source-note { border-left: 2px solid var(--accent); padding-left: 16px; color: var(--muted); font-size: 12px; }
+    .source-note strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 3px; }
+    .controls { padding: 24px 0 20px; display: grid; grid-template-columns: minmax(300px, 1fr) 210px 210px auto; align-items: end; gap: 12px; }
+    .control label { display: block; color: var(--muted); font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+    .search-field { position: relative; }
+    .search-field input { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 11px 13px; background: var(--paper); color: var(--ink); }
+    .search-field input::placeholder { color: #8a9691; }
+    .filter-menu { position: relative; }
+    .filter-menu summary { list-style: none; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); padding: 11px 13px; cursor: pointer; }
+    .filter-menu summary::-webkit-details-marker { display: none; }
+    .filter-menu summary::after { content: "⌄"; float: right; color: var(--muted); }
+    .filter-menu[open] summary { border-color: var(--accent); }
+    .filter-options { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(320px, 88vw); max-height: 300px; overflow: auto; padding: 8px; border: 1px solid var(--line); background: var(--paper); }
+    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; padding: 7px 6px; color: var(--ink); font-weight: 400; cursor: pointer; }
+    .filter-options label:hover { background: var(--soft); }
+    .filter-options input { accent-color: var(--accent); margin-top: 3px; }
+    .option-count { color: var(--muted); font-size: 11px; }
+    .clear-button { border: 0; background: transparent; color: var(--muted); padding: 10px 2px; white-space: nowrap; }
+    .clear-button:hover { color: var(--accent-strong); }
+    /* taste-skill-ignore: structural boundary for filter results */
+    .summary-row { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); /* taste-skill-ignore */ color: var(--muted); font-size: 12px; }
+    .summary-row strong { color: var(--ink); }
+    .catalogue-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0 10px; }
+    .catalogue-toolbar p { margin: 0; color: var(--muted); font-size: 12px; }
+    .page-size { color: var(--muted); font-size: 12px; }
+    .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
+    /* taste-skill-ignore: table frame is a real data surface */
+    .table-wrap { overflow: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); }
+    table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
+    col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
+    th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
+    th button { border: 0; padding: 0; background: transparent; color: inherit; font-weight: inherit; letter-spacing: inherit; text-align: left; text-transform: inherit; }
+    th button:hover { color: var(--accent); }
+    /* taste-skill-ignore: row separators belong to the real data table */
+    td { vertical-align: top; padding: 13px 12px; border-bottom: 1px solid #e7ebe8; }
+    tr:last-child td { border-bottom: 0; }
+    .skill-link { border: 0; padding: 0; background: transparent; color: var(--accent-strong); font-weight: 700; text-align: left; line-height: 1.35; }
+    .skill-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .cell-preview { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; color: #3e4b46; }
+    .muted-cell { color: var(--muted); }
+    .tag-line { color: #53615b; font-size: 12px; line-height: 1.4; }
+    /* taste-skill-ignore: empty state shares the table surface boundary */
+    .empty-state { display: none; padding: 56px 24px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ background: var(--paper); text-align: center; }
+    .empty-state.is-visible { display: block; }
+    .empty-state strong { display: block; margin-bottom: 6px; font-size: 16px; }
+    .empty-state p { margin: 0; color: var(--muted); }
+    .loading-row td { color: var(--muted); text-align: center; padding: 40px; }
+    .error-line { color: var(--danger); }
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 18px 0 0; }
+    .pagination[hidden] { display: none; }
+    .pagination span { color: var(--muted); font-size: 12px; }
+    dialog { width: min(820px, calc(100% - 28px)); max-height: min(88vh, 900px); padding: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    dialog::backdrop { background: rgba(14, 27, 22, .38); }
+    .dialog-header { display: flex; justify-content: space-between; gap: 24px; padding: 22px 24px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
+    .dialog-header h2 { margin: 0; font-size: 24px; line-height: 1.15; letter-spacing: -.04em; }
+    .dialog-meta { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .dialog-body { padding: 24px; overflow: auto; }
+    .detail-section + .detail-section { margin-top: 24px; }
+    .detail-section h3 { margin: 0 0 8px; font-size: 11px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+    .detail-section p { margin: 0; }
+    .detail-section .copy-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+    .markdown-body { color: #293630; }
+    .markdown-body > :first-child { margin-top: 0; }
+    .markdown-body > :last-child { margin-bottom: 0; }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 { margin: 1.2em 0 .45em; font-size: 1.05em; letter-spacing: -.02em; }
+    .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body blockquote { margin: .65em 0; }
+    .markdown-body ul, .markdown-body ol { padding-left: 1.4em; }
+    .markdown-body a { color: var(--accent-strong); }
+    .markdown-body code { padding: .1em .3em; border: 1px solid var(--line); border-radius: 3px; background: var(--soft); font-size: .92em; }
+    .markdown-body pre { position: relative; overflow: auto; margin: 12px 0; padding: 15px; border: 1px solid #cbd7d1; border-radius: 6px; background: #17231f; color: #e8f2ed; }
+    .markdown-body pre code { padding: 0; border: 0; background: transparent; color: inherit; }
+    .code-tools { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: -4px; }
+    .code-label { margin-right: auto; color: #a9c4b8; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+    .toast { position: fixed; right: 18px; bottom: 18px; max-width: min(380px, calc(100% - 36px)); padding: 11px 14px; border: 1px solid var(--accent); border-radius: 6px; background: var(--paper); color: var(--ink); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .16s ease, transform .16s ease; }
+    .toast.is-visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 980px) { .intro { grid-template-columns: 1fr; gap: 18px; } .controls { grid-template-columns: minmax(240px, 1fr) 1fr 1fr auto; } }
+    @media (max-width: 720px) {
+      .site-header { padding: 14px 18px; align-items: flex-start; } .header-status { display: block; text-align: right; } .header-status button { margin-top: 7px; }
+      .page-shell { padding-top: 28px; } h1 { font-size: 34px; } .intro-copy { font-size: 13px; }
+      .controls { grid-template-columns: 1fr 1fr; } .search-field, .clear-button { grid-column: 1 / -1; } .clear-button { text-align: left; padding: 4px 0; }
+      .summary-row { align-items: flex-start; flex-direction: column; gap: 3px; padding: 10px 0; }
+      .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .table-wrap { overflow: visible; border-top-width: 1px; }
+      table, tbody, tr, td { display: block; min-width: 0; width: 100%; } table { table-layout: auto; } thead { display: none; }
+      tr { padding: 15px 14px 10px; border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; }
+      td { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; padding: 5px 0; border: 0; }
+      td::before { content: attr(data-label); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+      td[data-field="skill"] { display: block; padding-bottom: 9px; } td[data-field="skill"]::before { display: none; }
+      .cell-preview { -webkit-line-clamp: 4; } .dialog-header, .dialog-body { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span><span class="brand-name">Skill AI</span><span class="brand-subtitle">Thư viện tra cứu</span></span>
+    </a>
+    <div class="header-status">
+      <span id="datasetStatus">Đang nạp dữ liệu…</span>
+      <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro" aria-labelledby="pageTitle">
+      <div>
+        <h1 id="pageTitle">Tìm đúng skill. Dùng đúng lúc.</h1>
+        <p class="intro-copy">Tra cứu theo tên, mô tả hoặc tình huống sử dụng. Lọc theo nguồn và lĩnh vực để thu hẹp nhanh danh sách.</p>
+      </div>
+      <div class="source-note">
+        <strong id="sourceSummary">Nguồn dữ liệu đang được tải</strong>
+        <span id="sourceDetail">Skill AI · nhánh skill-sheet</span>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Tìm kiếm và bộ lọc">
+      <div class="control search-field">
+        <label for="searchInput">Tìm kiếm toàn văn</label>
+        <input id="searchInput" type="search" placeholder="Ví dụ: phân tích, tuyển dụng, visual study guide…" autocomplete="off">
+      </div>
+      <div class="control">
+        <label>Category</label>
+        <details class="filter-menu" id="categoryMenu">
+          <summary id="categorySummary">Tất cả category</summary>
+          <div class="filter-options" id="categoryOptions"></div>
+        </details>
+      </div>
+      <div class="control">
+        <label>Lĩnh vực</label>
+        <details class="filter-menu" id="domainMenu">
+          <summary id="domainSummary">Tất cả lĩnh vực</summary>
+          <div class="filter-options" id="domainOptions"></div>
+        </details>
+      </div>
+      <button class="clear-button" id="clearButton" type="button">Xóa tìm kiếm và bộ lọc</button>
+    </section>
+
+    <div class="summary-row" aria-live="polite">
+      <span id="filterSummary">Đang chuẩn bị dữ liệu…</span>
+      <span id="activeSummary"></span>
+    </div>
+
+    <section class="catalogue" aria-label="Danh sách Skill AI">
+      <div class="catalogue-toolbar">
+        <p id="resultCount">Đang tải…</p>
+        <label class="page-size">Mỗi trang
+          <select id="pageSize" aria-label="Số dòng mỗi trang"><option>25</option><option selected>50</option><option>100</option></select>
+        </label>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <colgroup><col class="skill"><col class="description"><col class="when"><col class="how"><col class="category"><col class="domain"></colgroup>
+          <thead><tr>
+            <th><button data-sort="skill" type="button">Skill</button></th>
+            <th><button data-sort="description" type="button">Mô tả</button></th>
+            <th><button data-sort="whenToUse" type="button">Dùng khi</button></th>
+            <th><button data-sort="howToUse" type="button">Cách dùng</button></th>
+            <th><button data-sort="category" type="button">Category</button></th>
+            <th><button data-sort="domain" type="button">Lĩnh vực</button></th>
+          </tr></thead>
+          <tbody id="resultBody"><tr class="loading-row"><td colspan="6">Đang đọc workbook…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="emptyState"><strong>Không tìm thấy skill phù hợp</strong><p>Thử bỏ bớt từ khóa hoặc xóa một bộ lọc.</p></div>
+      <nav class="pagination" id="pagination" aria-label="Phân trang" hidden>
+        <button class="quiet-button" id="previousButton" type="button">Trước</button>
+        <span id="pageSummary"></span>
+        <button class="quiet-button" id="nextButton" type="button">Sau</button>
+      </nav>
+    </section>
+  </main>
+
+  <dialog id="detailDialog">
+    <div class="dialog-header">
+      <div><h2 id="detailTitle"></h2><p class="dialog-meta" id="detailMeta"></p></div>
+      <button class="quiet-button" id="closeDialog" type="button">Đóng</button>
+    </div>
+    <div class="dialog-body">
+      <section class="detail-section"><h3>Mô tả</h3><p id="detailDescription"></p></section>
+      <section class="detail-section"><h3>Dùng khi</h3><p id="detailWhen"></p></section>
+      <section class="detail-section">
+        <div class="copy-row"><button class="quiet-button" id="copyAllButton" type="button">Sao chép toàn bộ cách dùng</button></div>
+        <h3>Cách dùng</h3><div class="markdown-body" id="detailHow"></div>
+      </section>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const $ = (selector) => document.querySelector(selector);
+      const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
+      let toastTimer;
+
+      const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
+      const compact = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
+      const localeCompare = (a, b) => String(a).localeCompare(String(b), 'vi', { sensitivity: 'base' });
+      const showToast = (message) => { const element = $('#toast'); element.textContent = message; element.classList.add('is-visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => element.classList.remove('is-visible'), 2200); };
+
+      function selectedValues(containerId) {
+        return new Set([...document.querySelectorAll(`#${containerId} input:checked`)].map((input) => input.value));
+      }
+
+      function buildOptions(id, values, selected) {
+        const element = $(id);
+        element.innerHTML = values.map(({ value, count }) => `<label><input type="checkbox" value="${escapeHtml(value)}" ${selected.has(value) ? 'checked' : ''}><span>${escapeHtml(value)}</span><span class="option-count">${count}</span></label>`).join('');
+      }
+
+      function countsFor(field) {
+        const counts = new Map();
+        state.records.forEach((record) => counts.set(record[field], (counts.get(record[field]) || 0) + 1));
+        return [...counts.entries()].sort((a, b) => localeCompare(a[0], b[0])).map(([value, count]) => ({ value, count }));
+      }
+
+      function filteredRecords() {
+        const query = window.SkillAIData.normalize(state.query);
+        return state.records.filter((record) => (!query || record.searchText.includes(query))
+          && (!state.categories.size || state.categories.has(record.category))
+          && (!state.domains.size || state.domains.has(record.domain)));
+      }
+
+      function sortRecords(records) {
+        return records.sort((a, b) => {
+          const comparison = localeCompare(a[state.sortKey], b[state.sortKey]);
+          return state.sortDirection === 'asc' ? comparison : -comparison;
+        });
+      }
+
+      function updateFilterLabels() {
+        $('#categorySummary').textContent = state.categories.size ? `Đã chọn ${state.categories.size}` : 'Tất cả category';
+        $('#domainSummary').textContent = state.domains.size ? `Đã chọn ${state.domains.size}` : 'Tất cả lĩnh vực';
+        const active = [];
+        if (state.query) active.push(`từ khóa “${state.query}”`);
+        if (state.categories.size) active.push(`${state.categories.size} category`);
+        if (state.domains.size) active.push(`${state.domains.size} lĩnh vực`);
+        $('#activeSummary').textContent = active.length ? active.join(' · ') : 'Chưa áp dụng bộ lọc';
+      }
+
+      function render() {
+        const matches = sortRecords(filteredRecords());
+        const pageCount = Math.max(1, Math.ceil(matches.length / state.pageSize));
+        state.page = Math.min(state.page, pageCount);
+        const start = (state.page - 1) * state.pageSize;
+        const visible = matches.slice(start, start + state.pageSize);
+        const body = $('#resultBody');
+        body.innerHTML = visible.map((record) => `<tr>
+          <td data-label="Skill" data-field="skill"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button">${escapeHtml(record.skill)}</button></td>
+          <td data-label="Mô tả"><span class="cell-preview">${escapeHtml(record.description)}</span></td>
+          <td data-label="Dùng khi"><span class="cell-preview">${escapeHtml(record.whenToUse)}</span></td>
+          <td data-label="Cách dùng"><span class="cell-preview">${escapeHtml(compact(record.howToUse))}</span></td>
+          <td data-label="Category"><span class="tag-line">${escapeHtml(record.category)}</span></td>
+          <td data-label="Lĩnh vực"><span class="tag-line">${escapeHtml(record.domain)}</span></td>
+        </tr>`).join('');
+        $('#emptyState').classList.toggle('is-visible', !matches.length);
+        $('#resultCount').textContent = matches.length ? `Hiển thị ${start + 1}–${Math.min(start + state.pageSize, matches.length)} trong ${matches.length.toLocaleString('vi-VN')} kết quả` : '0 kết quả';
+        $('#filterSummary').innerHTML = `Tổng thư viện: <strong>${state.records.length.toLocaleString('vi-VN')} skill</strong>`;
+        $('#pagination').hidden = matches.length <= state.pageSize;
+        $('#pageSummary').textContent = `Trang ${state.page} / ${pageCount}`;
+        $('#previousButton').disabled = state.page <= 1;
+        $('#nextButton').disabled = state.page >= pageCount;
+        updateFilterLabels();
+      }
+
+      function renderMarkdown(value) {
+        const source = String(value || '');
+        if (!source.trim()) return '<p class="muted-cell">Chưa có hướng dẫn.</p>';
+        if (!window.marked || !window.DOMPurify) return `<p>${escapeHtml(source).replace(/\n/g, '<br>')}</p>`;
+        const html = window.marked.parse(source, { gfm: true, breaks: true, headerIds: false, mangle: false });
+        return window.DOMPurify.sanitize(html, {
+          USE_PROFILES: { html: true },
+          ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto):|[^a-z]|[a-z+.-]+(?:[^a-z+.-:]|$))/i
+        });
+      }
+
+      function openDetail(id) {
+        const record = state.records.find((item) => item.id === id);
+        if (!record) return;
+        state.current = record;
+        $('#detailTitle').textContent = record.skill;
+        $('#detailMeta').textContent = `${record.category} · ${record.domain} · dòng Excel ${record.sourceRow}`;
+        $('#detailDescription').textContent = record.description || 'Chưa có mô tả.';
+        $('#detailWhen').textContent = record.whenToUse || 'Chưa có thông tin.';
+        const how = $('#detailHow');
+        how.innerHTML = renderMarkdown(record.howToUse);
+        how.querySelectorAll('pre').forEach((pre) => {
+          const code = pre.querySelector('code');
+          const tools = document.createElement('div'); tools.className = 'code-tools';
+          const label = document.createElement('span'); label.className = 'code-label'; label.textContent = code?.className?.match(/language-([\w-]+)/)?.[1] || 'code';
+          const copy = document.createElement('button'); copy.className = 'quiet-button'; copy.type = 'button'; copy.textContent = 'Sao chép'; copy.addEventListener('click', () => copyText(code ? code.textContent : pre.textContent, 'Đã sao chép code.'));
+          tools.append(label, copy); pre.prepend(tools);
+        });
+        const dialog = $('#detailDialog');
+        if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
+      }
+
+      async function copyText(value, successMessage) {
+        try {
+          if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(value);
+          else { const textarea = document.createElement('textarea'); textarea.value = value; textarea.style.position = 'fixed'; textarea.style.opacity = '0'; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); textarea.remove(); }
+          showToast(successMessage);
+        } catch (error) { showToast('Không thể sao chép. Hãy chọn và copy thủ công.'); }
+      }
+
+      function clearFilters() {
+        state.query = ''; state.categories.clear(); state.domains.clear(); state.page = 1; $('#searchInput').value = '';
+        document.querySelectorAll('.filter-options input').forEach((input) => { input.checked = false; });
+        render();
+      }
+
+      async function loadData() {
+        $('#datasetStatus').textContent = 'Đang cập nhật…';
+        try {
+          const result = await window.SkillAIData.load(window.SKILL_AI_CONFIG);
+          state.records = result.records; state.version = result.version; state.loadedAt = result.loadedAt;
+          buildOptions('#categoryOptions', countsFor('category'), state.categories);
+          buildOptions('#domainOptions', countsFor('domain'), state.domains);
+          $('#sourceSummary').textContent = `${state.records.length.toLocaleString('vi-VN')} skill đã sẵn sàng`;
+          $('#sourceDetail').textContent = `${result.sheetName} · nhánh ${window.SKILL_AI_CONFIG.dataBranch} · cập nhật ${new Date(result.loadedAt).toLocaleString('vi-VN')}`;
+          $('#datasetStatus').textContent = 'Đã cập nhật';
+          render();
+        } catch (error) {
+          $('#datasetStatus').textContent = 'Không tải được dữ liệu';
+          $('#sourceSummary').textContent = 'Cần kiểm tra nguồn Excel';
+          $('#filterSummary').innerHTML = `<span class="error-line">${escapeHtml(error.message)}</span>`;
+          $('#resultBody').innerHTML = '<tr class="loading-row"><td colspan="6" class="error-line">Không thể hiển thị dữ liệu. Hãy bấm “Làm mới” sau khi kiểm tra nhánh skill-sheet.</td></tr>';
+        }
+      }
+
+      document.addEventListener('input', (event) => { if (event.target.id === 'searchInput') { state.query = event.target.value; state.page = 1; render(); } });
+      document.addEventListener('change', (event) => {
+        if (event.target.closest('#categoryOptions')) state.categories = selectedValues('categoryOptions');
+        if (event.target.closest('#domainOptions')) state.domains = selectedValues('domainOptions');
+        if (event.target.id === 'pageSize') state.pageSize = Number(event.target.value);
+        state.page = 1; render();
+      });
+      document.addEventListener('click', (event) => {
+        const open = event.target.closest('[data-open]');
+        const sort = event.target.closest('[data-sort]');
+        if (open) openDetail(open.dataset.open);
+        if (sort) { state.sortDirection = state.sortKey === sort.dataset.sort && state.sortDirection === 'asc' ? 'desc' : 'asc'; state.sortKey = sort.dataset.sort; render(); }
+      });
+      $('#clearButton').addEventListener('click', clearFilters);
+      $('#refreshButton').addEventListener('click', loadData);
+      $('#previousButton').addEventListener('click', () => { state.page -= 1; render(); });
+      $('#nextButton').addEventListener('click', () => { state.page += 1; render(); });
+      $('#closeDialog').addEventListener('click', () => $('#detailDialog').close());
+      $('#copyAllButton').addEventListener('click', () => state.current && copyText(state.current.howToUse, 'Đã sao chép toàn bộ cách dùng.'));
+      $('#detailDialog').addEventListener('click', (event) => { if (event.target === $('#detailDialog')) $('#detailDialog').close(); });
+      loadData();
+      window.setInterval(loadData, window.SKILL_AI_CONFIG.refreshMs || 300000);
+    })();
+  </script>
+</body>
+</html>
