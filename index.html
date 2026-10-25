@@ -126,12 +126,7 @@
     /* taste-skill-ignore: table frame is a real data surface */
     .catalogue { overflow-anchor: none; }
     .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
-    .table-progress { position: absolute; z-index: 2; inset: 0 0 auto; height: 3px; overflow: hidden; background: var(--soft); opacity: 0; pointer-events: none; transition: opacity .12s ease; }
-    .table-progress::after { content: ""; display: block; width: 24%; height: 100%; background: var(--accent-strong); transform: translateX(-120%); }
-    .table-wrap.is-updating .table-progress { opacity: 1; }
-    .table-wrap.is-updating .table-progress::after { animation: table-progress-sweep .8s ease-in-out infinite; }
     .table-wrap.is-updating table { opacity: .72; transition: opacity .12s ease; }
-    @keyframes table-progress-sweep { to { transform: translateX(520%); } }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
     th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
@@ -313,7 +308,6 @@
         </label>
       </div>
       <div class="table-wrap" id="tableWrap">
-        <div class="table-progress" id="tableProgress" aria-hidden="true"></div>
         <table>
           <colgroup><col class="skill"><col class="description"><col class="when"><col class="how"><col class="category"><col class="domain"></colgroup>
           <thead><tr>
@@ -358,7 +352,6 @@
       const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
       let toastTimer;
       let renderFrame = 0;
-      let updatingTimer = 0;
 
       const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
       const compact = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
@@ -463,20 +456,9 @@
         updateFilterLabels();
       }
 
-      function setTableUpdating(updating) {
-        const tableWrap = $('#tableWrap');
-        tableWrap.classList.toggle('is-updating', updating);
-        tableWrap.setAttribute('aria-busy', String(updating));
-      }
-
       function queueRender() {
-        setTableUpdating(true);
         cancelAnimationFrame(renderFrame);
-        clearTimeout(updatingTimer);
-        renderFrame = requestAnimationFrame(() => {
-          render();
-          updatingTimer = window.setTimeout(() => setTableUpdating(false), 140);
-        });
+        renderFrame = requestAnimationFrame(render);
       }
 
       function renderMarkdown(value) {
@@ -546,7 +528,6 @@
           $('#sourceDetail').textContent = `${result.sheetName} · ${result.sourceRecordCount.toLocaleString('vi-VN')} dòng, gộp ${result.duplicatesRemoved.toLocaleString('vi-VN')} dòng trùng · nhánh ${window.SKILL_AI_CONFIG.dataBranch}`;
           $('#datasetStatus').textContent = 'Đã cập nhật';
           setLoadingChrome(false);
-          setTableUpdating(false);
           render();
         } catch (error) {
           setLoadingChrome(false);
