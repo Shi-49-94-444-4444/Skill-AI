@@ -33,22 +33,29 @@
     button, input, select { font: inherit; }
     button { cursor: pointer; }
     button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid rgba(18, 105, 94, .22); outline-offset: 2px; }
-    /* taste-skill-ignore: structural boundary for the app header */
-    .site-header { min-height: 76px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ background: var(--paper); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(18px, 4vw, 64px); }
+    /* taste-skill-ignore: structural boundary for the app navigation */
+    .site-header { position: fixed; z-index: 10; inset: 0 auto 0 0; width: 236px; min-height: 100vh; border-right: 1px solid var(--line); /* taste-skill-ignore */ background: var(--ground); display: flex; flex-direction: column; align-items: stretch; gap: 24px; padding: 28px 18px; }
     .brand { color: var(--ink); display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
     .brand-mark { display: inline-grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--ink); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: -.05em; }
     .brand-name { display: block; font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
     .brand-subtitle { display: block; color: var(--muted); font-size: 11px; }
-    .header-status { color: var(--muted); display: flex; align-items: center; gap: 18px; font-size: 12px; }
+    .sidebar-nav { display: grid; gap: 4px; margin-top: 16px; }
+    .sidebar-nav a { color: var(--muted); border-radius: 6px; padding: 9px 10px; text-decoration: none; font-size: 13px; }
+    .sidebar-nav a:hover, .sidebar-nav a.active { background: #eaeaea; color: var(--ink); }
+    .sidebar-stats { display: grid; gap: 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); /* taste-skill-ignore */ }
+    .sidebar-stat strong { display: block; color: var(--ink); font-size: 20px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .sidebar-stat span { color: var(--muted); font-size: 11px; }
+    .header-status { color: var(--muted); display: grid; gap: 10px; margin-top: auto; font-size: 12px; }
     .header-status strong { color: var(--ink); font-weight: 600; }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
+    .header-status .quiet-button { width: 100%; }
     .quiet-button:hover { border-color: var(--accent); color: var(--accent-strong); }
     .primary-button { border-color: var(--accent); background: var(--accent); color: white; font-weight: 600; }
     .primary-button:hover { background: var(--accent-strong); }
-    .page-shell { width: min(1440px, 100%); margin: 0 auto; padding: 40px clamp(18px, 4vw, 64px) 64px; }
+    .page-shell { width: min(1440px, calc(100% - 236px)); margin: 0 0 0 236px; padding: 40px clamp(28px, 4vw, 64px) 64px; }
     /* taste-skill-ignore: structural boundary for the catalogue introduction */
     .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: 40px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
-    h1 { max-width: 680px; margin: 0; font-size: clamp(30px, 4vw, 52px); line-height: 1.07; letter-spacing: -.055em; font-weight: 700; }
+    h1 { max-width: 680px; margin: 0; font-size: clamp(26px, 2.8vw, 32px); line-height: 1.1; letter-spacing: -.04em; font-weight: 700; }
     .intro-copy { color: var(--muted); margin: 14px 0 0; max-width: 650px; }
     .source-note { border-left: 2px solid var(--accent); padding-left: 16px; color: var(--muted); font-size: 12px; }
     .source-note strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 3px; }
@@ -62,8 +69,8 @@
     .filter-menu summary::-webkit-details-marker { display: none; }
     .filter-menu summary::after { content: "⌄"; float: right; color: var(--muted); }
     .filter-menu[open] summary { border-color: var(--accent); }
-    .filter-options { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(320px, 88vw); max-height: 300px; overflow: auto; padding: 8px; border: 1px solid var(--line); background: var(--paper); }
-    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; padding: 7px 6px; color: var(--ink); font-weight: 400; cursor: pointer; }
+    .filter-options { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(320px, 88vw); max-height: 300px; overflow: auto; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: 0 14px 32px rgba(10, 10, 10, .12); /* taste-skill-ignore: real floating filter menu */ }
+    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; min-height: 34px; padding: 7px 6px; color: var(--ink); font-weight: 400; cursor: pointer; }
     .filter-options label:hover { background: var(--soft); }
     .filter-options input { accent-color: var(--accent); margin-top: 3px; }
     .option-count { color: var(--muted); font-size: 11px; }
@@ -80,21 +87,22 @@
     .table-wrap { overflow: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
-    th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
+    th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
     th button { border: 0; padding: 0; background: transparent; color: inherit; font-weight: inherit; letter-spacing: inherit; text-align: left; text-transform: inherit; }
     th button:hover { color: var(--accent); }
     /* taste-skill-ignore: row separators belong to the real data table */
     td { vertical-align: top; padding: 13px 12px; border-bottom: 1px solid #e7ebe8; }
     tr:last-child td { border-bottom: 0; }
-    .skill-link { border: 0; padding: 0; background: transparent; color: var(--accent-strong); font-weight: 700; text-align: left; line-height: 1.35; }
-    .skill-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .skill-link { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 6px; padding: 7px 8px; background: #f0f1f0; color: var(--accent-strong); font-weight: 700; text-align: left; line-height: 1.35; }
+    .skill-link:hover { border-color: var(--ink); background: #e7e8e7; }
     .skill-cell { display: flex; align-items: flex-start; gap: 8px; }
     .skill-code { color: inherit; font: inherit; overflow-wrap: anywhere; }
-    .copy-skill { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--muted); padding: 3px 6px; font-size: 10px; }
-    .copy-skill:hover { border-color: var(--accent); color: var(--accent-strong); }
+    .copy-skill { flex: 0 0 30px; align-self: center; border: 0; border-radius: 4px; background: transparent; color: var(--muted); padding: 5px; }
+    .copy-skill:hover { background: var(--soft); color: var(--accent-strong); }
+    .copy-skill svg { display: block; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .cell-preview, .tag-line { display: -webkit-box; min-height: 4.2em; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; color: #3e4b46; }
     .muted-cell { color: var(--muted); }
-    .tag-line { color: #53615b; font-size: 12px; line-height: 1.4; }
+    .tag-line { color: #53615b; font-size: 14px; line-height: 1.55; }
     /* taste-skill-ignore: empty state shares the table surface boundary */
     .empty-state { display: none; padding: 56px 24px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ background: var(--paper); text-align: center; }
     .empty-state.is-visible { display: block; }
@@ -130,9 +138,9 @@
     .toast { position: fixed; right: 18px; bottom: 18px; max-width: min(380px, calc(100% - 36px)); padding: 11px 14px; border: 1px solid var(--accent); border-radius: 6px; background: var(--paper); color: var(--ink); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .16s ease, transform .16s ease; }
     .toast.is-visible { opacity: 1; transform: translateY(0); }
     @media (max-width: 980px) { .intro { grid-template-columns: 1fr; gap: 18px; } .controls { grid-template-columns: minmax(240px, 1fr) 1fr 1fr auto; } }
-    @media (max-width: 720px) {
-      .site-header { padding: 14px 18px; align-items: flex-start; } .header-status { display: block; text-align: right; } .header-status button { margin-top: 7px; }
-      .page-shell { padding-top: 28px; } h1 { font-size: 34px; } .intro-copy { font-size: 13px; }
+    @media (max-width: 900px) {
+      .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ flex-direction: row; align-items: flex-start; gap: 14px; padding: 14px 18px; } .sidebar-nav, .sidebar-stats { display: none; } .header-status { display: block; margin-top: 0; text-align: right; } .header-status button { margin-top: 7px; }
+      .page-shell { width: 100%; margin-left: 0; padding-top: 28px; } h1 { font-size: 28px; } .intro-copy { font-size: 13px; }
       .controls { grid-template-columns: 1fr 1fr; } .search-field, .clear-button { grid-column: 1 / -1; } .clear-button { text-align: left; padding: 4px 0; }
       .summary-row { align-items: flex-start; flex-direction: column; gap: 3px; padding: 10px 0; }
       .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
@@ -152,13 +160,23 @@
       <span class="brand-mark" aria-hidden="true">SA</span>
       <span><span class="brand-name">Skill AI</span><span class="brand-subtitle">Thư viện tra cứu</span></span>
     </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a class="active" href="#catalogue">Kho Skill</a>
+      <a href="#filters">Bộ lọc</a>
+      <a href="#detailDialog">Cách dùng</a>
+    </nav>
+    <div class="sidebar-stats" aria-label="Tóm tắt dữ liệu">
+      <div class="sidebar-stat"><strong id="sidebarUnique">—</strong><span>Skill duy nhất</span></div>
+      <div class="sidebar-stat"><strong id="sidebarSource">—</strong><span>Dòng workbook</span></div>
+      <div class="sidebar-stat"><strong id="sidebarDuplicates">—</strong><span>Dòng trùng đã gộp</span></div>
+    </div>
     <div class="header-status">
       <span id="datasetStatus">Đang nạp dữ liệu…</span>
       <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
     </div>
   </header>
 
-  <main class="page-shell">
+  <main class="page-shell" id="catalogue">
     <section class="intro" aria-labelledby="pageTitle">
       <div>
         <h1 id="pageTitle">Tìm đúng skill. Dùng đúng lúc.</h1>
@@ -170,7 +188,7 @@
       </div>
     </section>
 
-    <section class="controls" aria-label="Tìm kiếm và bộ lọc">
+    <section class="controls" id="filters" aria-label="Tìm kiếm và bộ lọc">
       <div class="control search-field">
         <label for="searchInput">Tìm kiếm toàn văn</label>
         <input id="searchInput" type="search" placeholder="Ví dụ: phân tích, tuyển dụng, visual study guide…" autocomplete="off">
@@ -301,7 +319,7 @@
         const visible = matches.slice(start, start + state.pageSize);
         const body = $('#resultBody');
         body.innerHTML = visible.map((record) => `<tr>
-          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(record.skill)}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(record.skill)}" type="button" aria-label="Sao chép ${escapeHtml(record.skill)}">Copy</button></div></td>
+          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(record.skill)}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(record.skill)}" type="button" aria-label="Sao chép ${escapeHtml(record.skill)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg></button></div></td>
           <td data-label="Mô tả"><span class="cell-preview">${escapeHtml(record.description)}</span></td>
           <td data-label="Dùng khi"><span class="cell-preview">${escapeHtml(record.whenToUse)}</span></td>
           <td data-label="Cách dùng"><span class="cell-preview">${escapeHtml(compact(record.howToUse))}</span></td>
@@ -372,6 +390,9 @@
           state.records = result.records; state.version = result.version; state.loadedAt = result.loadedAt;
           buildOptions('#categoryOptions', countsFor('category'), state.categories);
           buildOptions('#domainOptions', countsFor('domain'), state.domains);
+          $('#sidebarUnique').textContent = state.records.length.toLocaleString('vi-VN');
+          $('#sidebarSource').textContent = result.sourceRecordCount.toLocaleString('vi-VN');
+          $('#sidebarDuplicates').textContent = result.duplicatesRemoved.toLocaleString('vi-VN');
           $('#sourceSummary').textContent = `${state.records.length.toLocaleString('vi-VN')} skill duy nhất đã sẵn sàng`;
           $('#sourceDetail').textContent = `${result.sheetName} · ${result.sourceRecordCount.toLocaleString('vi-VN')} dòng, gộp ${result.duplicatesRemoved.toLocaleString('vi-VN')} dòng trùng · nhánh ${window.SKILL_AI_CONFIG.dataBranch}`;
           $('#datasetStatus').textContent = 'Đã cập nhật';
