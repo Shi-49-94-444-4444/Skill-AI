@@ -379,10 +379,19 @@
         button.setAttribute('aria-pressed', String(dark));
         button.setAttribute('aria-label', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
         button.setAttribute('title', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện Dracula');
-        $('#themeThumbMoon').hidden = dark;
-        $('#themeThumbSun').hidden = !dark;
-        $('.theme-switch-static-moon').hidden = !dark;
-        $('.theme-switch-static-sun').hidden = dark;
+        if (dark) {
+          $('#themeThumbMoon').style.display = 'none';
+          $('#themeThumbSun').style.display = 'block';
+          
+          document.querySelector('.theme-switch-static-moon').style.display = 'block';
+          document.querySelector('.theme-switch-static-sun').style.display = 'none';
+        } else {
+          $('#themeThumbMoon').style.display = 'block';
+          $('#themeThumbSun').style.display = 'none';
+          
+          document.querySelector('.theme-switch-static-moon').style.display = 'none';
+          document.querySelector('.theme-switch-static-sun').style.display = 'block';
+        }
         try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
       }
 
