@@ -25,14 +25,28 @@
       --accent: #141414;
       --accent-strong: #0a0a0a;
       --danger: #a43f3f;
+      --focus: rgba(20, 20, 20, .2);
       --radius: 10px;
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --ink: #f8f8f2;
+      --muted: #c7c9d3;
+      --line: #44475a;
+      --ground: #282a36;
+      --paper: #343746;
+      --soft: #44475a;
+      --accent: #bd93f9;
+      --accent-strong: #ff79c6;
+      --danger: #ff5555;
+      --focus: rgba(189, 147, 249, .38);
     }
     * { box-sizing: border-box; }
     html { background: var(--ground); }
     body { margin: 0; color: var(--ink); background: var(--ground); font-family: "Geist", "Segoe UI", sans-serif; font-size: 14px; line-height: 1.55; }
     button, input, select { font: inherit; }
     button { cursor: pointer; }
-    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid rgba(18, 105, 94, .22); outline-offset: 2px; }
+    button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
     /* taste-skill-ignore: structural boundary for the app navigation */
     .site-header { position: fixed; z-index: 10; inset: 0 auto 0 0; width: 236px; min-height: 100vh; border-right: 1px solid var(--line); /* taste-skill-ignore */ background: var(--ground); display: flex; flex-direction: column; align-items: stretch; gap: 24px; padding: 28px 18px; }
     .brand { color: var(--ink); display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -42,11 +56,13 @@
     .sidebar-nav { display: grid; gap: 4px; margin-top: 16px; }
     .sidebar-nav a { color: var(--muted); border-radius: 6px; padding: 9px 10px; text-decoration: none; font-size: 13px; }
     .sidebar-nav a:hover, .sidebar-nav a.active { background: #eaeaea; color: var(--ink); }
+    html[data-theme="dark"] .sidebar-nav a:hover, html[data-theme="dark"] .sidebar-nav a.active { background: #44475a; }
     .sidebar-stats { display: grid; gap: 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); /* taste-skill-ignore */ }
     .sidebar-stat strong { display: block; color: var(--ink); font-size: 20px; line-height: 1.1; font-variant-numeric: tabular-nums; }
     .sidebar-stat span { color: var(--muted); font-size: 11px; }
     .header-status { color: var(--muted); display: grid; gap: 10px; margin-top: auto; font-size: 12px; }
     .header-status strong { color: var(--ink); font-weight: 600; }
+    .header-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
     .header-status .quiet-button { width: 100%; }
     .quiet-button:hover { border-color: var(--accent); color: var(--accent-strong); }
@@ -70,15 +86,18 @@
     .filter-menu summary::after { content: "⌄"; float: right; color: var(--muted); }
     .filter-menu[open] summary { border-color: var(--accent); }
     .filter-options { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(320px, 88vw); max-height: 300px; overflow: auto; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: 0 14px 32px rgba(10, 10, 10, .12); /* taste-skill-ignore: real floating filter menu */ }
-    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; min-height: 34px; padding: 7px 6px; color: var(--ink); font-weight: 400; cursor: pointer; }
+    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; min-height: 36px; padding: 8px 6px; color: var(--ink); font-size: 14px; line-height: 1.45; font-weight: 400; cursor: pointer; }
     .filter-options label:hover { background: var(--soft); }
     .filter-options input { accent-color: var(--accent); margin-top: 3px; }
-    .option-count { color: var(--muted); font-size: 11px; }
+    .option-count { color: var(--muted); font-size: 13px; }
     .clear-button { border: 0; background: transparent; color: var(--muted); padding: 10px 2px; white-space: nowrap; }
     .clear-button:hover { color: var(--accent-strong); }
     /* taste-skill-ignore: structural boundary for filter results */
     .summary-row { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); /* taste-skill-ignore */ color: var(--muted); font-size: 12px; }
     .summary-row strong { color: var(--ink); }
+    .guide-strip { display: grid; grid-template-columns: minmax(180px, 1.15fr) repeat(3, 1fr); gap: 16px; padding: 18px 0; color: var(--muted); font-size: 12px; }
+    .guide-strip strong { display: block; margin-bottom: 3px; color: var(--ink); font-size: 13px; }
+    .guide-strip span { display: block; }
     .catalogue-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0 10px; }
     .catalogue-toolbar p { margin: 0; color: var(--muted); font-size: 12px; }
     .page-size { color: var(--muted); font-size: 12px; }
@@ -108,7 +127,14 @@
     .empty-state.is-visible { display: block; }
     .empty-state strong { display: block; margin-bottom: 6px; font-size: 16px; }
     .empty-state p { margin: 0; color: var(--muted); }
-    .loading-row td { color: var(--muted); text-align: center; padding: 40px; }
+    .loading-row td { color: var(--muted); text-align: left; padding: 24px 12px; }
+    .skeleton-stack { display: grid; gap: 12px; }
+    .skeleton-grid { display: grid; grid-template-columns: 16% 20% 21% 21% 12% 10%; gap: 12px; }
+    .skeleton-line { display: block; height: 14px; border-radius: 3px; background: var(--soft); animation: skeleton-pulse 1.15s ease-in-out infinite; }
+    .skeleton-line:nth-child(2n) { animation-delay: .15s; }
+    .skeleton-line:nth-child(3n) { animation-delay: .3s; }
+    @keyframes skeleton-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .skeleton-line { animation: none; opacity: .7; } }
     .error-line { color: var(--danger); }
     .pagination { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 18px 0 0; }
     .pagination[hidden] { display: none; }
@@ -137,12 +163,20 @@
     .code-label { margin-right: auto; color: #a9c4b8; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
     .toast { position: fixed; right: 18px; bottom: 18px; max-width: min(380px, calc(100% - 36px)); padding: 11px 14px; border: 1px solid var(--accent); border-radius: 6px; background: var(--paper); color: var(--ink); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .16s ease, transform .16s ease; }
     .toast.is-visible { opacity: 1; transform: translateY(0); }
+    html[data-theme="dark"] th { background: #44475a; }
+    html[data-theme="dark"] .skill-link { background: #44475a; }
+    html[data-theme="dark"] .skill-link:hover { background: #4d5065; }
+    html[data-theme="dark"] .cell-preview { color: #f8f8f2; }
+    html[data-theme="dark"] .tag-line { color: #d5d7e0; }
+    html[data-theme="dark"] .search-field input::placeholder { color: #a7a9b7; }
+    html[data-theme="dark"] .markdown-body { color: #f8f8f2; }
     @media (max-width: 980px) { .intro { grid-template-columns: 1fr; gap: 18px; } .controls { grid-template-columns: minmax(240px, 1fr) 1fr 1fr auto; } }
     @media (max-width: 900px) {
       .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ flex-direction: row; align-items: flex-start; gap: 14px; padding: 14px 18px; } .sidebar-nav, .sidebar-stats { display: none; } .header-status { display: block; margin-top: 0; text-align: right; } .header-status button { margin-top: 7px; }
       .page-shell { width: 100%; margin-left: 0; padding-top: 28px; } h1 { font-size: 28px; } .intro-copy { font-size: 13px; }
       .controls { grid-template-columns: 1fr 1fr; } .search-field, .clear-button { grid-column: 1 / -1; } .clear-button { text-align: left; padding: 4px 0; }
       .summary-row { align-items: flex-start; flex-direction: column; gap: 3px; padding: 10px 0; }
+      .guide-strip { grid-template-columns: 1fr 1fr; gap: 14px; }
       .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
       .table-wrap { overflow: visible; border-top-width: 1px; }
       table, tbody, tr, td { display: block; min-width: 0; width: 100%; } table { table-layout: auto; } thead { display: none; }
@@ -163,7 +197,7 @@
     <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
       <a class="active" href="#catalogue">Kho Skill</a>
       <a href="#filters">Bộ lọc</a>
-      <a href="#detailDialog">Cách dùng</a>
+      <a href="#howto">Cách dùng</a>
     </nav>
     <div class="sidebar-stats" aria-label="Tóm tắt dữ liệu">
       <div class="sidebar-stat"><strong id="sidebarUnique">—</strong><span>Skill duy nhất</span></div>
@@ -172,7 +206,10 @@
     </div>
     <div class="header-status">
       <span id="datasetStatus">Đang nạp dữ liệu…</span>
-      <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
+      <div class="header-actions">
+        <button class="quiet-button" id="themeToggle" type="button" aria-pressed="false">Tối</button>
+        <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
+      </div>
     </div>
   </header>
 
@@ -214,6 +251,12 @@
       <span id="filterSummary">Đang chuẩn bị dữ liệu…</span>
       <span id="activeSummary"></span>
     </div>
+    <section class="guide-strip" id="howto" aria-label="Cách dùng thư viện">
+      <div><strong>Cách dùng</strong><span>Tìm, lọc rồi mở một Skill để đọc hướng dẫn đầy đủ.</span></div>
+      <div><strong>Tìm kiếm</strong><span>Gõ tên, mô tả hoặc tình huống sử dụng.</span></div>
+      <div><strong>Lọc</strong><span>Chọn một hoặc nhiều Category và lĩnh vực.</span></div>
+      <div><strong>Sao chép</strong><span>Bấm biểu tượng copy cạnh Skill hoặc trong code block.</span></div>
+    </section>
 
     <section class="catalogue" aria-label="Danh sách Skill AI">
       <div class="catalogue-toolbar">
@@ -233,7 +276,7 @@
             <th><button data-sort="category" type="button">Category</button></th>
             <th><button data-sort="domain" type="button">Lĩnh vực</button></th>
           </tr></thead>
-          <tbody id="resultBody"><tr class="loading-row"><td colspan="6">Đang đọc workbook…</td></tr></tbody>
+          <tbody id="resultBody"><tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Đang đọc workbook"><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div><div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div></div></td></tr></tbody>
         </table>
       </div>
       <div class="empty-state" id="emptyState"><strong>Không tìm thấy skill phù hợp</strong><p>Thử bỏ bớt từ khóa hoặc xóa một bộ lọc.</p></div>
@@ -271,6 +314,25 @@
       const compact = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
       const localeCompare = (a, b) => String(a).localeCompare(String(b), 'vi', { sensitivity: 'base' });
       const showToast = (message) => { const element = $('#toast'); element.textContent = message; element.classList.add('is-visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => element.classList.remove('is-visible'), 2200); };
+      const skeletonRow = '<div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div>';
+      function showLoadingState() {
+        $('#emptyState').classList.remove('is-visible');
+        $('#resultBody').innerHTML = `<tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Đang đọc workbook">${skeletonRow.repeat(3)}</div></td></tr>`;
+      }
+
+      function setTheme(theme) {
+        const dark = theme === 'dark';
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        const button = $('#themeToggle');
+        button.textContent = dark ? 'Sáng' : 'Tối';
+        button.setAttribute('aria-pressed', String(dark));
+        button.setAttribute('title', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện Dracula');
+        try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
+      }
+
+      let savedTheme = 'light';
+      try { savedTheme = localStorage.getItem('skill-ai-theme') || 'light'; } catch (error) { /* private browsing */ }
+      setTheme(savedTheme);
 
       function selectedValues(containerId) {
         return new Set([...document.querySelectorAll(`#${containerId} input:checked`)].map((input) => input.value));
@@ -385,6 +447,7 @@
 
       async function loadData() {
         $('#datasetStatus').textContent = 'Đang cập nhật…';
+        if (!state.records.length) showLoadingState();
         try {
           const result = await window.SkillAIData.load(window.SKILL_AI_CONFIG);
           state.records = result.records; state.version = result.version; state.loadedAt = result.loadedAt;
@@ -422,6 +485,7 @@
       });
       $('#clearButton').addEventListener('click', clearFilters);
       $('#refreshButton').addEventListener('click', loadData);
+      $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
       $('#previousButton').addEventListener('click', () => { state.page -= 1; render(); });
       $('#nextButton').addEventListener('click', () => { state.page += 1; render(); });
       $('#closeDialog').addEventListener('click', () => $('#detailDialog').close());
@@ -437,6 +501,14 @@
       document.addEventListener('focusin', (event) => {
         if (!event.target.closest('.filter-menu')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
       });
+      document.querySelectorAll('.sidebar-nav a').forEach((link) => link.addEventListener('click', (event) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.querySelectorAll('.sidebar-nav a').forEach((item) => item.classList.toggle('active', item === link));
+        if (link.getAttribute('href') === '#filters') window.setTimeout(() => $('#searchInput').focus(), 260);
+      }));
       loadData();
       window.setInterval(loadData, window.SKILL_AI_CONFIG.refreshMs || 300000);
     })(); });
