@@ -49,7 +49,7 @@
       --focus: rgba(189, 147, 249, .38);
     }
     * { box-sizing: border-box; }
-    html { background: var(--ground); }
+    html { background: var(--ground); overflow-y: scroll; }
     body { margin: 0; color: var(--ink); background: var(--ground); font-family: "Geist", "Segoe UI", sans-serif; font-size: 14px; line-height: 1.55; }
     button, input, select { font: inherit; }
     button { cursor: pointer; }
@@ -70,7 +70,7 @@
     .header-status { color: var(--muted); display: grid; gap: 10px; margin-top: auto; font-size: 12px; }
     .header-status strong { color: var(--ink); font-weight: 600; }
     .header-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 42px; min-width: 42px; padding: 8px; }
     .theme-icon { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
     .header-status .quiet-button { width: 100%; }
@@ -143,9 +143,15 @@
     .skeleton-line:nth-child(2n) { animation-delay: .15s; }
     .skeleton-line:nth-child(3n) { animation-delay: .3s; }
     @keyframes skeleton-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+    .loading-copy, .loading-value { color: transparent !important; background: var(--soft); border-radius: 4px; animation: skeleton-pulse 1.15s ease-in-out infinite; }
+    .loading-copy { display: inline-block; min-height: 1.45em; }
+    .loading-value { display: block; width: 76px; min-height: 22px; }
+    #sourceSummary.loading-copy { width: min(280px, 100%); }
+    #sourceDetail.loading-copy { width: min(300px, 100%); min-height: 2.4em; }
+    #filterSummary.loading-copy { width: 220px; }
     .result-row { animation: row-reveal .42s ease both; animation-delay: calc(var(--row-index) * 18ms); }
     @keyframes row-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    @media (prefers-reduced-motion: reduce) { .skeleton-line { animation: none; opacity: .7; } }
+    @media (prefers-reduced-motion: reduce) { .skeleton-line, .loading-copy, .loading-value { animation: none; opacity: .7; } }
     .error-line { color: var(--danger); }
     .pagination { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 18px 0 0; }
     .pagination[hidden] { display: none; }
@@ -213,9 +219,9 @@
       <a href="#howto">Cách dùng</a>
     </nav>
     <div class="sidebar-stats" aria-label="Tóm tắt dữ liệu">
-      <div class="sidebar-stat"><strong id="sidebarUnique">—</strong><span>Skill duy nhất</span></div>
-      <div class="sidebar-stat"><strong id="sidebarSource">—</strong><span>Dòng workbook</span></div>
-      <div class="sidebar-stat"><strong id="sidebarDuplicates">—</strong><span>Dòng trùng đã gộp</span></div>
+      <div class="sidebar-stat"><strong id="sidebarUnique" class="loading-value">—</strong><span>Skill duy nhất</span></div>
+      <div class="sidebar-stat"><strong id="sidebarSource" class="loading-value">—</strong><span>Dòng workbook</span></div>
+      <div class="sidebar-stat"><strong id="sidebarDuplicates" class="loading-value">—</strong><span>Dòng trùng đã gộp</span></div>
     </div>
     <div class="header-status">
       <span id="datasetStatus">Đang nạp dữ liệu…</span>
@@ -223,7 +229,6 @@
         <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false">
           <svg class="theme-icon" id="themeMoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
           <svg class="theme-icon" id="themeSun" viewBox="0 0 24 24" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
-          <span id="themeLabel">Tối</span>
         </button>
         <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
       </div>
@@ -237,8 +242,8 @@
         <p class="intro-copy">Tra cứu theo tên, mô tả hoặc tình huống sử dụng. Lọc theo nguồn và lĩnh vực để thu hẹp nhanh danh sách.</p>
       </div>
       <div class="source-note">
-        <strong id="sourceSummary">Nguồn dữ liệu đang được tải</strong>
-        <span id="sourceDetail">Skill AI · nhánh skill-sheet</span>
+        <strong id="sourceSummary" class="loading-copy">Nguồn dữ liệu đang được tải</strong>
+        <span id="sourceDetail" class="loading-copy">Skill AI · nhánh skill-sheet</span>
       </div>
     </section>
 
@@ -265,7 +270,7 @@
     </section>
 
     <div class="summary-row" aria-live="polite">
-      <span id="filterSummary">Đang chuẩn bị dữ liệu…</span>
+      <span id="filterSummary" class="loading-copy">Đang chuẩn bị dữ liệu…</span>
       <span id="activeSummary"></span>
     </div>
     <section class="guide-strip" id="howto" aria-label="Cách dùng thư viện">
@@ -344,8 +349,8 @@
         const button = $('#themeToggle');
         $('#themeMoon').hidden = dark;
         $('#themeSun').hidden = !dark;
-        $('#themeLabel').textContent = dark ? 'Sáng' : 'Tối';
         button.setAttribute('aria-pressed', String(dark));
+        button.setAttribute('aria-label', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
         button.setAttribute('title', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện Dracula');
         try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
       }
@@ -465,9 +470,14 @@
         render();
       }
 
+      function setLoadingChrome(loading) {
+        ['sourceSummary', 'sourceDetail', 'filterSummary'].forEach((id) => $(`#${id}`).classList.toggle('loading-copy', loading));
+        ['sidebarUnique', 'sidebarSource', 'sidebarDuplicates'].forEach((id) => $(`#${id}`).classList.toggle('loading-value', loading));
+      }
+
       async function loadData() {
         $('#datasetStatus').textContent = 'Đang cập nhật…';
-        if (!state.records.length) showLoadingState();
+        if (!state.records.length) { setLoadingChrome(true); showLoadingState(); }
         try {
           const result = await window.SkillAIData.load(window.SKILL_AI_CONFIG);
           state.records = result.records; state.version = result.version; state.loadedAt = result.loadedAt;
@@ -479,8 +489,10 @@
           $('#sourceSummary').textContent = `${state.records.length.toLocaleString('vi-VN')} skill duy nhất đã sẵn sàng`;
           $('#sourceDetail').textContent = `${result.sheetName} · ${result.sourceRecordCount.toLocaleString('vi-VN')} dòng, gộp ${result.duplicatesRemoved.toLocaleString('vi-VN')} dòng trùng · nhánh ${window.SKILL_AI_CONFIG.dataBranch}`;
           $('#datasetStatus').textContent = 'Đã cập nhật';
+          setLoadingChrome(false);
           render();
         } catch (error) {
+          setLoadingChrome(false);
           $('#datasetStatus').textContent = 'Không tải được dữ liệu';
           $('#sourceSummary').textContent = 'Cần kiểm tra nguồn Excel';
           $('#filterSummary').innerHTML = `<span class="error-line">${escapeHtml(error.message)}</span>`;
