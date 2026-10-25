@@ -88,7 +88,11 @@
     tr:last-child td { border-bottom: 0; }
     .skill-link { border: 0; padding: 0; background: transparent; color: var(--accent-strong); font-weight: 700; text-align: left; line-height: 1.35; }
     .skill-link:hover { text-decoration: underline; text-underline-offset: 3px; }
-    .cell-preview { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; color: #3e4b46; }
+    .skill-cell { display: flex; align-items: flex-start; gap: 8px; }
+    .skill-code { color: inherit; font: inherit; overflow-wrap: anywhere; }
+    .copy-skill { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--muted); padding: 3px 6px; font-size: 10px; }
+    .copy-skill:hover { border-color: var(--accent); color: var(--accent-strong); }
+    .cell-preview, .tag-line { display: -webkit-box; min-height: 4.2em; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; color: #3e4b46; }
     .muted-cell { color: var(--muted); }
     .tag-line { color: #53615b; font-size: 12px; line-height: 1.4; }
     /* taste-skill-ignore: empty state shares the table surface boundary */
@@ -297,7 +301,7 @@
         const visible = matches.slice(start, start + state.pageSize);
         const body = $('#resultBody');
         body.innerHTML = visible.map((record) => `<tr>
-          <td data-label="Skill" data-field="skill"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button">${escapeHtml(record.skill)}</button></td>
+          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(record.skill)}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(record.skill)}" type="button" aria-label="Sao chép ${escapeHtml(record.skill)}">Copy</button></div></td>
           <td data-label="Mô tả"><span class="cell-preview">${escapeHtml(record.description)}</span></td>
           <td data-label="Dùng khi"><span class="cell-preview">${escapeHtml(record.whenToUse)}</span></td>
           <td data-label="Cách dùng"><span class="cell-preview">${escapeHtml(compact(record.howToUse))}</span></td>
@@ -306,7 +310,7 @@
         </tr>`).join('');
         $('#emptyState').classList.toggle('is-visible', !matches.length);
         $('#resultCount').textContent = matches.length ? `Hiển thị ${start + 1}–${Math.min(start + state.pageSize, matches.length)} trong ${matches.length.toLocaleString('vi-VN')} kết quả` : '0 kết quả';
-        $('#filterSummary').innerHTML = `Tổng thư viện: <strong>${state.records.length.toLocaleString('vi-VN')} skill</strong>`;
+        $('#filterSummary').innerHTML = `Tổng thư viện: <strong>${state.records.length.toLocaleString('vi-VN')} skill duy nhất</strong>`;
         $('#pagination').hidden = matches.length <= state.pageSize;
         $('#pageSummary').textContent = `Trang ${state.page} / ${pageCount}`;
         $('#previousButton').disabled = state.page <= 1;
@@ -330,7 +334,8 @@
         if (!record) return;
         state.current = record;
         $('#detailTitle').textContent = record.skill;
-        $('#detailMeta').textContent = `${record.category} · ${record.domain} · dòng Excel ${record.sourceRow}`;
+        const variants = record.duplicateCount > 1 ? ` · ${record.duplicateCount} dòng đã gộp` : '';
+        $('#detailMeta').textContent = `${record.category} · ${record.domain} · dòng Excel ${record.sourceRow}${variants}`;
         $('#detailDescription').textContent = record.description || 'Chưa có mô tả.';
         $('#detailWhen').textContent = record.whenToUse || 'Chưa có thông tin.';
         const how = $('#detailHow');
@@ -367,8 +372,8 @@
           state.records = result.records; state.version = result.version; state.loadedAt = result.loadedAt;
           buildOptions('#categoryOptions', countsFor('category'), state.categories);
           buildOptions('#domainOptions', countsFor('domain'), state.domains);
-          $('#sourceSummary').textContent = `${state.records.length.toLocaleString('vi-VN')} skill đã sẵn sàng`;
-          $('#sourceDetail').textContent = `${result.sheetName} · nhánh ${window.SKILL_AI_CONFIG.dataBranch} · cập nhật ${new Date(result.loadedAt).toLocaleString('vi-VN')}`;
+          $('#sourceSummary').textContent = `${state.records.length.toLocaleString('vi-VN')} skill duy nhất đã sẵn sàng`;
+          $('#sourceDetail').textContent = `${result.sheetName} · ${result.sourceRecordCount.toLocaleString('vi-VN')} dòng, gộp ${result.duplicatesRemoved.toLocaleString('vi-VN')} dòng trùng · nhánh ${window.SKILL_AI_CONFIG.dataBranch}`;
           $('#datasetStatus').textContent = 'Đã cập nhật';
           render();
         } catch (error) {
@@ -387,8 +392,10 @@
         state.page = 1; render();
       });
       document.addEventListener('click', (event) => {
+        const copy = event.target.closest('[data-copy-skill]');
         const open = event.target.closest('[data-open]');
         const sort = event.target.closest('[data-sort]');
+        if (copy) { event.stopPropagation(); copyText(copy.dataset.copySkill, 'Đã sao chép Skill.'); return; }
         if (open) openDetail(open.dataset.open);
         if (sort) { state.sortDirection = state.sortKey === sort.dataset.sort && state.sortDirection === 'asc' ? 'desc' : 'asc'; state.sortKey = sort.dataset.sort; render(); }
       });
@@ -399,6 +406,16 @@
       $('#closeDialog').addEventListener('click', () => $('#detailDialog').close());
       $('#copyAllButton').addEventListener('click', () => state.current && copyText(state.current.howToUse, 'Đã sao chép toàn bộ cách dùng.'));
       $('#detailDialog').addEventListener('click', (event) => { if (event.target === $('#detailDialog')) $('#detailDialog').close(); });
+      $('#detailDialog').addEventListener('cancel', () => $('#detailDialog').close());
+      document.querySelectorAll('.filter-menu').forEach((menu) => menu.addEventListener('toggle', () => {
+        if (menu.open) document.querySelectorAll('.filter-menu[open]').forEach((other) => { if (other !== menu) other.removeAttribute('open'); });
+      }));
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest('.filter-menu')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
+      });
+      document.addEventListener('focusin', (event) => {
+        if (!event.target.closest('.filter-menu')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
+      });
       loadData();
       window.setInterval(loadData, window.SKILL_AI_CONFIG.refreshMs || 300000);
     })(); });

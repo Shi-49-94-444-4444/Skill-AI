@@ -96,6 +96,21 @@
     return (hash >>> 0).toString(36);
   }
 
+  function deduplicate(records) {
+    const unique = new Map();
+    records.forEach((record) => {
+      const key = normalize(record.skill);
+      const existing = unique.get(key);
+      if (existing) {
+        existing.duplicateCount += 1;
+        existing.duplicateRows.push(record.sourceRow);
+        return;
+      }
+      unique.set(key, { ...record, duplicateCount: 1, duplicateRows: [record.sourceRow] });
+    });
+    return [...unique.values()];
+  }
+
   function parse(buffer, config) {
     if (!window.XLSX) throw new Error('Thư viện đọc Excel chưa sẵn sàng.');
     const workbook = XLSX.read(buffer, { type: 'array', raw: false });
@@ -125,8 +140,11 @@
     }
 
     if (!records.length) throw new Error('Sheet không có dòng dữ liệu hợp lệ.');
+    const uniqueRecords = deduplicate(records);
     return {
-      records,
+      records: uniqueRecords,
+      sourceRecordCount: records.length,
+      duplicatesRemoved: records.length - uniqueRecords.length,
       sheetName,
       sourceHeaders: Object.keys(headers),
       version: `${records.length}-${fingerprint(records)}`
