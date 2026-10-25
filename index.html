@@ -50,7 +50,7 @@
       --focus: rgba(189, 147, 249, .38);
     }
     * { box-sizing: border-box; }
-    html { background: var(--ground); overflow-y: scroll; }
+    html { background: var(--ground); overflow-y: scroll; scrollbar-gutter: stable; }
     body { margin: 0; color: var(--ink); background: var(--ground); font-family: "Geist", "Segoe UI", sans-serif; font-size: 14px; line-height: 1.55; }
     button, input, select { font: inherit; }
     button { cursor: pointer; }
@@ -124,7 +124,7 @@
     .page-size { color: var(--muted); font-size: 12px; }
     .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
     /* taste-skill-ignore: table frame is a real data surface */
-    .table-wrap { overflow: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); }
+    .table-wrap { overflow-x: auto; overflow-y: hidden; scrollbar-gutter: stable both-edges; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
     th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
