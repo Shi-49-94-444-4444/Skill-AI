@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (error) { /* private browsing */ }
+    })();
+  </script>
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
@@ -63,6 +70,8 @@
     .header-status { color: var(--muted); display: grid; gap: 10px; margin-top: auto; font-size: 12px; }
     .header-status strong { color: var(--ink); font-weight: 600; }
     .header-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .theme-icon { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
     .header-status .quiet-button { width: 100%; }
     .quiet-button:hover { border-color: var(--accent); color: var(--accent-strong); }
@@ -127,13 +136,15 @@
     .empty-state.is-visible { display: block; }
     .empty-state strong { display: block; margin-bottom: 6px; font-size: 16px; }
     .empty-state p { margin: 0; color: var(--muted); }
-    .loading-row td { color: var(--muted); text-align: left; padding: 24px 12px; }
+    .loading-row td { height: 430px; color: var(--muted); text-align: left; padding: 24px 12px; }
     .skeleton-stack { display: grid; gap: 12px; }
     .skeleton-grid { display: grid; grid-template-columns: 16% 20% 21% 21% 12% 10%; gap: 12px; }
     .skeleton-line { display: block; height: 14px; border-radius: 3px; background: var(--soft); animation: skeleton-pulse 1.15s ease-in-out infinite; }
     .skeleton-line:nth-child(2n) { animation-delay: .15s; }
     .skeleton-line:nth-child(3n) { animation-delay: .3s; }
     @keyframes skeleton-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+    .result-row { animation: row-reveal .42s ease both; animation-delay: calc(var(--row-index) * 18ms); }
+    @keyframes row-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .skeleton-line { animation: none; opacity: .7; } }
     .error-line { color: var(--danger); }
     .pagination { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 18px 0 0; }
@@ -185,7 +196,9 @@
       td::before { content: attr(data-label); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
       td[data-field="skill"] { display: block; padding-bottom: 9px; } td[data-field="skill"]::before { display: none; }
       .cell-preview { -webkit-line-clamp: 4; } .dialog-header, .dialog-body { padding: 18px; }
+      .loading-row td { height: 360px; }
     }
+    @media (prefers-reduced-motion: reduce) { .result-row { animation: none; } }
   </style>
 </head>
 <body>
@@ -207,7 +220,11 @@
     <div class="header-status">
       <span id="datasetStatus">Đang nạp dữ liệu…</span>
       <div class="header-actions">
-        <button class="quiet-button" id="themeToggle" type="button" aria-pressed="false">Tối</button>
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+          <svg class="theme-icon" id="themeMoon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+          <svg class="theme-icon" id="themeSun" viewBox="0 0 24 24" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          <span id="themeLabel">Tối</span>
+        </button>
         <button class="quiet-button" id="refreshButton" type="button">Làm mới</button>
       </div>
     </div>
@@ -312,6 +329,7 @@
 
       const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
       const compact = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
+      const displaySkill = (value) => { const skill = String(value ?? '').trim(); return skill.startsWith('/') ? skill : `/${skill}`; };
       const localeCompare = (a, b) => String(a).localeCompare(String(b), 'vi', { sensitivity: 'base' });
       const showToast = (message) => { const element = $('#toast'); element.textContent = message; element.classList.add('is-visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => element.classList.remove('is-visible'), 2200); };
       const skeletonRow = '<div class="skeleton-grid"><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line"></span></div>';
@@ -324,7 +342,9 @@
         const dark = theme === 'dark';
         document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         const button = $('#themeToggle');
-        button.textContent = dark ? 'Sáng' : 'Tối';
+        $('#themeMoon').hidden = dark;
+        $('#themeSun').hidden = !dark;
+        $('#themeLabel').textContent = dark ? 'Sáng' : 'Tối';
         button.setAttribute('aria-pressed', String(dark));
         button.setAttribute('title', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện Dracula');
         try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
@@ -380,8 +400,8 @@
         const start = (state.page - 1) * state.pageSize;
         const visible = matches.slice(start, start + state.pageSize);
         const body = $('#resultBody');
-        body.innerHTML = visible.map((record) => `<tr>
-          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(record.skill)}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(record.skill)}" type="button" aria-label="Sao chép ${escapeHtml(record.skill)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg></button></div></td>
+        body.innerHTML = visible.map((record, index) => `<tr class="result-row" style="--row-index:${index}">
+          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(displaySkill(record.skill))}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(displaySkill(record.skill))}" type="button" aria-label="Sao chép ${escapeHtml(displaySkill(record.skill))}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg></button></div></td>
           <td data-label="Mô tả"><span class="cell-preview">${escapeHtml(record.description)}</span></td>
           <td data-label="Dùng khi"><span class="cell-preview">${escapeHtml(record.whenToUse)}</span></td>
           <td data-label="Cách dùng"><span class="cell-preview">${escapeHtml(compact(record.howToUse))}</span></td>
@@ -413,7 +433,7 @@
         const record = state.records.find((item) => item.id === id);
         if (!record) return;
         state.current = record;
-        $('#detailTitle').textContent = record.skill;
+        $('#detailTitle').textContent = displaySkill(record.skill);
         const variants = record.duplicateCount > 1 ? ` · ${record.duplicateCount} dòng đã gộp` : '';
         $('#detailMeta').textContent = `${record.category} · ${record.domain} · dòng Excel ${record.sourceRow}${variants}`;
         $('#detailDescription').textContent = record.description || 'Chưa có mô tả.';

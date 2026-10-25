@@ -99,7 +99,7 @@
   function deduplicate(records) {
     const unique = new Map();
     records.forEach((record) => {
-      const key = normalize(record.skill);
+      const key = `/${normalize(record.skill).replace(/^\/+/, '')}`;
       const existing = unique.get(key);
       if (existing) {
         existing.duplicateCount += 1;
