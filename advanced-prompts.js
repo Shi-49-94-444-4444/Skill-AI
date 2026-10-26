@@ -83,7 +83,7 @@
       $('#promptList').innerHTML = '<p class="empty-state">Không tìm thấy prompt phù hợp. Hãy đổi từ khóa hoặc chọn “Tất cả nhóm”.</p>';
       return;
     }
-    $('#promptList').innerHTML = filtered.map((item, index) => `<article class="prompt-item"><header><div><h2>${escapeHtml(item.title)}</h2><div class="prompt-categories">${item.categories.map((categoryName) => `<span>${escapeHtml(categoryName)}</span>`).join('')}</div></div><button class="quiet-button copy-prompt" type="button" data-copy-index="${prompts.indexOf(item)}" aria-label="Sao chép prompt: ${escapeHtml(item.title)}">Sao chép</button></header><p class="prompt-text">${escapeHtml(item.prompt)}</p></article>`).join('');
+    $('#promptList').innerHTML = filtered.map((item, index) => `<article class="prompt-item"><header><div><h3>${escapeHtml(item.title)}</h3><div class="prompt-categories">${item.categories.map((categoryName) => `<span>${escapeHtml(categoryName)}</span>`).join('')}</div></div><button class="quiet-button copy-prompt" type="button" data-copy-index="${prompts.indexOf(item)}" aria-label="Sao chép prompt: ${escapeHtml(item.title)}">Sao chép</button></header><p class="prompt-text">${escapeHtml(item.prompt)}</p></article>`).join('');
   }
 
   function notify(message) {

@@ -35,6 +35,12 @@
       --danger: #a43f3f;
       --focus: rgba(20, 20, 20, .2);
       --radius: 10px;
+      --type-display: clamp(28px, 3vw, 38px);
+      --type-heading: 24px;
+      --type-subheading: 17px;
+      --type-body: 14px;
+      --type-secondary: 13px;
+      --type-label: 12px;
     }
     html[data-theme="dark"] {
       color-scheme: dark;
@@ -100,12 +106,15 @@
     .page-shell { width: calc(100% - 236px); margin: 0 0 0 236px; padding: 40px clamp(28px, 4vw, 64px) 64px; }
     /* taste-skill-ignore: structural boundary for the catalogue introduction */
     .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: 40px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
-    h1 { max-width: 680px; margin: 0; font-size: clamp(26px, 2.8vw, 32px); line-height: 1.1; letter-spacing: -.04em; font-weight: 700; }
-    .intro-copy { color: var(--muted); margin: 14px 0 0; max-width: 650px; }
-    .source-note { border-left: 2px solid var(--accent); padding-left: 16px; color: var(--muted); font-size: 12px; }
-    .source-note strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 3px; }
+    h1 { max-width: 680px; margin: 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -.045em; font-weight: 700; }
+    h2 { font-size: var(--type-heading); line-height: 1.15; letter-spacing: -.04em; }
+    h3 { font-size: var(--type-subheading); line-height: 1.35; letter-spacing: -.02em; }
+    p { font-size: var(--type-body); line-height: 1.55; }
+    .intro-copy { color: var(--muted); margin: 12px 0 0; max-width: 650px; }
+    .source-note { border-left: 2px solid var(--accent); padding-left: 16px; color: var(--muted); font-size: var(--type-secondary); }
+    .source-note strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 3px; }
     .controls { padding: 24px 0 20px; display: grid; grid-template-columns: minmax(300px, 1fr) 210px 210px auto; align-items: end; gap: 12px; }
-    .control label { display: block; color: var(--muted); font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+    .control label { display: block; color: var(--muted); font-size: var(--type-label); font-weight: 600; margin-bottom: 6px; }
     .search-field { position: relative; }
     .search-field input { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 11px 13px; background: var(--paper); color: var(--ink); }
     .search-field input::placeholder { color: #8a9691; }
@@ -122,21 +131,21 @@
     .clear-button { border: 0; background: transparent; color: var(--muted); padding: 10px 2px; white-space: nowrap; }
     .clear-button:hover { color: var(--accent-strong); }
     /* taste-skill-ignore: structural boundary for filter results */
-    .summary-row { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); /* taste-skill-ignore */ color: var(--muted); font-size: 12px; }
+    .summary-row { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); /* taste-skill-ignore */ color: var(--muted); font-size: var(--type-secondary); }
     .summary-row strong { color: var(--ink); }
-    .guide-strip { display: grid; grid-template-columns: minmax(180px, 1.15fr) repeat(3, 1fr); gap: 16px; padding: 18px 0; color: var(--muted); font-size: 12px; }
-    .guide-strip strong { display: block; margin-bottom: 3px; color: var(--ink); font-size: 13px; }
+    .guide-strip { display: grid; grid-template-columns: minmax(180px, 1.15fr) repeat(3, 1fr); gap: 16px; padding: 18px 0; color: var(--muted); font-size: var(--type-secondary); }
+    .guide-strip strong { display: block; margin-bottom: 3px; color: var(--ink); font-size: var(--type-subheading); line-height: 1.35; }
     .guide-strip span { display: block; }
     .catalogue-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0 10px; }
-    .catalogue-toolbar p { margin: 0; color: var(--muted); font-size: 12px; }
-    .page-size { color: var(--muted); font-size: 12px; }
+    .catalogue-toolbar p { margin: 0; color: var(--muted); font-size: var(--type-secondary); }
+    .page-size { color: var(--muted); font-size: var(--type-secondary); }
     .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
     /* taste-skill-ignore: table frame is a real data surface */
     .catalogue { overflow-anchor: none; }
     .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
-    th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
+    th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: var(--type-label); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
     th button { border: 0; padding: 0; background: transparent; color: inherit; font-weight: inherit; letter-spacing: inherit; text-align: left; text-transform: inherit; }
     th button:hover { color: var(--accent); }
     /* taste-skill-ignore: row separators belong to the real data table */
@@ -178,11 +187,11 @@
     dialog { width: min(820px, calc(100% - 28px)); max-height: min(88vh, 900px); padding: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
     dialog::backdrop { background: rgba(14, 27, 22, .38); }
     .dialog-header { display: flex; justify-content: space-between; gap: 24px; padding: 22px 24px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
-    .dialog-header h2 { margin: 0; font-size: 24px; line-height: 1.15; letter-spacing: -.04em; }
-    .dialog-meta { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .dialog-header h2 { margin: 0; }
+    .dialog-meta { margin: 8px 0 0; color: var(--muted); font-size: var(--type-secondary); }
     .dialog-body { padding: 24px; overflow: auto; }
     .detail-section + .detail-section { margin-top: 24px; }
-    .detail-section h3 { margin: 0 0 8px; font-size: 11px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+    .detail-section h3 { margin: 0 0 8px; color: var(--ink); }
     .detail-section p { margin: 0; }
     .detail-section .copy-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
     .markdown-body { color: #293630; }
@@ -213,7 +222,7 @@
     .mobile-filter-dialog::backdrop { background: rgba(10, 12, 18, .52); }
     .mobile-filter-head, .mobile-filter-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; }
     .mobile-filter-head { border-bottom: 1px solid var(--line); /* taste-skill-ignore: separates modal title from its controls */ }
-    .mobile-filter-head h2 { margin: 0; font-size: 18px; }
+    .mobile-filter-head h2 { margin: 0; }
     .mobile-filter-foot { border-top: 1px solid var(--line); /* taste-skill-ignore: separates modal actions from filter choices */ }
     .mobile-filter-mount { padding: 14px 16px 18px; max-height: calc(82dvh - 126px); overflow-y: auto; }
     @media (max-width: 900px) {
@@ -228,7 +237,7 @@
       .header-status button { margin: 0; }
       .header-status .theme-toggle { width: 54px; min-width: 54px; }
       .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }
-      h1 { font-size: 28px; } .intro-copy { font-size: 13px; }
+      h1 { font-size: 28px; } .intro-copy { font-size: var(--type-body); }
       .controls { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 18px 0 16px; }
       .search-field { grid-column: 1 / -1; }
       .filter-fields { display: none; }
@@ -250,7 +259,7 @@
       table, tbody, tr, td { display: block; min-width: 0; width: 100%; } table { table-layout: auto; } thead { display: none; }
       tr { padding: 15px 14px 10px; border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; }
       td { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; padding: 5px 0; border: 0; }
-      td::before { content: attr(data-label); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+      td::before { content: attr(data-label); color: var(--muted); font-size: var(--type-label); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
       td[data-field="skill"] { display: block; padding-bottom: 9px; } td[data-field="skill"]::before { display: none; }
       .cell-preview { -webkit-line-clamp: 4; } .dialog-header, .dialog-body { padding: 18px; }
     }
@@ -266,15 +275,15 @@
       .header-actions .quiet-button:not(.theme-toggle) { padding: 8px 10px; }
       .page-shell { padding: 20px 14px 36px; }
       .intro { padding-bottom: 18px; }
-      h1 { font-size: 26px; }
-      .source-note { font-size: 12px; }
+      h1 { font-size: 28px; }
+      .source-note { font-size: var(--type-secondary); }
       .search-field input { padding: 12px; }
       .catalogue-toolbar { flex-direction: row; align-items: center; }
-      .catalogue-toolbar p, .page-size { font-size: 12px; }
+      .catalogue-toolbar p, .page-size { font-size: var(--type-secondary); }
       .table-wrap { min-height: 0; }
       tr { padding: 12px 0 10px; }
       td { grid-template-columns: 76px minmax(0, 1fr); gap: 8px; font-size: 14px; }
-      td::before { font-size: 10px; }
+      td::before { font-size: var(--type-label); }
       .skill-link { padding: 8px 9px; }
       .cell-preview { min-height: 0; -webkit-line-clamp: 5; }
     }
