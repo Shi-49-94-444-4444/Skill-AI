@@ -39,9 +39,9 @@
       --type-display: clamp(28px, 3vw, 38px);
       --type-heading: 24px;
       --type-subheading: 17px;
-      --type-body: 14px;
-      --type-secondary: 13px;
-      --type-label: 12px;
+      --type-body: 15px;
+      --type-secondary: 14px;
+      --type-label: 13px;
     }
     html[data-theme="dark"] {
       color-scheme: dark;
@@ -58,7 +58,7 @@
     }
     * { box-sizing: border-box; }
     html { background: var(--ground); overflow-y: scroll; scrollbar-gutter: stable; }
-    body { margin: 0; color: var(--ink); background: var(--ground); font-family: "Geist", "Segoe UI", sans-serif; font-size: 14px; line-height: 1.55; }
+    body { margin: 0; color: var(--ink); background: var(--ground); font-family: "Geist", "Segoe UI", sans-serif; font-size: 15px; line-height: 1.55; }
     button, input, select { font: inherit; }
     button { cursor: pointer; }
     button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
@@ -137,10 +137,10 @@
     .filter-menu summary::after { content: "⌄"; float: right; color: var(--muted); }
     .filter-menu[open] summary { border-color: var(--accent); }
     .filter-options { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(320px, 88vw); max-height: 300px; overflow: auto; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: 0 14px 32px rgba(10, 10, 10, .12); /* taste-skill-ignore: real floating filter menu */ }
-    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; min-height: 36px; padding: 8px 6px; color: var(--ink); font-size: 14px; line-height: 1.45; font-weight: 400; cursor: pointer; }
+    .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; min-height: 36px; padding: 8px 6px; color: var(--ink); font-size: 15px; line-height: 1.45; font-weight: 400; cursor: pointer; }
     .filter-options label:hover { background: var(--soft); }
     .filter-options input { accent-color: var(--accent); margin-top: 3px; }
-    .option-count { color: var(--muted); font-size: 13px; }
+    .option-count { color: var(--muted); font-size: 14px; }
     .clear-button { border: 0; background: transparent; color: var(--muted); padding: 10px 2px; white-space: nowrap; }
     .clear-button:hover { color: var(--accent-strong); }
     /* taste-skill-ignore: structural boundary for filter results */
@@ -174,7 +174,7 @@
     .copy-skill svg { display: block; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .cell-preview, .tag-line { display: -webkit-box; min-height: 4.2em; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; color: #3e4b46; }
     .muted-cell { color: var(--muted); }
-    .tag-line { color: #53615b; font-size: 14px; line-height: 1.55; }
+    .tag-line { color: #53615b; font-size: 15px; line-height: 1.55; }
     /* taste-skill-ignore: empty state shares the table surface boundary */
     .empty-state { display: none; padding: 56px 24px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ background: var(--paper); text-align: center; }
     .empty-state.is-visible { display: block; }
@@ -232,13 +232,29 @@
     @media (max-width: 980px) { .intro { grid-template-columns: 1fr; gap: 18px; } .controls { grid-template-columns: minmax(240px, 1fr) 1fr 1fr auto; } }
     .mobile-filter-trigger { display: none; }
     .filter-fields { display: contents; }
-    .mobile-filter-dialog { width: min(460px, 100%); max-height: min(82dvh, 680px); margin: auto 0 0; border: 1px solid var(--line); border-bottom: 0; border-radius: 16px 16px 0 0; background: var(--paper); color: var(--ink); box-shadow: 0 -16px 48px rgba(0, 0, 0, .2); /* taste-skill-ignore: native modal floats over a dimmed backdrop */ }
+    .mobile-filter-dialog { width: min(460px, 100%); height: min(82dvh, 680px); min-height: min(440px, 72dvh); max-height: min(82dvh, 680px); margin: auto 0 0; padding: 0; overflow: hidden; border: 1px solid var(--line); border-bottom: 0; border-radius: 18px 18px 0 0; background: var(--paper); color: var(--ink); box-shadow: 0 -16px 48px rgba(0, 0, 0, .2); overscroll-behavior: contain; /* taste-skill-ignore: native modal floats over a dimmed backdrop */ }
     .mobile-filter-dialog::backdrop { background: rgba(10, 12, 18, .52); }
     .mobile-filter-head, .mobile-filter-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; }
+    .mobile-filter-head-actions { display: flex; align-items: center; gap: 8px; }
+    .mobile-filter-head .clear-button { padding: 8px 4px; font-size: 14px; }
     .mobile-filter-head { border-bottom: 1px solid var(--line); /* taste-skill-ignore: separates modal title from its controls */ }
     .mobile-filter-head h2 { margin: 0; }
     .mobile-filter-foot { border-top: 1px solid var(--line); /* taste-skill-ignore: separates modal actions from filter choices */ }
-    .mobile-filter-mount { padding: 14px 16px 18px; max-height: calc(82dvh - 126px); overflow-y: auto; }
+    .mobile-filter-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    .mobile-filter-tab { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--muted); font-weight: 600; text-align: left; }
+    .mobile-filter-tab[aria-pressed="true"] { border-color: var(--ink); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+    .filter-tab-count { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+    .mobile-filter-mount { min-height: 0; flex: 1; padding: 12px 16px; overflow: hidden; }
+    .filter-fields.is-in-dialog { display: block; height: 100%; }
+    .filter-fields.is-in-dialog .control { display: none; height: 100%; }
+    .filter-fields.is-in-dialog .control.is-mobile-active { display: block; }
+    .filter-fields.is-in-dialog .control label, .filter-fields.is-in-dialog .filter-menu summary { display: none; }
+    .filter-fields.is-in-dialog .filter-menu, .filter-fields.is-in-dialog .filter-menu[open] { height: 100%; }
+    .filter-fields.is-in-dialog .filter-options { position: static; width: 100%; height: 100%; max-height: none; margin: 0; overflow-y: auto; padding: 4px 10px 12px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+    .filter-fields.is-in-dialog .filter-options label { min-height: 52px; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 4px; font-size: 16px; }
+    .filter-fields.is-in-dialog .filter-options input { width: 20px; height: 20px; margin: 0; }
+    .filter-fields.is-in-dialog .option-count { font-size: 15px; }
+    .filter-fields.is-in-dialog .clear-button { display: none; }
     @media (max-width: 900px) {
       .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px 12px; padding: 12px 16px; }
       .brand { min-width: 0; }
@@ -251,20 +267,19 @@
       .header-status button { margin: 0; }
       .header-status .theme-toggle { width: 54px; min-width: 54px; }
       .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }
-      h1 { font-size: 28px; } .intro-copy { font-size: var(--type-body); }
+      h1 { font-size: 30px; } .intro-copy { font-size: 16px; }
+      .source-note { font-size: 15px; }
       .controls { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 18px 0 16px; }
       .search-field { grid-column: 1 / -1; }
       .filter-fields { display: none; }
       .mobile-filter-trigger { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; align-self: end; padding: 8px 14px; }
+      .mobile-filter-dialog[open] { display: flex; flex-direction: column; width: calc(100vw - 20px); max-width: calc(100vw - 20px); margin: auto auto 0; }
+      .mobile-filter-head { flex: 0 0 auto; padding: 14px 18px; }
+      .mobile-filter-tabs { flex: 0 0 auto; }
+      .mobile-filter-foot { flex: 0 0 auto; padding: 12px 18px max(14px, env(safe-area-inset-bottom)); }
+      .mobile-filter-foot span { font-size: 14px; }
       .clear-button { grid-column: 1 / -1; text-align: left; padding: 4px 0; }
       .summary-row, .guide-strip { display: none; }
-      .filter-fields.is-in-dialog { display: grid; grid-template-columns: 1fr; gap: 14px; }
-      .filter-fields.is-in-dialog .control label { font-size: 13px; margin-bottom: 7px; }
-      .filter-fields.is-in-dialog .filter-menu summary { padding: 13px 14px; font-size: 15px; }
-      .filter-fields.is-in-dialog .filter-options { position: static; width: 100%; max-height: 220px; margin-top: 8px; }
-      .filter-fields.is-in-dialog .filter-options label { min-height: 44px; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 6px; font-size: 15px; }
-      .filter-fields.is-in-dialog .filter-options input { width: 18px; height: 18px; margin: 0; }
-      .filter-fields.is-in-dialog .option-count { font-size: 14px; }
       .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
       .table-wrap { overflow: visible; border-top-width: 1px; }
       .loading-row td { height: 620px; }
@@ -355,14 +370,14 @@
         <input id="searchInput" type="search" placeholder="Ví dụ: phân tích, tuyển dụng, visual study guide…" autocomplete="off">
       </div>
       <div class="filter-fields" id="filterFields">
-        <div class="control">
+        <div class="control" id="categoryControl" data-filter-panel="category">
           <label>Category</label>
           <details class="filter-menu" id="categoryMenu">
             <summary id="categorySummary">Tất cả category</summary>
             <div class="filter-options" id="categoryOptions"></div>
           </details>
         </div>
-        <div class="control">
+        <div class="control" id="domainControl" data-filter-panel="domain">
           <label>Lĩnh vực</label>
           <details class="filter-menu" id="domainMenu">
             <summary id="domainSummary">Tất cả lĩnh vực</summary>
@@ -371,11 +386,15 @@
         </div>
         <button class="clear-button" id="clearButton" type="button">Xóa tìm kiếm và bộ lọc</button>
       </div>
-      <button class="quiet-button mobile-filter-trigger" id="mobileFilterTrigger" type="button" aria-haspopup="dialog">Lọc</button>
+      <button class="quiet-button mobile-filter-trigger" id="mobileFilterTrigger" type="button" aria-haspopup="dialog">Bộ lọc</button>
     </section>
 
     <dialog class="mobile-filter-dialog" id="mobileFilterDialog" aria-labelledby="mobileFilterTitle">
-      <div class="mobile-filter-head"><h2 id="mobileFilterTitle">Bộ lọc</h2><button class="quiet-button" id="closeMobileFilters" type="button">Đóng</button></div>
+      <div class="mobile-filter-head"><h2 id="mobileFilterTitle">Bộ lọc</h2><div class="mobile-filter-head-actions"><button class="clear-button" id="clearMobileFilters" type="button">Xóa tất cả</button><button class="quiet-button" id="closeMobileFilters" type="button">Đóng</button></div></div>
+      <div class="mobile-filter-tabs" role="group" aria-label="Chọn nhóm bộ lọc">
+        <button class="mobile-filter-tab" id="mobileCategoryTab" type="button" aria-pressed="true">Category <span class="filter-tab-count" id="categorySelectedCount">0</span></button>
+        <button class="mobile-filter-tab" id="mobileDomainTab" type="button" aria-pressed="false">Lĩnh vực <span class="filter-tab-count" id="domainSelectedCount">0</span></button>
+      </div>
       <div class="mobile-filter-mount" id="mobileFilterMount"></div>
       <div class="mobile-filter-foot"><span id="mobileFilterCount">Chọn Category và lĩnh vực</span><button class="primary-button" id="applyMobileFilters" type="button">Xem kết quả</button></div>
     </dialog>
@@ -469,13 +488,27 @@
       const mobileFilterQuery = window.matchMedia('(max-width: 900px)');
       filterFields.before(filterHome);
 
+      function setMobileFilter(field) {
+        const categoryActive = field === 'category';
+        $('#categoryControl').classList.toggle('is-mobile-active', categoryActive);
+        $('#domainControl').classList.toggle('is-mobile-active', !categoryActive);
+        $('#categoryMenu').open = categoryActive;
+        $('#domainMenu').open = !categoryActive;
+        $('#mobileCategoryTab').setAttribute('aria-pressed', String(categoryActive));
+        $('#mobileDomainTab').setAttribute('aria-pressed', String(!categoryActive));
+        $('#mobileFilterMount').setAttribute('aria-labelledby', categoryActive ? 'mobileCategoryTab' : 'mobileDomainTab');
+      }
+
       function placeFilterFields() {
         if (mobileFilterQuery.matches) {
           $('#mobileFilterMount').append(filterFields);
           filterFields.classList.add('is-in-dialog');
+          setMobileFilter('category');
         } else {
           if (mobileFilters.open) mobileFilters.close();
           filterFields.classList.remove('is-in-dialog');
+          $('#categoryMenu').open = false;
+          $('#domainMenu').open = false;
           filterHome.parentNode.insertBefore(filterFields, filterHome);
         }
       }
@@ -601,6 +634,8 @@
         $('#activeSummary').textContent = active.length ? active.join(' · ') : 'Chưa áp dụng bộ lọc';
         const mobileActive = [...(state.categories.size ? [`${state.categories.size} category`] : []), ...(state.domains.size ? [`${state.domains.size} lĩnh vực`] : [])];
         $('#mobileFilterCount').textContent = mobileActive.length ? mobileActive.join(' · ') : 'Chọn Category và lĩnh vực';
+        $('#categorySelectedCount').textContent = state.categories.size;
+        $('#domainSelectedCount').textContent = state.domains.size;
       }
 
       function render() {
@@ -739,6 +774,9 @@
       });
       $('#clearButton').addEventListener('click', clearFilters);
       $('#mobileFilterTrigger').addEventListener('click', () => mobileFilters.showModal());
+      $('#clearMobileFilters').addEventListener('click', clearFilters);
+      $('#mobileCategoryTab').addEventListener('click', () => setMobileFilter('category'));
+      $('#mobileDomainTab').addEventListener('click', () => setMobileFilter('domain'));
       $('#closeMobileFilters').addEventListener('click', () => mobileFilters.close());
       $('#applyMobileFilters').addEventListener('click', () => mobileFilters.close());
       mobileFilters.addEventListener('click', (event) => { if (event.target === mobileFilters) mobileFilters.close(); });
@@ -757,10 +795,10 @@
         if (menu.open) document.querySelectorAll('.filter-menu[open]').forEach((other) => { if (other !== menu) other.removeAttribute('open'); });
       }));
       document.addEventListener('click', (event) => {
-        if (!event.target.closest('.filter-menu')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
+        if (!event.target.closest('.filter-menu') && !event.target.closest('#mobileFilterDialog')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
       });
       document.addEventListener('focusin', (event) => {
-        if (!event.target.closest('.filter-menu')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
+        if (!event.target.closest('.filter-menu') && !event.target.closest('#mobileFilterDialog')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
       });
       loadData();
       window.setInterval(loadData, window.SKILL_AI_CONFIG.refreshMs || 300000);

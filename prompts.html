@@ -16,11 +16,11 @@
   <script defer src="dashboard-config.js"></script>
   <script defer src="advanced-prompts.js"></script>
   <style>
-    :root { color-scheme: light; --ink:#17231f; --muted:#65716c; --line:#e2e2e2; --ground:#f8f8f8; --paper:#fff; --soft:#eee; --accent:#141414; --accent-strong:#0a0a0a; --danger:#a43f3f; --focus:rgba(20,20,20,.2); --type-display:clamp(28px,3vw,38px); --type-heading:24px; --type-subheading:17px; --type-body:14px; --type-secondary:13px; --type-label:12px; }
+    :root { color-scheme: light; --ink:#17231f; --muted:#65716c; --line:#e2e2e2; --ground:#f8f8f8; --paper:#fff; --soft:#eee; --accent:#141414; --accent-strong:#0a0a0a; --danger:#a43f3f; --focus:rgba(20,20,20,.2); --type-display:clamp(28px,3vw,38px); --type-heading:24px; --type-subheading:17px; --type-body:15px; --type-secondary:14px; --type-label:13px; }
     html[data-theme="dark"] { color-scheme:dark; --ink:#f8f8f2; --muted:#c7c9d3; --line:#44475a; --ground:#282a36; --paper:#343746; --soft:#44475a; --accent:#bd93f9; --accent-strong:#ff79c6; --danger:#ff5555; --focus:rgba(189,147,249,.38); }
     * { box-sizing:border-box; }
     html { min-height:100%; overflow-y:scroll; scrollbar-gutter:stable; background:var(--ground); }
-    body { min-height:100svh; margin:0; color:var(--ink); background:var(--ground); font:14px/1.55 "Geist","Segoe UI",sans-serif; }
+    body { min-height:100svh; margin:0; color:var(--ink); background:var(--ground); font:15px/1.55 "Geist","Segoe UI",sans-serif; }
     button,input,select { font:inherit; } button { cursor:pointer; }
     button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible { outline:3px solid var(--focus); outline-offset:2px; }
     .site-header { position:fixed; z-index:5; inset:0 auto 0 0; display:flex; flex-direction:column; align-items:stretch; gap:24px; width:236px; min-height:100svh; padding:28px 18px; border-right:1px solid var(--line); /* taste-skill-ignore: app navigation boundary */ background:var(--ground); }
@@ -61,9 +61,9 @@
     .prompt-item { min-width:0; padding:18px; border:1px solid var(--line); /* taste-skill-ignore: prompt is a distinct copyable content unit */ background:var(--paper); }
     .prompt-item header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
     .prompt-item h3 { margin:0; }
-    .prompt-categories { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; color:var(--muted); font-size:12px; }
+    .prompt-categories { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; color:var(--muted); font-size:13px; }
     .prompt-categories span { padding:3px 7px; border-radius:4px; background:var(--soft); }
-    .prompt-text { margin:14px 0 0; padding-top:13px; border-top:1px solid var(--line); /* taste-skill-ignore: separates title metadata from the verbatim prompt */ color:var(--ink); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .prompt-text { margin:14px 0 0; padding-top:13px; border-top:1px solid var(--line); /* taste-skill-ignore: separates title metadata from the verbatim prompt */ color:var(--ink); font-size:16px; white-space:pre-wrap; overflow-wrap:anywhere; }
     .copy-prompt { flex:0 0 auto; min-width:78px; }
     .prompt-skeleton { position:relative; min-width:0; min-height:210px; overflow:hidden; padding:18px; border:1px solid var(--line); background:var(--paper); }
     .prompt-skeleton::after { position:absolute; inset:0; content:""; pointer-events:none; transform:translateX(-100%); background:linear-gradient(100deg,transparent,rgba(127,127,127,.12),transparent); /* taste-skill-ignore: moving highlight makes the prompt loading skeleton visible */ animation:prompt-shimmer 1.35s ease-in-out infinite; }
@@ -88,7 +88,7 @@
       .site-header { padding:11px 14px; }.brand { gap:9px; }.brand-mark { width:30px; height:30px; }.brand-name { font-size:14px; }.brand-subtitle,.header-status { font-size:10px; }
       .header-actions { grid-template-columns:48px auto; }.header-actions .theme-toggle { width:48px; min-width:48px; }.header-actions button:last-child { padding:8px 9px; }
       .page-shell { padding:20px 14px 36px; }.page-heading { padding-bottom:18px; } h1 { font-size:28px; }
-      .prompt-controls { grid-template-columns:1fr; gap:10px; padding:16px 0 12px; }.prompt-item { padding:15px; }.prompt-text { font-size:var(--type-body); }
+      .prompt-controls { grid-template-columns:1fr; gap:10px; padding:16px 0 12px; }.prompt-item { padding:15px; }.prompt-text { font-size:16px; }
       .results-line { font-size:var(--type-secondary); }
     }
     html[data-embedded="true"] .site-header { display:none; }
