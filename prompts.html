@@ -52,18 +52,18 @@
     p { font-size:var(--type-body); line-height:1.55; }
     .intro-copy { max-width:650px; margin:12px 0 0; color:var(--muted); }
     .count-note { padding-left:15px; border-left:2px solid var(--accent); color:var(--muted); font-size:var(--type-secondary); }.count-note strong { display:block; color:var(--ink); font-size:15px; }
-    .prompt-controls { display:grid; grid-template-columns:minmax(250px,1fr) 230px; gap:12px; padding:22px 0 18px; }
+    .prompt-controls { display:grid; grid-template-columns:minmax(300px,1fr) 210px; gap:12px; padding:22px 0 18px; }
     .control label { display:block; margin-bottom:6px; color:var(--muted); font-size:var(--type-label); font-weight:600; }
-    .control input { width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); }
+    .control > input { width:100%; min-height:47px; padding:11px 13px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); }
     .prompt-filter-menu { position:relative; }
-    .prompt-filter-menu summary { min-height:44px; padding:10px 12px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); cursor:pointer; list-style:none; }
+    .prompt-filter-menu summary { min-height:47px; padding:11px 13px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); cursor:pointer; list-style:none; }
     .prompt-filter-menu summary::-webkit-details-marker { display:none; }
     .prompt-filter-menu summary::after { content:"⌄"; float:right; color:var(--muted); }
     .prompt-filter-menu[open] summary { border-color:var(--accent); }
-    .prompt-filter-options { position:absolute; z-index:5; top:calc(100% + 6px); right:0; width:min(360px,calc(100vw - 28px)); max-height:min(48dvh,360px); overflow:auto; padding:8px; border:1px solid var(--line); border-radius:8px; background:var(--paper); box-shadow:0 14px 32px rgba(10,10,10,.14); }
-    .prompt-filter-options label { display:grid; grid-template-columns:20px minmax(0,1fr) auto; gap:10px; align-items:center; min-height:44px; padding:8px; border-radius:4px; color:var(--ink); font-size:15px; line-height:1.4; cursor:pointer; }
+    .prompt-filter-options { position:absolute; z-index:5; top:calc(100% + 6px); right:0; width:min(320px,88vw); max-height:300px; overflow:auto; padding:8px; border:1px solid var(--line); border-radius:8px; background:var(--paper); box-shadow:0 14px 32px rgba(10,10,10,.12); }
+    .prompt-filter-options label { display:grid; grid-template-columns:18px minmax(0,1fr) auto; gap:8px; align-items:start; min-height:36px; padding:8px 6px; border-radius:0; color:var(--ink); font-size:15px; line-height:1.45; font-weight:400; cursor:pointer; }
     .prompt-filter-options label:hover { background:var(--soft); }
-    .prompt-filter-options input { width:18px; height:18px; margin:0; accent-color:var(--accent); }
+    .prompt-filter-options input { width:auto; height:auto; margin:3px 0 0; accent-color:var(--accent); }
     .prompt-filter-count { color:var(--muted); font-size:14px; font-variant-numeric:tabular-nums; }
     .results-line { display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-top:1px solid var(--line); /* taste-skill-ignore: separates controls from live result count */ color:var(--muted); font-size:var(--type-secondary); }
     .prompt-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding-top:12px; transition:opacity .14s ease; }
@@ -92,7 +92,11 @@
       .sidebar-nav { display:flex; grid-column:1/-1; grid-row:2; gap:6px; margin:0; overflow-x:auto; scrollbar-width:none; }.sidebar-nav::-webkit-scrollbar { display:none; }.sidebar-nav a { flex:0 0 auto; padding:8px 10px; }
       .header-status { display:grid; grid-column:2; grid-row:1; gap:5px; margin:0; text-align:right; font-size:11px; }.header-actions { grid-template-columns:54px auto; gap:6px; }.header-actions .theme-toggle { width:54px; min-width:54px; }.header-actions button:last-child { padding:8px 10px; }
       .page-shell { width:100%; margin:0; padding:24px 16px 42px; }.page-heading { grid-template-columns:1fr; gap:14px; }.count-note { max-width:360px; }
-      .prompt-list { grid-template-columns:1fr; gap:12px; }.prompt-controls { grid-template-columns:minmax(0,1fr) 190px; }
+      .prompt-list { grid-template-columns:1fr; gap:12px; }.prompt-controls { grid-template-columns:minmax(0,1fr); }
+      .prompt-filter-menu summary { min-height:44px; padding:10px 11px; }
+      .prompt-filter-menu[open] > .prompt-filter-options { position:fixed; top:auto; right:8px; bottom:max(8px,env(safe-area-inset-bottom)); left:8px; width:auto; max-width:none; max-height:min(62dvh,520px); padding:10px 10px calc(10px + env(safe-area-inset-bottom)); overflow-x:hidden; overflow-y:auto; -webkit-overflow-scrolling:touch; border-radius:16px; box-shadow:0 16px 48px rgba(20,30,55,.24); }
+      .prompt-filter-options label { grid-template-columns:20px minmax(0,1fr) auto; align-items:center; min-height:42px; gap:11px; padding:9px 10px; font-size:15px; line-height:1.35; }
+      .prompt-filter-options input { width:18px; height:18px; margin:0; }
     }
     @media (max-width:520px) {
       .site-header { padding:11px 14px; }.brand { gap:9px; }.brand-mark { width:30px; height:30px; }.brand-name { font-size:14px; }.brand-subtitle,.header-status { font-size:10px; }
