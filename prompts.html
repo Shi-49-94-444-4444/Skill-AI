@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
   <script>
-    (() => { try { if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (error) { /* private browsing */ } })();
+    (() => { if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.dataset.embedded = 'true'; try { if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (error) { /* private browsing */ } })();
   </script>
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script defer src="dashboard-config.js"></script>
@@ -78,6 +78,10 @@
       .prompt-controls { grid-template-columns:1fr; gap:10px; padding:16px 0 12px; }.prompt-item { padding:15px; }.prompt-item h2 { font-size:16px; }.prompt-text { font-size:14px; }
       .results-line { font-size:12px; }
     }
+    html[data-embedded="true"] .site-header { display:none; }
+    html[data-embedded="true"] .page-shell { width:100%; margin:0; padding:40px clamp(28px,4vw,64px) 64px; }
+    @media (max-width:900px) { html[data-embedded="true"] .page-shell { padding:24px 16px 42px; } }
+    @media (max-width:520px) { html[data-embedded="true"] .page-shell { padding:20px 14px 36px; } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
   </style>
 </head>

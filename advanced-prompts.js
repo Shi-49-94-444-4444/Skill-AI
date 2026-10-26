@@ -140,6 +140,11 @@
       const button = event.target.closest('[data-copy-index]');
       if (button) copyPrompt(Number(button.dataset.copyIndex));
     });
+    window.addEventListener('message', (event) => {
+      if (event.origin !== location.origin || event.source !== window.parent || !event.data) return;
+      if (event.data.type === 'skill-ai-theme' && ['light', 'dark'].includes(event.data.theme)) setTheme(event.data.theme, false);
+      if (event.data.type === 'skill-ai-refresh') load();
+    });
     load();
   });
 }());

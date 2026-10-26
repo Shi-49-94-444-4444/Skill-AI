@@ -77,12 +77,20 @@
     .theme-switch-static-moon { left: 5px; }
     .theme-switch-static-sun { right: 5px; }
     .theme-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
-    .theme-switch-thumb { position: absolute; z-index: 2; top: 2px; left: 2px; width: 22px; height: 22px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); transition: transform .2s ease; }
+    .theme-switch-thumb { position: absolute; z-index: 2; top: 2px; left: 2px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); transition: transform .2s ease; }
+    .theme-thumb-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .theme-toggle.is-dark .theme-switch-thumb { transform: translateX(24px); }
     .theme-toggle.is-dark .theme-switch-static-moon { color: var(--muted); }
     .theme-toggle.is-dark .theme-thumb-icon { color: var(--accent-strong); }
     .theme-toggle:not(.is-dark) .theme-switch-static-sun { color: var(--muted); }
     .theme-toggle:not(.is-dark) .theme-thumb-icon { color: var(--accent-strong); }
+    #promptPageHost { display: none; }
+    #promptPageFrame { display: block; width: 100%; height: 100dvh; border: 0; background: var(--ground); }
+    #catalogue.is-prompts { min-height: 100dvh; padding: 0; }
+    #catalogue.is-prompts > :not(#promptPageHost) { display: none !important; }
+    #catalogue.is-prompts #promptPageHost { display: block; }
+    #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: app-view-enter .16s ease both; }
+    @keyframes app-view-enter { from { opacity: .78; } to { opacity: 1; } }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
     .header-status .quiet-button:not(.theme-toggle) { width: 100%; }
     .header-status .theme-toggle { width: 62px; min-width: 62px; padding: 4px; }
@@ -219,8 +227,6 @@
       .header-actions { grid-template-columns: 54px auto; gap: 6px; }
       .header-status button { margin: 0; }
       .header-status .theme-toggle { width: 54px; min-width: 54px; }
-      .theme-switch-thumb { display: grid; place-items: center; }
-      .theme-thumb-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
       .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }
       h1 { font-size: 28px; } .intro-copy { font-size: 13px; }
       .controls { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 18px 0 16px; }
@@ -272,7 +278,7 @@
       .skill-link { padding: 8px 9px; }
       .cell-preview { min-height: 0; -webkit-line-clamp: 5; }
     }
-    @media (prefers-reduced-motion: reduce) { .result-row { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .result-row, #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: none; } }
   </style>
 </head>
 <body>
@@ -282,8 +288,8 @@
       <span><span class="brand-name">Skill AI</span><span class="brand-subtitle">Thư viện tra cứu</span></span>
     </a>
     <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
-      <a class="active" href="index.html" aria-current="page">Kho Skill</a>
-      <a href="prompts.html">Prompt nâng cao</a>
+      <a class="active" href="#skills" data-app-view="skills" aria-current="page">Kho Skill</a>
+      <a href="#prompts" data-app-view="prompts">Prompt nâng cao</a>
     </nav>
     <div class="sidebar-stats" aria-label="Tóm tắt dữ liệu">
       <div class="sidebar-stat"><strong id="sidebarUnique" class="loading-value">—</strong><span>Skill duy nhất</span></div>
@@ -293,7 +299,7 @@
     <div class="header-status">
       <span id="datasetStatus">Đang nạp dữ liệu…</span>
       <div class="header-actions">
-         <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
            <span class="theme-switch-track" aria-hidden="true">
              <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
              <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
@@ -390,6 +396,7 @@
         <button class="quiet-button" id="nextButton" type="button">Sau</button>
       </nav>
     </section>
+    <section id="promptPageHost" aria-label="Prompt nâng cao" aria-hidden="true"><iframe id="promptPageFrame" title="Trang Prompt nâng cao" loading="lazy"></iframe></section>
   </main>
 
   <dialog id="detailDialog">
@@ -466,11 +473,56 @@
           document.querySelector('.theme-switch-static-sun').style.display = 'block';
         }
         try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
+        const frame = $('#promptPageFrame');
+        if (frame.contentWindow && frame.src) frame.contentWindow.postMessage({ type: 'skill-ai-theme', theme: dark ? 'dark' : 'light' }, location.origin);
       }
 
       let savedTheme = 'light';
       try { savedTheme = localStorage.getItem('skill-ai-theme') || 'light'; } catch (error) { /* private browsing */ }
       setTheme(savedTheme);
+
+      const appNav = [...document.querySelectorAll('[data-app-view]')];
+      const promptHost = $('#promptPageHost');
+      const promptFrame = $('#promptPageFrame');
+      let skillScrollY = 0;
+      function sizePromptFrame() {
+        const mobile = window.matchMedia('(max-width: 900px)').matches;
+        const headerHeight = mobile ? document.querySelector('.site-header').getBoundingClientRect().height : 0;
+        promptFrame.style.height = `${Math.max(360, window.innerHeight - headerHeight)}px`;
+      }
+      function switchView(view, push = false) {
+        const prompts = view === 'prompts';
+        const main = $('#catalogue');
+        const wasPrompts = main.classList.contains('is-prompts');
+        if (prompts && !promptFrame.dataset.loaded) {
+          promptFrame.src = 'prompts.html?embed=1';
+          promptFrame.dataset.loaded = 'true';
+        }
+        if (prompts && !wasPrompts) skillScrollY = window.scrollY;
+        sizePromptFrame();
+        main.classList.toggle('is-prompts', prompts);
+        promptHost.setAttribute('aria-hidden', String(!prompts));
+        appNav.forEach((link) => {
+          const active = link.dataset.appView === (prompts ? 'prompts' : 'skills');
+          link.classList.toggle('active', active);
+          if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
+        });
+        const visibleView = prompts ? promptHost : main;
+        visibleView.classList.remove('is-entering');
+        void visibleView.offsetWidth;
+        visibleView.classList.add('is-entering');
+        window.scrollTo({ top: prompts ? 0 : skillScrollY, behavior: 'instant' });
+        if (push) history.pushState({ view: prompts ? 'prompts' : 'skills' }, '', prompts ? '#prompts' : '#skills');
+      }
+      appNav.forEach((link) => link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const next = link.dataset.appView;
+        if ((next === 'prompts') === $('#catalogue').classList.contains('is-prompts')) return;
+        switchView(next, true);
+      }));
+      window.addEventListener('popstate', () => switchView(location.hash === '#prompts' ? 'prompts' : 'skills'));
+      window.addEventListener('resize', sizePromptFrame);
+      if (location.hash === '#prompts') switchView('prompts');
 
       function selectedValues(containerId) {
         return new Set([...document.querySelectorAll(`#${containerId} input:checked`)].map((input) => input.value));
@@ -641,6 +693,9 @@
       $('#applyMobileFilters').addEventListener('click', () => mobileFilters.close());
       mobileFilters.addEventListener('click', (event) => { if (event.target === mobileFilters) mobileFilters.close(); });
       $('#refreshButton').addEventListener('click', loadData);
+      $('#refreshButton').addEventListener('click', () => {
+        if (promptFrame.contentWindow && promptFrame.src) promptFrame.contentWindow.postMessage({ type: 'skill-ai-refresh' }, location.origin);
+      });
       $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
       $('#previousButton').addEventListener('click', () => { state.page -= 1; queueRender(); });
       $('#nextButton').addEventListener('click', () => { state.page += 1; queueRender(); });
