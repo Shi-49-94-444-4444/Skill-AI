@@ -126,7 +126,6 @@
     /* taste-skill-ignore: table frame is a real data surface */
     .catalogue { overflow-anchor: none; }
     .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
-    .table-wrap.is-updating table { opacity: .72; transition: opacity .12s ease; }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
     th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
@@ -200,12 +199,43 @@
     html[data-theme="dark"] .search-field input::placeholder { color: #a7a9b7; }
     html[data-theme="dark"] .markdown-body { color: #f8f8f2; }
     @media (max-width: 980px) { .intro { grid-template-columns: 1fr; gap: 18px; } .controls { grid-template-columns: minmax(240px, 1fr) 1fr 1fr auto; } }
+    .mobile-filter-trigger { display: none; }
+    .filter-fields { display: contents; }
+    .mobile-filter-dialog { width: min(460px, 100%); max-height: min(82dvh, 680px); margin: auto 0 0; border: 1px solid var(--line); border-bottom: 0; border-radius: 16px 16px 0 0; background: var(--paper); color: var(--ink); box-shadow: 0 -16px 48px rgba(0, 0, 0, .2); /* taste-skill-ignore: native modal floats over a dimmed backdrop */ }
+    .mobile-filter-dialog::backdrop { background: rgba(10, 12, 18, .52); }
+    .mobile-filter-head, .mobile-filter-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; }
+    .mobile-filter-head { border-bottom: 1px solid var(--line); /* taste-skill-ignore: separates modal title from its controls */ }
+    .mobile-filter-head h2 { margin: 0; font-size: 18px; }
+    .mobile-filter-foot { border-top: 1px solid var(--line); /* taste-skill-ignore: separates modal actions from filter choices */ }
+    .mobile-filter-mount { padding: 14px 16px 18px; max-height: calc(82dvh - 126px); overflow-y: auto; }
     @media (max-width: 900px) {
-      .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ flex-direction: row; align-items: flex-start; gap: 14px; padding: 14px 18px; } .sidebar-nav, .sidebar-stats { display: none; } .header-status { display: block; margin-top: 0; text-align: right; } .header-status button { margin-top: 7px; }
-      .page-shell { width: 100%; margin-left: 0; padding-top: 28px; } h1 { font-size: 28px; } .intro-copy { font-size: 13px; }
-      .controls { grid-template-columns: 1fr 1fr; } .search-field, .clear-button { grid-column: 1 / -1; } .clear-button { text-align: left; padding: 4px 0; }
-      .summary-row { align-items: flex-start; flex-direction: column; gap: 3px; padding: 10px 0; }
-      .guide-strip { grid-template-columns: 1fr 1fr; gap: 14px; }
+      .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px 12px; padding: 12px 16px; }
+      .brand { min-width: 0; }
+      .sidebar-nav { display: flex; grid-column: 1 / -1; grid-row: 2; gap: 6px; margin: 0; overflow-x: auto; scrollbar-width: none; }
+      .sidebar-nav::-webkit-scrollbar { display: none; }
+      .sidebar-nav a { flex: 0 0 auto; padding: 8px 10px; }
+      .sidebar-stats { display: none; }
+      .header-status { display: grid; grid-column: 2; grid-row: 1; gap: 5px; margin: 0; text-align: right; font-size: 11px; }
+      .header-actions { grid-template-columns: 54px auto; gap: 6px; }
+      .header-status button { margin: 0; }
+      .header-status .theme-toggle { width: 54px; min-width: 54px; }
+      .theme-switch-thumb { display: grid; place-items: center; }
+      .theme-thumb-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+      .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }
+      h1 { font-size: 28px; } .intro-copy { font-size: 13px; }
+      .controls { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 18px 0 16px; }
+      .search-field { grid-column: 1 / -1; }
+      .filter-fields { display: none; }
+      .mobile-filter-trigger { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; align-self: end; padding: 8px 14px; }
+      .clear-button { grid-column: 1 / -1; text-align: left; padding: 4px 0; }
+      .summary-row, .guide-strip { display: none; }
+      .filter-fields.is-in-dialog { display: grid; grid-template-columns: 1fr; gap: 14px; }
+      .filter-fields.is-in-dialog .control label { font-size: 13px; margin-bottom: 7px; }
+      .filter-fields.is-in-dialog .filter-menu summary { padding: 13px 14px; font-size: 15px; }
+      .filter-fields.is-in-dialog .filter-options { position: static; width: 100%; max-height: 220px; margin-top: 8px; }
+      .filter-fields.is-in-dialog .filter-options label { min-height: 44px; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 6px; font-size: 15px; }
+      .filter-fields.is-in-dialog .filter-options input { width: 18px; height: 18px; margin: 0; }
+      .filter-fields.is-in-dialog .option-count { font-size: 14px; }
       .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
       .table-wrap { overflow: visible; border-top-width: 1px; }
       .loading-row td { height: 620px; }
@@ -218,6 +248,30 @@
       td[data-field="skill"] { display: block; padding-bottom: 9px; } td[data-field="skill"]::before { display: none; }
       .cell-preview { -webkit-line-clamp: 4; } .dialog-header, .dialog-body { padding: 18px; }
     }
+    @media (max-width: 520px) {
+      .site-header { padding: 11px 14px; }
+      .brand { gap: 9px; }
+      .brand-mark { width: 30px; height: 30px; }
+      .brand-name { font-size: 14px; }
+      .brand-subtitle { font-size: 10px; }
+      .header-status { font-size: 10px; }
+      .header-actions { grid-template-columns: 48px auto; }
+      .header-status .theme-toggle { width: 48px; min-width: 48px; }
+      .header-actions .quiet-button:not(.theme-toggle) { padding: 8px 10px; }
+      .page-shell { padding: 20px 14px 36px; }
+      .intro { padding-bottom: 18px; }
+      h1 { font-size: 26px; }
+      .source-note { font-size: 12px; }
+      .search-field input { padding: 12px; }
+      .catalogue-toolbar { flex-direction: row; align-items: center; }
+      .catalogue-toolbar p, .page-size { font-size: 12px; }
+      .table-wrap { min-height: 0; }
+      tr { padding: 12px 0 10px; }
+      td { grid-template-columns: 76px minmax(0, 1fr); gap: 8px; font-size: 14px; }
+      td::before { font-size: 10px; }
+      .skill-link { padding: 8px 9px; }
+      .cell-preview { min-height: 0; -webkit-line-clamp: 5; }
+    }
     @media (prefers-reduced-motion: reduce) { .result-row { animation: none; } }
   </style>
 </head>
@@ -228,9 +282,8 @@
       <span><span class="brand-name">Skill AI</span><span class="brand-subtitle">Thư viện tra cứu</span></span>
     </a>
     <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
-      <a class="active" href="#catalogue">Kho Skill</a>
-      <a href="#filters">Bộ lọc</a>
-      <a href="#howto">Cách dùng</a>
+      <a class="active" href="index.html" aria-current="page">Kho Skill</a>
+      <a href="prompts.html">Prompt nâng cao</a>
     </nav>
     <div class="sidebar-stats" aria-label="Tóm tắt dữ liệu">
       <div class="sidebar-stat"><strong id="sidebarUnique" class="loading-value">—</strong><span>Skill duy nhất</span></div>
@@ -272,22 +325,31 @@
         <label for="searchInput">Tìm kiếm toàn văn</label>
         <input id="searchInput" type="search" placeholder="Ví dụ: phân tích, tuyển dụng, visual study guide…" autocomplete="off">
       </div>
-      <div class="control">
-        <label>Category</label>
-        <details class="filter-menu" id="categoryMenu">
-          <summary id="categorySummary">Tất cả category</summary>
-          <div class="filter-options" id="categoryOptions"></div>
-        </details>
+      <div class="filter-fields" id="filterFields">
+        <div class="control">
+          <label>Category</label>
+          <details class="filter-menu" id="categoryMenu">
+            <summary id="categorySummary">Tất cả category</summary>
+            <div class="filter-options" id="categoryOptions"></div>
+          </details>
+        </div>
+        <div class="control">
+          <label>Lĩnh vực</label>
+          <details class="filter-menu" id="domainMenu">
+            <summary id="domainSummary">Tất cả lĩnh vực</summary>
+            <div class="filter-options" id="domainOptions"></div>
+          </details>
+        </div>
+        <button class="clear-button" id="clearButton" type="button">Xóa tìm kiếm và bộ lọc</button>
       </div>
-      <div class="control">
-        <label>Lĩnh vực</label>
-        <details class="filter-menu" id="domainMenu">
-          <summary id="domainSummary">Tất cả lĩnh vực</summary>
-          <div class="filter-options" id="domainOptions"></div>
-        </details>
-      </div>
-      <button class="clear-button" id="clearButton" type="button">Xóa tìm kiếm và bộ lọc</button>
+      <button class="quiet-button mobile-filter-trigger" id="mobileFilterTrigger" type="button" aria-haspopup="dialog">Lọc</button>
     </section>
+
+    <dialog class="mobile-filter-dialog" id="mobileFilterDialog" aria-labelledby="mobileFilterTitle">
+      <div class="mobile-filter-head"><h2 id="mobileFilterTitle">Bộ lọc</h2><button class="quiet-button" id="closeMobileFilters" type="button">Đóng</button></div>
+      <div class="mobile-filter-mount" id="mobileFilterMount"></div>
+      <div class="mobile-filter-foot"><span id="mobileFilterCount">Chọn Category và lĩnh vực</span><button class="primary-button" id="applyMobileFilters" type="button">Xem kết quả</button></div>
+    </dialog>
 
     <div class="summary-row" aria-live="polite">
       <span id="filterSummary" class="loading-copy">Đang chuẩn bị dữ liệu…</span>
@@ -352,6 +414,24 @@
       const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
       let toastTimer;
       let renderFrame = 0;
+      const filterFields = $('#filterFields');
+      const filterHome = document.createComment('filter fields home');
+      const mobileFilters = $('#mobileFilterDialog');
+      const mobileFilterQuery = window.matchMedia('(max-width: 900px)');
+      filterFields.before(filterHome);
+
+      function placeFilterFields() {
+        if (mobileFilterQuery.matches) {
+          $('#mobileFilterMount').append(filterFields);
+          filterFields.classList.add('is-in-dialog');
+        } else {
+          if (mobileFilters.open) mobileFilters.close();
+          filterFields.classList.remove('is-in-dialog');
+          filterHome.parentNode.insertBefore(filterFields, filterHome);
+        }
+      }
+      placeFilterFields();
+      mobileFilterQuery.addEventListener('change', placeFilterFields);
 
       const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
       const compact = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
@@ -429,6 +509,8 @@
         if (state.categories.size) active.push(`${state.categories.size} category`);
         if (state.domains.size) active.push(`${state.domains.size} lĩnh vực`);
         $('#activeSummary').textContent = active.length ? active.join(' · ') : 'Chưa áp dụng bộ lọc';
+        const mobileActive = [...(state.categories.size ? [`${state.categories.size} category`] : []), ...(state.domains.size ? [`${state.domains.size} lĩnh vực`] : [])];
+        $('#mobileFilterCount').textContent = mobileActive.length ? mobileActive.join(' · ') : 'Chọn Category và lĩnh vực';
       }
 
       function render() {
@@ -554,6 +636,10 @@
         if (sort) { state.sortDirection = state.sortKey === sort.dataset.sort && state.sortDirection === 'asc' ? 'desc' : 'asc'; state.sortKey = sort.dataset.sort; queueRender(); }
       });
       $('#clearButton').addEventListener('click', clearFilters);
+      $('#mobileFilterTrigger').addEventListener('click', () => mobileFilters.showModal());
+      $('#closeMobileFilters').addEventListener('click', () => mobileFilters.close());
+      $('#applyMobileFilters').addEventListener('click', () => mobileFilters.close());
+      mobileFilters.addEventListener('click', (event) => { if (event.target === mobileFilters) mobileFilters.close(); });
       $('#refreshButton').addEventListener('click', loadData);
       $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
       $('#previousButton').addEventListener('click', () => { state.page -= 1; queueRender(); });
@@ -571,14 +657,6 @@
       document.addEventListener('focusin', (event) => {
         if (!event.target.closest('.filter-menu')) document.querySelectorAll('.filter-menu[open]').forEach((menu) => menu.removeAttribute('open'));
       });
-      document.querySelectorAll('.sidebar-nav a').forEach((link) => link.addEventListener('click', (event) => {
-        const target = document.querySelector(link.getAttribute('href'));
-        if (!target) return;
-        event.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        document.querySelectorAll('.sidebar-nav a').forEach((item) => item.classList.toggle('active', item === link));
-        if (link.getAttribute('href') === '#filters') window.setTimeout(() => $('#searchInput').focus(), 260);
-      }));
       loadData();
       window.setInterval(loadData, window.SKILL_AI_CONFIG.refreshMs || 300000);
     })(); });
