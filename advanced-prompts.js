@@ -7,6 +7,7 @@
     .toLocaleLowerCase('vi-VN').replace(/\s+/g, ' ').trim();
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
   let prompts = [];
+  const selectedCategories = new Set();
   let toastTimer;
   let renderTimer = 0;
 
@@ -72,9 +73,8 @@
 
   function render() {
     const query = normalize($('#promptSearch').value);
-    const category = $('#categoryFilter').value;
     const filtered = prompts.filter((item) => (!query || item.searchText.includes(query))
-      && (!category || item.categories.includes(category)));
+      && (!selectedCategories.size || item.categories.some((category) => selectedCategories.has(category))));
     $('#resultCount').textContent = `${filtered.length.toLocaleString('vi-VN')} / ${prompts.length.toLocaleString('vi-VN')} prompt`;
     if (!filtered.length) {
       $('#promptList').innerHTML = '<p class="empty-state">Không tìm thấy prompt phù hợp. Hãy đổi từ khóa hoặc chọn “Tất cả nhóm”.</p>';
@@ -129,8 +129,12 @@
     $('#promptList').innerHTML = skeletonMarkup();
     try {
       prompts = parseWorkbook(await fetchWorkbook());
-      const categories = [...new Set(prompts.flatMap((item) => item.categories))].sort((a, b) => a.localeCompare(b, 'vi'));
-      $('#categoryFilter').innerHTML = '<option value="">Tất cả nhóm</option>' + categories.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join('');
+      const categoryCounts = new Map();
+      prompts.forEach((item) => new Set(item.categories).forEach((category) => categoryCounts.set(category, (categoryCounts.get(category) || 0) + 1)));
+      const categories = [...categoryCounts].sort(([a], [b]) => a.localeCompare(b, 'vi'));
+      for (const category of selectedCategories) if (!categoryCounts.has(category)) selectedCategories.delete(category);
+      $('#promptCategoryOptions').innerHTML = categories.map(([value, count]) => `<label><input type="checkbox" value="${escapeHtml(value)}"${selectedCategories.has(value) ? ' checked' : ''}><span>${escapeHtml(value)}</span><span class="prompt-filter-count">${count.toLocaleString('vi-VN')}</span></label>`).join('');
+      updateCategorySummary();
       $('#promptCount').textContent = `${prompts.length.toLocaleString('vi-VN')} prompt`;
       $('#datasetStatus').textContent = 'Đã cập nhật';
       render();
@@ -141,6 +145,10 @@
     }
   }
 
+  function updateCategorySummary() {
+    $('#promptCategorySummary').textContent = selectedCategories.size ? `Đã chọn ${selectedCategories.size} nhóm` : 'Tất cả nhóm';
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     let theme = 'light';
     try { theme = localStorage.getItem('skill-ai-theme') || 'light'; } catch (error) { /* private browsing */ }
@@ -148,8 +156,27 @@
     $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
     $('#refreshButton').addEventListener('click', load);
     $('#promptSearch').addEventListener('input', queueRender);
-    $('#categoryFilter').addEventListener('change', queueRender);
-    $('#clearSearch').addEventListener('click', () => { $('#promptSearch').value = ''; $('#categoryFilter').value = ''; queueRender(); });
+    $('#promptCategoryOptions').addEventListener('change', (event) => {
+      const checkbox = event.target.closest('input[type="checkbox"]');
+      if (!checkbox) return;
+      if (checkbox.checked) selectedCategories.add(checkbox.value);
+      else selectedCategories.delete(checkbox.value);
+      updateCategorySummary();
+      queueRender();
+    });
+    $('#clearSearch').addEventListener('click', () => {
+      $('#promptSearch').value = '';
+      selectedCategories.clear();
+      $('#promptCategoryOptions').querySelectorAll('input[type="checkbox"]').forEach((checkbox) => { checkbox.checked = false; });
+      updateCategorySummary();
+      queueRender();
+    });
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#promptCategoryMenu')) $('#promptCategoryMenu').removeAttribute('open');
+    });
+    document.addEventListener('focusin', (event) => {
+      if (!event.target.closest('#promptCategoryMenu')) $('#promptCategoryMenu').removeAttribute('open');
+    });
     $('#promptList').addEventListener('click', (event) => {
       const button = event.target.closest('[data-copy-index]');
       if (button) copyPrompt(Number(button.dataset.copyIndex));
