@@ -8,6 +8,7 @@
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
   let prompts = [];
   let toastTimer;
+  let renderTimer = 0;
 
   function setTheme(theme, persist = true) {
     const dark = theme === 'dark';
@@ -16,10 +17,6 @@
     button.classList.toggle('is-dark', dark);
     button.setAttribute('aria-pressed', String(dark));
     button.setAttribute('aria-label', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
-    $('#themeThumbMoon').style.display = dark ? 'none' : 'block';
-    $('#themeThumbSun').style.display = dark ? 'block' : 'none';
-    $('.theme-switch-static-moon').style.display = dark ? 'block' : 'none';
-    $('.theme-switch-static-sun').style.display = dark ? 'none' : 'block';
     if (persist) { try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ } }
   }
 
@@ -68,7 +65,7 @@
       title: String(row[columns.title] ?? '').trim(),
       prompt: String(row[columns.prompt] ?? '').replace(/\r\n?/g, '\n'),
       categories: String(row[columns.category] ?? '').split(/\r?\n/).map((item) => item.trim()).filter(Boolean)
-    })).filter((item) => item.title || item.prompt.trim());
+    })).filter((item) => item.title || item.prompt.trim()).map((item) => ({ ...item, searchText: normalize(`${item.title} ${item.prompt} ${item.categories.join(' ')}`) }));
     if (!result.length) throw new Error('Sheet chưa có prompt hợp lệ.');
     return result;
   }
@@ -76,7 +73,7 @@
   function render() {
     const query = normalize($('#promptSearch').value);
     const category = $('#categoryFilter').value;
-    const filtered = prompts.filter((item) => (!query || normalize(`${item.title} ${item.prompt} ${item.categories.join(' ')}`).includes(query))
+    const filtered = prompts.filter((item) => (!query || item.searchText.includes(query))
       && (!category || item.categories.includes(category)));
     $('#resultCount').textContent = `${filtered.length.toLocaleString('vi-VN')} / ${prompts.length.toLocaleString('vi-VN')} prompt`;
     if (!filtered.length) {
@@ -84,6 +81,23 @@
       return;
     }
     $('#promptList').innerHTML = filtered.map((item, index) => `<article class="prompt-item"><header><div><h3>${escapeHtml(item.title)}</h3><div class="prompt-categories">${item.categories.map((categoryName) => `<span>${escapeHtml(categoryName)}</span>`).join('')}</div></div><button class="quiet-button copy-prompt" type="button" data-copy-index="${prompts.indexOf(item)}" aria-label="Sao chép prompt: ${escapeHtml(item.title)}">Sao chép</button></header><p class="prompt-text">${escapeHtml(item.prompt)}</p></article>`).join('');
+  }
+
+  function skeletonMarkup() {
+    const bar = (className) => `<span class="skeleton-bar ${className}"></span>`;
+    return Array.from({ length: 4 }, () => `<div class="prompt-skeleton" aria-hidden="true">${bar('skeleton-title')}${bar('skeleton-tag')}${bar('skeleton-tag')}${bar('skeleton-copy')}${bar('skeleton-copy')}${bar('skeleton-copy short')}</div>`).join('');
+  }
+
+  function queueRender() {
+    clearTimeout(renderTimer);
+    renderTimer = setTimeout(() => {
+      const list = $('#promptList');
+      list.classList.add('is-updating');
+      renderTimer = setTimeout(() => {
+        render();
+        requestAnimationFrame(() => list.classList.remove('is-updating'));
+      }, 70);
+    }, 110);
   }
 
   function notify(message) {
@@ -112,7 +126,7 @@
 
   async function load() {
     $('#datasetStatus').textContent = 'Đang tải prompt…';
-    $('#promptList').innerHTML = '<div class="prompt-skeleton" aria-hidden="true"></div><div class="prompt-skeleton" aria-hidden="true"></div><div class="prompt-skeleton" aria-hidden="true"></div><div class="prompt-skeleton" aria-hidden="true"></div>';
+    $('#promptList').innerHTML = skeletonMarkup();
     try {
       prompts = parseWorkbook(await fetchWorkbook());
       const categories = [...new Set(prompts.flatMap((item) => item.categories))].sort((a, b) => a.localeCompare(b, 'vi'));
@@ -133,9 +147,9 @@
     setTheme(theme, false);
     $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
     $('#refreshButton').addEventListener('click', load);
-    $('#promptSearch').addEventListener('input', render);
-    $('#categoryFilter').addEventListener('change', render);
-    $('#clearSearch').addEventListener('click', () => { $('#promptSearch').value = ''; $('#categoryFilter').value = ''; render(); });
+    $('#promptSearch').addEventListener('input', queueRender);
+    $('#categoryFilter').addEventListener('change', queueRender);
+    $('#clearSearch').addEventListener('click', () => { $('#promptSearch').value = ''; $('#categoryFilter').value = ''; queueRender(); });
     $('#promptList').addEventListener('click', (event) => {
       const button = event.target.closest('[data-copy-index]');
       if (button) copyPrompt(Number(button.dataset.copyIndex));

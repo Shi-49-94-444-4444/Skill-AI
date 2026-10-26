@@ -39,7 +39,10 @@
     .theme-switch-icon { position:absolute; z-index:1; top:6px; display:grid; place-items:center; width:16px; height:16px; }.theme-switch-static-moon { left:5px; }.theme-switch-static-sun { right:5px; }
     .theme-icon { width:14px; height:14px; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.7; }
     .theme-switch-thumb { position:absolute; z-index:2; top:2px; left:2px; display:grid; place-items:center; width:22px; height:22px; border:1px solid var(--line); border-radius:50%; background:var(--paper); transition:transform .2s ease; }
-    .theme-toggle.is-dark .theme-switch-thumb { transform:translateX(24px); }.theme-thumb-icon { width:14px; height:14px; fill:none; stroke:var(--accent-strong); stroke-linecap:round; stroke-linejoin:round; stroke-width:1.7; }
+    .theme-toggle.is-dark .theme-switch-thumb,html[data-theme="dark"] .theme-switch-thumb { transform:translateX(24px); }.theme-thumb-icon { width:14px; height:14px; fill:none; stroke:var(--accent-strong); stroke-linecap:round; stroke-linejoin:round; stroke-width:1.7; }
+    html[data-theme="dark"] #themeThumbMoon,html:not([data-theme="dark"]) #themeThumbSun,html[data-theme="dark"] .theme-switch-static-sun,html:not([data-theme="dark"]) .theme-switch-static-moon { display:none!important; }
+    html[data-theme="dark"] #themeThumbSun,html:not([data-theme="dark"]) #themeThumbMoon { display:block!important; }
+    html[data-theme="dark"] .theme-switch-static-moon,html:not([data-theme="dark"]) .theme-switch-static-sun { display:grid!important; }
     .theme-toggle.is-dark .theme-switch-static-moon,.theme-toggle:not(.is-dark) .theme-switch-static-sun { color:var(--muted); }
     .page-shell { width:calc(100% - 236px); margin-left:236px; padding:44px clamp(28px,4vw,64px) 64px; }
     .page-heading { display:grid; grid-template-columns:minmax(0,1fr) minmax(230px,320px); align-items:end; gap:36px; padding-bottom:26px; border-bottom:1px solid var(--line); /* taste-skill-ignore: separates page intro from search controls */ }
@@ -53,7 +56,8 @@
     .control label { display:block; margin-bottom:6px; color:var(--muted); font-size:var(--type-label); font-weight:600; }
     .control input,.control select { width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); }
     .results-line { display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-top:1px solid var(--line); /* taste-skill-ignore: separates controls from live result count */ color:var(--muted); font-size:var(--type-secondary); }
-    .prompt-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding-top:12px; }
+    .prompt-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding-top:12px; transition:opacity .14s ease; }
+    .prompt-list.is-updating { opacity:.48; pointer-events:none; }
     .prompt-item { min-width:0; padding:18px; border:1px solid var(--line); /* taste-skill-ignore: prompt is a distinct copyable content unit */ background:var(--paper); }
     .prompt-item header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
     .prompt-item h3 { margin:0; }
@@ -61,8 +65,14 @@
     .prompt-categories span { padding:3px 7px; border-radius:4px; background:var(--soft); }
     .prompt-text { margin:14px 0 0; padding-top:13px; border-top:1px solid var(--line); /* taste-skill-ignore: separates title metadata from the verbatim prompt */ color:var(--ink); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
     .copy-prompt { flex:0 0 auto; min-width:78px; }
-    .prompt-skeleton { min-height:210px; background:var(--soft); opacity:.5; animation:skeleton-pulse 1.15s ease-in-out infinite; }
-    @keyframes skeleton-pulse { 0%,100% { opacity:.45; } 50% { opacity:1; } }
+    .prompt-skeleton { position:relative; min-width:0; min-height:210px; overflow:hidden; padding:18px; border:1px solid var(--line); background:var(--paper); }
+    .prompt-skeleton::after { position:absolute; inset:0; content:""; pointer-events:none; transform:translateX(-100%); background:linear-gradient(100deg,transparent,rgba(127,127,127,.12),transparent); /* taste-skill-ignore: moving highlight makes the prompt loading skeleton visible */ animation:prompt-shimmer 1.35s ease-in-out infinite; }
+    .skeleton-bar { display:block; height:11px; margin:0 0 10px; border-radius:3px; background:var(--soft); }
+    .skeleton-title { width:43%; height:16px; margin-bottom:14px; }
+    .skeleton-tag { display:inline-block; width:22%; height:18px; margin:0 6px 12px 0; }
+    .skeleton-copy { width:100%; height:10px; margin-top:9px; }
+    .skeleton-copy.short { width:76%; }
+    @keyframes prompt-shimmer { to { transform:translateX(100%); } }
     .empty-state,.error-state { grid-column:1/-1; padding:32px 0; color:var(--muted); }
     .error-state { color:var(--danger); }
     .toast { position:fixed; right:18px; bottom:18px; max-width:calc(100% - 36px); padding:11px 14px; border:1px solid var(--line); background:var(--paper); color:var(--ink); opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .16s ease,transform .16s ease; }
@@ -107,7 +117,7 @@
       <div class="control"><label for="categoryFilter">Nhóm chủ đề</label><select id="categoryFilter"><option value="">Tất cả nhóm</option></select></div>
     </section>
     <div class="results-line"><span id="resultCount" aria-live="polite">Đang đọc workbook…</span><button class="quiet-button" id="clearSearch" type="button">Xóa tìm kiếm</button></div>
-    <section class="prompt-list" id="promptList" aria-label="Danh sách prompt"><div class="prompt-skeleton" aria-hidden="true"></div><div class="prompt-skeleton" aria-hidden="true"></div><div class="prompt-skeleton" aria-hidden="true"></div><div class="prompt-skeleton" aria-hidden="true"></div></section>
+    <section class="prompt-list" id="promptList" aria-label="Danh sách prompt"><div class="prompt-skeleton" aria-hidden="true"><span class="skeleton-bar skeleton-title"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy short"></span></div><div class="prompt-skeleton" aria-hidden="true"><span class="skeleton-bar skeleton-title"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy short"></span></div><div class="prompt-skeleton" aria-hidden="true"><span class="skeleton-bar skeleton-title"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy short"></span></div><div class="prompt-skeleton" aria-hidden="true"><span class="skeleton-bar skeleton-title"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-tag"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy"></span><span class="skeleton-bar skeleton-copy short"></span></div></section>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

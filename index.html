@@ -14,6 +14,7 @@
       try {
         if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
       } catch (error) { /* private browsing */ }
+      document.documentElement.dataset.initialView = location.hash === '#prompts' ? 'prompts' : 'skills';
     })();
   </script>
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
@@ -86,17 +87,29 @@
     .theme-switch-thumb { position: absolute; z-index: 2; top: 2px; left: 2px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); transition: transform .2s ease; }
     .theme-thumb-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     .theme-toggle.is-dark .theme-switch-thumb { transform: translateX(24px); }
+    html[data-theme="dark"] .theme-switch-thumb { transform: translateX(24px); }
+    html[data-theme="dark"] #themeThumbMoon, html:not([data-theme="dark"]) #themeThumbSun,
+    html[data-theme="dark"] .theme-switch-static-sun, html:not([data-theme="dark"]) .theme-switch-static-moon { display: none !important; }
+    html[data-theme="dark"] #themeThumbSun, html:not([data-theme="dark"]) #themeThumbMoon { display: block !important; }
+    html[data-theme="dark"] .theme-switch-static-moon, html:not([data-theme="dark"]) .theme-switch-static-sun { display: grid !important; }
     .theme-toggle.is-dark .theme-switch-static-moon { color: var(--muted); }
     .theme-toggle.is-dark .theme-thumb-icon { color: var(--accent-strong); }
     .theme-toggle:not(.is-dark) .theme-switch-static-sun { color: var(--muted); }
     .theme-toggle:not(.is-dark) .theme-thumb-icon { color: var(--accent-strong); }
     #promptPageHost { display: none; }
     #promptPageFrame { display: block; width: 100%; height: 100dvh; border: 0; background: var(--ground); }
+    #catalogue { view-transition-name: skill-ai-canvas; }
+    ::view-transition-old(skill-ai-canvas) { animation: view-out .18s ease both; }
+    ::view-transition-new(skill-ai-canvas) { animation: view-in .18s ease both; }
+    @keyframes view-out { to { opacity: 0; } }
+    @keyframes view-in { from { opacity: 0; } to { opacity: 1; } }
     #catalogue.is-prompts { min-height: 100dvh; padding: 0; }
     #catalogue.is-prompts > :not(#promptPageHost) { display: none !important; }
     #catalogue.is-prompts #promptPageHost { display: block; }
-    #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: app-view-enter .16s ease both; }
-    @keyframes app-view-enter { from { opacity: .78; } to { opacity: 1; } }
+    html[data-initial-view="prompts"] #catalogue > :not(#promptPageHost) { display: none !important; }
+    html[data-initial-view="prompts"] #catalogue #promptPageHost { display: block; }
+    #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: app-view-enter .18s ease both; }
+    @keyframes app-view-enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     .quiet-button, .primary-button { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 6px; padding: 8px 12px; }
     .header-status .quiet-button:not(.theme-toggle) { width: 100%; }
     .header-status .theme-toggle { width: 62px; min-width: 62px; padding: 4px; }
@@ -142,7 +155,8 @@
     .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
     /* taste-skill-ignore: table frame is a real data surface */
     .catalogue { overflow-anchor: none; }
-    .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); /* taste-skill-ignore: real data table frame */ }
+    .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); transition: opacity .14s ease; /* taste-skill-ignore: real data table frame */ }
+    .table-wrap.is-updating { opacity: .48; pointer-events: none; }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
     th { padding: 10px 12px; color: var(--muted); text-align: left; font-size: var(--type-label); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--line); background: #fafbfa; }
@@ -280,14 +294,14 @@
       .search-field input { padding: 12px; }
       .catalogue-toolbar { flex-direction: row; align-items: center; }
       .catalogue-toolbar p, .page-size { font-size: var(--type-secondary); }
-      .table-wrap { min-height: 0; }
+      .table-wrap { min-height: 620px; }
       tr { padding: 12px 0 10px; }
       td { grid-template-columns: 76px minmax(0, 1fr); gap: 8px; font-size: 14px; }
       td::before { font-size: var(--type-label); }
       .skill-link { padding: 8px 9px; }
       .cell-preview { min-height: 0; -webkit-line-clamp: 5; }
     }
-    @media (prefers-reduced-motion: reduce) { .result-row, #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .result-row, #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: none; } .table-wrap { transition: none; } }
   </style>
 </head>
 <body>
@@ -425,11 +439,30 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
+    if (location.hash === '#prompts') {
+      const main = document.getElementById('catalogue');
+      const host = document.getElementById('promptPageHost');
+      const frame = document.getElementById('promptPageFrame');
+      main.classList.add('is-prompts');
+      host.setAttribute('aria-hidden', 'false');
+      frame.src = 'prompts.html?embed=1';
+      frame.dataset.loaded = 'true';
+      document.querySelectorAll('[data-app-view]').forEach((link) => {
+        const active = link.dataset.appView === 'prompts';
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
+      });
+    }
+  </script>
+
+  <script>
     window.addEventListener('DOMContentLoaded', () => { (() => {
       const $ = (selector) => document.querySelector(selector);
       const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
       let toastTimer;
       let renderFrame = 0;
+      let renderTimer = 0;
+      let renderToken = 0;
       const filterFields = $('#filterFields');
       const filterHome = document.createComment('filter fields home');
       const mobileFilters = $('#mobileFilterDialog');
@@ -468,19 +501,6 @@
         button.setAttribute('aria-pressed', String(dark));
         button.setAttribute('aria-label', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối');
         button.setAttribute('title', dark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện Dracula');
-        if (dark) {
-          $('#themeThumbMoon').style.display = 'none';
-          $('#themeThumbSun').style.display = 'block';
-          
-          document.querySelector('.theme-switch-static-moon').style.display = 'block';
-          document.querySelector('.theme-switch-static-sun').style.display = 'none';
-        } else {
-          $('#themeThumbMoon').style.display = 'block';
-          $('#themeThumbSun').style.display = 'none';
-          
-          document.querySelector('.theme-switch-static-moon').style.display = 'none';
-          document.querySelector('.theme-switch-static-sun').style.display = 'block';
-        }
         try { localStorage.setItem('skill-ai-theme', dark ? 'dark' : 'light'); } catch (error) { /* private browsing */ }
         const frame = $('#promptPageFrame');
         if (frame.contentWindow && frame.src) frame.contentWindow.postMessage({ type: 'skill-ai-theme', theme: dark ? 'dark' : 'light' }, location.origin);
@@ -499,7 +519,7 @@
         const headerHeight = mobile ? document.querySelector('.site-header').getBoundingClientRect().height : 0;
         promptFrame.style.height = `${Math.max(360, window.innerHeight - headerHeight)}px`;
       }
-      function switchView(view, push = false) {
+      function switchView(view, push = false, animate = true) {
         const prompts = view === 'prompts';
         const main = $('#catalogue');
         const wasPrompts = main.classList.contains('is-prompts');
@@ -509,18 +529,27 @@
         }
         if (prompts && !wasPrompts) skillScrollY = window.scrollY;
         sizePromptFrame();
-        main.classList.toggle('is-prompts', prompts);
-        promptHost.setAttribute('aria-hidden', String(!prompts));
-        appNav.forEach((link) => {
-          const active = link.dataset.appView === (prompts ? 'prompts' : 'skills');
-          link.classList.toggle('active', active);
-          if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
-        });
-        const visibleView = prompts ? promptHost : main;
-        visibleView.classList.remove('is-entering');
-        void visibleView.offsetWidth;
-        visibleView.classList.add('is-entering');
-        window.scrollTo({ top: prompts ? 0 : skillScrollY, behavior: 'instant' });
+        const applyView = () => {
+          document.documentElement.dataset.initialView = prompts ? 'prompts' : 'skills';
+          main.classList.toggle('is-prompts', prompts);
+          promptHost.setAttribute('aria-hidden', String(!prompts));
+          appNav.forEach((link) => {
+            const active = link.dataset.appView === (prompts ? 'prompts' : 'skills');
+            link.classList.toggle('active', active);
+            if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
+          });
+          if (animate) window.scrollTo({ top: prompts ? 0 : skillScrollY, behavior: 'instant' });
+        };
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!animate) applyView();
+        else if (document.startViewTransition && !reduceMotion) document.startViewTransition(applyView);
+        else {
+          applyView();
+          const visibleView = prompts ? promptHost : main;
+          visibleView.classList.remove('is-entering');
+          void visibleView.offsetWidth;
+          visibleView.classList.add('is-entering');
+        }
         if (push) history.pushState({ view: prompts ? 'prompts' : 'skills' }, '', prompts ? '#prompts' : '#skills');
       }
       appNav.forEach((link) => link.addEventListener('click', (event) => {
@@ -531,7 +560,7 @@
       }));
       window.addEventListener('popstate', () => switchView(location.hash === '#prompts' ? 'prompts' : 'skills'));
       window.addEventListener('resize', sizePromptFrame);
-      if (location.hash === '#prompts') switchView('prompts');
+      if (location.hash === '#prompts') switchView('prompts', false, false);
 
       function selectedValues(containerId) {
         return new Set([...document.querySelectorAll(`#${containerId} input:checked`)].map((input) => input.value));
@@ -599,9 +628,21 @@
         updateFilterLabels();
       }
 
-      function queueRender() {
-        cancelAnimationFrame(renderFrame);
-        renderFrame = requestAnimationFrame(render);
+      function queueRender(delay = 0) {
+        clearTimeout(renderTimer);
+        const token = ++renderToken;
+        renderTimer = setTimeout(() => {
+          const table = $('#tableWrap');
+          table.classList.add('is-updating');
+          renderTimer = setTimeout(() => {
+            if (token !== renderToken) return;
+            cancelAnimationFrame(renderFrame);
+            renderFrame = requestAnimationFrame(() => {
+              render();
+              requestAnimationFrame(() => { if (token === renderToken) table.classList.remove('is-updating'); });
+            });
+          }, 70);
+        }, delay);
       }
 
       function renderMarkdown(value) {
@@ -681,7 +722,7 @@
         }
       }
 
-      document.addEventListener('input', (event) => { if (event.target.id === 'searchInput') { state.query = event.target.value; state.page = 1; queueRender(); } });
+      document.addEventListener('input', (event) => { if (event.target.id === 'searchInput') { state.query = event.target.value; state.page = 1; queueRender(110); } });
       document.addEventListener('change', (event) => {
         if (event.target.closest('#categoryOptions')) state.categories = selectedValues('categoryOptions');
         if (event.target.closest('#domainOptions')) state.domains = selectedValues('domainOptions');
