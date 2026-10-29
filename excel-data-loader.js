@@ -11,6 +11,7 @@
   };
 
   function normalize(value) {
+    if (window.SkillAI?.text?.normalize) return window.SkillAI.text.normalize(value);
     return String(value ?? '')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')

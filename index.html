@@ -22,6 +22,7 @@
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+  <script defer src="site-common.js?v=20261029_v2"></script>
   <script defer src="dashboard-config.js?v=20261029_fix4"></script>
   <script defer src="excel-data-loader.js?v=20261029_fix4"></script><link rel="stylesheet" href="guides/guide-nav.css?v=20261029_fix4"><script defer src="guides/guide-catalog.js?v=20261029_fix4"></script><script defer src="guides/guide-nav.js?v=20261029_fix4"></script>
   <style>
@@ -528,7 +529,15 @@
         };
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!animate) applyView();
-        else if (document.startViewTransition && !reduceMotion) document.startViewTransition(applyView);
+        else if (document.startViewTransition && !reduceMotion) {
+          try {
+            const vt = document.startViewTransition(applyView);
+            if (vt?.ready) vt.ready.catch(() => {});
+            if (vt?.finished) vt.finished.catch(() => {});
+          } catch (e) {
+            applyView();
+          }
+        }
         else {
           applyView();
           const visibleView = prompts ? promptHost : main;
@@ -667,11 +676,11 @@
       }
 
       async function copyText(value, successMessage) {
-        try {
-          if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(value);
-          else { const textarea = document.createElement('textarea'); textarea.value = value; textarea.style.position = 'fixed'; textarea.style.opacity = '0'; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); textarea.remove(); }
+        if (window.SkillAI?.clipboard?.copy) {
+          await window.SkillAI.clipboard.copy(value, successMessage);
+        } else {
           showToast(successMessage);
-        } catch (error) { showToast('Không thể sao chép. Hãy chọn và copy thủ công.'); }
+        }
       }
 
       function clearFilters() {

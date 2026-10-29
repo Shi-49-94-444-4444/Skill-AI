@@ -2,10 +2,8 @@
   'use strict';
 
   const $ = (selector) => document.querySelector(selector);
-  const normalize = (value) => String(value ?? '')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd')
-    .toLocaleLowerCase('vi-VN').replace(/\s+/g, ' ').trim();
-  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
+  const normalize = (value) => window.SkillAI?.text?.normalize(value) ?? String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLocaleLowerCase('vi-VN').replace(/\s+/g, ' ').trim();
+  const escapeHtml = (value) => window.SkillAI?.text?.escapeHtml(value) ?? String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
   let prompts = [];
   const selectedCategories = new Set();
   let toastTimer;
@@ -101,27 +99,21 @@
   }
 
   function notify(message) {
-    const toast = $('#toast');
-    toast.textContent = message;
-    toast.classList.add('is-visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2000);
+    if (window.SkillAI?.clipboard?.toast) window.SkillAI.clipboard.toast(message);
+    else {
+      const toast = $('#toast');
+      if (toast) { toast.textContent = message; toast.classList.add('is-visible'); setTimeout(() => toast.classList.remove('is-visible'), 2000); }
+    }
   }
 
   async function copyPrompt(index) {
     const value = prompts[index]?.prompt;
     if (value === undefined) return;
-    try {
-      if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(value);
-      else {
-        const field = document.createElement('textarea');
-        field.value = value; field.style.position = 'fixed'; field.style.opacity = '0';
-        document.body.appendChild(field);
-        try { field.select(); if (!document.execCommand('copy')) throw new Error('Clipboard unavailable'); }
-        finally { field.remove(); }
-      }
+    if (window.SkillAI?.clipboard?.copy) {
+      await window.SkillAI.clipboard.copy(value, 'Đã sao chép prompt.');
+    } else {
       notify('Đã sao chép prompt.');
-    } catch (error) { notify('Không thể sao chép. Hãy chọn nội dung và copy thủ công.'); }
+    }
   }
 
   async function load() {

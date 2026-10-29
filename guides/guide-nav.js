@@ -16,10 +16,8 @@
   const base = new URL('.', script ? script.src : location.href);
   const groupsById = new Map(data.groups.map((group) => [group.id, group]));
 
-  const normalize = (value) => String(value ?? '')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd')
-    .toLocaleLowerCase('vi-VN').replace(/\s+/g, ' ').trim();
-  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
+  const normalize = (value) => window.SkillAI?.text?.normalize(value) ?? String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLocaleLowerCase('vi-VN').replace(/\s+/g, ' ').trim();
+  const escapeHtml = (value) => window.SkillAI?.text?.escapeHtml(value) ?? String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
 
   const urlFor = (slug) => new URL(slug === 'index' ? 'index.html' : `${slug}.html`, base).href;
   const groupLabel = (id) => groupsById.get(id)?.label || '';
