@@ -77,10 +77,12 @@
     .sidebar-stat span { color: var(--muted); font-size: 11px; }
     .header-status { color: var(--muted); display: grid; gap: 10px; margin-top: auto; font-size: 12px; }
     .header-status strong { color: var(--ink); font-weight: 600; }
-    .header-actions { display: grid; grid-template-columns: 62px 1fr; gap: 8px; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .header-actions .theme-toggle { flex: 0 0 62px; }
+    .header-actions .quiet-button:not(.theme-toggle) { flex: 1 1 auto; }
     .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 62px; min-width: 62px; padding: 4px; }
     .theme-switch-track { position: relative; display: block; flex: 0 0 50px; width: 50px; height: 28px; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--muted); }
-    .theme-switch-icon { position: absolute; z-index: 1; top: 6px; display: grid; place-items: center; width: 16px; height: 16px; }
+    .theme-switch-icon { position: absolute; z-index: 1; top: 5px; display: grid; place-items: center; width: 16px; height: 16px; }
     .theme-switch-static-moon { left: 5px; }
     .theme-switch-static-sun { right: 5px; }
     .theme-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
@@ -116,7 +118,7 @@
     .quiet-button:hover { border-color: var(--accent); color: var(--accent-strong); }
     .primary-button { border-color: var(--accent); background: var(--accent); color: white; font-weight: 600; }
     .primary-button:hover { background: var(--accent-strong); }
-    .page-shell { width: calc(100% - 236px); margin: 0 0 0 236px; padding: 40px clamp(28px, 4vw, 64px) 64px; }
+    .page-shell { width: calc(100% - 236px); margin-left: 236px; padding: 40px clamp(28px, 4vw, 64px) 64px; max-width: 1440px; }
     /* taste-skill-ignore: structural boundary for the catalogue introduction */
     .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: 40px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
     h1 { max-width: 680px; margin: 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -.045em; font-weight: 700; }
@@ -239,7 +241,7 @@
       .sidebar-nav a { flex: 0 0 auto; padding: 8px 10px; }
       .sidebar-stats { display: none; }
       .header-status { display: grid; grid-column: 2; grid-row: 1; gap: 5px; margin: 0; text-align: right; font-size: 11px; }
-      .header-actions { grid-template-columns: 54px auto; gap: 6px; }
+      .header-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
       .header-status button { margin: 0; }
       .header-status .theme-toggle { width: 54px; min-width: 54px; }
       .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }

@@ -157,9 +157,15 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
   font-size: 12px;
 }
 .header-actions {
-  display: grid;
-  grid-template-columns: 62px 1fr;
+  display: flex;
+  align-items: center;
   gap: 8px;
+}
+.header-actions .theme-toggle {
+  flex: 0 0 62px;
+}
+.header-actions .quiet-button:not(.theme-toggle) {
+  flex: 1 1 auto;
 }
 .quiet-button {
   padding: 8px 12px;
@@ -197,7 +203,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .theme-switch-icon {
   position: absolute;
   z-index: 1;
-  top: 6px;
+  top: 5px;
   display: grid;
   place-items: center;
   width: 16px;
@@ -1072,7 +1078,9 @@ p code, li code, td code {
     font-size: 11px;
   }
   .header-actions {
-    grid-template-columns: 54px auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     gap: 6px;
   }
   .header-status .theme-toggle { width: 54px; min-width: 54px; }
@@ -1115,4 +1123,20 @@ p code, li code, td code {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* 
+==========================================================================
+   Instant Soft Navigation Transitions
+========================================================================== */
+@keyframes pageFadeIn {
+  from { opacity: 0.85; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-shell.is-swapping {
+  animation: pageFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.18s;
 }

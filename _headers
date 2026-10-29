@@ -1,6 +1,29 @@
+# Security Headers cho mọi route
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.sheetjs.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://raw.githubusercontent.com https://cdn.sheetjs.com https://cdn.jsdelivr.net; img-src 'self' data:; base-uri 'self'; form-action 'none'; frame-ancestors 'self'
 
+# Cache tối ưu cho assets tĩnh (CSS, JS, Fonts)
+/*.css
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/*.js
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/guides/*.css
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/guides/*.js
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# Cache vĩnh viễn cho hình ảnh và vector icons
+/guides/assets/*
+  Cache-Control: public, max-age=2592000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=2592000, immutable
+
+/favicon.svg
+  Cache-Control: public, max-age=2592000, immutable

@@ -133,26 +133,31 @@
     }
   });
 
-  // 6. Xử lý fallback khi ảnh tải lỗi
-  document.querySelectorAll('.ui-shot-box img').forEach(img => {
-    img.addEventListener('error', () => {
-      const box = img.closest('.ui-shot-box');
-      if (box) {
-        img.style.display = 'none';
-        const fallback = document.createElement('div');
-        fallback.style.padding = '32px 20px';
-        fallback.style.textAlign = 'center';
-        fallback.style.color = 'var(--muted)';
-        fallback.style.fontSize = '14px';
-        fallback.innerHTML = `<span>⚠️ Không thể tải trước hình ảnh sơ đồ. Vui lòng tham khảo trực tiếp mã nguồn.</span>`;
-        box.insertBefore(fallback, box.querySelector('.ui-shot-caption'));
-      }
+  // 6. Xử lý fallback khi ảnh tải lỗi & tái khởi tạo động
+  function initMediaFallbacks() {
+    document.querySelectorAll('.ui-shot-box img').forEach(img => {
+      img.onerror = () => {
+        const box = img.closest('.ui-shot-box');
+        if (box && !box.querySelector('.ui-shot-fallback')) {
+          img.style.display = 'none';
+          const fallback = document.createElement('div');
+          fallback.className = 'ui-shot-fallback';
+          fallback.style.padding = '32px 20px';
+          fallback.style.textAlign = 'center';
+          fallback.style.color = 'var(--muted)';
+          fallback.style.fontSize = '14px';
+          fallback.innerHTML = `<span>⚠️ Không thể tải trước hình ảnh. Vui lòng tham khảo trực tiếp mã nguồn.</span>`;
+          box.insertBefore(fallback, box.querySelector('.ui-shot-caption'));
+        }
+      };
     });
-  });
+  }
 
   // 7. Tìm kiếm trong trang Hub Guide (nếu có ô tìm kiếm #hubSearch)
-  const hubSearch = document.getElementById('hubSearch');
-  if (hubSearch) {
+  function initHubSearch() {
+    const hubSearch = document.getElementById('hubSearch');
+    if (!hubSearch || hubSearch.dataset.bound) return;
+    hubSearch.dataset.bound = 'true';
     const cards = document.querySelectorAll('.guide-card');
     const groupSections = document.querySelectorAll('.group-section');
     const emptyNotice = document.getElementById('hubEmpty');
@@ -180,4 +185,12 @@
       }
     });
   }
+
+  function reinitDynamicFeatures() {
+    initMediaFallbacks();
+    initHubSearch();
+  }
+
+  window.reinitGuideDynamicFeatures = reinitDynamicFeatures;
+  reinitDynamicFeatures();
 })();
