@@ -186,9 +186,36 @@
     });
   }
 
+  // 8. Linh Tinh Quang Điểm (Spiritual Ambient Atmosphere)
+  function initSpiritualAtmosphere() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const shell = document.querySelector('.page-shell');
+    if (!shell || shell.querySelector('.mystic-ambient-layer')) return;
+
+    const layer = document.createElement('div');
+    layer.className = 'mystic-ambient-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    
+    // 12 tinh thể linh quang lững lờ trôi rất nhẹ
+    for (let i = 0; i < 12; i++) {
+      const mote = document.createElement('span');
+      mote.className = 'spiritual-mote';
+      const size = Math.floor(Math.random() * 2) + 2; // 2px - 3px
+      mote.style.width = `${size}px`;
+      mote.style.height = `${size}px`;
+      mote.style.left = `${(i * 8.2 + Math.random() * 5).toFixed(1)}%`;
+      mote.style.top = `${(Math.random() * 90 + 5).toFixed(1)}%`;
+      mote.style.animationDelay = `${(Math.random() * 8).toFixed(1)}s`;
+      mote.style.animationDuration = `${(9 + Math.random() * 6).toFixed(1)}s`;
+      layer.appendChild(mote);
+    }
+    shell.insertBefore(layer, shell.firstChild);
+  }
+
   function reinitDynamicFeatures() {
     initMediaFallbacks();
     initHubSearch();
+    initSpiritualAtmosphere();
   }
 
   window.reinitGuideDynamicFeatures = reinitDynamicFeatures;

@@ -385,12 +385,19 @@ p {
   color: var(--accent-strong);
   text-decoration: underline;
 }
+.guide-side-meta svg,
 .guide-side-meta a svg {
-  width: 15px;
-  height: 15px;
-  fill: none;
-  stroke: currentColor;
+  width: 15px !important;
+  height: 15px !important;
+  max-width: 15px !important;
+  max-height: 15px !important;
+  min-width: 15px !important;
+  flex-shrink: 0;
+  fill: none !important;
+  stroke: currentColor !important;
   stroke-width: 1.8;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* ==========================================================================
@@ -1117,26 +1124,156 @@ p code, li code, td code {
   .stepper-number { width: 28px; height: 28px; font-size: 12px; }
 }
 
+/* ==========================================================================
+   Magical Motion Effects & Eastern Fantasy Atmosphere (Huyền Khí & Linh Lực)
+   ========================================================================== */
+
+/* 1. Ethereal Ambient Mist Backdrop (Khí lưu nền trang) */
+.page-shell {
+  position: relative;
+  background-image: 
+    radial-gradient(ellipse 650px 320px at 85% 8%, rgba(189, 147, 249, 0.05), transparent 70%),
+    radial-gradient(ellipse 550px 350px at 10% 40%, rgba(139, 233, 253, 0.04), transparent 70%),
+    radial-gradient(ellipse 700px 420px at 75% 80%, rgba(80, 250, 123, 0.03), transparent 70%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* 2. Sương Tan Linh Hiện - Staggered Page Entrance */
+@keyframes etherealRise {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.breadcrumbs { animation: etherealRise 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.page-heading { animation: etherealRise 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both; }
+.quick-glance-card { animation: etherealRise 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both; }
+.svg-diagram-frame, .ui-shot-box, .diagram-frame { animation: etherealRise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+
+/* 3. Phù Quang Viền Chú - Mystical Rune Border & Aura on Hover */
+.quick-glance-card,
+.step-card,
+.diagram-frame,
+.ui-shot-box,
+.svg-diagram-frame,
+.guide-card {
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.25s ease, 
+              box-shadow 0.25s ease;
+}
+
+.quick-glance-card:hover,
+.step-card:hover,
+.diagram-frame:hover,
+.svg-diagram-frame:hover,
+.ui-shot-box:hover,
+.guide-card:hover {
+  border-color: rgba(189, 147, 249, 0.45) !important;
+  box-shadow: 0 12px 32px -8px rgba(189, 147, 249, 0.16),
+              0 0 0 1px rgba(189, 147, 249, 0.25) !important;
+  transform: translateY(-2px);
+}
+
+.step-card:hover .step-badge,
+.stepper-item:hover .stepper-number {
+  transform: scale(1.08);
+  box-shadow: 0 0 14px rgba(189, 147, 249, 0.45);
+}
+
+/* 4. Linh Khí Lưu Chuyển - Ethereal Energy Breathing for Illustrations & Diagrams */
+@keyframes spiritBreathing {
+  0%, 100% {
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 16px rgba(189, 147, 249, 0.12));
+  }
+  50% {
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 26px rgba(139, 233, 253, 0.22));
+  }
+}
+
+.svg-diagram-frame svg {
+  animation: spiritBreathing 7s ease-in-out infinite;
+}
+
+.ui-shot-box img {
+  animation: spiritBreathing 8s ease-in-out infinite;
+}
+
+/* 5. Linh Tinh Quang Điểm - Spiritual Ambient Layer */
+.mystic-ambient-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.spiritual-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px 1px var(--accent);
+  opacity: 0;
+  animation: floatMote 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.spiritual-mote:nth-child(2n) {
+  background: var(--dracula-cyan);
+  box-shadow: 0 0 8px 1px var(--dracula-cyan);
+}
+
+.spiritual-mote:nth-child(3n) {
+  background: var(--dracula-green);
+  box-shadow: 0 0 8px 1px var(--dracula-green);
+}
+
+.spiritual-mote:nth-child(4n) {
+  background: var(--dracula-yellow);
+  box-shadow: 0 0 8px 1px var(--dracula-yellow);
+}
+
+@keyframes floatMote {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) scale(0.6);
+  }
+  25% {
+    opacity: 0.55;
+    transform: translateY(-25px) translateX(8px) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-55px) translateX(-6px) scale(1.1);
+  }
+  75% {
+    opacity: 0.4;
+    transform: translateY(-90px) translateX(10px) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-130px) translateX(-4px) scale(0.5);
+  }
+}
+
+/* 6. Trợ năng & Giảm chuyển động (Accessibility First) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-}
-
-/* 
-==========================================================================
-   Instant Soft Navigation Transitions
-========================================================================== */
-@keyframes pageFadeIn {
-  from { opacity: 0.85; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.page-shell.is-swapping {
-  animation: pageFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-}
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.18s;
+  .mystic-ambient-layer {
+    display: none !important;
+  }
+  .svg-diagram-frame svg,
+  .ui-shot-box img {
+    animation: none !important;
+  }
 }

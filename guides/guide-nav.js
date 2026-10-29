@@ -25,41 +25,28 @@
   const groupLabel = (id) => groupsById.get(id)?.label || '';
 
   // Nhận diện trang hiện tại, hỗ trợ cả /guides/x.html, /guides/x (clean URL của Cloudflare Pages) và /guides/.
-  function resolveSlugFromUrl(urlStr) {
+  const currentSlug = (() => {
+    const path = decodeURI(location.pathname);
+    const root = decodeURI(base.pathname);
+    if (!path.startsWith(root)) return null;
+    const rest = path.slice(root.length).replace(/\.html$/i, '').replace(/\/$/, '');
+    if (!rest || rest === 'index') return 'index';
+    return data.guides.some((guide) => guide.slug === rest) ? rest : null;
+  })();
+
+  // Native Browser Prefetching (không can thiệp router hay pushState)
+  const prefetchedUrls = new Set();
+  function prefetchUrl(href) {
+    if (!href || prefetchedUrls.has(href)) return;
     try {
-      const u = new URL(urlStr, location.href);
-      const root = decodeURI(base.pathname);
-      const p = decodeURI(u.pathname);
-      if (!p.startsWith(root)) return null;
-      const rest = p.slice(root.length).replace(/\.html$/i, '').replace(/\/$/, '');
-      if (!rest || rest === 'index') return 'index';
-      return data.guides.some((guide) => guide.slug === rest) ? rest : null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  let currentSlug = resolveSlugFromUrl(location.href);
-
-  // In-Memory Page Cache & Soft Navigation Router
-  const pageCache = new Map();
-  // Khởi tạo cache ngay với trang hiện tại
-  if (typeof document !== 'undefined') {
-    pageCache.set(location.href.split('#')[0], document.documentElement.outerHTML);
-  }
-
-  async function prefetchPage(urlStr) {
-    const cleanUrl = urlStr.split('#')[0];
-    if (pageCache.has(cleanUrl)) return pageCache.get(cleanUrl);
-    try {
-      const res = await fetch(cleanUrl, { credentials: 'same-origin' });
-      if (!res.ok) return null;
-      const text = await res.text();
-      pageCache.set(cleanUrl, text);
-      return text;
-    } catch (e) {
-      return null;
-    }
+      const u = new URL(href, location.href);
+      if (u.origin !== location.origin) return;
+      prefetchedUrls.add(href);
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = href;
+      document.head.appendChild(link);
+    } catch (e) {}
   }
 
   const index = data.guides.map((guide) => ({
@@ -95,11 +82,11 @@
     base,
     urlFor,
     groupLabel,
-    get currentSlug() { return currentSlug; },
+    currentSlug,
     normalize,
     escapeHtml,
     search,
-    prefetch: prefetchPage
+    prefetch: prefetchUrl
   });
 
   if (document.documentElement.dataset.embedded === 'true') return;
@@ -248,115 +235,16 @@
     });
     window.addEventListener('resize', () => { if (isOpen()) { scrim.hidden = !sheetQuery.matches; place(); } });
 
-    // --- INSTANT SOFT ROUTING & PREFETCH ---
-    function updateActiveNav() {
-      const onGuidePage = currentSlug !== null;
-      toggle.classList.toggle('active', onGuidePage);
-      if (isOpen()) render();
-    }
-
-    async function navigateSoft(urlStr, push = true) {
-      const slug = resolveSlugFromUrl(urlStr);
-      const currentShell = document.querySelector('main.page-shell');
-      if (!slug || !currentShell) {
-        location.href = urlStr;
-        return;
-      }
-
-      try {
-        let html = await prefetchPage(urlStr);
-        if (!html) {
-          location.href = urlStr;
-          return;
-        }
-
-        const parser = new DOMParser();
-        const newDoc = parser.parseFromString(html, 'text/html');
-        const newShell = newDoc.querySelector('main.page-shell');
-        if (!newShell) {
-          location.href = urlStr;
-          return;
-        }
-
-        const apply = () => {
-          newShell.classList.add('is-swapping');
-          currentShell.replaceWith(newShell);
-          document.title = newDoc.title;
-          currentSlug = slug;
-          if (push) {
-            history.pushState({ guideSlug: slug, url: urlStr }, '', urlStr);
-          }
-          
-          const hash = urlStr.includes('#') ? urlStr.split('#')[1] : null;
-          if (hash) {
-            const el = document.getElementById(hash);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.scrollTo({ top: 0, behavior: 'instant' });
-          }
-
-          close(false);
-          updateActiveNav();
-
-          if (window.reinitGuideDynamicFeatures) {
-            window.reinitGuideDynamicFeatures();
-          }
-        };
-
-        if (document.startViewTransition) {
-          document.startViewTransition(apply);
-        } else {
-          apply();
-        }
-      } catch (e) {
-        location.href = urlStr;
-      }
-    }
-
-    // Prefetch khi rê chuột hoặc chạm
+    // Tự động prefetch trang Guide khi rê chuột hoặc chạm nhẹ vào liên kết
     document.addEventListener('pointerover', (e) => {
       const a = e.target.closest('a[href]');
-      if (!a) return;
-      const slug = resolveSlugFromUrl(a.href);
-      if (slug) prefetchPage(a.href);
+      if (a && a.href && a.origin === location.origin) prefetchUrl(a.href);
     }, { passive: true });
 
     document.addEventListener('touchstart', (e) => {
       const a = e.target.closest('a[href]');
-      if (!a) return;
-      const slug = resolveSlugFromUrl(a.href);
-      if (slug) prefetchPage(a.href);
+      if (a && a.href && a.origin === location.origin) prefetchUrl(a.href);
     }, { passive: true });
-
-    // Intercept click để chuyển trang mềm không reload
-    document.addEventListener('click', (e) => {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      const a = e.target.closest('a[href]');
-      if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
-
-      const currentShell = document.querySelector('main.page-shell');
-      if (!currentShell) return;
-
-      const slug = resolveSlugFromUrl(a.href);
-      if (!slug) return; // Ra ngoài (ví dụ index.html) thì chuyển trang bình thường
-
-      const curClean = location.href.split('#')[0];
-      const targetClean = a.href.split('#')[0];
-      if (curClean === targetClean && a.href.includes('#')) {
-        return; // Anchor scroll cùng trang
-      }
-
-      e.preventDefault();
-      navigateSoft(a.href, true);
-    });
-
-    window.addEventListener('popstate', (e) => {
-      const slug = resolveSlugFromUrl(location.href);
-      const currentShell = document.querySelector('main.page-shell');
-      if (slug && currentShell) {
-        navigateSoft(location.href, false);
-      }
-    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
