@@ -67,8 +67,9 @@
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(189, 147, 249, 0.65) 0%, rgba(139, 233, 253, 0.25) 60%, transparent 100%);
-  filter: blur(1px);
   pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
   animation: floatMote ease-in-out infinite alternate;
 }
 @keyframes floatMote {

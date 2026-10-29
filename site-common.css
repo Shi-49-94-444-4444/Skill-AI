@@ -133,6 +133,8 @@ a:focus-visible {
   padding: 28px 18px;
   border-right: 1px solid var(--line);
   background: var(--ground);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .brand {
@@ -489,13 +491,15 @@ html:not([data-theme="dark"]) .theme-switch-static-sun {
   border-radius: 50%;
   background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
   opacity: 0.12;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
   animation: floatMote 12s infinite ease-in-out;
 }
 
 html[data-theme="dark"] .spiritual-mote {
   background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
   opacity: 0.28;
-  filter: drop-shadow(0 0 3px var(--accent));
+  box-shadow: 0 0 4px var(--accent);
 }
 
 @keyframes floatMote {
