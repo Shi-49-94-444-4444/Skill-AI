@@ -575,10 +575,12 @@ p {
 }
 
 /* ==========================================================================
-   Screenshots & Media UI: Industrial Brutalism (Hard Edges, Zero Radius, 2px Borders)
+   Screenshots & Media UI: Industrial Brutalism & Loading Skrimmy
+   Zero Clipping, Zero Stretching, Full 16:9 Aspect Ratio Display
    ========================================================================== */
 .ui-shot-box {
-  margin: 28px 0 36px;
+  margin: 24px 0 32px;
+  max-width: 920px;
   border: 2px solid var(--line) !important;
   border-radius: 0px !important;
   background: var(--paper);
@@ -591,34 +593,90 @@ p {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #141720;
+  background: #090a0f;
   overflow: hidden;
   border-radius: 0px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Base solid skeleton backdrop */
+.ui-shot-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #141722;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Shimmer Skeleton Wave Highlight ("Skrimmy") */
+.ui-shot-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateX(-100%);
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.12) 50%, transparent 80%);
+  animation: prompt-shimmer 1.35s ease-in-out infinite;
+  z-index: 2;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+@keyframes prompt-shimmer {
+  to { transform: translateX(100%); }
+}
+
+html:not([data-theme="dark"]) .ui-shot-media::before {
+  background: #edf2f7;
+}
+html:not([data-theme="dark"]) .ui-shot-media::after {
+  background: linear-gradient(100deg, transparent 20%, rgba(0, 0, 0, 0.08) 50%, transparent 80%);
+}
+
+/* Image: ALWAYS object-fit: contain so 100% of the graphic is visible */
 .ui-shot-media img,
 .ui-shot-box > img,
 .ui-shot-img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  background: #090a0d; /* deep brutalist backdrop */
-  cursor: zoom-in;
-  border-radius: 0px !important;
-}
-
-.ui-shot-media img {
   position: absolute;
   inset: 0;
+  width: 100%;
   height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #090a0d;
+  cursor: zoom-in;
+  border-radius: 0px !important;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
+  z-index: 3;
+  display: block;
+}
+
+/* Fully Loaded state */
+.ui-shot-media.is-loaded img,
+.ui-shot-media img.is-loaded {
+  opacity: 1 !important;
+}
+
+.ui-shot-media.is-loaded::before,
+.ui-shot-media.is-loaded::after {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  animation: none !important;
 }
 
 .ui-shot-media:hover img {
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
 .ui-shot-media .hero-zoom-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
   border-radius: 0px !important;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
@@ -626,7 +684,14 @@ p {
   text-transform: uppercase;
   background: rgba(11, 14, 20, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8f8f2;
+  padding: 5px 10px;
   z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .ui-shot-media:hover .hero-zoom-hint {
@@ -638,14 +703,16 @@ html:not([data-theme="dark"]) .ui-shot-box img,
 html:not([data-theme="dark"]) .ui-shot-img {
   background: #090a0d;
 }
+
 .ui-shot-caption {
-  padding: 14px 20px;
+  padding: 12px 18px;
   border-top: 2px solid var(--line) !important;
   font-size: 13px;
   color: var(--muted);
   line-height: 1.6;
   background: var(--paper);
 }
+
 .ui-shot-caption strong {
   color: var(--ink);
   font-family: 'JetBrains Mono', 'Geist Mono', monospace;

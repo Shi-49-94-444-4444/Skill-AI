@@ -61,7 +61,26 @@
     });
   }
 
+  // 4. Standalone Image Skrimmy & Skeleton handler
+  function initGuideImageSkeletons() {
+    document.querySelectorAll('.ui-shot-media, .hero-showcase-media').forEach((media) => {
+      const img = media.querySelector('img');
+      if (!img) return;
+      function markDone() {
+        media.classList.add('is-loaded');
+        img.classList.add('is-loaded');
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        markDone();
+      } else {
+        img.addEventListener('load', markDone, { once: true });
+        img.addEventListener('error', markDone, { once: true });
+      }
+    });
+  }
+
   function reinitDynamicFeatures() {
+    initGuideImageSkeletons();
     window.SkillAI?.ui?.initImageSkeletons?.();
     window.SkillAI?.ui?.initImageFallbacks?.();
     window.SkillAI?.ui?.initLightbox?.();
@@ -70,9 +89,11 @@
   }
 
   window.reinitGuideDynamicFeatures = reinitDynamicFeatures;
+  initGuideImageSkeletons();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', reinitDynamicFeatures);
   } else {
     reinitDynamicFeatures();
   }
+  window.addEventListener('load', initGuideImageSkeletons, { once: true });
 })();
