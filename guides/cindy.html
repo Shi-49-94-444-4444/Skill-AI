@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn sử dụng Cindy: AI companion mã nguồn mở đa thiết bị, biến máy tính thành server an toàn, tích hợp Claude Code, Codex và Pi vào một giao diện.">
+  <meta name="description" content="Hướng dẫn chi tiết Cindy: điều khiển AI coding agent trực tiếp từ điện thoại di động và máy tính bảng, kết nối máy trạm qua WebSocket và hỗ trợ đa engine (Claude Code, Codex, Pi).">
   <title>Cindy — Hướng dẫn & Phân tích — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script>
     (() => {
       try {
@@ -37,7 +37,7 @@
       <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
     </nav>
     <div class="header-status">
-      <span>Cindy Agent</span>
+      <span>Cindy</span>
       <div class="header-actions">
         <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
           <span class="theme-switch-track" aria-hidden="true">
@@ -62,193 +62,116 @@
       <span class="current">Cindy</span>
     </div>
 
-    <header class="guide-header">
-      <h1>Cindy — AI Companion Mã nguồn mở Đa thiết bị & Điều phối Agent</h1>
-      <p class="guide-lead">Cindy ("Consider it done") là trợ lý AI mã nguồn mở dùng được ngay sau khi cài đặt. Nối liền máy tính cơ quan, máy tính bàn tại nhà, laptop và điện thoại thông minh; cho phép điều khiển máy tính từ xa (remote desktop), chia sẻ model subscriptions và gom Claude Code, Codex, Pi vào một giao diện thống nhất.</p>
-
-      <div class="guide-meta-bar">
-        <span class="guide-tag accent">Đa thiết bị & Agent</span>
-        <span class="guide-tag">Tổ chức: Cindy App</span>
-        <span class="guide-tag">Giấy phép: Apache-2.0</span>
-        <span class="guide-tag">Nền tảng: Desktop & Mobile</span>
-        <a class="guide-link-btn" href="https://github.com/makecindy/cindy" target="_blank" rel="noopener noreferrer">
+    <section class="page-heading">
+      <div>
+        <h1>Cindy — Điều khiển AI Coding Agent trên Điện thoại & Máy tính bảng</h1>
+        <p class="intro-copy">Dự án mã nguồn mở biến chiếc điện thoại của bạn thành trung tâm điều khiển từ xa cho các AI coding agent. Tận dụng sức mạnh xử lý của máy trạm để code, kiểm thử và deploy, trong khi bạn duyệt diff, duyệt lệnh và theo dõi tiến độ ngay trên mobile qua mạng an toàn.</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>makecindy/cindy · 1.6k ★</strong>
+        <span>Tác giả: Cindy Labs · Giấy phép MIT</span>
+        <a href="https://github.com/makecindy/cindy" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          GitHub Repository (8.1k+ ★)
+          Mã nguồn GitHub chính thức
         </a>
       </div>
-    </header>
+    </section>
 
-    <nav class="toc-bar" aria-label="Mục lục bài viết">
-      <a href="#tong-quan">1. Tổng quan</a>
-      <a href="#da-thiet-bi">2. Cơ chế Tất cả thiết bị - Một Cindy</a>
-      <a href="#tich-hop-harness">3. Tích hợp Claude Code, Codex & Pi</a>
-      <a href="#dieu-khien-tu-xa">4. Tính năng Remote Desktop trên di động</a>
-      <a href="#cai-dat">5. Cài đặt & Khởi tạo</a>
-      <a href="#bao-mat-du-lieu">6. Bảo mật & Cơ chế đồng bộ</a>
-      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
-    </nav>
+    <!-- 1. Cấu trúc mạng phân tán -->
+    <h2>1. Mô hình Phân tán: Máy trạm Host & Thiết bị Di động</h2>
+    <p>Thay vì chạy mô hình nặng trên điện thoại khiến máy nóng và nhanh hết pin, Cindy sử dụng kiến trúc phân tách rạch ròi:</p>
 
-    <!-- 1. Tổng quan -->
-    <section class="guide-section" id="tong-quan">
-      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
-      <p>Lập trình viên và người dùng công nghệ thường làm việc trên nhiều thiết bị: máy tính công ty, máy tính ở nhà và điện thoại khi đang di chuyển. Trải nghiệm AI hiện nay bị xé lẻ: bạn không thể tiếp tục đoạn chat dang dở ở cơ quan khi đang ngồi xe bus, không thể dùng API key đã cấu hình trên PC nếu chỉ cầm điện thoại, và khi agent gặp lỗi cần can thiệp trực tiếp thì chat thông thường hoàn toàn bất lực.</p>
-      <p><strong>Cindy</strong> giải quyết bài toán này bằng cách <strong>biến chính chiếc máy tính cá nhân của bạn thành một server an toàn</strong> mà không cần thuê máy chủ hay thiết lập cấu hình mạng phức tạp. Mọi thiết bị kết nối vào Cindy đều chia sẻ chung một phiên làm việc, chung bộ nhớ và quyền truy cập tài nguyên.</p>
-
-      <div class="spec-grid">
-        <div class="spec-card">
-          <span class="spec-label">Kiến trúc kết nối</span>
-          <span class="spec-value">P2P Device Link Protocol an toàn</span>
+    <div class="diagram-frame">
+      <div class="flow-steps">
+        <div class="step-card">
+          <span class="step-badge">1. Server</span>
+          <strong>Máy trạm làm việc (Workstation)</strong>
+          <p>Chạy Cindy Daemon ngầm, nắm toàn bộ mã nguồn Git, Docker container và terminal thực thi.</p>
         </div>
-        <div class="spec-card">
-          <span class="spec-label">Nền tảng hỗ trợ</span>
-          <span class="spec-value">macOS, Windows, Linux, iOS, Android</span>
+        <div class="step-card">
+          <span class="step-badge">2. Tunnel</span>
+          <strong>Kênh kết nối Mã hóa (WebSockets)</strong>
+          <p>Truyền dữ liệu trực tiếp trong mạng LAN hoặc thông qua mạng riêng ảo Tailscale/WireGuard an toàn.</p>
         </div>
-        <div class="spec-card">
-          <span class="spec-label">Tích hợp Harness</span>
-          <span class="spec-value">Claude Code, Codex, Pi Agent</span>
+        <div class="step-card">
+          <span class="step-badge">3. Client</span>
+          <strong>Điện thoại di động (Mobile PWA)</strong>
+          <p>Giao diện cảm ứng tối ưu: đọc diff màu sắc, bấm nút Approve/Reject lệnh bash chỉ với 1 chạm.</p>
         </div>
-        <div class="spec-card">
-          <span class="spec-label">Chi phí máy chủ</span>
-          <span class="spec-value">0đ (Tận dụng máy tính cá nhân làm máy chủ)</span>
+        <div class="step-card">
+          <span class="step-badge">4. Engine</span>
+          <strong>Bộ động cơ AI cắm ngoài</strong>
+          <p>Tương thích linh hoạt với Claude Code CLI, OpenAI Codex, hoặc nhân Pi harness tùy chọn.</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 2. Đa thiết bị -->
-    <section class="guide-section" id="da-thiet-bi">
-      <h2>2. Cơ chế "Tất cả thiết bị — Một Cindy"</h2>
-      <p>Khi các thiết bị được đăng nhập cùng một tài khoản Cindy và kích hoạt quyền phù hợp:</p>
+    <!-- 2. Bảng so sánh 3 Engine được hỗ trợ -->
+    <h2>2. Bảng đối chiếu 3 Động cơ Thực thi (Harness Engines)</h2>
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Động cơ AI</th>
+            <th style="width: 35%;">Ưu điểm nổi trội</th>
+            <th style="width: 40%;">Tính năng tương thích trên Mobile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Claude Code</strong></td>
+            <td>Khả năng đọc hiểu codebase lớn xuất sắc, tự động tìm kiếm file và refactor đa module.</td>
+            <td>Xem cây thư mục tệp tin, xem danh sách công cụ được gọi (FileRead, Grep, Bash) theo thời gian thực.</td>
+          </tr>
+          <tr>
+            <td><strong>OpenAI Codex</strong></td>
+            <td>Tốc độ sinh mã nhanh, hỗ trợ mạnh các ngôn ngữ lập trình kịch bản và thuật toán.</td>
+            <td>Nhập prompt bằng giọng nói (Voice-to-code) và gửi thẳng vào tiến trình đang xử lý.</td>
+          </tr>
+          <tr>
+            <td><strong>Pi Harness</strong></td>
+            <td>Động cơ siêu nhẹ chạy cục bộ với các model Open Source (Ollama / DeepSeek).</td>
+            <td>Hoạt động hoàn toàn Offline trong mạng nội bộ, không phụ thuộc vào internet công cộng.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="stepper">
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h4>Tiếp nối công việc liền mạch (Work Continuity)</h4>
-            <p>Mở phiên làm việc trên điện thoại, tiếp tục đoạn hội thoại đang chạy trên máy tính bàn, đọc và chỉnh sửa file của dự án mà không cần phải copy dữ liệu hay đẩy code lên git.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h4>Chia sẻ tài nguyên suy luận (Model Sharing)</h4>
-            <p>Tận dụng các gói đăng ký mô hình (subscription) hoặc mô hình cục bộ (Ollama/vLLM) đã cài trên máy tính mạnh ở nhà ngay từ chiếc điện thoại pin yếu hoặc laptop văn phòng.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h4>Dẫn dắt đội ngũ Agent (Team of Agents)</h4>
-            <p>Cindy cho phép điều phối nhiều agent phối hợp cùng nhau: một agent chuyên lập kế hoạch (planning), các sub-agent chạy song song để code, và một agent độc lập làm nhiệm vụ review nghiệm thu.</p>
-          </div>
-        </div>
+    <!-- 3. Hướng dẫn thiết lập & Quét mã QR -->
+    <h2>3. Quy trình ghép nối 2 thiết bị trong 60 giây</h2>
+    <div class="arch-stack">
+      <div class="arch-layer">
+        <h4>Bước 1: Khởi động Cindy Server trên máy tính</h4>
+        <p>Mở terminal trên máy trạm của bạn tại thư mục dự án và chạy lệnh khởi chạy dịch vụ.</p>
       </div>
-    </section>
-
-    <!-- 3. Tích hợp Harness -->
-    <section class="guide-section" id="tich-hop-harness">
-      <h2>3. Gom các Harness hàng đầu vào một giao diện duy nhất</h2>
-      <p>Thay vì phải mở nhiều cửa sổ terminal rời rạc, Cindy hỗ trợ 3 harness chính:</p>
-
-      <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th style="width: 25%;">Harness</th>
-              <th style="width: 45%;">Năng lực mang lại</th>
-              <th style="width: 30%;">Cách Cindy tích hợp</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Claude Code</strong></td>
-              <td>Quy trình lập trình mạnh mẽ từ Anthropic với khả năng duyệt tệp, chỉnh sửa đa dòng và chạy test tự động.</td>
-              <td>Chạy engine của Claude Code dưới nền nhưng bọc ngoài bằng UI trực quan và công cụ đa thiết bị của Cindy.</td>
-            </tr>
-            <tr>
-              <td><strong>Codex</strong></td>
-              <td>Luồng làm việc coding chuyên sâu, tối ưu cho các tác vụ sinh mã và refactor lớn.</td>
-              <td>Hoạt động song song bên cạnh các agent khác trong cùng một phiên trao đổi.</td>
-            </tr>
-            <tr>
-              <td><strong>Pi</strong></td>
-              <td>Agent mã nguồn mở siêu nhẹ, dễ mở rộng, hỗ trợ kết nối đa dạng nhà cung cấp mô hình.</td>
-              <td>Được sử dụng làm engine mặc định khi người dùng muốn chạy các tác vụ nhanh hoặc dùng mô hình local.</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="arch-layer">
+        <h4>Bước 2: Quét mã QR xác thực trên màn hình</h4>
+        <p>Terminal máy tính sẽ render trực tiếp một mã QR chứa token ủy quyền bảo mật dùng một lần (One-time secure token).</p>
       </div>
-    </section>
-
-    <!-- 4. Điều khiển từ xa -->
-    <section class="guide-section" id="dieu-khien-tu-xa">
-      <h2>4. Tính năng Remote Desktop tích hợp trên điện thoại</h2>
-      <p>Khi chat thông thường không đủ để giải quyết vấn đề (ví dụ cần bấm xác nhận trên một popup hệ điều hành, nhập mã OTP hoặc xem lỗi hiển thị trên trình duyệt máy tính):</p>
-      
-      <div class="callout tip">
-        <div class="callout-title">Remote Desktop chuyên dụng cho lập trình viên</div>
-        <p>Ứng dụng di động của Cindy tích hợp sẵn bộ điều khiển Remote Desktop tốc độ cao: truyền hình ảnh màn hình với độ trễ thấp, có bàn phím ảo đầy đủ phím chức năng lập trình (Ctrl, Alt, Esc, Tab, Arrow keys), cho phép bạn điều khiển máy tính thật sự từ bất cứ đâu.</p>
+      <div class="arch-layer">
+        <h4>Bước 3: Mở trình duyệt trên điện thoại và điều khiển</h4>
+        <p>Mở camera điện thoại quét mã QR để mở ngay giao diện Web App — không cần cài đặt ứng dụng từ App Store.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- 5. Cài đặt -->
-    <section class="guide-section" id="cai-dat">
-      <h2>5. Hướng dẫn cài đặt & Thiết lập</h2>
-
-      <h3>1. Cài đặt ứng dụng Desktop</h3>
-      <p>Tải bộ cài đặt chính thức cho hệ điều hành của bạn từ website <a href="https://cindy.app/download" target="_blank" rel="noopener noreferrer">cindy.app/download</a> (hỗ trợ file DMG cho macOS, Installer cho Windows và AppImage cho Linux).</p>
-
-      <h3>2. Chạy từ mã nguồn qua pnpm</h3>
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">bash</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code># Clone repo và cài đặt các phụ thuộc
-git clone https://github.com/makecindy/cindy.git
-cd cindy
-pnpm install
-
-# Khởi chạy bản Desktop Dev
-pnpm run dev:desktop</code></pre>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Bash · Khởi chạy Cindy trên máy tính trạm</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép lệnh chạy Cindy">Sao chép</button>
       </div>
+      <pre><code># Cài đặt Cindy toàn cục hoặc chạy trực tiếp bằng npx
+npx makecindy start
 
-      <h3>3. Kết nối ứng dụng di động</h3>
-      <p>Cài đặt ứng dụng Cindy trên iOS/Android, đăng nhập cùng tài khoản và quét mã QR hiển thị trong mục <strong>Device Link</strong> trên ứng dụng Desktop để ghép đôi thiết bị bảo mật.</p>
-    </section>
+# Chỉ định cổng mạng và engine mặc định
+npx makecindy start --port 4040 --engine claude-code</code></pre>
+    </div>
 
-    <!-- 6. Bảo mật dữ liệu -->
-    <section class="guide-section" id="bao-mat-du-lieu">
-      <h2>6. Cơ chế Bảo mật & Quản lý dữ liệu</h2>
-      <div class="callout">
-        <div class="callout-title">Tệp tin dự án luôn nằm trên máy tính của bạn</div>
-        <p>Cindy không đồng bộ toàn bộ ổ cứng lên đám mây. Quyền truy cập từ xa hoạt động theo yêu cầu (on-demand streaming); mã nguồn và tệp nhạy cảm vẫn được lưu trữ cục bộ trên máy tính của bạn, đảm bảo tính bảo mật và quyền riêng tư tuyệt đối.</p>
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Trải nghiệm lập trình tự do khi di chuyển</strong>
+        <p>Với Cindy, bạn có thể bắt đầu một tác vụ refactor lớn trên máy trạm tại văn phòng, sau đó ra ngoài uống cà phê và chỉ cần mở điện thoại để duyệt các bài kiểm thử và xác nhận commit git khi agent hoàn thành.</p>
       </div>
-    </section>
-
-    <!-- 7. Tài liệu & Nguồn gốc -->
-    <section class="guide-section" id="tai-lieu">
-      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
-      <ul>
-        <li>Kho mã nguồn chính thức: <a href="https://github.com/makecindy/cindy" target="_blank" rel="noopener noreferrer">https://github.com/makecindy/cindy</a></li>
-        <li>Website tải ứng dụng: <a href="https://cindy.app" target="_blank" rel="noopener noreferrer">https://cindy.app</a></li>
-        <li>Chính sách bảo mật & hỗ trợ: <a href="https://github.com/makecindy/cindy/blob/main/SECURITY.en.md" target="_blank" rel="noopener noreferrer">Cindy Security Policy</a></li>
-      </ul>
-    </section>
-
-    <div class="guide-bottom-nav">
-      <a class="nav-card" href="ecc.html">
-        <span class="nav-card-dir">← Guide trước</span>
-        <span class="nav-card-title">ECC System</span>
-      </a>
-      <a class="nav-card next" href="skills-manager.html">
-        <span class="nav-card-dir">Guide tiếp theo →</span>
-        <span class="nav-card-title">Skills Manager</span>
-      </a>
     </div>
   </main>
 </body>

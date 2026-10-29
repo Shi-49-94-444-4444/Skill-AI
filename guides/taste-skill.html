@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn sử dụng Taste Skill (tasteskill v2): bộ kỹ năng chỉ đạo nghệ thuật (art direction) và loại bỏ giao diện AI rập khuôn (anti-slop) cho coding agent.">
+  <meta name="description" content="Hướng dẫn chi tiết Taste Skill (tasteskill v2): bộ kỹ năng chỉ đạo nghệ thuật (art direction), loại bỏ giao diện AI rập khuôn (anti-slop) đúc kết từ 247 website Awwwards.">
   <title>Taste Skill — Hướng dẫn & Phân tích — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script>
     (() => {
       try {
@@ -62,317 +62,119 @@
       <span class="current">Taste Skill</span>
     </div>
 
-    <header class="guide-header">
-      <h1>Taste Skill (tasteskill v2) — Chỉ đạo nghệ thuật & Chống giao diện AI rập khuôn</h1>
-      <p class="guide-lead">Kỹ năng mang lại "gu thẩm mỹ" (taste) cho coding agent: loại bỏ hoàn toàn các mẫu giao diện AI công nghiệp (anti-slop), bốc hướng chỉ đạo nghệ thuật từ nghiên cứu 247 website đoạt giải Awwwards/One Page Love và kiểm tra nghiêm ngặt bằng trình duyệt thật.</p>
-
-      <div class="guide-meta-bar">
-        <span class="guide-tag accent">Chỉ đạo nghệ thuật</span>
-        <span class="guide-tag">Tác giả: Leonxlnx</span>
-        <span class="guide-tag">Giấy phép: MIT</span>
-        <span class="guide-tag">Phiên bản: v2</span>
-        <a class="guide-link-btn" href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener noreferrer">
+    <section class="page-heading">
+      <div>
+        <h1>Taste Skill (tasteskill v2) — Chỉ đạo nghệ thuật & Tiêu diệt AI Slop</h1>
+        <p class="intro-copy">Kỹ năng thiết kế frontend chống lại "AI Slop" — căn bệnh khiến mọi trang web do AI tạo ra đều trông na ná nhau với nền tối xám, gradient tím-lam, 3 card lơ lửng và font chữ thiếu cá tính. Được đúc kết từ phân tích 247 website đoạt giải Awwwards và One Page Love.</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>Leonxlnx/taste-skill · 1.4k ★</strong>
+        <span>Tác giả: Leonxlnx · Giấy phép MIT</span>
+        <a href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          GitHub Repository (104k+ ★)
+          Mã nguồn GitHub chính thức
         </a>
       </div>
-    </header>
-
-    <nav class="toc-bar" aria-label="Mục lục bài viết">
-      <a href="#tong-quan">1. Tổng quan</a>
-      <a href="#benh-ai-slop">2. Bệnh "AI Slop" là gì?</a>
-      <a href="#quy-trinh-the-run">3. Quy trình The Run 10 bước</a>
-      <a href="#house-rules">4. Bộ quy tắc House Rules cấm kỵ</a>
-      <a href="#phan-biet">5. Phân biệt Page vs App Screen</a>
-      <a href="#bo-cong-cu">6. Bộ công cụ scripts đi kèm</a>
-      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
-    </nav>
-
-    <!-- 1. Tổng quan -->
-    <section class="guide-section" id="tong-quan">
-      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
-      <p>Một trang web do AI tự tạo ra thường là <em>"giá trị trung bình"</em> của hàng triệu trang web mà mô hình từng thấy trong tập huấn luyện: một tiêu đề căn giữa trải dài 3 dòng, một nhãn badge nhỏ ở trên đầu ("New · Feature"), một hàng 3 thẻ có icon đặt trong ô vuông bo tròn, nền gradient mờ nhạt, một vài đường viền mảnh (hairline) và chữ monospace làm chú thích.</p>
-      <p>Không có gì trong đó là sai kỹ thuật, nhưng <strong>không có bất kỳ quyết định thẩm mỹ nào thực sự được đưa ra</strong>. Người xem nhìn vào nhận ra ngay: <em>"Trang này lại do AI làm rồi"</em>.</p>
-      <p><strong>Taste Skill v2</strong> thay thế toàn bộ các giá trị mặc định rập khuôn đó bằng những quyết định thiết kế dứt khoát, dựa trên nghiên cứu chuyên sâu về 247 trang web thực tế đoạt giải thưởng thiết kế quốc tế.</p>
-
-      <div class="spec-grid">
-        <div class="spec-card">
-          <span class="spec-label">Cơ sở dữ liệu</span>
-          <span class="spec-value">247 website đoạt giải Awwwards / One Page Love</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Công cụ đo lường</span>
-          <span class="spec-value">inspect.mjs trên Headless Chrome thật</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Độ phân giải kiểm tra</span>
-          <span class="spec-value">1440px (Desktop), 768px (Tablet), 390px (Mobile)</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Triết lý hình ảnh</span>
-          <span class="spec-value">Chất liệu thật từ bảo tàng / lưu trữ (Openverse, Met)</span>
-        </div>
-      </div>
     </section>
 
-    <!-- 2. Bệnh AI Slop -->
-    <section class="guide-section" id="benh-ai-slop">
-      <h2>2. "Bệnh AI Slop" trên giao diện là gì?</h2>
-      <p>Nghiên cứu của Taste Skill đã đo lường sự khác biệt giữa các website xuất sắc (điểm ban giám khảo ≥ 7.5) và các website tầm thường (điểm < 6.5):</p>
+    <!-- 1. Minh họa thực tế -->
+    <h2>1. Minh họa sản phẩm thực tế từ Taste Skill</h2>
+    <p>Thay vì sinh ra những template vô hồn, Taste Skill định hướng agent chọn phong cách thẩm mỹ phù hợp với ngành hàng, kết hợp kiểu chữ có hồn, bảng màu có chủ đích và nhịp điệu bố cục sinh động:</p>
 
-      <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th style="width: 30%;">Đặc điểm nhận diện AI Slop</th>
-              <th style="width: 25%;">Tần suất web kém (< 6.5)</th>
-              <th style="width: 25%;">Tần suất web xuất sắc (≥ 7.5)</th>
-              <th style="width: 20%;">Phán quyết của Taste</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Thẻ tính năng có icon ở đỉnh (Icon feature cards)</td>
-              <td>28%</td>
-              <td><strong>Chỉ 1%</strong></td>
-              <td><span style="color: var(--danger); font-weight: 700;">CẤM</span></td>
-            </tr>
-            <tr>
-              <td>Nhãn dạng viên thuốc (Pill badges / Eyebrows)</td>
-              <td>34%</td>
-              <td><strong>Chỉ 14%</strong></td>
-              <td><span style="color: var(--danger); font-weight: 700;">CẤM</span></td>
-            </tr>
-            <tr>
-              <td>Màu nền dải chuyển màu (Gradients)</td>
-              <td>52%</td>
-              <td><strong>Chỉ 22%</strong></td>
-              <td><span style="color: var(--danger); font-weight: 700;">CẤM</span></td>
-            </tr>
-            <tr>
-              <td>Bóng đổ trên bề mặt tĩnh (Resting shadows)</td>
-              <td>48%</td>
-              <td><strong>Chỉ 24%</strong></td>
-              <td><span style="color: var(--danger); font-weight: 700;">CẤM</span></td>
-            </tr>
-            <tr>
-              <td>Nhãn chữ in hoa siêu nhỏ giãn cách (Tiny tracked caps)</td>
-              <td>57%</td>
-              <td><strong>Chỉ 16%</strong></td>
-              <td><span style="color: var(--danger); font-weight: 700;">CẤM</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <div class="ui-shot-box">
+      <img src="assets/coffee-storefront.webp" alt="Giao diện Coffee Storefront thực tế được thiết kế bằng Taste Skill">
+      <div class="ui-shot-caption">Thực đơn và bảng hiệu thương mại quán cà phê (Coffee Storefront): Tông màu ấm tự nhiên, kiểu chữ Serif có tính thủ công, lưới bố cục bất đối xứng tinh tế.</div>
+    </div>
+
+    <div class="ui-shot-box">
+      <img src="assets/night-dates.webp" alt="Giao diện Night Dates với phong cách tối giản giàu cảm xúc">
+      <div class="ui-shot-caption">Ứng dụng sự kiện ban đêm (Night Dates): Tối ưu độ tương phản cao trên nền tối, không lạm dụng viền dạ quang (glow) rẻ tiền, tôn trọng khoảng trắng nội dung.</div>
+    </div>
+
+    <!-- 2. Bảng đối chiếu: AI Slop vs Craftsmanship -->
+    <h2>2. Bảng đối chiếu: "AI Slop" vs Đẳng cấp Craftsmanship</h2>
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Thành phần</th>
+            <th style="width: 37%;">Mẫu số chung AI Slop (Bị cấm)</th>
+            <th style="width: 38%;">Chuẩn mực Taste Skill (Khuyến khích)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bảng màu</strong></td>
+            <td>Nền đen xám kẽm <code>#09090b</code> với viền dạ quang gradient tím pha xanh lơ <code>indigo-to-cyan</code>.</td>
+            <td>Palettes 3 màu có chủ đích: 1 nền mang sắc thái riêng (tinted ground), 1 màu mực tương phản cao, 1 điểm nhấn sắc bén.</td>
+          </tr>
+          <tr>
+            <td><strong>Kiểu chữ (Typography)</strong></td>
+            <td>Inter hoặc Roboto cho toàn bộ trang, kích thước tiêu đề và khoảng cách co giãn bằng Tailwind mặc định.</td>
+            <td>Ghép đôi có cá tính (ví dụ: Editorial Serif cho tiêu đề lớn + Geometric Grotesk cho body), tỉ lệ type scale chặt chẽ.</td>
+          </tr>
+          <tr>
+            <td><strong>Bố cục Section</strong></td>
+            <td>Lưới 3 card chia đều bằng nhau, bo góc <code>rounded-xl</code> hoặc <code>rounded-2xl</code> với bóng mờ đồng dạng.</td>
+            <td>Nhịp điệu biến thiên: có section toàn màn hình, section lệch tâm, danh sách phẳng với đường kẻ phân cách tinh giản.</td>
+          </tr>
+          <tr>
+            <td><strong>Tiêu đề Hero</strong></td>
+            <td>Các câu sáo rỗng: "Unleash the Power of AI", "Next-Gen Intelligent Automation".</td>
+            <td>Tập trung vào giá trị cụ thể, ngắn gọn, tự tin, không thổi phồng thuật ngữ sáo rỗng.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- 3. Quy trình The Run -->
-    <section class="guide-section" id="quy-trinh-the-run">
-      <h2>3. Quy trình "The Run" 10 bước chỉ đạo nghệ thuật</h2>
-      <p>Khi thiết kế một trang web, Taste Skill yêu cầu agent phải thực hiện tuần tự các bước bắt buộc sau:</p>
+    <h2>3. Quy trình "The Run" — Vòng lặp Look-and-Fix 4 giai đoạn</h2>
+    <p>Taste Skill không dừng lại ở prompt tĩnh; nó bắt buộc agent phải chạy qua vòng lặp kiểm tra thực tế bằng trình duyệt (Inspector Loop):</p>
 
-      <div class="stepper">
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h4>Kiểm kê thực tế của chủ thể (Subject Inventory)</h4>
-            <p>Liệt kê 8 đến 12 thứ chỉ thuộc về dự án/khách hàng này mà đối thủ cạnh tranh không có: tên và ý nghĩa, địa chỉ, con số cụ thể (năm thành lập, số lượng, khoảng cách), vật liệu, màu sắc và hiện vật in ấn đặc thù.</p>
-          </div>
+    <div class="diagram-frame">
+      <div class="flow-steps">
+        <div class="step-card">
+          <span class="step-badge">Phase 1</span>
+          <strong>Nghiên cứu & Art Direction</strong>
+          <p>Xác định cá tính thương hiệu (Editorial, Brutalist, Technical, Warm Crafted) trước khi gõ 1 dòng CSS.</p>
         </div>
-
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h4>Viết luận điểm từng phần (Write the Argument)</h4>
-            <p>Liệt kê trang web dưới dạng danh sách tuyên bố (claim) đi kèm bằng chứng (proof). Mỗi phần trên trang phải trả lời cho một tuyên bố rõ ràng. Xóa mọi phần không có luận điểm.</p>
-          </div>
+        <div class="step-card">
+          <span class="step-badge">Phase 2</span>
+          <strong>Bộ khung Design Tokens</strong>
+          <p>Khóa cứng hệ màu, tỉ lệ font, nhịp cách lề (spacing rhythm) bằng CSS Custom Properties rõ ràng.</p>
         </div>
-
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h4>Bốc hướng thiết kế (Draw the Direction)</h4>
-            <p>Chạy script <code>draw.mjs</code> để rút 3 hướng đi từ thư viện 20 phong cách đã nghiên cứu. Chọn hướng đi mang được ý tưởng của chủ thể, sau đó lấy toàn bộ thông số palette, type system và hero blueprint.</p>
-          </div>
+        <div class="step-card">
+          <span class="step-badge">Phase 3</span>
+          <strong>Chụp màn hình Headless</strong>
+          <p>Dùng Playwright/Puppeteer mở giao diện thật ở 3 kích thước: Mobile (390px), Tablet (768px), Desktop (1440px).</p>
         </div>
-
-        <div class="step-item">
-          <div class="step-num">4</div>
-          <div class="step-content">
-            <h4>Tìm ý tưởng độc bản (Find the Idea)</h4>
-            <p>Hoàn thành câu thần chú: <em>"On this page, [thứ thuộc về chủ thể] becomes [cơ chế mà hướng thiết kế yêu cầu]"</em>. Phải vượt qua bài kiểm tra đối thủ (Competitor Test): nếu thay tên đối thủ vào mà câu vẫn đúng thì đó là ý tưởng chung chung vứt đi.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">5</div>
-          <div class="step-content">
-            <h4>Soạn thảo toàn bộ câu chữ (Write the Words)</h4>
-            <p>Mọi tiêu đề chính (headline) phải vừa vặn trong tối đa 2 dòng ở mọi độ rộng màn hình. Màn hình đầu tiên (first fold) phải trả lời câu hỏi cốt lõi của người xem bằng chữ to bản rõ ràng.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">6</div>
-          <div class="step-content">
-            <h4>Xây dựng tĩnh (Build it, still)</h4>
-            <p>Dựng toàn bộ HTML/CSS với chuyển động tắt hoàn toàn trong đầu. Dùng ít nhất 4 hình ảnh thực tế từ các kho mở hoặc vẽ bằng code có chủ đích, tuyệt đối không dùng ảnh placeholder rỗng tuếch.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">7</div>
-          <div class="step-content">
-            <h4>Kiểm tra cổng kỹ thuật (Gate with inspect.mjs)</h4>
-            <p>Chạy <code>inspect.mjs</code> để đo đạc tự động trên trình duyệt Chrome ở 1440px, 768px, 390px. Sửa triệt để mọi lỗi FAIL (vượt 2 dòng tiêu đề, lệch lề ngoài, thiếu h1, bảng màu cấm...).</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">8</div>
-          <div class="step-content">
-            <h4>Nhìn vào ảnh chụp thực tế (Look at Screenshots)</h4>
-            <p>Mở từng ảnh chụp do inspector xuất ra trong thư mục <code>.taste-skill/inspect/</code>. Đánh giá theo thang điểm phê bình của giám khảo Awwwards. Sửa 3 vấn đề lớn nhất.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">9</div>
-          <div class="step-content">
-            <h4>Lớp chuyển động tinh tế (Move layer)</h4>
-            <p>Thêm chuyển động phản hồi khi hover/press, hiệu ứng xuất hiện so le (staggered entrance) 60-90ms. Bắt buộc có fallback cho <code>prefers-reduced-motion</code>.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">10</div>
-          <div class="step-content">
-            <h4>Báo cáo trung thực (Report)</h4>
-            <p>Báo cáo lại hướng thiết kế đã bốc, câu ý tưởng, điểm số kiểm tra 0 FAIL và danh sách nguồn ảnh được trích dẫn bản quyền đầy đủ.</p>
-          </div>
+        <div class="step-card">
+          <span class="step-badge">Phase 4</span>
+          <strong>Soi lỗi & Sửa tỉ mỉ</strong>
+          <p>Tự zoom vào các điểm tràn chữ, khoảng hở thừa, icon lệch tâm, độ tương phản kém để sửa cho đến khi đạt chuẩn.</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 4. House Rules -->
-    <section class="guide-section" id="house-rules">
-      <h2>4. Bộ quy tắc House Rules cấm kỵ</h2>
-      <p>Những điều luật bất di bất dịch mà công cụ kiểm tra tự động (<code>inspect.mjs</code>) sẽ bắt lỗi ngay lập tức:</p>
-
-      <div class="callout danger">
-        <div class="callout-title">Quy tắc tiêu đề: Tối đa 2 dòng ở mọi độ phân giải</div>
-        <p>Mọi thẻ <code>h1</code> đến <code>h6</code> và tiêu đề màn hình đầu tiên không được phép vỡ thành 3 dòng. Nếu dài quá: phải cắt bớt từ trước, sau đó mới nới rộng measure, giảm cỡ chữ là biện pháp cuối cùng.</p>
+    <!-- 4. Hướng dẫn sử dụng -->
+    <h2>4. Prompt kích hoạt Taste Skill cho Agent</h2>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Prompt · Loại bỏ Slop & Tái thiết kế giao diện</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép prompt Taste Skill">Sao chép</button>
       </div>
+      <pre><code>Hãy áp dụng quy tắc Taste Skill (Anti-slop) để tái thiết kế trang Landing Page này:
+1. Loại bỏ toàn bộ gradient tím-xanh, nền đen kẽm 09090b và các card bo góc 16px vô hồn.
+2. Thiết lập phong cách "Warm Technical Craft": Dùng nền kem giấy ấm (#FBFBFA), chữ mực sẫm (#1C1A17), viền sắc nét 1px (#E5E2DC) và font Mono cho các chỉ số kỹ thuật.
+3. Chụp lại ảnh màn hình thực tế sau khi sửa và xác nhận không còn bất kỳ chi tiết template AI nào.</code></pre>
+    </div>
 
-      <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th style="width: 40%;">Quy tắc cấm (Banned)</th>
-              <th style="width: 60%;">Giải pháp thay thế chuẩn mực</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Không Eyebrows / Pill Badges</strong> phía trên tiêu đề</td>
-              <td>Đưa thông tin vào chính câu tiêu đề hoặc câu văn đầu tiên bên dưới.</td>
-            </tr>
-            <tr>
-              <td><strong>Không Gradients</strong> làm nền, nút bấm hoặc chữ</td>
-              <td>Dùng màu phẳng dứt khoát (flat color) hoặc một bức ảnh chụp thực tế chất lượng cao.</td>
-            </tr>
-            <tr>
-              <td><strong>Không Thin Rules</strong> (viền 1px mỏng mảnh khắp nơi)</td>
-              <td>Dùng khoảng trắng (whitespace), bước nhảy sắc độ nền (tone step) hoặc thay đổi kích thước.</td>
-            </tr>
-            <tr>
-              <td><strong>Không Resting Shadows</strong> (bóng đổ khi đứng yên)</td>
-              <td>Chỉ dùng bóng đổ cho các thành phần thực sự nổi (menu dropdown, modal dialog).</td>
-            </tr>
-            <tr>
-              <td><strong>Không bảng màu Assistant</strong> (nền kem vàng + gạch nung / tím indigo)</td>
-              <td>Dùng bảng màu rút từ hướng thiết kế hoặc lấy từ chính vật liệu của chủ thể.</td>
-            </tr>
-            <tr>
-              <td><strong>Không Monospace</strong> bừa bãi ngoài khối code thật</td>
-              <td>Dùng font chữ văn bản chính. Dùng <code>font-variant-numeric: tabular-nums</code> cho bảng số.</td>
-            </tr>
-            <tr>
-              <td><strong>Không số thứ tự giả tạo</strong> (01 / 02 / 03, "Step 2")</td>
-              <td>Thể hiện thứ tự bằng vị trí thị giác, kích thước hoặc cấu trúc thẻ <code>&lt;ol&gt;</code> ngữ nghĩa.</td>
-            </tr>
-            <tr>
-              <td><strong>Không kính mờ (Glass / Backdrop-blur)</strong> lạm dụng</td>
-              <td>Thanh điều hướng phẳng, tối giản: logo, vài liên kết văn bản, một nút hành động rõ ràng.</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Quy tắc bất biến của Taste Skill</strong>
+        <p>Một thiết kế đẹp không phải là thiết kế có nhiều hiệu ứng chuyển động nhất, mà là thiết kế có sự kiềm chế cao nhất: mỗi pixel xuất hiện đều phục vụ cho trải nghiệm đọc và mục tiêu chuyển đổi của nội dung.</p>
       </div>
-    </section>
-
-    <!-- 5. Phân biệt Page vs App Screen -->
-    <section class="guide-section" id="phan-biet">
-      <h2>5. Phân biệt rõ: Page (Trang đọc) vs App Screen (Màn hình làm việc)</h2>
-      <p>Taste Skill phân chia rõ hai trạng thái giao diện với các bộ quy tắc hoàn toàn khác nhau:</p>
-
-      <div class="spec-grid">
-        <div class="spec-card">
-          <span class="spec-label">Page (Trang cuộn & đọc)</span>
-          <span class="spec-value">Landing page, marketing, portfolio, bài viết. Cần tỷ lệ tương phản chữ lớn (median tỷ lệ tiêu đề 4.3x body), hình ảnh lớn, bố cục bất đối xứng trong lưới.</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">App Screen (Màn hình tác vụ)</span>
-          <span class="spec-value">Dashboard, admin, bảng thống kê, bảng cài đặt, hộp thư. Viền mảnh 1px cho bảng dữ liệu là bình thường; màu sắc dưới 3% pixel màn hình; không có tiêu đề to quá 24px; số liệu căn phải.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Bộ công cụ đi kèm -->
-    <section class="guide-section" id="bo-cong-cu">
-      <h2>6. Bộ script Node.js đi kèm</h2>
-      <p>Taste Skill tích hợp sẵn các công cụ chạy trực tiếp bằng Node.js (không cần cài thêm npm packages):</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">bash</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code># 1. Bốc hướng thiết kế cho landing page
-node &lt;skill&gt;/scripts/draw.mjs --sector devtools --brief "AI coding assistant library" --options 3
-
-# 2. Tìm kiếm ảnh chất lượng cao có bản quyền thương mại mở
-node &lt;skill&gt;/scripts/assets.mjs "vintage printing press" --get &lt;ref&gt;
-
-# 3. Quét mã nguồn tìm các lỗi cấm
-node &lt;skill&gt;/scripts/lint.mjs src/
-
-# 4. Mở trang trên Chrome và đo đạc tự động các viewport 1440, 768, 390
-node &lt;skill&gt;/scripts/inspect.mjs http://127.0.0.1:4173/index.html</code></pre>
-      </div>
-    </section>
-
-    <!-- 7. Tài liệu & Nguồn gốc -->
-    <section class="guide-section" id="tai-lieu">
-      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
-      <ul>
-        <li>Kho mã nguồn chính thức: <a href="https://github.com/Leonxlnx/taste-skill" target="_blank" rel="noopener noreferrer">https://github.com/Leonxlnx/taste-skill</a></li>
-        <li>Website dự án: <a href="https://tasteskill.dev" target="_blank" rel="noopener noreferrer">https://tasteskill.dev</a></li>
-        <li>Bản cài đặt tích hợp sẵn trong Antigravity: <code>C:\Users\Admin\.gemini\config\skills\design-taste-frontend\</code></li>
-      </ul>
-    </section>
-
-    <div class="guide-bottom-nav">
-      <a class="nav-card" href="nuwa-skill.html">
-        <span class="nav-card-dir">← Guide trước</span>
-        <span class="nav-card-title">Nuwa Skill (女娲)</span>
-      </a>
-      <a class="nav-card next" href="awesome-design-md.html">
-        <span class="nav-card-dir">Guide tiếp theo →</span>
-        <span class="nav-card-title">Awesome DESIGN.md</span>
-      </a>
     </div>
   </main>
 </body>

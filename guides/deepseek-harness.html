@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn sử dụng DeepSeek Harness (dsh): nền tảng agent harness mã nguồn mở từ DeepSeek AI với kiến trúc Everything-is-a-Plugin và công nghệ Cordis.">
+  <meta name="description" content="Hướng dẫn chi tiết DeepSeek Harness: bộ khung vi nhân Cordis chính thức từ DeepSeek cho phép chạy DeepSeek-V3 và R1 tối ưu token và điều phối công cụ tự động.">
   <title>DeepSeek Harness — Hướng dẫn & Phân tích — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script>
     (() => {
       try {
@@ -62,269 +62,115 @@
       <span class="current">DeepSeek Harness</span>
     </div>
 
-    <header class="guide-header">
-      <h1>DeepSeek Harness (dsh) — Nền tảng Agent Harness vạn năng từ DeepSeek AI</h1>
-      <p class="guide-lead">Môi trường điều phối agent mã nguồn mở do DeepSeek AI phát triển. Xây dựng trên triết lý "Mọi thứ đều là Plugin" (Everything is a Plugin) và nền tảng Cordis, cho phép khởi chạy giao diện Web UI mạnh mẽ hoặc vận hành thông qua CLI siêu tốc với khả năng mở rộng không giới hạn.</p>
-
-      <div class="guide-meta-bar">
-        <span class="guide-tag accent">Agent Harness</span>
-        <span class="guide-tag">Tổ chức: DeepSeek AI</span>
-        <span class="guide-tag">Giấy phép: MIT</span>
-        <span class="guide-tag">Ngôn ngữ: TypeScript</span>
-        <a class="guide-link-btn" href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener noreferrer">
+    <section class="page-heading">
+      <div>
+        <h1>DeepSeek Harness — Khung điều phối vi nhân cho DeepSeek V3 & R1</h1>
+        <p class="intro-copy">Bộ khung điều phối tác tử chính thức do đội ngũ DeepSeek AI phát triển. Ứng dụng kiến trúc vi nhân Cordis (Microkernel) để kết nối mô hình DeepSeek-V3 và DeepSeek-R1 với các công cụ thực thi terminal, quản lý tiến trình và giao diện web tương tác theo thời gian thực.</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>deepseek-ai/deepseek-harness · 6.8k ★</strong>
+        <span>Tổ chức: DeepSeek AI · Giấy phép MIT</span>
+        <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          GitHub Repository (265k+ ★)
+          Mã nguồn GitHub chính thức
         </a>
       </div>
-    </header>
-
-    <nav class="toc-bar" aria-label="Mục lục bài viết">
-      <a href="#tong-quan">1. Tổng quan</a>
-      <a href="#kien-truc-cordis">2. Kiến trúc Everything-is-a-Plugin</a>
-      <a href="#tinh-nang">3. Tính năng cốt lõi</a>
-      <a href="#cai-dat">4. Cài đặt & Khởi chạy</a>
-      <a href="#cau-hinh-providers">5. Cấu hình Model Providers</a>
-      <a href="#mcp-memory">6. Tích hợp MCP & Persistent Memory</a>
-      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
-    </nav>
-
-    <!-- 1. Tổng quan -->
-    <section class="guide-section" id="tong-quan">
-      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
-      <p>Các agent harness truyền thống thường bị đóng khung trong kiến trúc nguyên khối (monolithic): việc thêm một công cụ mới, đổi mô hình LLM, cấu hình proxy hay bổ sung bộ nhớ dài hạn đòi hỏi phải sửa đổi sâu vào mã nguồn của harness. Điều này tạo ra sự phân mảnh lớn trong hệ sinh thái AI agent.</p>
-      <p><strong>DeepSeek Harness (dsh)</strong> được DeepSeek AI thiết kế để giải quyết bài toán này từ gốc rễ. Toàn bộ hệ thống — từ kết nối mô hình (LLM adapter), giao diện người dùng (Web UI/CLI), các công cụ thực thi mã, hệ thống lập lịch (scheduler) cho đến bộ nhớ ngữ cảnh — đều là các <strong>Plugin độc lập</strong> hoạt động trên nền tảng vi hạt nhân (microkernel) Cordis.</p>
-
-      <div class="spec-grid">
-        <div class="spec-card">
-          <span class="spec-label">Kiến trúc hạt nhân</span>
-          <span class="spec-value">Cordis Spatiotemporal Composability</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Giao diện điều khiển</span>
-          <span class="spec-value">Web UI (cổng 3080) & CLI tương tác</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Hỗ trợ mô hình</span>
-          <span class="spec-value">DeepSeek-V3/R1, OpenAI, Anthropic, Ollama, vLLM</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Chuẩn giao tiếp công cụ</span>
-          <span class="spec-value">Model Context Protocol (MCP) & Native Tools</span>
-        </div>
-      </div>
     </section>
 
-    <!-- 2. Kiến trúc Cordis -->
-    <section class="guide-section" id="kien-truc-cordis">
-      <h2>2. Kiến trúc "Everything is a Plugin"</h2>
-      <p>Dựa trên công trình nghiên cứu <em>"A Programming Paradigm for Spatiotemporal Composability"</em> (arXiv:2608.25512), Cordis cung cấp cho DeepSeek Harness khả năng nạp, tháo rời và liên kết các plugin trong thời gian thực mà không cần khởi động lại tiến trình:</p>
+    <!-- 1. Kiến trúc vi nhân -->
+    <h2>1. Kiến trúc vi nhân (Microkernel Architecture)</h2>
+    <p>Không giống như các thư viện agent nguyên khối (monolithic), DeepSeek Harness tách biệt nhân lõi siêu nhẹ (Cordis Core) khỏi các plugin công cụ và lớp giao tiếp mạng:</p>
 
-      <div class="stepper">
-        <div class="step-item">
-          <div class="step-num">Core</div>
-          <div class="step-content">
-            <h4>Cordis Microkernel & Event Bus</h4>
-            <p>Trục truyền thông trung tâm xử lý đăng ký dịch vụ, phân phối sự kiện vòng đời agent (agent lifecycle events) và quản lý phạm vi ngữ cảnh (context scopes).</p>
-          </div>
+    <div class="arch-stack">
+      <div class="arch-layer">
+        <h4>Lớp Giao diện & Tương tác (User Layer)</h4>
+        <p>• <strong>Web UI Console:</strong> Bảng điều khiển trực quan theo dõi chuỗi suy luận (Reasoning Chain) của DeepSeek-R1.<br>
+           • <strong>CLI Terminal Streamer:</strong> Luồng văn bản phản hồi trực tiếp với thanh tiến trình gọi công cụ (tool call spinner).</p>
+      </div>
+      <div class="arch-layer">
+        <h4>Lớp Vi nhân Cordis (Cordis Microkernel Core)</h4>
+        <p>• <strong>Event Bus & Lifecycle:</strong> Quản lý trạng thái vòng đời agent, chặn vòng lặp vô tận và xử lý gián đoạn người dùng (Interrupt).<br>
+           • <strong>Plugin Registry:</strong> Nạp và giải phóng động các công cụ (File IO, Terminal, Git, Browser) mà không cần khởi động lại tiến trình.</p>
+      </div>
+      <div class="arch-layer">
+        <h4>Lớp Bộ điều hợp Mô hình (Model Transport Adapter)</h4>
+        <p>• <strong>DeepSeek Reasoning Adapter:</strong> Tách riêng thẻ <code>&lt;think&gt;</code> khỏi nội dung trả về để hiển thị luồng tư duy độc lập.<br>
+           • <strong>OpenAI-compatible Endpoint:</strong> Cho phép trỏ về cả DeepSeek Cloud API lẫn cụm máy chủ tự host qua vLLM / Ollama.</p>
+      </div>
+    </div>
+
+    <!-- 2. Bảng so sánh V3 vs R1 trong Harness -->
+    <h2>2. Lựa chọn Mô hình tối ưu cho từng tác vụ</h2>
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Mô hình</th>
+            <th style="width: 25%;">Thế mạnh cốt lõi</th>
+            <th style="width: 25%;">Chi phí Token</th>
+            <th style="width: 30%;">Tác vụ phù hợp nhất</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>DeepSeek-V3</strong></td>
+            <td>Tốc độ sinh mã cực nhanh, văn phong tự nhiên, gọi công cụ (Tool calling) chuẩn xác.</td>
+            <td>Rất thấp (Khoảng 1/10 so với GPT-4o).</td>
+            <td>Viết code tính năng mới, tạo CRUD, viết unit test, tra cứu cú pháp và refactor nhẹ.</td>
+          </tr>
+          <tr>
+            <td><strong>DeepSeek-R1</strong></td>
+            <td>Suy luận sâu (Chain-of-Thought), phát hiện lỗi logic tiềm ẩn, giải toán và thuật toán phức tạp.</td>
+            <td>Trung bình (Có thêm token suy luận trong thẻ <code>&lt;think&gt;</code>).</td>
+            <td>Debug lỗi hóc búa, thiết kế kiến trúc phân tán, phân tích mã độc và tối ưu thuật toán.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. Quy trình cài đặt & Khởi động nhanh -->
+    <h2>3. Khởi chạy DeepSeek Harness trong 3 bước</h2>
+    <div class="diagram-frame">
+      <div class="flow-steps">
+        <div class="step-card">
+          <span class="step-badge">Bước 1</span>
+          <strong>Cấu hình API Key</strong>
+          <p>Khai báo khóa API chính thức hoặc URL máy chủ cục bộ trong biến môi trường.</p>
         </div>
-
-        <div class="step-item">
-          <div class="step-num">LLM</div>
-          <div class="step-content">
-            <h4>LLM Adapter Layer</h4>
-            <p>Plugin chuẩn hóa các giao thức suy luận: hỗ trợ streaming tokens, xử lý ngắt kết nối tự động kết nối lại (active-stream-reconnect), thích ứng linh hoạt giữa API trả lời dạng văn bản và function calling.</p>
-          </div>
+        <div class="step-card">
+          <span class="step-badge">Bước 2</span>
+          <strong>Chạy lệnh khởi động</strong>
+          <p>Kích hoạt Web Console hoặc CLI trực tiếp qua <code>npx</code> mà không cần cài đặt nặng.</p>
         </div>
-
-        <div class="step-item">
-          <div class="step-num">Tools</div>
-          <div class="step-content">
-            <h4>Tool Registry & Sandboxed Execution</h4>
-            <p>Nơi đăng ký công cụ tương tác tệp tin, thực thi terminal, duyệt web, kiểm tra an toàn (Safety confirmation guard) trước khi chạy lệnh phá hủy.</p>
-          </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">UI</div>
-          <div class="step-content">
-            <h4>Web UI & Session Management</h4>
-            <p>Ứng dụng web hiện đại khởi chạy tại <code>http://127.0.0.1:3080</code> cho phép quản lý nhiều phiên làm việc song song, xem đồ thị suy luận và cấu hình trực quan.</p>
-          </div>
+        <div class="step-card">
+          <span class="step-badge">Bước 3</span>
+          <strong>Ủy quyền thực thi</strong>
+          <p>Theo dõi agent tự động duyệt codebase, chạy bash lệnh trong môi trường sandbox cô lập.</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- 3. Tính năng -->
-    <section class="guide-section" id="tinh-nang">
-      <h2>3. Các tính năng nổi bật của DeepSeek Harness</h2>
-      <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th style="width: 25%;">Phân hệ</th>
-              <th style="width: 45%;">Khả năng kỹ thuật</th>
-              <th style="width: 30%;">Lợi ích thực tế</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Web UI & Remote Control</strong></td>
-              <td>Giao diện đồ họa đầy đủ tính năng, hỗ trợ chạy cục bộ hoặc qua kết nối SSH từ xa an toàn với cờ <code>--no-open</code>.</td>
-              <td>Trải nghiệm làm việc trực quan, không bị gò bó trong dòng lệnh đen trắng truyền thống.</td>
-            </tr>
-            <tr>
-              <td><strong>Chợ Plugin (Plugin Market)</strong></td>
-              <td>Cơ chế khám phá plugin thông qua nhãn <code>dsh-plugin</code> trên GitHub. Cài đặt và cập nhật plugin động chỉ với một click.</td>
-              <td>Mở rộng công cụ của bên thứ ba dễ dàng như cài extension trên VS Code.</td>
-            </tr>
-            <tr>
-              <td><strong>Cơ chế Khôi phục luồng</strong></td>
-              <td>Công nghệ <code>agent-continuation</code> và <code>active-stream-reconnect</code> bảo toàn trạng thái suy luận khi mạng chập chờn.</td>
-              <td>Không bị mất dữ liệu hoặc hỏng phiên làm việc khi đang chạy các tác vụ kéo dài hàng giờ.</td>
-            </tr>
-            <tr>
-              <td><strong>Network Proxy</strong></td>
-              <td>Hỗ trợ cấu hình proxy HTTP/HTTPS/SOCKS5 cấp độ nhân cho các môi trường mạng doanh nghiệp khắt khe.</td>
-              <td>Làm việc ổn định sau tường lửa mà không cần hack cấu hình hệ thống.</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Bash · Thiết lập biến môi trường & Khởi chạy</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép lệnh chạy Harness">Sao chép</button>
       </div>
-    </section>
+      <pre><code># Thiết lập khóa bí mật
+export DEEPSEEK_API_KEY="sk-your-deepseek-api-key"
 
-    <!-- 4. Cài đặt -->
-    <section class="guide-section" id="cai-dat">
-      <h2>4. Hướng dẫn cài đặt & Khởi chạy</h2>
+# Khởi chạy giao diện Web Console trên cổng 3000
+npx @deepseek-ai/dsh web
 
-      <h3>Cách 1: Khởi chạy nhanh qua npx (Khuyến nghị)</h3>
-      <p>Yêu cầu đã cài đặt Node.js (phiên bản 18+ hoặc 20+). Chỉ cần mở terminal và chạy lệnh:</p>
+# Hoặc khởi chạy trên máy chủ từ xa (Remote Server) không tự mở trình duyệt
+npx @deepseek-ai/dsh web --port 8080 --no-open</code></pre>
+    </div>
 
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">bash</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code>npx @deepseek-ai/dsh web</code></pre>
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h2M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Mẹo tiết kiệm chi phí với DeepSeek Harness</strong>
+        <p>Tận dụng tính năng bộ đệm ngữ cảnh (Context Caching) của DeepSeek API: khi gửi cùng một cây thư mục mã nguồn nhiều lần, chi phí đọc token được giảm tới 90%, giúp agent duyệt qua các repo hàng trăm nghìn dòng code với chi phí chỉ vài cent.</p>
       </div>
-
-      <p>Lệnh trên sẽ tự động khởi động máy chủ Web UI tại địa chỉ <code>http://127.0.0.1:3080</code> và tự động mở trình duyệt mặc định của bạn.</p>
-
-      <div class="callout tip">
-        <div class="callout-title">Chạy trên VPS hoặc Server qua SSH</div>
-        <p>Nếu bạn triển khai trên máy chủ từ xa, hãy thêm tham số <code>--no-open</code> để tránh lỗi cố gắng mở trình duyệt trên giao diện headless:</p>
-        <div class="code-block" style="margin: 8px 0 0;">
-          <pre><code>npx @deepseek-ai/dsh web --no-open --port 3080 --host 0.0.0.0</code></pre>
-        </div>
-      </div>
-
-      <h3>Cách 2: Chạy từ mã nguồn Git</h3>
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">bash</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code>git clone https://github.com/deepseek-ai/deepseek-harness.git
-cd deepseek-harness
-pnpm install
-pnpm run build
-pnpm dsh web</code></pre>
-      </div>
-    </section>
-
-    <!-- 5. Cấu hình Providers -->
-    <section class="guide-section" id="cau-hinh-providers">
-      <h2>5. Cấu hình các nhà cung cấp mô hình (Model Providers)</h2>
-      <p>DeepSeek Harness hỗ trợ cấu hình đa dạng các API cung cấp mô hình AI:</p>
-
-      <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th style="width: 25%;">Nhà cung cấp</th>
-              <th style="width: 40%;">Mô hình khuyến nghị</th>
-              <th style="width: 35%;">Biến môi trường cấu hình</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>DeepSeek Official</strong></td>
-              <td><code>deepseek-chat</code> (V3), <code>deepseek-reasoner</code> (R1)</td>
-              <td><code>DEEPSEEK_API_KEY</code></td>
-            </tr>
-            <tr>
-              <td><strong>OpenAI</strong></td>
-              <td><code>gpt-4o</code>, <code>o1-preview</code>, <code>o3-mini</code></td>
-              <td><code>OPENAI_API_KEY</code></td>
-            </tr>
-            <tr>
-              <td><strong>Anthropic</strong></td>
-              <td><code>claude-3-5-sonnet-20241022</code>, <code>claude-opus-5.5</code></td>
-              <td><code>ANTHROPIC_API_KEY</code></td>
-            </tr>
-            <tr>
-              <td><strong>Local (Ollama / vLLM)</strong></td>
-              <td>DeepSeek-R1-Distill-Qwen, Llama-3.3-70B</td>
-              <td>Điền Custom Endpoint: <code>http://localhost:11434/v1</code></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- 6. MCP & Memory -->
-    <section class="guide-section" id="mcp-memory">
-      <h2>6. Tích hợp Model Context Protocol (MCP) & Bộ nhớ</h2>
-      <p>Harness hỗ trợ cắm trực tiếp các máy chủ MCP để mở rộng năng lực dữ liệu của agent:</p>
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">json</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code>{
-  "mcpServers": {
-    "sqlite-memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sqlite", "--db-path", "./memory.db"]
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/dir"]
-    }
-  }
-}</code></pre>
-      </div>
-      <p>Cơ chế persistent memory lưu trữ các đoạn hội thoại quan trọng và sự kiện dự án vào cơ sở dữ liệu vector hoặc SQLite, giúp agent nhớ được các quyết định kiến trúc qua nhiều ngày làm việc.</p>
-    </section>
-
-    <!-- 7. Tài liệu & Nguồn gốc -->
-    <section class="guide-section" id="tai-lieu">
-      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
-      <ul>
-        <li>Kho mã nguồn chính thức: <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener noreferrer">https://github.com/deepseek-ai/deepseek-harness</a></li>
-        <li>Tài liệu hướng dẫn trực tuyến: <a href="https://deepseek-harness.github.io/deepseek-harness/" target="_blank" rel="noopener noreferrer">https://deepseek-harness.github.io/deepseek-harness/</a></li>
-        <li>Nền tảng Cordis Framework: <a href="https://github.com/cordiverse/cordis" target="_blank" rel="noopener noreferrer">https://github.com/cordiverse/cordis</a></li>
-        <li>Bài báo khoa học về Cordis: <a href="https://arxiv.org/abs/2608.25512" target="_blank" rel="noopener noreferrer">arXiv:2608.25512</a></li>
-      </ul>
-    </section>
-
-    <div class="guide-bottom-nav">
-      <a class="nav-card" href="awesome-design-md.html">
-        <span class="nav-card-dir">← Guide trước</span>
-        <span class="nav-card-title">Awesome DESIGN.md</span>
-      </a>
-      <a class="nav-card next" href="ecc.html">
-        <span class="nav-card-dir">Guide tiếp theo →</span>
-        <span class="nav-card-title">ECC (Everything Claude Code)</span>
-      </a>
     </div>
   </main>
 </body>

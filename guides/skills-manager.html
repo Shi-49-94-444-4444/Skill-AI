@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn sử dụng Skills Manager: ứng dụng desktop viết bằng Rust giúp quản lý, đồng bộ và phân bổ skill qua hơn 50 AI coding agent (Claude Code, Cursor, Copilot...).">
+  <meta name="description" content="Hướng dẫn chi tiết Skills Manager: công cụ trực quan và CLI giúp quản lý, phân loại, bật tắt và cô lập phạm vi kỹ năng (Global vs Workspace) cho Claude Code và Codex.">
   <title>Skills Manager — Hướng dẫn & Phân tích — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script>
     (() => {
       try {
@@ -62,199 +62,103 @@
       <span class="current">Skills Manager</span>
     </div>
 
-    <header class="guide-header">
-      <h1>Skills Manager — Ứng dụng Desktop Quản lý & Đồng bộ Skill cho hơn 50 Coding Agent</h1>
-      <p class="guide-lead">Ứng dụng máy tính siêu nhẹ viết bằng Rust, giải quyết tình trạng phân mảnh skill giữa các công cụ AI lập trình: tập trung toàn bộ kỹ năng vào một kho duy nhất, đồng bộ một chạm qua hệ thống Presets, hỗ trợ phân loại phạm vi Global/Project và cho phép chính agent tự quản lý kỹ năng của mình.</p>
-
-      <div class="guide-meta-bar">
-        <span class="guide-tag accent">Công cụ cho agent</span>
-        <span class="guide-tag">Tác giả: xingkongliang</span>
-        <span class="guide-tag">Giấy phép: MIT</span>
-        <span class="guide-tag">Ngôn ngữ: Rust / Tauri</span>
-        <a class="guide-link-btn" href="https://github.com/xingkongliang/skills-manager" target="_blank" rel="noopener noreferrer">
+    <section class="page-heading">
+      <div>
+        <h1>Skills Manager — Bảng điều khiển Quản lý & Điều phối Kỹ năng Agent</h1>
+        <p class="intro-copy">Công cụ trực quan kết hợp CLI mạnh mẽ giải quyết bài toán quản trị kỹ năng khi số lượng skill trong máy vượt quá vài chục. Hỗ trợ tìm kiếm, cài đặt 1-click, đồng bộ kho skill và cô lập phạm vi hoạt động giữa Toàn cục (Global) và Từng dự án (Project Workspace).</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>xingkongliang/skills-manager · 1.1k ★</strong>
+        <span>Tác giả: xingkongliang · Giấy phép MIT</span>
+        <a href="https://github.com/xingkongliang/skills-manager" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          GitHub Repository (7k+ ★)
+          Mã nguồn GitHub chính thức
         </a>
       </div>
-    </header>
+    </section>
 
-    <nav class="toc-bar" aria-label="Mục lục bài viết">
-      <a href="#tong-quan">1. Tổng quan</a>
-      <a href="#tinh-nang">2. Các tính năng cốt lõi</a>
-      <a href="#mo-hinh-workspace">3. Mô hình Workspace & Presets</a>
-      <a href="#ho-tro-nen-tang">4. 50+ Coding Agent được hỗ trợ</a>
-      <a href="#cai-dat">5. Cài đặt & Sử dụng</a>
-      <a href="#agent-dieu-khien">6. Để Agent tự quản lý Skill</a>
-      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
-    </nav>
+    <!-- 1. Cơ chế vận hành & Sơ đồ -->
+    <h2>1. Nguyên lý vận hành của Skills Manager</h2>
+    <p>Thay vì chỉnh sửa thủ công các file cấu hình JSON hay sao chép thư mục kỹ năng rải rác trong máy tính, Skills Manager chuẩn hóa toàn bộ luồng nạp và giải phóng:</p>
 
-    <!-- 1. Tổng quan -->
-    <section class="guide-section" id="tong-quan">
-      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
-      <p>Khi sử dụng song song nhiều công cụ AI lập trình (như Claude Code trong terminal, Cursor trong IDE, GitHub Copilot trong VS Code, Codex hoặc Gemini CLI), lập trình viên phải đối mặt với một cơn ác mộng quản lý:</p>
-      <ul>
-        <li>Mỗi công cụ lưu skill ở một thư mục khác nhau (<code>~/.claude/skills</code>, <code>~/.cursor/skills</code>, <code>~/.agents/skills</code>, <code>.github/copilot-instructions.md</code>...).</li>
-        <li>Khi bạn tinh chỉnh hoặc cập nhật một skill, bạn phải sao chép thủ công qua hàng chục thư mục.</li>
-        <li>Không có cách nào bật/tắt nhanh một nhóm skill cho một dự án cụ thể mà không làm ảnh hưởng các dự án khác.</li>
-      </ul>
-      <p><strong>Skills Manager</strong> ra đời để gom tất cả về <strong>một thư viện trung tâm duy nhất (Single Source of Truth)</strong>, phân bổ tự động bằng liên kết tượng trưng (symlink) hoặc copy có kiểm soát, đi kèm giao diện đồ họa đẹp mắt và mượt mà.</p>
+    <div class="ui-shot-box">
+      <img src="assets/diagram-how-it-works.png" alt="Sơ đồ nguyên lý vận hành của Skills Manager">
+      <div class="ui-shot-caption">Sơ đồ cơ chế hoạt động của Skills Manager: Trung tâm điều phối nạp kỹ năng từ kho trực tuyến vào các môi trường agent cục bộ.</div>
+    </div>
 
-      <div class="spec-grid">
-        <div class="spec-card">
-          <span class="spec-label">Nền tảng công nghệ</span>
-          <span class="spec-value">Rust + Tauri (Siêu nhẹ, tiêu tốn dưới 50MB RAM)</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Thư viện trung tâm</span>
-          <span class="spec-value">Thư mục ~/.skills-manager</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Hỗ trợ chợ ứng dụng</span>
-          <span class="spec-value">skills.sh Marketplace + Git URL + Local zip</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Phạm vi công cụ</span>
-          <span class="spec-value">50+ AI Coding Runtimes & IDEs</span>
-        </div>
+    <!-- 2. Mô hình Workspace -->
+    <h2>2. Mô hình phân vùng Workspace (Global vs Project-Scoped)</h2>
+    <p>Điểm mạnh nhất của Skills Manager là khả năng ngăn chặn tình trạng "ô nhiễm kỹ năng" (Skill pollution) — nơi một kỹ năng chỉ dành cho Python lại bị kích hoạt nhầm trong một dự án Go hoặc Rust:</p>
+
+    <div class="ui-shot-box">
+      <img src="assets/diagram-workspace-model.png" alt="Mô hình phân vùng Workspace trong Skills Manager">
+      <div class="ui-shot-caption">Mô hình phân vùng Workspace: Phân tách rõ ràng giữa Kỹ năng dùng chung toàn hệ thống (Global) và Kỹ năng đặc thù cho từng kho mã (Workspace).</div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Phạm vi áp dụng</th>
+            <th style="width: 35%;">Vị trí lưu trữ</th>
+            <th style="width: 40%;">Loại kỹ năng phù hợp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Global Scope</strong> (Toàn cục)</td>
+            <td><code>~/.claude/skills/</code> hoặc <code>~/.config/agent/</code></td>
+            <td>Các kỹ năng phổ quát: Git conventions, TDD workflow, Code review, Linter chung, Quản lý tài liệu.</td>
+          </tr>
+          <tr>
+            <td><strong>Project Scope</strong> (Theo dự án)</td>
+            <td><code>./.claude/skills/</code> trong thư mục mã nguồn</td>
+            <td>Các kỹ năng công nghệ sâu: Next.js App Router rules, Django ORM best practices, Prisma migration scripts.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. Giao diện Kho Kỹ năng & Thao tác cài đặt -->
+    <h2>3. Giao diện Khám phá & Cài đặt 1-Click</h2>
+    <p>Skills Manager tích hợp sẵn kho thư viện phong phú với khả năng lọc theo tag, tìm kiếm theo tên và hiển thị hướng dẫn chi tiết:</p>
+
+    <div class="ui-shot-box">
+      <img src="assets/library.png" alt="Giao diện thư viện kỹ năng trực quan trong Skills Manager">
+      <div class="ui-shot-caption">Giao diện Thư viện Kỹ năng (Library): Phân loại theo danh mục, hiển thị lượt cài đặt và trạng thái kích hoạt hiện tại.</div>
+    </div>
+
+    <div class="ui-shot-box">
+      <img src="assets/install-skills.png" alt="Hộp thoại cài đặt kỹ năng dễ dàng">
+      <div class="ui-shot-caption">Quy trình cài đặt: Tự động tải về, kiểm tra xung đột biến môi trường và liên kết vào dự án mong muốn.</div>
+    </div>
+
+    <!-- 4. Lệnh dòng lệnh CLI -->
+    <h2>4. Sử dụng tiện lợi qua công cụ dòng lệnh (CLI)</h2>
+    <p>Nếu bạn là người yêu thích terminal, Skills Manager cung cấp đầy đủ các lệnh quản trị nhanh chóng:</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Bash · Các lệnh CLI phổ biến</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép lệnh CLI Skills Manager">Sao chép</button>
       </div>
-    </section>
+      <pre><code># Liệt kê toàn bộ kỹ năng đang cài đặt trong máy
+skills-manager list
 
-    <!-- 2. Tính năng -->
-    <section class="guide-section" id="tinh-nang">
-      <h2>2. Các tính năng cốt lõi</h2>
-      <div class="table-wrap">
-        <table class="guide-table">
-          <thead>
-            <tr>
-              <th style="width: 25%;">Tính năng</th>
-              <th style="width: 45%;">Khả năng kỹ thuật</th>
-              <th style="width: 30%;">Lợi ích thực tế</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Unified Skill Library</strong></td>
-              <td>Tập hợp tất cả skill từ Git repos, folder cục bộ, file nén <code>.zip</code>, <code>.skill</code> hoặc marketplace về thư mục trung tâm.</td>
-              <td>Chỉ cần chỉnh sửa file một nơi, tất cả các agent đều được hưởng cập nhật mới nhất.</td>
-            </tr>
-            <tr>
-              <td><strong>Hệ thống Presets</strong></td>
-              <td>Gom các skill thành bộ theo mục đích: <em>"Frontend Next.js"</em>, <em>"Backend Go"</em>, <em>"Security Audit"</em>. Bật/tắt nguyên bộ bằng một cú click.</td>
-              <td>Chuyển đổi ngữ cảnh làm việc trong 1 giây mà không làm phình to context của agent.</td>
-            </tr>
-            <tr>
-              <td><strong>Nhận diện định dạng tự động</strong></td>
-              <td>Tự động phân tích cấu trúc để nhận diện chuẩn Agent Skills, Claude Plugin, Copilot Extension hay Cursor Rules.</td>
-              <td>Không lo lắng về sự khác biệt cú pháp giữa các hãng AI.</td>
-            </tr>
-            <tr>
-              <td><strong>Chợ kỹ năng tích hợp</strong></td>
-              <td>Tìm kiếm và duyệt hàng nghìn skill phổ biến từ skills.sh ngay trong ứng dụng desktop mà không cần mở trình duyệt.</td>
-              <td>Cài đặt một chạm kèm kiểm tra tương thích trước khi nạp.</td>
-            </tr>
-          </tbody>
-        </table>
+# Cài đặt một kỹ năng từ GitHub vào dự án hiện tại
+skills-manager add vercel-labs/agent-skills --scope project
+
+# Bật hoặc tắt nhanh một kỹ năng mà không cần xóa thư mục
+skills-manager disable taste-skill
+skills-manager enable taste-skill</code></pre>
+    </div>
+
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h2M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Giữ sạch ngữ cảnh cho Agent</strong>
+        <p>Việc bật quá nhiều kỹ năng không liên quan cùng một lúc sẽ làm phình to system prompt và khiến agent dễ nhầm lẫn quy tắc. Hãy dùng Skills Manager để chỉ bật đúng bộ kỹ năng phục vụ cho công nghệ của dự án bạn đang làm việc.</p>
       </div>
-    </section>
-
-    <!-- 3. Mô hình Workspace -->
-    <section class="guide-section" id="mo-hinh-workspace">
-      <h2>3. Mô hình Workspace: Global vs Project Scope</h2>
-      <p>Skills Manager phân chia phạm vi áp dụng rất khoa học:</p>
-
-      <div class="spec-grid">
-        <div class="spec-card">
-          <span class="spec-label">Phạm vi Toàn cục (Global Workspace)</span>
-          <span class="spec-value">Áp dụng cho các kỹ năng cá nhân dùng mọi lúc, mọi nơi: kỹ năng giao tiếp, phong cách viết lách, công cụ debug cơ bản. Tự động có mặt trên mọi dự án của agent.</span>
-        </div>
-        <div class="spec-card">
-          <span class="spec-label">Phạm vi Dự án (Project Workspace)</span>
-          <span class="spec-value">Chỉ kích hoạt khi mở đúng thư mục của dự án đó: quy tắc thiết kế DESIGN.md của công ty, bộ skill Docker/K8s riêng biệt, tiêu chuẩn mã nguồn của repo.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. Hỗ trợ nền tảng -->
-    <section class="guide-section" id="ho-tro-nen-tang">
-      <h2>4. Hơn 50 Coding Agent & Môi trường được hỗ trợ</h2>
-      <p>Skills Manager tự động phát hiện các công cụ đã cài đặt trên máy tính của bạn:</p>
-      <ul>
-        <li><strong>Terminal Coding Agents:</strong> Claude Code, Codex CLI, Gemini CLI, OpenCode, Aider, OpenClaw, Hermes Agent...</li>
-        <li><strong>IDE & Biên tập mã:</strong> Cursor, VS Code (GitHub Copilot), Windsurf, JetBrains AI Assistant, Zed Editor...</li>
-        <li><strong>Agent Harness & Nền tảng mở:</strong> DeepSeek Harness, Cindy, Adal, Continue.dev, Cline...</li>
-      </ul>
-    </section>
-
-    <!-- 5. Cài đặt -->
-    <section class="guide-section" id="cai-dat">
-      <h2>5. Hướng dẫn cài đặt & Thiết lập</h2>
-
-      <h3>1. Tải ứng dụng Desktop</h3>
-      <p>Truy cập website chính thức <a href="https://skillsmanager.dev" target="_blank" rel="noopener noreferrer">skillsmanager.dev</a> để tải bộ cài đặt phù hợp với hệ điều hành (macOS, Windows, Linux).</p>
-
-      <h3>2. Cài đặt nhanh qua dòng lệnh / Package Manager</h3>
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">bash</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code># macOS (Homebrew)
-brew install --cask skills-manager
-
-# Windows (Winget)
-winget install xingkongliang.SkillsManager
-
-# Linux (Cargo)
-cargo install skills-manager-cli</code></pre>
-      </div>
-    </section>
-
-    <!-- 6. Agent điều khiển -->
-    <section class="guide-section" id="agent-dieu-khien">
-      <h2>6. Để Agent tự quản lý kỹ năng qua CLI / API</h2>
-      <p>Thay vì bạn phải tự click chuột, bạn có thể cấp quyền cho chính Claude Code hoặc Cursor gọi Skills Manager:</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">prompt</span>
-          <button class="copy-btn" type="button">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Sao chép
-          </button>
-        </div>
-        <pre><code>Dự án này là một web thương mại điện tử viết bằng Next.js.
-Hãy dùng skills-manager CLI để kiểm tra xem đã có preset 'Frontend Performance' chưa.
-Nếu chưa, hãy cài đặt skill 'vercel-labs/agent-skills' và kích hoạt cho workspace hiện tại.</code></pre>
-      </div>
-
-      <div class="callout tip">
-        <div class="callout-title">Bảo toàn trạng thái an toàn</div>
-        <p>Khi agent tương tác thông qua Skills Manager CLI, toàn bộ metadata, đường dẫn nguồn gốc và phiên bản cập nhật đều được bảo toàn nguyên vẹn trong cơ sở dữ liệu, không làm hỏng cấu trúc thư mục của agent.</p>
-      </div>
-    </section>
-
-    <!-- 7. Tài liệu & Nguồn gốc -->
-    <section class="guide-section" id="tai-lieu">
-      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
-      <ul>
-        <li>Kho mã nguồn chính thức: <a href="https://github.com/xingkongliang/skills-manager" target="_blank" rel="noopener noreferrer">https://github.com/xingkongliang/skills-manager</a></li>
-        <li>Website ứng dụng: <a href="https://skillsmanager.dev" target="_blank" rel="noopener noreferrer">https://skillsmanager.dev</a></li>
-        <li>Tài liệu đặc tả nhận diện định dạng: <a href="https://github.com/xingkongliang/skills-manager/blob/main/docs/skill-format-detection-spec.md" target="_blank" rel="noopener noreferrer">Format Detection Specification</a></li>
-      </ul>
-    </section>
-
-    <div class="guide-bottom-nav">
-      <a class="nav-card" href="cindy.html">
-        <span class="nav-card-dir">← Guide trước</span>
-        <span class="nav-card-title">Cindy</span>
-      </a>
-      <a class="nav-card next" href="playwright-cli.html">
-        <span class="nav-card-dir">Guide tiếp theo →</span>
-        <span class="nav-card-title">Playwright CLI</span>
-      </a>
     </div>
   </main>
 </body>
