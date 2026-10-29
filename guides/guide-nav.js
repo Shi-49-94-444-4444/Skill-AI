@@ -37,7 +37,12 @@
       if (!m) return null;
       const name = m[1];
       if (!name || name === 'index') return 'index';
-      return data.guides.some((guide) => guide.slug === name) ? name : null;
+      const match = data.guides.find((guide) => guide.slug === name);
+      if (match) {
+        document.documentElement.dataset.guideGroup = match.group;
+        return name;
+      }
+      return null;
     } catch (e) {
       return null;
     }

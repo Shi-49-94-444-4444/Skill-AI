@@ -476,8 +476,18 @@ html:not([data-theme="dark"]) .theme-switch-static-sun {
 }
 
 /* ==========================================================================
-   Layer 6: Global Motion & Spiritual Atmosphere
+   Layer 6: Global Motion & Spiritual Atmosphere (Cosmic Constellation Canvas)
    ========================================================================== */
+.cosmic-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.92;
+}
+
 .mystic-ambient-layer {
   position: absolute;
   inset: 0;
@@ -499,18 +509,23 @@ html:not([data-theme="dark"]) .theme-switch-static-sun {
 html[data-theme="dark"] .spiritual-mote {
   background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
   opacity: 0.28;
-  box-shadow: 0 0 4px var(--accent);
+  box-shadow: 0 0 6px var(--accent);
 }
 
 @keyframes floatMote {
   0% { transform: translateY(0) scale(0.9); opacity: 0.08; }
-  50% { transform: translateY(-24px) scale(1.15); opacity: 0.32; }
+  50% { transform: translateY(-26px) scale(1.2); opacity: 0.36; }
   100% { transform: translateY(0) scale(0.9); opacity: 0.08; }
 }
 
 @keyframes spiritBreathing {
   0%, 100% { box-shadow: 0 0 0 1px var(--line); }
   50% { box-shadow: 0 0 0 1px var(--accent), 0 0 16px var(--spirit-aura); }
+}
+
+@keyframes auraPulse {
+  0%, 100% { opacity: 0.2; transform: scale(0.99); }
+  50% { opacity: 0.45; transform: scale(1.01); }
 }
 
 /* ==========================================================================
@@ -520,34 +535,196 @@ html[data-theme="dark"] .spiritual-mote {
 .prompt-item,
 .glance-item,
 .quick-glance-card > div,
-.ui-shot-box {
+.ui-shot-box,
+.hero-showcase-card {
   position: relative;
   overflow: hidden;
-  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
-              box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
-              border-color 0.2s ease;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.22s ease;
+  will-change: transform;
 }
 
 .guide-card::before,
-.prompt-item::before {
+.prompt-item::before,
+.hero-showcase-card::before,
+.ui-shot-box::before {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(189, 147, 249, 0.12), transparent 70%);
+  background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(189, 147, 249, 0.14), transparent 70%);
   opacity: 0;
   transition: opacity 0.25s ease;
-  z-index: 1;
+  z-index: 2;
 }
 
 html[data-theme="dark"] .guide-card::before,
-html[data-theme="dark"] .prompt-item::before {
-  background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(189, 147, 249, 0.18), transparent 70%);
+html[data-theme="dark"] .prompt-item::before,
+html[data-theme="dark"] .hero-showcase-card::before,
+html[data-theme="dark"] .ui-shot-box::before {
+  background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(189, 147, 249, 0.2), rgba(139, 233, 253, 0.08) 45%, transparent 70%);
 }
 
 .guide-card:hover::before,
-.prompt-item:hover::before {
+.prompt-item:hover::before,
+.hero-showcase-card:hover::before,
+.ui-shot-box:hover::before {
   opacity: 1;
+}
+
+/* 3D Tilt Response on Hover */
+.guide-card:hover,
+.prompt-item:hover,
+.glance-item:hover,
+.quick-glance-card > div:hover,
+.hero-showcase-card:hover {
+  border-color: rgba(189, 147, 249, 0.45) !important;
+  box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.25),
+              0 0 0 1px rgba(189, 147, 249, 0.3) !important;
+}
+
+html[data-theme="dark"] .guide-card:hover,
+html[data-theme="dark"] .prompt-item:hover,
+html[data-theme="dark"] .hero-showcase-card:hover {
+  box-shadow: 0 16px 38px -8px rgba(0, 0, 0, 0.5),
+              0 0 20px rgba(189, 147, 249, 0.22),
+              0 0 0 1px rgba(189, 147, 249, 0.4) !important;
+}
+
+/* ==========================================================================
+   Layer 8: Hero Visual Showcase (East Asian Cyberpunk / Guochao Art)
+   ========================================================================== */
+.hero-showcase-card {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 10px);
+  background: var(--paper);
+  cursor: zoom-in;
+  text-decoration: none;
+  color: inherit;
+  margin-top: 18px;
+  margin-bottom: 22px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.hero-showcase-media {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: calc(var(--radius, 10px) - 1px) calc(var(--radius, 10px) - 1px) 0 0;
+  background: #141720;
+}
+
+.hero-showcase-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  will-change: transform;
+}
+
+.hero-showcase-card:hover .hero-showcase-img {
+  transform: scale(1.03);
+}
+
+.hero-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(14, 18, 35, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(139, 233, 253, 0.35);
+  color: #8be9fd;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #50fa7b;
+  box-shadow: 0 0 6px #50fa7b;
+}
+
+.hero-zoom-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(14, 18, 35, 0.78);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f8f8f2;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero-showcase-card:hover .hero-zoom-hint {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.hero-showcase-caption {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.hero-showcase-caption strong {
+  color: var(--ink);
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* Subtle Aura Breathing Behind Hero */
+.hero-showcase-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 0 0 24px rgba(189, 147, 249, 0.2);
+  opacity: 0.25;
+  animation: auraPulse 6s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Staggered Row Animation for Library Table */
+@keyframes rowFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-row {
+  animation: rowFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--row-index, 0) * 0.012s);
 }
 
 /* Micro-interactions on buttons */
@@ -559,7 +736,13 @@ html[data-theme="dark"] .prompt-item::before {
   transition: transform 0.14s cubic-bezier(0.2, 0.8, 0.2, 1),
               background-color 0.18s ease,
               border-color 0.18s ease,
-              color 0.18s ease;
+              color 0.18s ease,
+              box-shadow 0.18s ease;
+}
+
+.quiet-button:hover,
+.skill-link:hover {
+  transform: translateY(-1px);
 }
 
 .quiet-button:active,
@@ -570,6 +753,16 @@ html[data-theme="dark"] .prompt-item::before {
 
 .theme-toggle:active {
   transform: scale(0.92);
+}
+
+/* Copy Button Feedback Ripple State */
+.copy-skill.is-copied,
+.copy-prompt.is-copied,
+.quiet-button.is-copied {
+  border-color: #50fa7b !important;
+  color: #50fa7b !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(80, 250, 123, 0.4);
 }
 
 /* Guide Reference Badge in Table */
@@ -586,14 +779,66 @@ html[data-theme="dark"] .prompt-item::before {
   border: 1px solid rgba(189, 147, 249, 0.32);
   white-space: nowrap;
   margin-left: 6px;
-  transition: all 0.16s ease;
+  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .guide-ref-pill:hover {
   background: var(--dracula-purple, #bd93f9);
   color: #191a21;
   border-color: var(--dracula-purple, #bd93f9);
-  transform: translateY(-1px);
+  transform: translateY(-1.5px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(189, 147, 249, 0.35);
+}
+
+/* Responsive Adjustments for Hero Showcase */
+@media (max-width: 900px) {
+  .hero-showcase-media {
+    height: 190px;
+  }
+  .hero-showcase-caption {
+    font-size: 12.5px;
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-showcase-media {
+    height: 160px;
+  }
+  .hero-badge {
+    top: 10px;
+    left: 10px;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  .hero-zoom-hint {
+    display: none;
+  }
+}
+
+/* Magnetic Interaction Physics */
+.theme-toggle,
+.brand-mark,
+.hero-zoom-hint,
+.guide-ref-pill {
+  will-change: transform;
+  transition: transform 0.14s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+}
+.brand-mark:hover {
+  box-shadow: 0 0 14px var(--spirit-aura);
+}
+
+/* Code Block Depth & Highlighting */
+.markdown-body pre,
+.code-block pre {
+  position: relative;
+  border-radius: 8px;
+  transition: box-shadow 0.22s ease, border-color 0.22s ease;
+}
+html[data-theme="dark"] .markdown-body pre:hover,
+html[data-theme="dark"] .code-block pre:hover {
+  border-color: rgba(189, 147, 249, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(189, 147, 249, 0.25);
 }
 
 /* Reduced Motion Compliance */
@@ -604,9 +849,20 @@ html[data-theme="dark"] .prompt-item::before {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .cosmic-canvas,
   .mystic-ambient-layer,
   .guide-card::before,
-  .prompt-item::before {
+  .prompt-item::before,
+  .hero-showcase-card::before,
+  .hero-showcase-card::after,
+  .ui-shot-box::before,
+  .ui-shot-box::after {
     display: none !important;
+  }
+  .hero-showcase-card:hover .hero-showcase-img {
+    transform: none !important;
+  }
+  .result-row {
+    animation: none !important;
   }
 }

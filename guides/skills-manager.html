@@ -16,13 +16,13 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="../site-common.css?v=20261029_v3">
-  <link rel="stylesheet" href="guide.css?v=20261029_v3">
-  <link rel="stylesheet" href="guide-nav.css?v=20261029_v3">
-  <script defer src="../site-common.js?v=20261029_v3"></script>
-  <script defer src="guide-catalog.js?v=20261029_v3"></script>
-  <script defer src="guide-nav.js?v=20261029_v3"></script>
-  <script defer src="guide.js?v=20261029_v3"></script>
+  <link rel="stylesheet" href="../site-common.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide-nav.css?v=20261029_v4">
+  <script defer src="../site-common.js?v=20261029_v4"></script>
+  <script defer src="guide-catalog.js?v=20261029_v4"></script>
+  <script defer src="guide-nav.js?v=20261029_v4"></script>
+  <script defer src="guide.js?v=20261029_v4"></script>
 </head>
 <body>
   <header class="site-header">
@@ -104,28 +104,23 @@
     </div>
 
     <!-- Hero Illustration -->
-    <div class="ui-shot-box">
-      <img src="assets/skills-manager-chibi.jpg" alt="Chibi thủ thư kỹ thuật số quản lý và docking kỹ năng vào các coding agent" loading="lazy" decoding="async">
-      <div class="ui-shot-caption"><strong>Trạm điều phối kỹ năng tập trung (Skills Manager Docking Station):</strong> Chibi thủ thư kỹ thuật số nạp các cartridge kỹ năng chuẩn hóa vào trạm docking cho Claude Code, Codex, OpenCode và Cursor.</div>
+    <!-- 1. Cơ chế vận hành & Sơ đồ -->
+        <div class="ui-shot-box">
+      <img src="assets/skills-manager-editorial-hero.png" alt="Trung tâm điều phối kỹ năng Industrial Yellow" loading="lazy" decoding="async">
+      <div class="ui-shot-caption"><strong>// 01 · TRUNG TÂM ĐIỀU PHỐI THƯ VIỆN KỸ NĂNG (SKILLS MANAGER REGISTRY):</strong> Mặt phẳng vàng công nghiệp Industrial Yellow với các khối đen đồ sộ, quản trị 1,396 kỹ năng qua symlink nguyên tử.</div>
     </div>
 
-    <!-- 1. Cơ chế vận hành & Sơ đồ -->
     <h2>1. Nguyên lý vận hành của Skills Manager</h2>
     <p>Thay vì chỉnh sửa thủ công các file cấu hình JSON hay sao chép thư mục kỹ năng rải rác trong máy tính, Skills Manager chuẩn hóa toàn bộ luồng nạp và giải phóng (nhấn vào ảnh để xem chi tiết):</p>
 
-    <div class="ui-shot-box">
-      <img src="assets/diagram-how-it-works.png" alt="Sơ đồ nguyên lý vận hành của Skills Manager">
-      <div class="ui-shot-caption"><strong>Sơ đồ cơ chế hoạt động của Skills Manager:</strong> Trung tâm điều phối nạp kỹ năng từ kho trực tuyến vào các môi trường agent cục bộ.</div>
+    <!-- 2. Mô hình Workspace -->
+        <div class="ui-shot-box">
+      <img src="assets/skills-manager-editorial-concept.png" alt="Tô-pô phân vùng workspace đơn nguồn" loading="lazy" decoding="async">
+      <div class="ui-shot-caption"><strong>// 02 · TÔ-PÔ PHÂN VÙNG WORKSPACE ĐƠN NGUỒN (ATOMIC SYMLINK MESH):</strong> Thư viện kỹ năng gốc liên kết tức thì trong 0.2ms tới 4 môi trường lập trình (Claude Code, Cursor, Antigravity, Codex) với 0 MB dư thừa ổ đĩa.</div>
     </div>
 
-    <!-- 2. Mô hình Workspace -->
     <h2>2. Mô hình phân vùng Workspace (Global vs Project-Scoped)</h2>
     <p>Điểm mạnh nhất của Skills Manager là khả năng ngăn chặn tình trạng "ô nhiễm kỹ năng" (Skill pollution) — nơi một kỹ năng chỉ dành cho Python lại bị kích hoạt nhầm trong một dự án Go hoặc Rust:</p>
-
-    <div class="ui-shot-box">
-      <img src="assets/diagram-workspace-model.png" alt="Mô hình phân vùng Workspace trong Skills Manager">
-      <div class="ui-shot-caption"><strong>Mô hình phân vùng Workspace:</strong> Phân tách rõ ràng giữa Kỹ năng dùng chung toàn hệ thống (Global) và Kỹ năng đặc thù cho từng kho mã (Workspace).</div>
-    </div>
 
     <div class="table-wrap">
       <table class="guide-table">
@@ -152,18 +147,13 @@
     </div>
 
     <!-- 3. Giao diện Kho Kỹ năng & Thao tác cài đặt -->
+        <div class="ui-shot-box">
+      <img src="assets/skills-manager-editorial-detail.png" alt="Quy trình triển khai bộ preset đã xác thực" loading="lazy" decoding="async">
+      <div class="ui-shot-caption"><strong>// 03 · QUY TRÌNH TRIỂN KHAI BỘ PRESET (PRESET INTEGRITY MANIFEST):</strong> Lệnh skills-manager deploy --preset frontend đồng bộ hóa 42 kỹ năng chuẩn mực được ký xác thực mật mã.</div>
+    </div>
+
     <h2>3. Giao diện Khám phá & Cài đặt 1-Click</h2>
     <p>Skills Manager tích hợp sẵn kho thư viện phong phú với khả năng lọc theo tag, tìm kiếm theo tên và hiển thị hướng dẫn chi tiết:</p>
-
-    <div class="ui-shot-box">
-      <img src="assets/library.png" alt="Giao diện thư viện kỹ năng trực quan trong Skills Manager">
-      <div class="ui-shot-caption"><strong>Giao diện Thư viện Kỹ năng (Library):</strong> Phân loại theo danh mục, hiển thị lượt cài đặt và trạng thái kích hoạt hiện tại.</div>
-    </div>
-
-    <div class="ui-shot-box">
-      <img src="assets/install-skills.png" alt="Hộp thoại cài đặt kỹ năng dễ dàng">
-      <div class="ui-shot-caption"><strong>Quy trình cài đặt:</strong> Tự động tải về, kiểm tra xung đột biến môi trường và liên kết vào dự án mong muốn.</div>
-    </div>
 
     <!-- 4. Lệnh dòng lệnh CLI -->
     <h2>4. Sử dụng tiện lợi qua công cụ dòng lệnh (CLI)</h2>

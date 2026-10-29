@@ -217,6 +217,7 @@
     FEATURED_SKILLS.forEach((feat, i) => {
       const key = `/${normalize(feat.skill).replace(/^\/+/, '')}`;
       const existing = unique.get(key);
+      const cleanSkill = normalize(feat.skill).replace(/^\/+/, '');
       if (existing) {
         existing.description = feat.description;
         existing.whenToUse = feat.whenToUse;
@@ -224,7 +225,7 @@
         existing.category = feat.category;
         existing.domain = feat.domain;
         existing.guideSlug = feat.guideSlug;
-        existing.searchText = normalize([existing.skill, feat.description, feat.whenToUse, feat.category, feat.domain].join(' '));
+        existing.searchText = normalize([cleanSkill, `/${cleanSkill}`, existing.skill, feat.description, feat.whenToUse, feat.category, feat.domain].join(' '));
       } else {
         unique.set(key, {
           id: `featured:${feat.skill}`,
@@ -236,7 +237,7 @@
           category: feat.category,
           domain: feat.domain,
           guideSlug: feat.guideSlug,
-          searchText: normalize([feat.skill, feat.description, feat.whenToUse, feat.category, feat.domain].join(' ')),
+          searchText: normalize([cleanSkill, `/${cleanSkill}`, feat.skill, feat.description, feat.whenToUse, feat.category, feat.domain].join(' ')),
           duplicateCount: 1,
           duplicateRows: [i + 1]
         });
@@ -270,7 +271,8 @@
       };
       if (![record.skill, record.description, record.whenToUse, record.howToUse, record.category, record.domain]
         .some((value) => value.trim())) continue;
-      record.searchText = normalize([record.skill, record.description, record.whenToUse].join(' '));
+      const clean = normalize(record.skill).replace(/^\/+/, '');
+      record.searchText = normalize([clean, `/${clean}`, record.skill, record.description, record.whenToUse].join(' '));
       records.push(record);
     }
 

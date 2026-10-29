@@ -575,40 +575,60 @@ p {
 }
 
 /* ==========================================================================
-   Screenshots & Media UI (Xử lý toàn diện tỷ lệ, nền tối & responsive)
+   Screenshots & Media UI: Industrial Brutalism (Hard Edges, Zero Radius, 2px Borders)
    ========================================================================== */
 .ui-shot-box {
-  margin: 24px 0 32px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  margin: 28px 0 36px;
+  border: 2px solid var(--line) !important;
+  border-radius: 0px !important;
   background: var(--paper);
   overflow: hidden;
-  box-shadow: var(--card-shadow);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
+  position: relative;
 }
 .ui-shot-box img, .ui-shot-img {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 540px;
+  max-height: 560px;
   object-fit: contain;
-  background: #191a21; /* deep contrast backdrop */
+  background: #090a0d; /* deep brutalist backdrop */
   cursor: zoom-in;
   transition: opacity .15s ease;
+  border-radius: 0px !important;
 }
 html:not([data-theme="dark"]) .ui-shot-box img,
 html:not([data-theme="dark"]) .ui-shot-img {
-  background: #f3f5f4;
+  background: #090a0d;
 }
 .ui-shot-caption {
-  padding: 12px 18px;
-  border-top: 1px solid var(--line);
+  padding: 14px 20px;
+  border-top: 2px solid var(--line) !important;
   font-size: 13px;
   color: var(--muted);
-  line-height: 1.55;
+  line-height: 1.6;
   background: var(--paper);
 }
 .ui-shot-caption strong {
   color: var(--ink);
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Industrial Brutalism Layout Overrides: Sharp rectangular geometry */
+.quick-glance-card,
+.glance-item,
+.step-card,
+.table-wrap,
+.guide-tabs,
+.tab-btn,
+.tab-content {
+  border-radius: 0px !important;
+}
+.quick-glance-card {
+  border: 2px solid var(--line) !important;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* ==========================================================================
@@ -1247,6 +1267,27 @@ body::before {
   pointer-events: none;
   animation: auraGlowPulse 6s ease-in-out infinite;
   will-change: opacity;
+}
+
+/* 4b. Guide Topic Identity Aura (ui-ux-pro-max) */
+html[data-guide-group="design"] .ui-shot-box::after,
+html[data-guide-group="design"] .svg-diagram-frame::after {
+  box-shadow: 0 0 28px rgba(189, 147, 249, 0.35), 0 0 8px rgba(241, 250, 140, 0.2);
+}
+
+html[data-guide-group="tools"] .ui-shot-box::after,
+html[data-guide-group="tools"] .svg-diagram-frame::after {
+  box-shadow: 0 0 28px rgba(80, 250, 123, 0.32), 0 0 8px rgba(139, 233, 253, 0.22);
+}
+
+html[data-guide-group="agent-harness"] .ui-shot-box::after,
+html[data-guide-group="agent-harness"] .svg-diagram-frame::after {
+  box-shadow: 0 0 28px rgba(139, 233, 253, 0.35), 0 0 8px rgba(189, 147, 249, 0.2);
+}
+
+html[data-guide-group="skill-collections"] .ui-shot-box::after,
+html[data-guide-group="skill-collections"] .svg-diagram-frame::after {
+  box-shadow: 0 0 28px rgba(255, 121, 198, 0.32), 0 0 8px rgba(189, 147, 249, 0.25);
 }
 
 /* 5. Tối ưu hóa render phần tử dài (Content Visibility) */

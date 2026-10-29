@@ -182,8 +182,10 @@
       }
 
       document.addEventListener('click', (e) => {
-        const img = e.target.closest('.ui-shot-box img, .ui-shot-img, [data-lightbox]');
-        if (!img || img.id === 'lightboxImg') return;
+        const targetEl = e.target.closest('.ui-shot-box img, .ui-shot-img, [data-lightbox], .hero-showcase-img, .hero-showcase-card');
+        if (!targetEl || targetEl.id === 'lightboxImg') return;
+        const img = targetEl.tagName === 'IMG' ? targetEl : targetEl.querySelector('img');
+        if (!img) return;
         const target = document.getElementById('lightboxImg');
         if (target) {
           target.src = img.src;
@@ -234,36 +236,147 @@
     return Object.freeze({ initLightbox, initTabs, initImageFallbacks });
   })();
 
-  // 5. Spiritual Ambient Atmosphere & Interactive Motion
+  // 5. Spiritual Ambient Atmosphere & Interactive Motion (ui-ux-pro-max)
   const ambientUtils = (() => {
     function init() {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      initMotes();
+      initCosmicCanvas();
       initSpotlight();
+      initTilt();
+      initMagnetic();
+      initCopyFeedback();
     }
 
-    function initMotes() {
+    function initCosmicCanvas() {
       const shell = document.querySelector('.page-shell');
-      if (!shell || shell.querySelector('.mystic-ambient-layer')) return;
+      if (!shell || shell.querySelector('.cosmic-canvas')) return;
 
-      const layer = document.createElement('div');
-      layer.className = 'mystic-ambient-layer';
-      layer.setAttribute('aria-hidden', 'true');
+      const canvas = document.createElement('canvas');
+      canvas.className = 'cosmic-canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      shell.insertBefore(canvas, shell.firstChild);
 
-      // 12 tinh thể linh quang lững lờ trôi rất nhẹ
-      for (let i = 0; i < 12; i++) {
-        const mote = document.createElement('span');
-        mote.className = 'spiritual-mote';
-        const size = Math.floor(Math.random() * 2) + 2; // 2px - 3px
-        mote.style.width = `${size}px`;
-        mote.style.height = `${size}px`;
-        mote.style.left = `${(i * 8.2 + Math.random() * 5).toFixed(1)}%`;
-        mote.style.top = `${(Math.random() * 90 + 5).toFixed(1)}%`;
-        mote.style.animationDelay = `${(Math.random() * 8).toFixed(1)}s`;
-        mote.style.animationDuration = `${(9 + Math.random() * 6).toFixed(1)}s`;
-        layer.appendChild(mote);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let width = 0;
+      let height = 0;
+      let animId = null;
+      let mouseX = -1000;
+      let mouseY = -1000;
+
+      const particles = [];
+      const PARTICLE_COUNT = 26;
+
+      function resize() {
+        const rect = shell.getBoundingClientRect();
+        width = canvas.width = rect.width;
+        height = canvas.height = Math.max(rect.height, window.innerHeight);
       }
-      shell.insertBefore(layer, shell.firstChild);
+
+      const draculaColors = ['#bd93f9', '#8be9fd', '#50fa7b', '#ff79c6', '#f1fa8c'];
+      function createParticle() {
+        const isDark = document.documentElement.dataset.theme === 'dark';
+        const color = isDark
+          ? draculaColors[Math.floor(Math.random() * draculaColors.length)]
+          : 'rgba(71, 85, 105, 0.4)';
+        return {
+          x: Math.random() * (width || window.innerWidth),
+          y: Math.random() * (height || window.innerHeight),
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 1.5 + 1.2,
+          color,
+          alpha: Math.random() * 0.35 + 0.15
+        };
+      }
+
+      function initParticles() {
+        particles.length = 0;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          particles.push(createParticle());
+        }
+      }
+
+      function updateAndDraw() {
+        if (document.hidden) {
+          animId = null;
+          return;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+        const isDark = document.documentElement.dataset.theme === 'dark';
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = width;
+          else if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          else if (p.y > height) p.y = 0;
+
+          // Mouse gentle repel
+          const dx = p.x - mouseX;
+          const dy = p.y - mouseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 90 && dist > 0) {
+            p.x += (dx / dist) * 1.2;
+            p.y += (dy / dist) * 1.2;
+          }
+
+          // Draw particle
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = isDark ? p.color : 'rgba(71, 85, 105, 0.35)';
+          ctx.globalAlpha = p.alpha;
+          ctx.fill();
+
+          // Connect with nearby particles
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const pDist = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (pDist < 80) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = isDark ? p.color : 'rgba(100, 116, 139, 0.15)';
+              ctx.globalAlpha = (1 - pDist / 80) * 0.18;
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+
+        animId = requestAnimationFrame(updateAndDraw);
+      }
+
+      resize();
+      initParticles();
+      animId = requestAnimationFrame(updateAndDraw);
+
+      window.addEventListener('resize', () => {
+        resize();
+      }, { passive: true });
+
+      shell.addEventListener('pointermove', (e) => {
+        const rect = shell.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      }, { passive: true });
+
+      shell.addEventListener('pointerleave', () => {
+        mouseX = -1000;
+        mouseY = -1000;
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && !animId) {
+          animId = requestAnimationFrame(updateAndDraw);
+        }
+      });
     }
 
     function initSpotlight() {
@@ -287,7 +400,7 @@
 
       document.addEventListener('pointermove', (e) => {
         if (document.hidden) return;
-        const card = e.target.closest('.guide-card, .prompt-item, .glance-item, .quick-glance-card > div, .ui-shot-box, .result-row');
+        const card = e.target.closest('.guide-card, .prompt-item, .glance-item, .quick-glance-card > div, .ui-shot-box, .result-row, .hero-showcase-card');
         if (!card) {
           targetCard = null;
           return;
@@ -308,7 +421,85 @@
       });
     }
 
-    return Object.freeze({ init });
+    function initTilt() {
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+
+      let tiltFrame = null;
+      let activeCard = null;
+      let mouseEvt = null;
+
+      function applyTilt() {
+        if (activeCard && mouseEvt) {
+          const rect = activeCard.getBoundingClientRect();
+          const x = (mouseEvt.clientX - rect.left) / rect.width - 0.5;
+          const y = (mouseEvt.clientY - rect.top) / rect.height - 0.5;
+          const tiltX = -(y * 5).toFixed(2); // clamp to max 2.5 deg
+          const tiltY = (x * 5).toFixed(2);
+          activeCard.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-3px)`;
+        }
+        tiltFrame = null;
+      }
+
+      document.addEventListener('pointermove', (e) => {
+        if (document.hidden) return;
+        const card = e.target.closest('.hero-showcase-card, .guide-card, .prompt-item, .glance-item, .quick-glance-card > div');
+        if (!card) {
+          if (activeCard) {
+            activeCard.style.transform = '';
+            activeCard = null;
+          }
+          return;
+        }
+        if (activeCard && activeCard !== card) {
+          activeCard.style.transform = '';
+        }
+        activeCard = card;
+        mouseEvt = e;
+        if (!tiltFrame) tiltFrame = requestAnimationFrame(applyTilt);
+      }, { passive: true });
+
+      document.addEventListener('pointerleave', () => {
+        if (activeCard) {
+          activeCard.style.transform = '';
+          activeCard = null;
+        }
+      });
+    }
+
+    function initMagnetic() {
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      document.addEventListener('pointermove', (e) => {
+        if (document.hidden) return;
+        const target = e.target.closest('.theme-toggle, .brand-mark, .hero-zoom-hint, .guide-ref-pill');
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        const x = e.clientX - (rect.left + rect.width / 2);
+        const y = e.clientY - (rect.top + rect.height / 2);
+        const pullX = Math.max(-5, Math.min(5, x * 0.22)).toFixed(1);
+        const pullY = Math.max(-5, Math.min(5, y * 0.22)).toFixed(1);
+        target.style.transform = `translate3d(${pullX}px, ${pullY}px, 0)`;
+      }, { passive: true });
+
+      document.addEventListener('pointerout', (e) => {
+        const target = e.target.closest('.theme-toggle, .brand-mark, .hero-zoom-hint, .guide-ref-pill');
+        if (target) {
+          target.style.transform = '';
+        }
+      });
+    }
+
+    function initCopyFeedback() {
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.copy-skill, .copy-prompt, .copy-btn, [data-copy-skill]');
+        if (!btn) return;
+        btn.classList.add('is-copied');
+        setTimeout(() => btn.classList.remove('is-copied'), 1200);
+      });
+    }
+
+    return Object.freeze({ init, initCosmicCanvas, initSpotlight, initTilt, initMagnetic });
   })();
 
   // Expose global namespace SkillAI

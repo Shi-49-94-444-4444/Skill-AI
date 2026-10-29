@@ -19,20 +19,16 @@
       if (isPrompts) document.documentElement.classList.add('is-prompts');
     })();
   </script>
-  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
-  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
-  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
-  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
-  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
-  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
+  <link rel="stylesheet" href="site-common.css?v=20261029_v4">
+  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v4">
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
-  <script defer src="site-common.js?v=20261029_v3"></script>
-  <script defer src="dashboard-config.js?v=20261029_v3"></script>
-  <script defer src="excel-data-loader.js?v=20261029_v3"></script>
-  <script defer src="guides/guide-catalog.js?v=20261029_v3"></script>
-  <script defer src="guides/guide-nav.js?v=20261029_v3"></script>
+  <script defer src="site-common.js?v=20261029_v4"></script>
+  <script defer src="dashboard-config.js?v=20261029_v4"></script>
+  <script defer src="excel-data-loader.js?v=20261029_v4"></script>
+  <script defer src="guides/guide-catalog.js?v=20261029_v4"></script>
+  <script defer src="guides/guide-nav.js?v=20261029_v4"></script>
   <style>
     :root {
       color-scheme: light;
@@ -362,6 +358,18 @@
       </div>
     </section>
 
+    <!-- Hero Visual Showcase: Cyber Codex of AI Skills -->
+    <div class="hero-showcase-card" role="region" aria-label="Đại Điển Mã Kỹ Thuật Số" data-lightbox>
+      <div class="hero-showcase-media">
+        <span class="hero-badge">Đại Điển Mã · Cyber Codex</span>
+        <img class="hero-showcase-img" src="guides/assets/hero-home-codex.jpg" alt="Đại Điển Mã Kỹ Thuật Số: Học giả AI điều khiển ma trận thẻ ngọc và dải mã thư pháp trong không gian Dracula Cyberpunk" loading="eager" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="hero-showcase-caption">
+        <strong>Tàng Thư Kỹ Năng Thông Minh (Skill AI Knowledge Matrix):</strong> Hệ thống tra cứu toàn diện 1.396+ kỹ năng chuyên sâu cho coding agent, tích hợp chỉ đạo nghệ thuật frontend, testing Playwright, thiết kế deep modules và chuẩn hóa Dracula Theme.
+      </div>
+    </div>
+
     <section class="controls" id="filters" aria-label="Tìm kiếm và bộ lọc">
       <div class="control search-field">
         <label for="searchInput">Tìm kiếm toàn văn</label>
@@ -593,8 +601,9 @@
       }
 
       function filteredRecords() {
-        const query = window.SkillAIData.normalize(state.query);
-        return state.records.filter((record) => (!query || record.searchText.includes(query))
+        const query = window.SkillAIData.normalize(state.query).trim();
+        const cleanQuery = query.replace(/^\/+/, '');
+        return state.records.filter((record) => (!query || record.searchText.includes(query) || (cleanQuery && record.searchText.includes(cleanQuery)))
           && (!state.categories.size || state.categories.has(record.category))
           && (!state.domains.size || state.domains.has(record.domain)));
       }
@@ -765,7 +774,7 @@
       $('#refreshButton').addEventListener('click', () => {
         if (promptFrame.contentWindow && promptFrame.src) promptFrame.contentWindow.postMessage({ type: 'skill-ai-refresh' }, location.origin);
       });
-      $('#themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+      // Theme toggle is handled globally and synchronized by site-common.js (window.SkillAI.theme)
       $('#previousButton').addEventListener('click', () => { state.page -= 1; queueRender(); });
       $('#nextButton').addEventListener('click', () => { state.page += 1; queueRender(); });
       $('#closeDialog').addEventListener('click', () => $('#detailDialog').close());

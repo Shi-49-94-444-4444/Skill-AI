@@ -13,13 +13,13 @@
     (() => { if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.dataset.embedded = 'true'; try { if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (error) { /* private browsing */ } })();
   </script>
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <script defer src="site-common.js?v=20261029_v3"></script>
-  <script defer src="dashboard-config.js?v=20261029_v3"></script>
-  <script defer src="advanced-prompts.js?v=20261029_v3"></script>
-  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
-  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
-  <script defer src="guides/guide-catalog.js?v=20261029_v3"></script>
-  <script defer src="guides/guide-nav.js?v=20261029_v3"></script>
+  <script defer src="site-common.js?v=20261029_v4"></script>
+  <script defer src="dashboard-config.js?v=20261029_v4"></script>
+  <script defer src="advanced-prompts.js?v=20261029_v4"></script>
+  <link rel="stylesheet" href="site-common.css?v=20261029_v4">
+  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v4">
+  <script defer src="guides/guide-catalog.js?v=20261029_v4"></script>
+  <script defer src="guides/guide-nav.js?v=20261029_v4"></script>
   <style>
     :root { color-scheme: light; --ink:#17231f; --muted:#65716c; --line:#e2e2e2; --ground:#f8f8f8; --paper:#fff; --soft:#eee; --accent:#141414; --accent-strong:#0a0a0a; --danger:#a43f3f; --focus:rgba(20,20,20,.2); --type-display:clamp(28px,3vw,38px); --type-heading:24px; --type-subheading:17px; --type-body:15px; --type-secondary:14px; --type-label:13px; }
     html[data-theme="dark"] { color-scheme:dark; --ink:#f8f8f2; --muted:#c7c9d3; --line:#44475a; --ground:#282a36; --paper:#343746; --soft:#44475a; --accent:#bd93f9; --accent-strong:#ff79c6; --danger:#ff5555; --focus:rgba(189,147,249,.38); }
@@ -137,6 +137,18 @@
   </header>
   <main class="page-shell">
     <section class="page-heading" aria-labelledby="pageTitle"><div><h1 id="pageTitle">Prompt nâng cao</h1><p class="intro-copy">Tìm mẫu phù hợp, thay phần trong ngoặc vuông bằng thông tin của bạn rồi sao chép để dùng.</p></div><div class="count-note"><strong id="promptCount">— prompt</strong><span>Đọc từ sheet “Prompt nâng cao” trong workbook Skill AI.</span></div></section>
+
+    <!-- Hero Visual Showcase: Prompt Alchemy & Neural Forge -->
+    <div class="hero-showcase-card" role="region" aria-label="Luyện Kim Thuật Ngữ Điệu" data-lightbox>
+      <div class="hero-showcase-media">
+        <span class="hero-badge">Luyện Kim Ngữ Điệu · Neural Forge</span>
+        <img class="hero-showcase-img" src="guides/assets/hero-prompts-forge.jpg" alt="Luyện Kim Thuật Ngữ Điệu: Kỹ sư Prompt tinh luyện các lăng kính dữ liệu và công thức thư pháp trong lò rèn thần kinh Dracula Cyberpunk" loading="eager" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="hero-showcase-caption">
+        <strong>Lò Rèn Ngữ Điệu Cấp Cao (Advanced Prompt Engineering Laboratory):</strong> Kho mẫu prompt tinh tuyển theo từng ngữ cảnh chuyên biệt: thiết kế UX, lập trình fullstack, kiểm thử hệ thống và marketing. Dễ dàng tinh chỉnh các biến số trong ngoặc vuông <code>[...]</code> và sao chép chỉ với 1 click.
+      </div>
+    </div>
     <section class="prompt-controls" aria-label="Tìm kiếm prompt">
       <div class="control"><label for="promptSearch">Tìm trong tiêu đề và nội dung</label><input id="promptSearch" type="search" placeholder="Ví dụ: website, UX, SEO, học tiếng Anh…" autocomplete="off"></div>
       <div class="control"><label>Nhóm chủ đề</label><details class="prompt-filter-menu" id="promptCategoryMenu"><summary id="promptCategorySummary">Tất cả nhóm</summary><div class="prompt-filter-options" id="promptCategoryOptions" aria-label="Lọc theo nhóm chủ đề"></div></details></div>
