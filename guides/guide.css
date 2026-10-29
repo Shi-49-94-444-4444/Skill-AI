@@ -586,17 +586,54 @@ p {
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
   position: relative;
 }
-.ui-shot-box img, .ui-shot-img {
-  display: block;
+
+.ui-shot-media {
+  position: relative;
   width: 100%;
-  height: auto;
-  max-height: 560px;
-  object-fit: contain;
-  background: #090a0d; /* deep brutalist backdrop */
-  cursor: zoom-in;
-  transition: opacity .15s ease;
+  aspect-ratio: 16 / 9;
+  background: #141720;
+  overflow: hidden;
   border-radius: 0px !important;
 }
+
+.ui-shot-media img,
+.ui-shot-box > img,
+.ui-shot-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #090a0d; /* deep brutalist backdrop */
+  cursor: zoom-in;
+  border-radius: 0px !important;
+}
+
+.ui-shot-media img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.ui-shot-media:hover img {
+  transform: scale(1.02);
+}
+
+.ui-shot-media .hero-zoom-hint {
+  border-radius: 0px !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(11, 14, 20, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.ui-shot-media:hover .hero-zoom-hint {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
 html:not([data-theme="dark"]) .ui-shot-box img,
 html:not([data-theme="dark"]) .ui-shot-img {
   background: #090a0d;

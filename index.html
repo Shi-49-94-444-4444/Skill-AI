@@ -134,7 +134,7 @@
     .quiet-button:hover { border-color: var(--accent); color: var(--accent-strong); }
     .primary-button { border-color: var(--accent); background: var(--accent); color: white; font-weight: 600; }
     .primary-button:hover { background: var(--accent-strong); }
-    .page-shell { width: calc(100% - 236px); margin-left: 236px; padding: 40px clamp(28px, 4vw, 64px) 64px; max-width: 1440px; }
+    .page-shell { width: calc(100% - 236px); margin-left: 236px; padding: 40px clamp(28px, 4vw, 64px) 64px; max-width: 1440px; min-width: 0; box-sizing: border-box; }
     /* taste-skill-ignore: structural boundary for the catalogue introduction */
     .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: 40px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ }
     h1 { max-width: 680px; margin: 0; font-size: var(--type-display); line-height: 1.08; letter-spacing: -.045em; font-weight: 700; }
@@ -144,7 +144,7 @@
     .intro-copy { color: var(--muted); margin: 12px 0 0; max-width: 650px; }
     .source-note { border-left: 2px solid var(--accent); padding-left: 16px; color: var(--muted); font-size: var(--type-secondary); }
     .source-note strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 3px; }
-    .controls { padding: 24px 0 20px; display: grid; grid-template-columns: minmax(300px, 1fr) 210px 210px auto; align-items: end; gap: 12px; }
+    .controls { padding: 24px 0 20px; display: grid; grid-template-columns: minmax(300px, 1fr) 210px 210px auto; align-items: end; gap: 12px; min-width: 0; max-width: 100%; box-sizing: border-box; }
     .control label { display: block; color: var(--muted); font-size: var(--type-label); font-weight: 600; margin-bottom: 6px; }
     .search-field { position: relative; }
     .search-field input { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 11px 13px; background: var(--paper); color: var(--ink); }
@@ -173,7 +173,7 @@
     .page-size select { margin-left: 6px; border: 1px solid var(--line); border-radius: 5px; padding: 5px 8px; background: var(--paper); color: var(--ink); }
     /* taste-skill-ignore: table frame is a real data surface */
     .catalogue { overflow-anchor: none; }
-    .table-wrap { position: relative; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); transition: opacity .14s ease; /* taste-skill-ignore: real data table frame */ }
+    .table-wrap { position: relative; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; min-height: 620px; overflow-x: auto; overflow-y: hidden; overflow-anchor: none; scrollbar-gutter: stable; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); background: var(--paper); transition: opacity .14s ease; /* taste-skill-ignore: real data table frame */ }
     .table-wrap.is-updating { opacity: .48; pointer-events: none; }
     table { width: 100%; min-width: 1040px; border-collapse: collapse; table-layout: fixed; }
     col.skill { width: 16%; } col.description { width: 20%; } col.when { width: 21%; } col.how { width: 21%; } col.category { width: 12%; } col.domain { width: 10%; }
@@ -247,8 +247,16 @@
     html[data-theme="dark"] .tag-line { color: #d5d7e0; }
     html[data-theme="dark"] .search-field input::placeholder { color: #a7a9b7; }
     html[data-theme="dark"] .markdown-body { color: #f8f8f2; }
-    @media (max-width: 980px) { .intro { grid-template-columns: 1fr; gap: 18px; } .controls { grid-template-columns: minmax(240px, 1fr) 1fr 1fr auto; } }
-    .filter-fields { display: contents; }
+    @media (max-width: 1200px) {
+      .intro { grid-template-columns: 1fr; gap: 18px; }
+      .controls { grid-template-columns: minmax(200px, 1fr) 180px 180px auto; }
+      .guide-strip { grid-template-columns: 1fr 1fr; gap: 12px; }
+    }
+    @media (max-width: 1040px) {
+      .controls { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .filter-fields { display: contents; }
+      .clear-button { justify-self: start; }
+    }
     @media (max-width: 900px) {
       .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px 12px; padding: 12px 16px; }
       .brand { min-width: 0; }
@@ -362,7 +370,7 @@
     <div class="hero-showcase-card" role="region" aria-label="Đại Điển Mã Kỹ Thuật Số" data-lightbox>
       <div class="hero-showcase-media">
         <span class="hero-badge">Đại Điển Mã · Cyber Codex</span>
-        <img class="hero-showcase-img" src="guides/assets/hero-home-codex.jpg" alt="Đại Điển Mã Kỹ Thuật Số: Học giả AI điều khiển ma trận thẻ ngọc và dải mã thư pháp trong không gian Dracula Cyberpunk" loading="eager" decoding="async">
+        <img class="hero-showcase-img" src="guides/assets/hero-home-codex.png" alt="Skill AI Master Codex: Bảng điều khiển công nghiệp 1,396 kỹ năng AI, chuẩn hóa kiến trúc Dracula Theme và kiểm thử Playwright" loading="eager" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
       <div class="hero-showcase-caption">

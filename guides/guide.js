@@ -62,6 +62,7 @@
   }
 
   function reinitDynamicFeatures() {
+    window.SkillAI?.ui?.initImageSkeletons?.();
     window.SkillAI?.ui?.initImageFallbacks?.();
     window.SkillAI?.ui?.initLightbox?.();
     window.SkillAI?.ambient?.init?.();

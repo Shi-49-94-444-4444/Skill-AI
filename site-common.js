@@ -182,7 +182,7 @@
       }
 
       document.addEventListener('click', (e) => {
-        const targetEl = e.target.closest('.ui-shot-box img, .ui-shot-img, [data-lightbox], .hero-showcase-img, .hero-showcase-card');
+        const targetEl = e.target.closest('.ui-shot-media, .ui-shot-box img, .ui-shot-img, [data-lightbox], .hero-showcase-img, .hero-showcase-card, .hero-showcase-media');
         if (!targetEl || targetEl.id === 'lightboxImg') return;
         const img = targetEl.tagName === 'IMG' ? targetEl : targetEl.querySelector('img');
         if (!img) return;
@@ -233,7 +233,25 @@
       });
     }
 
-    return Object.freeze({ initLightbox, initTabs, initImageFallbacks });
+    function initImageSkeletons() {
+      const images = document.querySelectorAll('.hero-showcase-media img, .ui-shot-media img, .ui-shot-box img');
+      images.forEach((img) => {
+        const container = img.closest('.hero-showcase-media, .ui-shot-media, .ui-shot-box');
+        function markLoaded() {
+          if (container) container.classList.add('is-loaded');
+          img.classList.add('is-loaded');
+        }
+
+        if (img.complete && img.naturalWidth > 0) {
+          markLoaded();
+        } else {
+          img.addEventListener('load', markLoaded, { once: true });
+          img.addEventListener('error', markLoaded, { once: true });
+        }
+      });
+    }
+
+    return Object.freeze({ initLightbox, initTabs, initImageFallbacks, initImageSkeletons });
   })();
 
   // 5. Spiritual Ambient Atmosphere & Interactive Motion (ui-ux-pro-max)
@@ -515,6 +533,7 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       themeManager.init();
+      uiUtils.initImageSkeletons();
       uiUtils.initLightbox();
       uiUtils.initTabs();
       uiUtils.initImageFallbacks();
@@ -522,6 +541,7 @@
     });
   } else {
     themeManager.init();
+    uiUtils.initImageSkeletons();
     uiUtils.initLightbox();
     uiUtils.initTabs();
     uiUtils.initImageFallbacks();
