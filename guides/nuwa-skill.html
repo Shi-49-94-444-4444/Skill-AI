@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn sử dụng Nuwa Skill (女娲): kỹ năng chưng cất tư duy và mô hình nhận thức của các nhân vật kiệt xuất thành góc nhìn cố vấn độc lập cho AI coding agent.">
+  <title>Nuwa Skill (女娲) — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Nuwa Skill (女娲)</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Nuwa Skill (女娲)</span>
+    </div>
+
+    <header class="guide-header">
+      <h1>Nuwa Skill (女娲) — Chưng cất cách tư duy của các bộ óc kiệt xuất</h1>
+      <p class="guide-lead">Lấy cảm hứng từ Nữ Oa (thần thoại tạo tác con người), dự án Nuwa (女娲) cung cấp phương pháp luận và kỹ năng chuẩn hóa nhằm chưng cất (distill) thế giới quan, quy tắc ra quyết định và mô hình tư duy của bất kỳ chuyên gia nào thành một Skill độc lập cho AI coding agent.</p>
+
+      <div class="guide-meta-bar">
+        <span class="guide-tag accent">Góc nhìn & Tư duy</span>
+        <span class="guide-tag">Tác giả: alchaincyf</span>
+        <span class="guide-tag">Giấy phép: MIT</span>
+        <span class="guide-tag">Chuẩn: Agent Skills</span>
+        <a class="guide-link-btn" href="https://github.com/alchaincyf/nuwa-skill" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository (36.6k+ ★)
+        </a>
+      </div>
+    </header>
+
+    <nav class="toc-bar" aria-label="Mục lục bài viết">
+      <a href="#tong-quan">1. Tổng quan</a>
+      <a href="#nguyen-ly">2. Nguyên lý chưng cất tư duy</a>
+      <a href="#cac-bo-oc">3. Thư viện góc nhìn mẫu</a>
+      <a href="#hoi-dong-co-van">4. Mô hình Hội đồng cố vấn song song</a>
+      <a href="#cai-dat">5. Cài đặt & Sử dụng</a>
+      <a href="#tu-tao-persona">6. Cách tự tạo một Perspective Skill</a>
+      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
+    </nav>
+
+    <!-- 1. Tổng quan -->
+    <section class="guide-section" id="tong-quan">
+      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
+      <p>Khi yêu cầu một mô hình ngôn ngữ <em>"hãy đóng vai Steve Jobs"</em> hoặc <em>"hãy tư vấn như Charlie Munger"</em> qua prompt thông thường, kết quả trả về thường rất nông: mô hình chỉ bắt chước một vài câu cửa miệng, giọng điệu bề nổi nhưng hoàn toàn thiếu chiều sâu lập luận và các mô hình tư duy thực sự (Mental Models) của nhân vật.</p>
+      <p><strong>Nuwa Skill</strong> giải quyết triệt để vấn đề này bằng cách tiếp cận theo tiêu chuẩn kỹ thuật phần mềm:</p>
+      <ul>
+        <li>Thu thập toàn bộ bài viết, sách, video phỏng vấn và các quyết định lịch sử của nhân vật.</li>
+        <li>Chắt lọc thành cấu trúc tài liệu <code>SKILL.md</code> với các nguyên tắc logic không thể thỏa hiệp.</li>
+        <li>Xây dựng tệp kiểm định độ chân thực <code>FIDELITY.md</code> để đo lường mức độ trùng khớp tư duy.</li>
+        <li>Tích hợp liền mạch vào hơn 50 môi trường runtime hỗ trợ Agent Skills (Claude Code, Cursor, Codex, OpenClaw, Gemini CLI...).</li>
+      </ul>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Phương pháp luận</span>
+          <span class="spec-value">Knowledge Distillation cho Heuristics</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Kiểm định chất lượng</span>
+          <span class="spec-value">Bộ test FIDELITY.md đa kịch bản</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Mô hình ứng dụng</span>
+          <span class="spec-value">Ban cố vấn đa góc nhìn (Advisory Board)</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Khả năng tương thích</span>
+          <span class="spec-value">50+ Agent Runtimes chuẩn Agent Skills</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Nguyên lý -->
+    <section class="guide-section" id="nguyen-ly">
+      <h2>2. Nguyên lý chưng cất tư duy (Cognitive Distillation)</h2>
+      <p>Một góc nhìn chuẩn Nuwa không phải là một đoạn mô tả tính cách (personality prompt), mà gồm 4 tầng nhận thức có cấu trúc:</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Hệ thống Tiên đề & Niềm tin cốt lõi (Axioms & Worldview)</h4>
+            <p>Những sự thật hiển nhiên mà nhân vật tin tưởng tuyệt đối. Ví dụ: Với Feynman, <em>"quy tắc đầu tiên là bạn không được tự lừa dối chính mình, và bạn là người dễ bị lừa dối nhất"</em>; với Elon Musk, <em>"mọi thứ đều phải quy về các nguyên lý cơ bản của vật lý học (First Principles)"</em>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Bộ lọc tư duy & Heuristic ra quyết định</h4>
+            <p>Cách nhân vật từ chối một ý tưởng hoặc giải quyết bế tắc. Ví dụ: Mô hình đảo ngược (Inversion) của Charlie Munger — thay vì hỏi làm sao để thành công, hãy hỏi làm cách nào để dự án chắc chắn phá sản rồi tránh nó bằng mọi giá.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Mẫu câu hỏi thử thách (Challenging Questions)</h4>
+            <p>Thay vì đưa ra câu trả lời vuốt ve, agent sẽ dùng chính câu hỏi đặc trưng của chuyên gia đó để phản biện ý kiến của bạn, bóc tách các giả định sai lầm tiềm ẩn.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Bản kiểm định độ trung thực (FIDELITY.md)</h4>
+            <p>Tập hợp các tình huống tiến thoái lưỡng nan trong quá khứ để đối chiếu xem phản hồi của agent có đúng với cách nhân vật thực tế đã hành xử hay không.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Thư viện góc nhìn mẫu -->
+    <section class="guide-section" id="cac-bo-oc">
+      <h2>3. Thư viện các góc nhìn tư duy sẵn có</h2>
+      <p>Nuwa cung cấp sẵn nhiều gói góc nhìn (perspective skills) đã được tinh chỉnh hoàn thiện:</p>
+
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Nhân vật / Góc nhìn</th>
+              <th style="width: 45%;">Mô hình tư duy đặc trưng</th>
+              <th style="width: 30%;">Phù hợp nhất khi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Richard Feynman</strong></td>
+              <td>Kỹ thuật Feynman (giải thích cho đứa trẻ 8 tuổi hiểu), trung thực trí tuệ tuyệt đối, hoài nghi lành mạnh với biệt ngữ rỗng tuếch.</td>
+              <td>Đơn giản hóa hệ thống phức tạp, viết tài liệu, kiểm tra độ hiểu sâu của team.</td>
+            </tr>
+            <tr>
+              <td><strong>Charlie Munger</strong></td>
+              <td>Tư duy đa ngành (Latticework of Mental Models), phương pháp đảo ngược (Inversion), tránh né sự ngu xuẩn hơn là cố tỏ ra thông minh.</td>
+              <td>Đánh giá rủi ro dự án, thẩm định quyết định đầu tư công nghệ, thiết kế kiến trúc.</td>
+            </tr>
+            <tr>
+              <td><strong>Naval Ravikant</strong></td>
+              <td>Tri thức đặc thù (Specific Knowledge), đòn bẩy không cần xin phép (Permissionless Leverage: code & media), phán đoán dài hạn.</td>
+              <td>Định hướng sản phẩm cá nhân, xây dựng startup công nghệ, tự động hóa quy trình.</td>
+            </tr>
+            <tr>
+              <td><strong>Elon Musk</strong></td>
+              <td>Quy trình 5 bước kỹ thuật: Đặt câu hỏi cho mọi yêu cầu -> Xóa bỏ thành phần -> Tối ưu hóa -> Tăng tốc độ -> Tự động hóa.</td>
+              <td>Loại bỏ tính năng thừa, tối ưu hóa quy trình build/CI/CD, hạ giá thành hạ tầng.</td>
+            </tr>
+            <tr>
+              <td><strong>Steve Jobs</strong></td>
+              <td>Gọt giũa tối đa (Saying no to 1,000 things), trải nghiệm người dùng không thỏa hiệp, trường bẻ cong thực tại (Reality Distortion Field).</td>
+              <td>Thiết kế sản phẩm đầu cuối, giao diện UI/UX, thông điệp truyền thông.</td>
+            </tr>
+            <tr>
+              <td><strong>Paul Graham</strong></td>
+              <td>Làm những việc không thể scale (Do things that don't scale), nói chuyện trực tiếp với khách hàng, phát hiện ý tưởng phản trực giác.</td>
+              <td>Giai đoạn 0-to-1 sản phẩm mới, tìm kiếm Product-Market Fit.</td>
+            </tr>
+            <tr>
+              <td><strong>Ilya Sutskever / Karpathy</strong></td>
+              <td>Trực giác toán học sâu sắc về AI, tôn trọng định luật scaling (Scaling Laws), code sạch từ số 0 (from scratch).</td>
+              <td>Thiết kế kiến trúc hệ thống AI/ML, fine-tuning mô hình, đánh giá pipeline dữ liệu.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. Hội đồng cố vấn song song -->
+    <section class="guide-section" id="hoi-dong-co-van">
+      <h2>4. Mô hình Hội đồng cố vấn đa luồng (Advisory Board)</h2>
+      <p>Sức mạnh lớn nhất của Nuwa không phải là gọi từng nhân vật đơn lẻ, mà là chạy <strong>nhiều sub-agent song song</strong> tạo thành một <em>"Hội đồng cố vấn ảo"</em> để cùng phản biện một bài toán khó:</p>
+
+      <div class="callout tip">
+        <div class="callout-title">Kỹ thuật Multi-Agent Perspective</div>
+        <p>Ví dụ: Khi bạn trình bày một đề xuất kiến trúc mới, agent có thể triệu tập đồng thời 3 góc nhìn: <strong>Feynman</strong> (kiểm tra xem kiến trúc có bị phức tạp hóa quá mức không), <strong>Charlie Munger</strong> (chỉ ra 5 kịch bản hệ thống này sẽ sập) và <strong>Elon Musk</strong> (đòi hỏi xóa bỏ 50% số service không cần thiết). Sự va chạm giữa các góc nhìn mang lại chiều sâu chưa từng có.</p>
+      </div>
+    </section>
+
+    <!-- 5. Cài đặt & Sử dụng -->
+    <section class="guide-section" id="cai-dat">
+      <h2>5. Hướng dẫn cài đặt & Gọi góc nhìn</h2>
+      <p>Cài đặt thông qua công cụ quản lý <code>skills</code>:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># Cài đặt bộ kỹ năng Nuwa tổng
+npx skills add alchaincyf/nuwa-skill
+
+# Hoặc cài đặt từng góc nhìn cụ thể từ thư mục examples/
+npx skills add alchaincyf/nuwa-skill/examples/feynman-perspective
+npx skills add alchaincyf/nuwa-skill/examples/munger-perspective</code></pre>
+      </div>
+
+      <h3>Cách gọi trong phiên làm việc với Agent</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">prompt</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>Tôi đang dự định xây dựng một hệ sinh thái microservices với 12 service nhỏ cho một ứng dụng có 500 người dùng hoạt động hàng ngày.
+Hãy kích hoạt góc nhìn của Charlie Munger và Elon Musk để phản biện kế hoạch này một cách tàn nhẫn.</code></pre>
+      </div>
+    </section>
+
+    <!-- 6. Tự tạo Persona -->
+    <section class="guide-section" id="tu-tao-persona">
+      <h2>6. Cách tự chưng cất một góc nhìn chuyên gia mới</h2>
+      <p>Bạn hoàn toàn có thể dùng Nuwa để chưng cất chính kiến trúc sư trưởng trong công ty bạn hoặc một chuyên gia trong ngành:</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">A</div>
+          <div class="step-content">
+            <h4>Thu thập Corpus tư liệu</h4>
+            <p>Gom ít nhất 5-10 tài liệu dài (bài phỏng vấn sâu, bài viết blog cá nhân, PR review mẫu, email kỹ thuật) của chuyên gia đó.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">B</div>
+          <div class="step-content">
+            <h4>Chạy kỹ năng chưng cất</h4>
+            <p>Yêu cầu agent đọc tài liệu và trích xuất theo mẫu <code>SKILL.md</code> của Nuwa: Tiên đề -> Mô hình tư duy -> Câu hỏi phản biện -> Giọng điệu logic.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">C</div>
+          <div class="step-content">
+            <h4>Viết bộ test FIDELITY.md</h4>
+            <p>Đưa ra 3 tình huống kỹ thuật khó và so sánh câu trả lời của agent với cách xử lý thực tế của người đó ngoài đời để tinh chỉnh trọng số.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Tài liệu & Nguồn gốc -->
+    <section class="guide-section" id="tai-lieu">
+      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
+      <ul>
+        <li>Kho mã nguồn chính thức: <a href="https://github.com/alchaincyf/nuwa-skill" target="_blank" rel="noopener noreferrer">https://github.com/alchaincyf/nuwa-skill</a></li>
+        <li>Tài liệu chuẩn Agent Skills: <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer">https://agentskills.io</a></li>
+        <li>Ví dụ góc nhìn Feynman: <a href="https://github.com/alchaincyf/nuwa-skill/tree/main/examples/feynman-perspective" target="_blank" rel="noopener noreferrer">nuwa-skill/examples/feynman-perspective</a></li>
+      </ul>
+    </section>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="vercel-agent-skills.html">
+        <span class="nav-card-dir">← Guide trước</span>
+        <span class="nav-card-title">Vercel Agent Skills</span>
+      </a>
+      <a class="nav-card next" href="taste-skill.html">
+        <span class="nav-card-dir">Guide tiếp theo →</span>
+        <span class="nav-card-title">Taste Skill</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

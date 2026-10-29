@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn sử dụng Microsoft Playwright CLI: công cụ tự động hóa trình duyệt dành cho coding agent, chụp ảnh màn hình, kiểm tra selector và ghi lại thao tác test.">
+  <title>Playwright CLI — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Playwright CLI</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Playwright CLI</span>
+    </div>
+
+    <header class="guide-header">
+      <h1>Playwright CLI — Trao cho AI Agent đôi mắt và đôi tay trên Trình duyệt</h1>
+      <p class="guide-lead">Công cụ dòng lệnh chính thức từ Microsoft cho phép AI coding agent tự động tương tác trực tiếp với trình duyệt web: mở trang, chụp ảnh màn hình, tương tác với các phần tử, trích xuất cây khả năng tiếp cận (Accessibility Tree) và tự động sinh mã kiểm thử E2E.</p>
+
+      <div class="guide-meta-bar">
+        <span class="guide-tag accent">Công cụ cho agent</span>
+        <span class="guide-tag">Tổ chức: Microsoft</span>
+        <span class="guide-tag">Giấy phép: Apache-2.0</span>
+        <span class="guide-tag">Ngôn ngữ: TypeScript</span>
+        <a class="guide-link-btn" href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository (14.7k+ ★)
+        </a>
+      </div>
+    </header>
+
+    <nav class="toc-bar" aria-label="Mục lục bài viết">
+      <a href="#tong-quan">1. Tổng quan</a>
+      <a href="#tinh-nang-chinh">2. Các tính năng chính</a>
+      <a href="#lenh-co-ban">3. Lệnh CLI cơ bản thường dùng</a>
+      <a href="#quy-trinh-agent">4. Cách Agent sử dụng để tự kiểm tra UI</a>
+      <a href="#ghi-ma-codegen">5. Tự động sinh mã kiểm thử (Codegen)</a>
+      <a href="#tai-lieu">6. Tài liệu & Nguồn gốc</a>
+    </nav>
+
+    <!-- 1. Tổng quan -->
+    <section class="guide-section" id="tong-quan">
+      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
+      <p>Khi lập trình viên yêu cầu AI viết mã frontend (HTML/CSS/JS/React), một trong những hạn chế lớn nhất là <strong>agent không thực sự nhìn thấy trang web trông như thế nào sau khi chạy</strong>. Agent chỉ đoán giao diện qua mã nguồn, dẫn đến việc các phần tử bị che khuất, nút bấm bị tràn màn hình hoặc luồng người dùng bị kẹt mà không ai hay biết.</p>
+      <p><strong>Microsoft Playwright CLI</strong> cung cấp một giao diện dòng lệnh đơn giản, chuẩn hóa để agent có thể khởi động trình duyệt thật (Chromium, Firefox, WebKit), điều hướng đến URL cục bộ, chụp ảnh màn hình để tự soi lỗi, click vào các nút bấm để kiểm tra tương tác và trích xuất thông tin DOM một cách chuẩn xác.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Engine trình duyệt</span>
+          <span class="spec-value">Chromium, Firefox, WebKit</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Chế độ vận hành</span>
+          <span class="spec-value">Headless (chạy ngầm) & Headed (mở cửa sổ)</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Chụp ảnh màn hình</span>
+          <span class="spec-value">Fullpage, Viewport, Element Selector</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Tích hợp sẵn</span>
+          <span class="spec-value">Antigravity, Claude Code, GitHub Actions</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Tính năng chính -->
+    <section class="guide-section" id="tinh-nang-chinh">
+      <h2>2. Các tính năng kỹ thuật nổi bật</h2>
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Tính năng</th>
+              <th style="width: 45%;">Khả năng kỹ thuật</th>
+              <th style="width: 30%;">Ứng dụng cho Agent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Screenshot Snapshot</strong></td>
+              <td>Chụp ảnh màn hình toàn trang hoặc theo selector với các tùy chọn viewport (1440px desktop, 768px tablet, 390px mobile).</td>
+              <td>Agent nạp ảnh vào vision model để kiểm định visual layout trước khi bàn giao.</td>
+            </tr>
+            <tr>
+              <td><strong>Accessibility Tree</strong></td>
+              <td>Trích xuất cây ARIA/Accessibility Snapshot dưới dạng text có cấu trúc.</td>
+              <td>Agent kiểm tra tính khả dụng cho người khuyết tật mà không cần nạp toàn bộ DOM nặng nề.</td>
+            </tr>
+            <tr>
+              <td><strong>Codegen (Ghi mã tự động)</strong></td>
+              <td>Mở trình duyệt, theo dõi thao tác chuột/bàn phím của người dùng và dịch trực tiếp thành mã test Playwright (TS/JS/Python).</td>
+              <td>Viết test tự động siêu tốc chỉ bằng cách click thao tác trên web.</td>
+            </tr>
+            <tr>
+              <td><strong>Thực thi kịch bản CLI</strong></td>
+              <td>Hỗ trợ click, type, press key, wait-for-selector trực tiếp từ các lệnh dòng lệnh ngắn gọn.</td>
+              <td>Agent tự động điền form, kiểm tra luồng login và xác minh chức năng.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. Lệnh CLI cơ bản -->
+    <section class="guide-section" id="lenh-co-ban">
+      <h2>3. Các lệnh CLI cơ bản thường dùng</h2>
+
+      <h3>1. Chụp ảnh màn hình trang web</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># Chụp ảnh toàn trang ở chế độ desktop
+npx playwright screenshot --full-page http://localhost:3000 screenshot.png
+
+# Chụp ảnh giả lập màn hình iPhone 14
+npx playwright screenshot --device="iPhone 14" http://localhost:3000 mobile.png</code></pre>
+      </div>
+
+      <h3>2. Trích xuất cây Accessibility Tree để agent đọc</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>npx playwright-cli snapshot http://localhost:3000 --output tree.json</code></pre>
+      </div>
+
+      <h3>3. Kiểm tra mã phản hồi HTTP và console error</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>npx playwright-cli check-errors http://localhost:3000</code></pre>
+      </div>
+    </section>
+
+    <!-- 4. Quy trình Agent -->
+    <section class="guide-section" id="quy-trinh-agent">
+      <h2>4. Chu trình Agent tự kiểm tra và sửa lỗi UI (Look-and-Fix Loop)</h2>
+      <p>Khi được tích hợp kỹ năng Playwright CLI, agent có thể chạy vòng lặp hoàn thiện giao diện tự động:</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Khởi động máy chủ cục bộ & Chụp ảnh</h4>
+            <p>Agent chạy server test và dùng <code>playwright screenshot</code> để chụp ảnh giao diện ở 3 kích thước: 1440px (Desktop), 768px (Tablet) và 390px (Mobile).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Quan sát và chấm điểm thị giác</h4>
+            <p>Agent đọc hình ảnh chụp được, phát hiện các điểm lỗi: chữ tràn dòng, bảng dữ liệu bị che khuất, nút bấm bị lệch lề ngoài hoặc thiếu độ tương phản.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Chỉnh sửa CSS / HTML và chụp lại</h4>
+            <p>Agent sửa mã nguồn và gọi lệnh chụp lại ngay lập tức để so sánh trực tiếp Before / After cho đến khi toàn bộ lỗi thị giác được triệt tiêu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Codegen -->
+    <section class="guide-section" id="ghi-ma-codegen">
+      <h2>5. Tự động sinh mã kiểm thử với Codegen</h2>
+      <p>Lệnh <code>codegen</code> là trợ thủ đắc lực giúp bạn tạo kịch bản kiểm thử tự động chỉ trong vài giây:</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># Mở trình duyệt và tự động sinh code TypeScript
+npx playwright codegen http://localhost:3000 --target typescript -o tests/e2e.spec.ts</code></pre>
+      </div>
+
+      <p>Cửa sổ trình duyệt và cửa sổ Playwright Inspector sẽ hiện ra song song. Mọi thao tác gõ phím, click chuột, chọn dropdown của bạn sẽ được tự động chuyển thành mã code Playwright chuẩn chỉ.</p>
+    </section>
+
+    <!-- 6. Tài liệu & Nguồn gốc -->
+    <section class="guide-section" id="tai-lieu">
+      <h2>6. Nguồn tham khảo & Tài liệu chính thức</h2>
+      <ul>
+        <li>Kho mã nguồn chính thức: <a href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener noreferrer">https://github.com/microsoft/playwright-cli</a></li>
+        <li>Trang chủ Playwright: <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer">https://playwright.dev</a></li>
+        <li>Tài liệu Playwright CLI Docs: <a href="https://playwright.dev/docs/test-cli" target="_blank" rel="noopener noreferrer">Playwright Command Line Tools</a></li>
+      </ul>
+    </section>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="skills-manager.html">
+        <span class="nav-card-dir">← Guide trước</span>
+        <span class="nav-card-title">Skills Manager</span>
+      </a>
+      <a class="nav-card next" href="watermarks-remover.html">
+        <span class="nav-card-dir">Guide tiếp theo →</span>
+        <span class="nav-card-title">Watermarks Remover</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

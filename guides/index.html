@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trung tâm tài liệu hướng dẫn và phân tích các bộ skill, công cụ, agent harness hàng đầu cho AI coding agent.">
+  <title>Guide & Tài liệu — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>11 hướng dẫn chuyên sâu</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <span class="current">Guide</span>
+    </div>
+
+    <section class="hub-intro">
+      <h1>Hệ thống Guide & Phân tích chuyên sâu</h1>
+      <p class="guide-lead">Tập hợp các tài liệu hướng dẫn kỹ thuật chi tiết được phân tích trực tiếp từ các kho mã nguồn mở hàng đầu: bộ sưu tập skill kỹ thuật, nguyên tắc thiết kế frontend, nền tảng agent harness và công cụ phụ trợ cho AI coding agent.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Tổng số Guide</span>
+          <span class="spec-value">11 trang chuyên khảo</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Phân nhóm chủ đề</span>
+          <span class="spec-value">4 nhóm nghiệp vụ</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Ngôn ngữ biên soạn</span>
+          <span class="spec-value">Tiếng Việt kỹ thuật</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Nguồn phân tích</span>
+          <span class="spec-value">GitHub Verified Repos</span>
+        </div>
+      </div>
+
+      <div class="hub-search-box">
+        <input class="hub-search-input" id="hubSearch" type="search" placeholder="Tìm guide theo tên, tính năng, công cụ hoặc từ khóa (ví dụ: TDD, React, Design System, Harness, C2PA, Browser)..." autocomplete="off">
+      </div>
+      <p id="hubEmpty" style="display: none; color: var(--muted); padding: 24px 0; text-align: center;">Không tìm thấy Guide phù hợp với từ khóa tìm kiếm.</p>
+    </section>
+
+    <!-- Nhóm 1: Bộ sưu tập skill -->
+    <section class="group-section" id="group-skill-collections">
+      <div class="group-header">
+        <h2>Bộ sưu tập skill</h2>
+        <p>Các gói kỹ năng chuẩn hóa giúp coding agent làm việc có quy trình, hỏi kỹ yêu cầu, viết test trước và tối ưu mã nguồn.</p>
+      </div>
+      <div class="guide-card-grid">
+        <a class="guide-card" href="mattpocock-skills.html">
+          <div class="guide-card-title">
+            <span>Matt Pocock Skills</span>
+            <span class="guide-tag">Engineering</span>
+          </div>
+          <p class="guide-card-desc">Bộ skill thực chiến chống "vibe coding": kỹ thuật grilling session phỏng vấn làm rõ yêu cầu, TDD red-green-refactor, lập spec, chẩn đoán lỗi và giữ kiến trúc gọn gàng.</p>
+          <div class="guide-card-footer">
+            <span>mattpocock/skills · 300k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="vercel-agent-skills.html">
+          <div class="guide-card-title">
+            <span>Vercel Agent Skills</span>
+            <span class="guide-tag">Frontend & Perf</span>
+          </div>
+          <p class="guide-card-desc">Bộ skill chính thức từ Vercel Labs: 40+ quy tắc tối ưu React/Next.js, 100+ tiêu chuẩn web design & accessibility, React Native, View Transitions và deploy.</p>
+          <div class="guide-card-footer">
+            <span>vercel-labs/agent-skills · 33k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="nuwa-skill.html">
+          <div class="guide-card-title">
+            <span>Nuwa Skill (女娲)</span>
+            <span class="guide-tag">Persona & Mind</span>
+          </div>
+          <p class="guide-card-desc">Kỹ năng chưng cất tư duy và nhân sinh quan của các chuyên gia hàng đầu (Feynman, Munger, Musk, Naval) thành góc nhìn cố vấn độc lập cho AI agent.</p>
+          <div class="guide-card-footer">
+            <span>alchaincyf/nuwa-skill · 36k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Nhóm 2: Thiết kế giao diện -->
+    <section class="group-section" id="group-design">
+      <div class="group-header">
+        <h2>Thiết kế giao diện</h2>
+        <p>Quy chuẩn mỹ thuật, chỉ đạo nghệ thuật và hệ thống token giúp agent loại bỏ thiết kế rập khuôn, dựng UI có gu và chiều sâu.</p>
+      </div>
+      <div class="guide-card-grid">
+        <a class="guide-card" href="taste-skill.html">
+          <div class="guide-card-title">
+            <span>Taste Skill</span>
+            <span class="guide-tag">Art Direction</span>
+          </div>
+          <p class="guide-card-desc">Art direction cho agent đúc kết từ 247 website đoạt giải: cấm các mẫu AI rập khuôn, bốc hướng thiết kế theo bản chất chủ thể và kiểm tra bằng trình duyệt thật.</p>
+          <div class="guide-card-footer">
+            <span>Leonxlnx/taste-skill · 104k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="awesome-design-md.html">
+          <div class="guide-card-title">
+            <span>Awesome DESIGN.md</span>
+            <span class="guide-tag">Design Systems</span>
+          </div>
+          <p class="guide-card-desc">Kho tài liệu DESIGN.md phân tích phong cách thiết kế của các thương hiệu hàng đầu (Apple, Claude, Linear, Stripe, Airbnb, Ferrari) để thả vào dự án cho agent tuân thủ.</p>
+          <div class="guide-card-footer">
+            <span>VoltAgent/awesome-design-md · 124k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Nhóm 3: Agent và harness -->
+    <section class="group-section" id="group-agent-harness">
+      <div class="group-header">
+        <h2>Agent và harness</h2>
+        <p>Hệ điều hành, runtime điều phối, cơ chế plugin và giải pháp mở rộng harness cho AI coding agent.</p>
+      </div>
+      <div class="guide-card-grid">
+        <a class="guide-card" href="deepseek-harness.html">
+          <div class="guide-card-title">
+            <span>DeepSeek Harness</span>
+            <span class="guide-tag">Plugin Architecture</span>
+          </div>
+          <p class="guide-card-desc">Nền tảng harness nguồn mở từ DeepSeek AI với triết lý "Everything is a plugin", hỗ trợ Web UI, CLI điều phối, tích hợp MCP memory, proxy mạng và nhà cung cấp mô hình.</p>
+          <div class="guide-card-footer">
+            <span>deepseek-ai/deepseek-harness · 265k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="ecc.html">
+          <div class="guide-card-title">
+            <span>ECC (Everything Claude Code)</span>
+            <span class="guide-tag">Harness Optimization</span>
+          </div>
+          <p class="guide-card-desc">Hệ thống tối ưu hiệu năng toàn diện cho harness: kết hợp skill, instinct, persistent memory, bảo mật phân tầng và phương pháp research-first cho hơn 10 nền tảng coding agent.</p>
+          <div class="guide-card-footer">
+            <span>affaan-m/ECC · 291k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="cindy.html">
+          <div class="guide-card-title">
+            <span>Cindy</span>
+            <span class="guide-tag">Multi-Device Agent</span>
+          </div>
+          <p class="guide-card-desc">AI companion mã nguồn mở kết nối máy tính và điện thoại: biến máy tính cá nhân thành máy chủ an toàn, tích hợp Claude Code, Codex và Pi trong một giao diện duy nhất.</p>
+          <div class="guide-card-footer">
+            <span>makecindy/cindy · 8.1k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Nhóm 4: Công cụ cho agent -->
+    <section class="group-section" id="group-tools">
+      <div class="group-header">
+        <h2>Công cụ cho agent</h2>
+        <p>Ứng dụng desktop và công cụ dòng lệnh hỗ trợ quản lý skill, tự động hóa tương tác web và bảo vệ dữ liệu.</p>
+      </div>
+      <div class="guide-card-grid">
+        <a class="guide-card" href="skills-manager.html">
+          <div class="guide-card-title">
+            <span>Skills Manager</span>
+            <span class="guide-tag">Desktop Tool</span>
+          </div>
+          <p class="guide-card-desc">Ứng dụng desktop nhẹ viết bằng Rust giúp quản lý, đồng bộ và phân bổ skill qua hơn 50 công cụ AI (Claude Code, Cursor, Copilot, Codex, Gemini CLI) với hệ thống Presets linh hoạt.</p>
+          <div class="guide-card-footer">
+            <span>xingkongliang/skills-manager · 7k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="playwright-cli.html">
+          <div class="guide-card-title">
+            <span>Playwright CLI</span>
+            <span class="guide-tag">Browser Automation</span>
+          </div>
+          <p class="guide-card-desc">Công cụ CLI chính thức từ Microsoft cho phép agent duyệt web, click, nhập liệu, chụp ảnh màn hình, kiểm tra tính khả dụng và ghi lại hành động thành code test.</p>
+          <div class="guide-card-footer">
+            <span>microsoft/playwright-cli · 14.7k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+
+        <a class="guide-card" href="watermarks-remover.html">
+          <div class="guide-card-title">
+            <span>Watermarks Remover</span>
+            <span class="guide-tag">Privacy & Hygiene</span>
+          </div>
+          <p class="guide-card-desc">Dịch vụ bảo vệ quyền riêng tư: loại bỏ các dấu vết AI (ký tự Unicode ẩn, khoảng trắng bất thường, chữ ký thống kê SynthID-Text và siêu dữ liệu C2PA/EXIF) trên dữ liệu bạn sở hữu.</p>
+          <div class="guide-card-footer">
+            <span>guillaumemeyer/watermarks-remover · 25.4k+ ★</span>
+            <span class="read-more">Xem chi tiết →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

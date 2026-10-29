@@ -1,0 +1,55 @@
+/* Menu Guide trong sidebar. Mọi lớp đều có tiền tố gnav- để không đụng CSS của các trang hiện có. */
+.sidebar-nav .gnav-toggle { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; margin:0; padding:9px 10px; border:0; border-radius:6px; background:transparent; color:var(--muted); font:inherit; font-size:13px; line-height:1.55; text-align:left; cursor:pointer; }
+.sidebar-nav .gnav-toggle:hover,.sidebar-nav .gnav-toggle.active,.sidebar-nav .gnav-toggle[aria-expanded="true"] { background:var(--soft); color:var(--ink); }
+.sidebar-nav .gnav-toggle:focus-visible { outline:3px solid var(--focus); outline-offset:2px; }
+.gnav-chevron { flex:0 0 12px; width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; transition:transform .16s ease; }
+
+.gnav-panel { position:fixed; z-index:60; top:80px; left:246px; display:flex; flex-direction:column; width:min(360px,calc(100vw - 260px)); max-height:calc(100vh - 24px); overflow:hidden; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink); box-shadow:0 14px 32px rgba(10,10,10,.12); /* taste-skill-ignore: a real floating menu */ font-family:"Geist","Segoe UI",sans-serif; font-size:15px; line-height:1.5; }
+.gnav-panel[hidden],.gnav-scrim[hidden] { display:none; }
+.gnav-panel:focus { outline:none; }
+.gnav-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 12px 0 16px; }
+.gnav-title { margin:0; font-size:15px; font-weight:700; letter-spacing:-.02em; }
+.gnav-count { margin-left:6px; color:var(--muted); font-size:13px; font-weight:400; letter-spacing:0; }
+.gnav-close { padding:6px 8px; border:0; border-radius:6px; background:transparent; color:var(--muted); font:inherit; font-size:13px; cursor:pointer; }
+.gnav-close:hover { background:var(--soft); color:var(--ink); }
+.gnav-search { position:relative; padding:10px 16px 12px; }
+.gnav-search input { width:100%; min-height:40px; margin:0; padding:9px 38px 9px 12px; border:1px solid var(--line); border-radius:6px; background:var(--ground); color:var(--ink); font:inherit; font-size:15px; }
+.gnav-search input:focus { border-color:var(--accent); outline:none; }
+.gnav-search input::-webkit-search-cancel-button { display:none; -webkit-appearance:none; }
+.gnav-clear { position:absolute; top:50%; right:21px; display:grid; place-items:center; width:30px; height:30px; padding:0; border:0; border-radius:4px; background:transparent; color:var(--muted); cursor:pointer; transform:translateY(-50%); }
+.gnav-clear:hover { background:var(--soft); color:var(--ink); }
+.gnav-clear svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; }
+.gnav-results { flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:0 8px 10px; }
+.gnav-group + .gnav-group { margin-top:8px; }
+.gnav-group-title { margin:0; padding:6px 8px 3px; color:var(--muted); font-size:13px; font-weight:500; }
+.gnav-list { margin:0; padding:0; list-style:none; }
+.gnav-item { display:block; padding:7px 8px; border-radius:6px; color:var(--ink); text-decoration:none; }
+.gnav-item:hover { background:var(--soft); }
+.gnav-item:focus-visible,.gnav-all:focus-visible,.gnav-close:focus-visible,.gnav-clear:focus-visible,.gnav-empty-reset:focus-visible { outline:none; box-shadow:inset 0 0 0 2px var(--accent); }
+.gnav-item[aria-current="page"] { background:var(--soft); }
+.gnav-item-title { display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:14px; font-weight:500; }
+.gnav-here { flex:0 0 auto; color:var(--muted); font-size:12px; font-weight:400; }
+.gnav-item-meta { display:-webkit-box; overflow:hidden; margin-top:1px; color:var(--muted); font-size:13px; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+.gnav-empty { padding:6px 8px 4px; color:var(--muted); font-size:14px; }
+.gnav-empty p { margin:0 0 8px; }
+.gnav-empty-reset { padding:7px 10px; border:1px solid var(--line); border-radius:6px; background:var(--paper); color:var(--ink); font:inherit; font-size:14px; cursor:pointer; }
+.gnav-empty-reset:hover { border-color:var(--accent); }
+.gnav-foot { padding:11px 16px 12px; background:var(--ground); }
+.gnav-all { color:var(--ink); font-size:14px; font-weight:500; text-decoration:none; }
+.gnav-all:hover { text-decoration:underline; text-underline-offset:3px; }
+.gnav-scrim { position:fixed; z-index:59; inset:0; background:rgba(14,27,22,.38); }
+.gnav-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+@media (max-width:900px) {
+  .sidebar-nav .gnav-toggle { flex:0 0 auto; width:auto; padding:8px 10px; }
+  .gnav-chevron { transform:rotate(90deg); }
+  .gnav-toggle[aria-expanded="true"] .gnav-chevron { transform:rotate(-90deg); }
+  .gnav-panel { top:auto; right:8px; bottom:max(8px,env(safe-area-inset-bottom)); left:8px; width:auto; max-height:min(80dvh,640px); border-radius:16px; box-shadow:0 16px 48px rgba(20,30,55,.24); }
+  .gnav-head { padding:12px 10px 0 16px; }
+  .gnav-close { min-height:40px; padding:8px 12px; font-size:14px; }
+  .gnav-search input { min-height:44px; font-size:16px; }
+  .gnav-item { padding:10px; }
+  .gnav-item-title { font-size:15px; }
+  .gnav-foot { padding:12px 16px calc(12px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion:reduce) { .gnav-chevron { transition:none; } }

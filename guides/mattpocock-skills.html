@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn chi tiết bộ Matt Pocock Skills: bộ kỹ năng công nghệ phần mềm thực chiến cho AI coding agent, chống vibe coding, TDD và grilling session.">
+  <title>Matt Pocock Skills — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Matt Pocock Skills</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Matt Pocock Skills</span>
+    </div>
+
+    <header class="guide-header">
+      <h1>Matt Pocock Skills — Kỹ thuật phần mềm thực thụ cho Coding Agent</h1>
+      <p class="guide-lead">Bộ skill tinh gọn, có khả năng kết hợp cao được xây dựng bởi Matt Pocock (nhà sáng lập Total TypeScript). Mục tiêu là giải quyết 4 thất bại kinh điển của lập trình viên khi dùng AI: lệch pha yêu cầu, agent nói dông dài, code không chạy được và biến codebase thành bãi rác phức tạp.</p>
+
+      <div class="guide-meta-bar">
+        <span class="guide-tag accent">Bộ sưu tập skill</span>
+        <span class="guide-tag">Tác giả: Matt Pocock</span>
+        <span class="guide-tag">Giấy phép: MIT</span>
+        <span class="guide-tag">Ngôn ngữ: TypeScript / Shell</span>
+        <a class="guide-link-btn" href="https://github.com/mattpocock/skills" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository (305k+ ★)
+        </a>
+      </div>
+    </header>
+
+    <nav class="toc-bar" aria-label="Mục lục bài viết">
+      <a href="#tong-quan">1. Tổng quan</a>
+      <a href="#bon-that-bai">2. Bốn thất bại lớn & Cách giải quyết</a>
+      <a href="#phan-loai-skill">3. Phân loại User-invoked & Model-invoked</a>
+      <a href="#cai-dat">4. Cài đặt đa nền tảng</a>
+      <a href="#quy-trinh-thuc-te">5. Quy trình làm việc mẫu</a>
+      <a href="#luu-y">6. Lưu ý & Khắc phục sự cố</a>
+      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
+    </nav>
+
+    <!-- 1. Tổng quan -->
+    <section class="guide-section" id="tong-quan">
+      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
+      <p>Lập trình trong thời đại AI thường bị cuốn vào trào lưu <em>"vibe coding"</em> — yêu cầu mơ hồ, để agent tự do sinh code, sau đó mất hàng giờ sửa các lỗi logic tinh vi hoặc đối mặt với một codebase rối rắm không thể bảo trì.</p>
+      <p>Các giải pháp framework lớn (như GSD, BMAD, Spec-Kit) thường cố gắng kiểm soát toàn bộ quy trình từ đầu đến cuối, nhưng lại lấy đi quyền chủ động của kỹ sư và rất khó gỡ lỗi khi quy trình sinh lỗi. <strong>Matt Pocock Skills</strong> đi theo hướng ngược lại: cung cấp các kỹ năng nhỏ, độc lập, có thể ghép nối (composable) với bất kỳ mô hình ngôn ngữ lớn (LLM) nào và chạy trên hầu hết các agent phổ biến (Claude Code, Codex, GitHub Copilot, Gemini CLI, Cursor, Windsurf...).</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Triết lý cốt lõi</span>
+          <span class="spec-value">Kỹ thuật phần mềm cơ bản (Fundamentals)</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Cơ chế tương tác</span>
+          <span class="spec-value">Grilling interview (Chất vấn liên tục)</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Vòng lặp chất lượng</span>
+          <span class="spec-value">TDD Red-Green-Refactor</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Kiến trúc module</span>
+          <span class="spec-value">Deep Modules (Giao diện hẹp, bên trong sâu)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Bốn thất bại lớn -->
+    <section class="guide-section" id="bon-that-bai">
+      <h2>2. Bốn thất bại kinh điển & Bộ giải pháp tương ứng</h2>
+      <p>Hệ thống skill này được Matt Pocock đúc kết từ hàng nghìn giờ làm việc thực tế với coding agent để xử lý triệt để 4 thất bại thường gặp nhất:</p>
+
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 20%;">Thất bại kinh điển</th>
+              <th style="width: 35%;">Nguyên nhân thực tế</th>
+              <th style="width: 45%;">Giải pháp bằng Skill</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Agent làm sai ý bạn</strong></td>
+              <td>Khoảng cách giao tiếp (communication gap). Lập trình viên tưởng agent đã hiểu, nhưng thực tế yêu cầu có nhiều nhánh rẽ chưa được xác định.</td>
+              <td>Dùng <code>/grill-me</code> (cho ý tưởng/kế hoạch) hoặc <code>/grill-with-docs</code> (cho code). Agent sẽ đóng vai người phỏng vấn khó tính, liên tục đặt câu hỏi đào sâu mọi nhánh quyết định trước khi gõ 1 dòng code.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Agent nói dông dài, tốn token</strong></td>
+              <td>Thiếu ngôn ngữ chung (Ubiquitous Language theo Domain-Driven Design). Agent phải đoán thuật ngữ của dự án nên dùng 20 từ thay vì 1 từ chuẩn.</td>
+              <td>Skill <code>/grill-with-docs</code> tự động cập nhật <code>GLOSSARY.md</code> và các bản ghi quyết định kiến trúc (ADR). Khi có bảng thuật ngữ, agent suy nghĩ ít token hơn và đặt tên hàm/biến nhất quán 100%.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Code sinh ra không chạy được</strong></td>
+              <td>Thiếu vòng lặp phản hồi (feedback loop) tức thì. Agent sinh code mà không biết thực tế code chạy ra sao (flying blind).</td>
+              <td>Skill <code>/tdd</code>: Bắt buộc viết test đỏ (failing test) trước, sau đó mới viết mã để test xanh (passing), rồi mới refactor. Khi gặp lỗi khó, dùng <code>/diagnosing-bugs</code> theo quy trình cô lập nghiệm ngặt.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Biến codebase thành "đống bùn" (Ball of Mud)</strong></td>
+              <td>Agent sinh code rất nhanh nhưng đẩy nhanh tốc độ hỗn loạn phần mềm (software entropy). Các module bị nông, rối ren, phụ thuộc chéo.</td>
+              <td>Skill <code>/improve-codebase-architecture</code> quét codebase tìm cơ hội làm sâu module (deepening opportunities), xuất báo cáo HTML trực quan và hướng dẫn tái cấu trúc.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. Phân loại User-invoked & Model-invoked -->
+    <section class="guide-section" id="phan-loai-skill">
+      <h2>3. Phân loại: User-invoked vs Model-invoked</h2>
+      <p>Một điểm kiến trúc rất thông minh của bộ skill này là sự phân định rõ ràng quyền kích hoạt:</p>
+      
+      <div class="callout tip">
+        <div class="callout-title">Nguyên tắc kích hoạt</div>
+        <p><strong>User-invoked</strong> chỉ được gọi khi bạn gõ lệnh (ví dụ <code>/grill-me</code>), nhiệm vụ là điều phối toàn cục. <strong>Model-invoked</strong> có thể do bạn gọi hoặc do chính agent tự động kích hoạt khi nhận thấy hoàn cảnh phù hợp. Một skill User-invoked có thể gọi các skill Model-invoked, nhưng tuyệt đối không được tự ý gọi chéo một User-invoked skill khác.</p>
+      </div>
+
+      <h3>Nhóm Kỹ thuật (Engineering Skills)</h3>
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">User-invoked (Lập trình viên gõ)</span>
+          <span class="spec-value">
+            <code>/ask-matt</code> · <code>/grill-with-docs</code> · <code>/to-spec</code> · <code>/to-tickets</code> · <code>/implement</code> · <code>/implement-spec</code> · <code>/improve-codebase-architecture</code> · <code>/wayfinder</code> · <code>/retro</code>
+          </span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Model-invoked (Agent tự động vươn tới)</span>
+          <span class="spec-value">
+            <code>tdd</code> · <code>diagnosing-bugs</code> · <code>codebase-design</code> · <code>code-review</code> · <code>domain-modeling</code> · <code>prototype</code> · <code>research</code> · <code>pr</code> · <code>wizard</code>
+          </span>
+        </div>
+      </div>
+
+      <h3>Nhóm Năng suất (Productivity Skills)</h3>
+      <ul>
+        <li><code>/grill-me</code>: Phỏng vấn dồn dập về bất kỳ ý tưởng, kế hoạch hay quyết định nào ngoài code.</li>
+        <li><code>/handoff</code>: Nén ngữ cảnh hội thoại hiện tại thành tài liệu chuyển giao (handoff document) để agent ở session sau tiếp quản liền mạch.</li>
+        <li><code>/teach</code>: Hướng dẫn người dùng học một kỹ năng/công nghệ mới từng bước thông qua workspace thực hành.</li>
+        <li><code>/to-questionnaire</code>: Biến một quyết định phức tạp thành bảng câu hỏi markdown cho bên liên quan điền vào.</li>
+        <li><code>/wait-what</code>: Gọi ngay khi agent giải thích khó hiểu. Agent sẽ giải thích lại bằng tiếng Anh/Việt giản dị, dựa trên thuật ngữ của <code>GLOSSARY.md</code>.</li>
+      </ul>
+    </section>
+
+    <!-- 4. Cài đặt -->
+    <section class="guide-section" id="cai-dat">
+      <h2>4. Hướng dẫn cài đặt đa nền tảng</h2>
+      <p>Bạn có thể cài đặt theo dạng plugin tự cập nhật hoặc sao chép file cấu hình cục bộ vào thư mục của agent:</p>
+
+      <h3>1. Cài đặt cho Claude Code</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>claude plugin install mattpocock-skills@claude-plugins-official</code></pre>
+      </div>
+
+      <h3>2. Cài đặt cho Codex</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>codex plugin marketplace add mattpocock/skills
+codex plugin add mattpocock-skills@mattpocock</code></pre>
+      </div>
+
+      <h3>3. Cài đặt cho Gemini CLI</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>gemini skills install https://github.com/mattpocock/skills.git --path skills/engineering
+gemini skills install https://github.com/mattpocock/skills.git --path skills/productivity</code></pre>
+      </div>
+
+      <h3>4. Cài đặt cho Cursor, Windsurf, OpenCode hoặc bất kỳ Agent nào qua npx</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>npx skills@latest add mattpocock/skills -a cursor   # đổi cursor thành tên agent bạn dùng</code></pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-title">Bước bắt buộc sau khi cài đặt</div>
+        <p>Trong cửa sổ chat của agent, hãy gõ <code>/setup-matt-pocock-skills</code> một lần cho mỗi repository. Lệnh này sẽ hỏi bạn issue tracker (GitHub, GitLab, file local), cách gán nhãn triage và nơi lưu các tài liệu kiến trúc.</p>
+      </div>
+    </section>
+
+    <!-- 5. Quy trình mẫu -->
+    <section class="guide-section" id="quy-trinh-thuc-te">
+      <h2>5. Quy trình làm việc mẫu (Full Workflow)</h2>
+      <p>Một chu trình phát triển tính năng chuẩn mực với Matt Pocock Skills diễn ra qua 5 giai đoạn:</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Khởi tạo và làm rõ yêu cầu (/grill-with-docs)</h4>
+            <p>Trước khi viết code, bạn chạy <code>/grill-with-docs</code> và mô tả ý tưởng sơ bộ. Agent sẽ phỏng vấn bạn từng khía cạnh: luồng người dùng, ca biên, cách xử lý lỗi và lưu lại các thuật ngữ mới vào <code>GLOSSARY.md</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Đặc tả kỹ thuật & Phân rã công việc (/to-spec & /to-tickets)</h4>
+            <p>Chạy <code>/to-spec</code> để tổng hợp toàn bộ nội dung phỏng vấn thành bản đặc tả kỹ thuật chi tiết. Sau đó chạy <code>/to-tickets</code> để bẻ spec thành các ticket nhỏ độc lập có khai báo rõ quan hệ phụ thuộc (blocking edges).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Triển khai bằng TDD (/implement & tdd)</h4>
+            <p>Chạy <code>/implement</code>. Agent sẽ duyệt qua danh sách ticket, kích hoạt kỹ năng <code>tdd</code> tại từng điểm giao tiếp: tạo test thất bại trước, viết logic tối thiểu để vượt qua test, sau đó mới dọn dẹp mã nguồn.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Đánh giá mã hai trục (/code-review)</h4>
+            <p>Trước khi commit, kỹ năng <code>code-review</code> chạy 2 sub-agent độc lập song song: một sub-agent soi xem code có bám sát Spec ban đầu không, một sub-agent soi theo Tiêu chuẩn kỹ thuật và các Code Smells của Martin Fowler.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Tạo Pull Request chuẩn mực (/pr)</h4>
+            <p>Tự động tạo PR body gồm: tóm tắt trực quan ngắn gọn nhất, bằng chứng trước/sau (before/after) chứng minh code hoạt động và đánh giá mức độ rủi ro (One-way hay Two-way door decision).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Lưu ý & Khắc phục sự cố -->
+    <section class="guide-section" id="luu-y">
+      <h2>6. Lưu ý quan trọng & Khắc phục sự cố</h2>
+      <div class="callout warn">
+        <div class="callout-title">Tránh cài đặt trùng lặp</div>
+        <p>Nếu bạn đã cài đặt qua Plugin Manager của agent (ví dụ Claude Code plugin), đừng cài thêm qua <code>skills.sh</code> hoặc <code>npx skills</code>. Việc cài cả hai cách sẽ khiến agent nạp mọi kỹ năng 2 lần và gây xung đột context.</p>
+      </div>
+      <div class="callout">
+        <div class="callout-title">Tập tin GLOSSARY.md rất quan trọng</div>
+        <p>Đừng xóa hoặc sửa tay <code>GLOSSARY.md</code> nếu không cần thiết. Đây là "bộ nhớ chung" giúp agent tiết kiệm 30-40% lượng token phải suy luận mỗi khi bắt đầu một lượt trao đổi mới.</p>
+      </div>
+    </section>
+
+    <!-- 7. Tài liệu & Nguồn gốc -->
+    <section class="guide-section" id="tai-lieu">
+      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
+      <ul>
+        <li>Kho mã nguồn chính thức: <a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener noreferrer">https://github.com/mattpocock/skills</a></li>
+        <li>Trang danh mục kỹ năng: <a href="https://skills.sh/mattpocock/skills" target="_blank" rel="noopener noreferrer">https://skills.sh/mattpocock/skills</a></li>
+        <li>Tài liệu khóa học & bản tin của Matt Pocock: <a href="https://www.aihero.dev/s/skills-newsletter" target="_blank" rel="noopener noreferrer">AI Hero Newsletter</a></li>
+      </ul>
+    </section>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="index.html">
+        <span class="nav-card-dir">← Danh bạ Guide</span>
+        <span class="nav-card-title">Trung tâm tài liệu Guide</span>
+      </a>
+      <a class="nav-card next" href="vercel-agent-skills.html">
+        <span class="nav-card-dir">Guide tiếp theo →</span>
+        <span class="nav-card-title">Vercel Agent Skills</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

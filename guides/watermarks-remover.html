@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn sử dụng Watermarks Remover: bộ kỹ năng và dịch vụ Python giúp loại bỏ các dấu vết AI (ký tự Unicode ẩn, SynthID-Text, siêu dữ liệu C2PA/EXIF) vì quyền riêng tư.">
+  <title>Watermarks Remover — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Watermarks Remover</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Watermarks Remover</span>
+    </div>
+
+    <header class="guide-header">
+      <h1>Watermarks Remover — Làm sạch Ký tự ẩn & Siêu dữ liệu AI cho Quyền riêng tư</h1>
+      <p class="guide-lead">Bộ kỹ năng và dịch vụ chuẩn hóa viết bằng thư viện tiêu chuẩn của Python (không phụ thuộc bên thứ ba) giúp phát hiện và bóc tách các dấu vết nhận diện nguồn gốc AI (AI provenance marks) khỏi văn bản, mã nguồn và tệp đa phương tiện thuộc quyền sở hữu của bạn.</p>
+
+      <div class="guide-meta-bar">
+        <span class="guide-tag accent">Bảo vệ quyền riêng tư</span>
+        <span class="guide-tag">Tác giả: Guillaume Meyer</span>
+        <span class="guide-tag">Giấy phép: MIT</span>
+        <span class="guide-tag">Ngôn ngữ: Python 3.10+</span>
+        <a class="guide-link-btn" href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository (25.4k+ ★)
+        </a>
+      </div>
+    </header>
+
+    <nav class="toc-bar" aria-label="Mục lục bài viết">
+      <a href="#tong-quan">1. Tổng quan</a>
+      <a href="#cac-loai-watermark">2. Ba tầng dấu vết AI bị bóc tách</a>
+      <a href="#dinh-dang-ho-tro">3. Các định dạng tệp hỗ trợ</a>
+      <a href="#cai-dat">4. Cài đặt & Khởi động dịch vụ</a>
+      <a href="#tich-hop-agent">5. Kích hoạt trong Agent Skills</a>
+      <a href="#luu-y-dao-duc">6. Lưu ý bản quyền & Đạo đức</a>
+      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
+    </nav>
+
+    <!-- 1. Tổng quan -->
+    <section class="guide-section" id="tong-quan">
+      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
+      <p>Khi các nhà cung cấp AI lớn (như OpenAI, Google, Anthropic) sinh nội dung văn bản, hình ảnh, tài liệu hoặc mã nguồn, họ thường nhúng vào các <strong>dấu vết nhận diện nguồn gốc (AI Watermarks)</strong> ngầm:</p>
+      <ul>
+        <li><strong>Ký tự Unicode vô hình:</strong> Zero-Width Spaces (ZWSP), Zero-Width Joiner (ZWJ), các ký tự đảo chiều văn bản (BiDi overrides) hoặc ký tự thẻ Unicode (Tags) vô hình đối với mắt thường nhưng dễ dàng bị máy quét nhận diện.</li>
+        <li><strong>Chữ ký thống kê phân bố token:</strong> Các phương pháp nhúng watermark xác suất như SynthID-Text của Google, Kirchenbauer green-list hoặc Aaronson EXP keyed-Gumbel.</li>
+        <li><strong>Siêu dữ liệu tệp tin (File Metadata):</strong> Siêu dữ liệu C2PA Content Credentials, thẻ EXIF, XMP nhúng trong tệp ảnh, video và văn bản Office.</li>
+      </ul>
+      <p><strong>Watermarks Remover</strong> được phát triển nhằm mục đích bảo vệ <strong>quyền riêng tư và tính vệ sinh dữ liệu (hygiene)</strong> trên các nội dung mà bạn hoàn toàn sở hữu bản quyền, loại bỏ các ký tự rác tiềm ẩn nguy cơ gây lỗi biên dịch hoặc rò rỉ siêu dữ liệu ngoài ý muốn.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Kiến trúc dịch vụ</span>
+          <span class="spec-value">Thin-client Agent Skill + Local Python Service</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Phụ thuộc bên thứ ba</span>
+          <span class="spec-value">0 dependencies (Dùng thuần Python stdlib)</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Cổng dịch vụ mặc định</span>
+          <span class="spec-value">http://127.0.0.1:8765</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Khả năng bóc tách</span>
+          <span class="spec-value">Unicode ẩn, SynthID, C2PA, EXIF, XMP</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Ba tầng dấu vết -->
+    <section class="guide-section" id="cac-loai-watermark">
+      <h2>2. Ba tầng dấu vết AI được xử lý</h2>
+      <p>Dự án phân chia việc làm sạch dữ liệu thành 3 tầng kỹ thuật riêng biệt:</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">A</div>
+          <div class="step-content">
+            <h4>Tầng A: Ký tự Unicode ẩn & Khoảng trắng dị biệt (Deterministic)</h4>
+            <p>Sử dụng thuật toán tiền định viết bằng Python để quét sạch toàn bộ các ký tự vô hình: Zero-Width Space (U+200B), Zero-Width Non-Joiner (U+200C), Zero-Width Joiner (U+200D), Word Joiner (U+2060), Byte Order Mark (U+FEFF), các ký tự điều khiển định hướng BiDi và dải Unicode Tags (U+E0000 - U+E007F).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">B</div>
+          <div class="step-content">
+            <h4>Tầng B: Watermark Thống kê phân bố Token (Statistical Sampling)</h4>
+            <p>Đối phó với các dấu vết xác suất như SynthID-Text hay Kirchenbauer green-list bằng hook <code>rewrite_text.py</code> hoặc prompt tái cấu trúc câu chữ mà vẫn bảo toàn 100% ý nghĩa nội dung ban đầu.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">Files</div>
+          <div class="step-content">
+            <h4>Tầng Tệp tin: Làm sạch Siêu dữ liệu C2PA & Thuộc tính nhúng</h4>
+            <p>Bóc tách toàn bộ khối manifest C2PA, siêu dữ liệu XMP, thẻ EXIF máy ảnh, trường tác giả trong tài liệu Office và các chunk nhúng trong container đa phương tiện.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Định dạng hỗ trợ -->
+    <section class="guide-section" id="dinh-dang-ho-tro">
+      <h2>3. Các định dạng tệp tin được hỗ trợ toàn diện</h2>
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Nhóm tệp tin</th>
+              <th style="width: 45%;">Định dạng mở rộng hỗ trợ</th>
+              <th style="width: 30%;">Phương pháp xử lý</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hình ảnh</strong></td>
+              <td>PNG, JPEG, WebP, AVIF, HEIC, BMP, GIF, TIFF, SVG</td>
+              <td>Xóa EXIF, XMP, C2PA JUMBF chunks, giữ nguyên chất lượng nén ảnh.</td>
+            </tr>
+            <tr>
+              <td><strong>Văn bản & Mã nguồn</strong></td>
+              <td>HTML, Markdown, Plain Text, Code files (.py, .ts, .js, .json)</td>
+              <td>Quét chuỗi byte trần loại bỏ Unicode không hợp lệ và bidi overrides.</td>
+            </tr>
+            <tr>
+              <td><strong>Tài liệu văn phòng</strong></td>
+              <td>PDF, DOCX, XLSX, PPTX, EPUB, ODT</td>
+              <td>Giải nén cấu trúc zip/XML, xóa trường Author, Company, Revision và C2PA stamps.</td>
+            </tr>
+            <tr>
+              <td><strong>Âm thanh & Video</strong></td>
+              <td>MP4, MOV, M4A, M4V, WAV, MP3, FLAC</td>
+              <td>Loại bỏ metadata atoms (moov/udta) và ID3 tags chứa dấu vết AI.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. Cài đặt -->
+    <section class="guide-section" id="cai-dat">
+      <h2>4. Hướng dẫn cài đặt & Khởi động dịch vụ</h2>
+
+      <h3>1. Khởi động dịch vụ nền Python (Local Service)</h3>
+      <p>Yêu cầu Python 3.10 trở lên. Không cần cài bất kỳ thư viện pip nào bên ngoài:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># Clone repo
+git clone https://github.com/guillaumemeyer/watermarks-remover.git
+cd watermarks-remover
+
+# Khởi động dịch vụ cục bộ trên cổng 8765
+python3 service/server.py --port 8765</code></pre>
+      </div>
+
+      <h3>2. Cài đặt Skill cho Coding Agent</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># Cài đặt tự động cho Claude Code
+python3 install_skill.py --skill remove-ai-marks --target claude-code
+
+# Cài đặt cho Cursor
+python3 install_skill.py --skill remove-ai-marks --target cursor
+
+# Cài đặt cho Codex
+python3 install_skill.py --skill remove-ai-marks --target codex</code></pre>
+      </div>
+    </section>
+
+    <!-- 5. Tích hợp Agent -->
+    <section class="guide-section" id="tich-hop-agent">
+      <h2>5. Cách gọi trong phiên làm việc với Agent</h2>
+      <p>Sau khi cài đặt, bạn có thể yêu cầu agent làm sạch tài liệu trực tiếp:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">prompt</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>Hãy dùng skill /remove-ai-marks để kiểm tra và làm sạch toàn bộ tệp trong thư mục docs/ và assets/images/.
+Loại bỏ các ký tự Unicode vô hình và siêu dữ liệu C2PA/EXIF khỏi các file ảnh sản phẩm.</code></pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-title">Kiến trúc Thin-Client</div>
+        <p>Bản thân tệp skill nạp vào agent hoàn toàn là Markdown thuần túy; nó chỉ gọi API HTTP cục bộ tới dịch vụ đang chạy trên cổng 8765. Do đó agent của bạn không bao giờ bị nghẽn context hoặc cần cài đặt môi trường Python nặng nề.</p>
+      </div>
+    </section>
+
+    <!-- 6. Lưu ý đạo đức -->
+    <section class="guide-section" id="luu-y-dao-duc">
+      <h2>6. Lưu ý về Quyền sở hữu & Đạo đức sử dụng</h2>
+      <div class="callout warn">
+        <div class="callout-title">Chỉ sử dụng trên nội dung bạn sở hữu</div>
+        <p>Công cụ này được thiết kế phục vụ mục đích <strong>bảo vệ quyền riêng tư cá nhân và làm sạch kỹ thuật</strong> cho các dữ liệu do bạn tạo ra hoặc bạn sở hữu bản quyền hợp pháp. Không sử dụng công cụ để vi phạm pháp luật, làm sai lệch bằng chứng hoặc đánh tráo nguồn gốc tác phẩm của người khác.</p>
+      </div>
+    </section>
+
+    <!-- 7. Tài liệu & Nguồn gốc -->
+    <section class="guide-section" id="tai-lieu">
+      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
+      <ul>
+        <li>Kho mã nguồn chính thức: <a href="https://github.com/guillaumemeyer/watermarks-remover" target="_blank" rel="noopener noreferrer">https://github.com/guillaumemeyer/watermarks-remover</a></li>
+        <li>Tài liệu đo đạc SynthID-Text benchmark: <a href="https://github.com/guillaumemeyer/watermarks-remover/blob/main/docs/synthid-text-benchmark.md" target="_blank" rel="noopener noreferrer">SynthID-Text Benchmark Docs</a></li>
+        <li>Chính sách bảo mật: <a href="https://github.com/guillaumemeyer/watermarks-remover/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security Policy</a></li>
+      </ul>
+    </section>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="playwright-cli.html">
+        <span class="nav-card-dir">← Guide trước</span>
+        <span class="nav-card-title">Playwright CLI</span>
+      </a>
+      <a class="nav-card next" href="index.html">
+        <span class="nav-card-dir">Về trang chủ Guide →</span>
+        <span class="nav-card-title">Danh bạ 11 Guide</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

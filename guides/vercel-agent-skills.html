@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn sử dụng Vercel Agent Skills: bộ kỹ năng chính thức từ Vercel Labs dành cho coding agent về tối ưu hiệu năng React, Next.js, Web Design Guidelines và Deploy.">
+  <title>Vercel Agent Skills — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Vercel Agent Skills</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Vercel Agent Skills</span>
+    </div>
+
+    <header class="guide-header">
+      <h1>Vercel Agent Skills — Bộ kỹ năng tối ưu Frontend & Kiến trúc từ Vercel Labs</h1>
+      <p class="guide-lead">Tập hợp các kỹ năng chuẩn hóa theo định dạng Agent Skills được đội ngũ kỹ sư Vercel xây dựng. Đóng gói hơn 40 quy tắc tối ưu hiệu năng React/Next.js, 100+ tiêu chuẩn thiết kế web và khả năng tiếp cận (Accessibility), View Transitions và tự động triển khai.</p>
+
+      <div class="guide-meta-bar">
+        <span class="guide-tag accent">Bộ sưu tập skill</span>
+        <span class="guide-tag">Tổ chức: Vercel Labs</span>
+        <span class="guide-tag">Chuẩn: Agent Skills</span>
+        <span class="guide-tag">Hệ sinh thái: Next.js / React</span>
+        <a class="guide-link-btn" href="https://github.com/vercel-labs/agent-skills" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository (33k+ ★)
+        </a>
+      </div>
+    </header>
+
+    <nav class="toc-bar" aria-label="Mục lục bài viết">
+      <a href="#tong-quan">1. Tổng quan</a>
+      <a href="#danh-sach-skill">2. Chi tiết 8 kỹ năng cốt lõi</a>
+      <a href="#react-perf">3. 40+ Quy tắc tối ưu React</a>
+      <a href="#web-design">4. 100+ Tiêu chuẩn Web Design</a>
+      <a href="#cai-dat">5. Cài đặt & Tích hợp</a>
+      <a href="#vi-du">6. Kịch bản ứng dụng thực tế</a>
+      <a href="#tai-lieu">7. Tài liệu & Nguồn gốc</a>
+    </nav>
+
+    <!-- 1. Tổng quan -->
+    <section class="guide-section" id="tong-quan">
+      <h2>1. Tổng quan: Đây là gì và giải quyết vấn đề gì?</h2>
+      <p>Khi các lập trình viên sử dụng AI để xây dựng ứng dụng React và Next.js, mã nguồn do mô hình sinh ra thường mắc phải các lỗi hiệu năng phổ biến: hiệu ứng thác nước (waterfalls) trong fetch dữ liệu, re-render vô tội vạ, bỏ qua các chuẩn accessibility (ARIA, focus-visible) hoặc sử dụng các biến thể boolean prop cồng kềnh.</p>
+      <p><strong>Vercel Agent Skills</strong> giải quyết bài toán này bằng cách đóng gói toàn bộ cẩm nang kỹ thuật nội bộ của Vercel (Engineering Guidelines, Design System Rules, Writing Handbook) thành các tập tin chỉ dẫn <code>SKILL.md</code>. Agent sau khi được nạp bộ skill này sẽ tự động kiểm tra mã nguồn, rà soát hiệu năng và đưa ra các đề xuất tái cấu trúc chuẩn xác nhất.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Quy chuẩn kỹ thuật</span>
+          <span class="spec-value">Vercel Engineering Standards</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Tối ưu React/Next.js</span>
+          <span class="spec-value">40+ quy tắc phân cấp mức độ</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Kiểm tra giao diện (UI UX)</span>
+          <span class="spec-value">100+ bài kiểm tra Accessibility</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Cơ chế phát hiện</span>
+          <span class="spec-value">Tự động (Model-Invoked)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Danh sách skill -->
+    <section class="guide-section" id="danh-sach-skill">
+      <h2>2. Chi tiết 8 kỹ năng cốt lõi trong bộ sưu tập</h2>
+      <p>Mỗi kỹ năng trong kho này chịu trách nhiệm cho một miền chuyên môn độc lập:</p>
+
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Tên Kỹ năng (Skill)</th>
+              <th style="width: 45%;">Mô tả nhiệm vụ</th>
+              <th style="width: 30%;">Tình huống sử dụng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>vercel-optimize</code></td>
+              <td>Kiểm toán toàn diện dự án triển khai trên Vercel: chi phí, thời gian xử lý hàm Serverless/Edge, chiến lược bộ nhớ đệm (ISR), middleware, tối ưu ảnh và số phút build.</td>
+              <td>"Giảm chi phí hóa đơn Vercel", "Tìm route bị chậm", "Kiểm toán hiệu năng dự án".</td>
+            </tr>
+            <tr>
+              <td><code>react-best-practices</code></td>
+              <td>Bộ nguyên tắc vàng về hiệu năng React và Next.js. Ưu tiên giải quyết tình trạng waterfall fetch dữ liệu, phình to bundle size và re-render thừa thãi.</td>
+              <td>Viết component mới, review code trước khi merge, tối ưu thời gian tải trang.</td>
+            </tr>
+            <tr>
+              <td><code>web-design-guidelines</code></td>
+              <td>Soát xét mã giao diện theo hơn 100 tiêu chuẩn công nghiệp: ngữ nghĩa HTML, trạng thái focus, hỗ trợ bàn phím, tương thích reduced-motion, định dạng số/ngày tháng quốc tế.</td>
+              <td>"Review my UI", "Check accessibility", "Audit design", "Check my site against best practices".</td>
+            </tr>
+            <tr>
+              <td><code>writing-guidelines</code></td>
+              <td>Kiểm tra câu chữ, văn phong tài liệu kỹ thuật theo Vercel Writing Handbook: câu chủ động, không dùng từ cấm (như 'easy', 'simple'), chuẩn hóa code block và ngắt dòng.</td>
+              <td>"Review my docs", "Check writing style", "Audit prose", kiểm tra chất lượng file README.</td>
+            </tr>
+            <tr>
+              <td><code>react-native-guidelines</code></td>
+              <td>16 quy tắc tối ưu cho React Native và Expo: sử dụng FlashList thay vì FlatList, Reanimated, safe areas, expo-image và mô hình quản lý state Zustand.</td>
+              <td>Xây dựng ứng dụng di động đa nền tảng, tối ưu tốc độ cuộn danh sách lớn trên iOS/Android.</td>
+            </tr>
+            <tr>
+              <td><code>react-view-transitions</code></td>
+              <td>Triển khai chuyển cảnh trang mượt mà chuẩn native thông qua React View Transition API và thuộc tính <code>transitionTypes</code> trên component <code>next/link</code>.</td>
+              <td>Hiệu ứng list-to-detail morphing, chuyển cảnh trang theo hướng tiến/lùi, animated filter.</td>
+            </tr>
+            <tr>
+              <td><code>composition-patterns</code></td>
+              <td>Mô hình cấu thành component React có khả năng mở rộng. Tránh tình trạng lạm dụng boolean prop bằng compound components và state lifting.</td>
+              <td>Tái cấu trúc component thư viện, thiết kế API component linh hoạt, loại bỏ prop drilling.</td>
+            </tr>
+            <tr>
+              <td><code>deploy-to-vercel</code></td>
+              <td>Tự động hóa quy trình triển khai lên Vercel: ưu tiên git-push deploy, gọi Vercel CLI hoặc tạo deployment tạm thời với link claim khi chưa đăng nhập.</td>
+              <td>"Deploy my app", "Push this live", "Tạo bản preview deployment".</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. React Best Practices -->
+    <section class="guide-section" id="react-perf">
+      <h2>3. Điểm nhấn: 40+ Quy tắc tối ưu React từ Vercel</h2>
+      <p>Vercel phân loại các tiêu chuẩn tối ưu theo mức độ ảnh hưởng trực tiếp đến trải nghiệm người dùng (Impact Levels):</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">!</div>
+          <div class="step-content">
+            <h4>Mức độ Nguy cấp (Critical) — Triệt tiêu Waterfall & Tối ưu Bundle Size</h4>
+            <p>Tránh tình trạng component cha đợi dữ liệu xong mới đến component con fetch (fetch waterfall). Chuyển sang fetch song song với <code>Promise.all</code> hoặc nạp dữ liệu ở Server Component trước khi render. Phân tích loại bỏ các thư viện cồng kềnh (ví dụ thay thế Moment.js bằng date-fns hoặc Intl).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">A</div>
+          <div class="step-content">
+            <h4>Mức độ Cao (High) — Hiệu năng Phía Máy chủ (Server-side Performance)</h4>
+            <p>Tận dụng triệt để React Server Components (RSC) để giữ logic nặng và module phụ thuộc lớn ở máy chủ, không chuyển JavaScript xuống client. Áp dụng dynamic IO và Suspense boundaries hợp lý.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">B</div>
+          <div class="step-content">
+            <h4>Mức độ Trung bình (Medium) — Kiểm soát Re-render & Kích thước DOM</h4>
+            <p>Không đặt định nghĩa component lồng bên trong component khác. Sử dụng component con cô lập (isolated child) hoặc React Compiler/memo khi có tính toán nặng. Tránh inline object hoặc inline arrow function trong props nếu component con được memoize.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Web Design Guidelines -->
+    <section class="guide-section" id="web-design">
+      <h2>4. Điểm nhấn: 100+ Tiêu chuẩn Web Interface Guidelines</h2>
+      <p>Kỹ năng <code>web-design-guidelines</code> trong bộ sưu tập này là một trong những công cụ audit toàn diện nhất hiện nay:</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Trạng thái Focus</span>
+          <span class="spec-value">Bắt buộc có :focus-visible rõ ràng, offset 2px, không dùng outline: none trần trụi.</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Khả năng tiếp cận</span>
+          <span class="spec-value">Thẻ ngữ nghĩa (main, nav, article), aria-label trên icon buttons, tỷ lệ tương phản đạt chuẩn WCAG.</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Chuyển động (Motion)</span>
+          <span class="spec-value">Luôn tôn trọng prefers-reduced-motion, chỉ animate transform và opacity để GPU tăng tốc.</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Typography</span>
+          <span class="spec-value">Sử dụng font-variant-numeric: tabular-nums cho bảng số liệu, tránh dùng ký tự 3 dấu chấm (...) thay cho ellipsis (…).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Cài đặt -->
+    <section class="guide-section" id="cai-dat">
+      <h2>5. Hướng dẫn cài đặt & Kích hoạt</h2>
+      <p>Cài đặt bộ skill này thông qua công cụ quản lý <code>skills</code> theo chuẩn Agent Skills:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>npx skills add vercel-labs/agent-skills</code></pre>
+      </div>
+
+      <p>Sau khi thêm vào dự án, các tệp chỉ dẫn sẽ nằm trong thư mục <code>.agents/skills/</code> hoặc thư mục cấu hình của agent bạn đang sử dụng. Agent sẽ tự động nạp khi nhận thấy các câu lệnh hoặc ngữ cảnh liên quan.</p>
+    </section>
+
+    <!-- 6. Ví dụ -->
+    <section class="guide-section" id="vi-du">
+      <h2>6. Kịch bản ứng dụng thực tế</h2>
+
+      <h3>Kịch bản 1: Kiểm tra Accessibility và UX trước khi phát hành</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">prompt</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>Hãy review lại file components/Navbar.tsx và components/DataTable.tsx theo web-design-guidelines.
+Kiểm tra kỹ các trạng thái focus-visible, hỗ trợ điều hướng bằng phím Tab, aria-labels và chế độ dark mode.</code></pre>
+      </div>
+
+      <h3>Kịch bản 2: Tái cấu trúc loại bỏ Boolean Prop Hell</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">prompt</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>Component Modal hiện tại đang nhận hơn 10 props boolean (hasHeader, isDismissable, showCloseButton, isFooterSticky...).
+Hãy dùng composition-patterns để chuyển đổi sang mô hình Compound Components (Modal.Header, Modal.Body, Modal.Footer).</code></pre>
+      </div>
+    </section>
+
+    <!-- 7. Tài liệu & Nguồn gốc -->
+    <section class="guide-section" id="tai-lieu">
+      <h2>7. Nguồn tham khảo & Tài liệu chính thức</h2>
+      <ul>
+        <li>Kho mã nguồn chính thức: <a href="https://github.com/vercel-labs/agent-skills" target="_blank" rel="noopener noreferrer">https://github.com/vercel-labs/agent-skills</a></li>
+        <li>Chuẩn đặc tả Agent Skills: <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer">https://agentskills.io</a></li>
+        <li>Trang phân phối trên skills.sh: <a href="https://skills.sh/vercel-labs/agent-skills" target="_blank" rel="noopener noreferrer">skills.sh/vercel-labs/agent-skills</a></li>
+      </ul>
+    </section>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="mattpocock-skills.html">
+        <span class="nav-card-dir">← Guide trước</span>
+        <span class="nav-card-title">Matt Pocock Skills</span>
+      </a>
+      <a class="nav-card next" href="nuwa-skill.html">
+        <span class="nav-card-dir">Guide tiếp theo →</span>
+        <span class="nav-card-title">Nuwa Skill (女娲)</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

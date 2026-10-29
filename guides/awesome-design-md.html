@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn sử dụng Awesome DESIGN.md: bộ sưu tập tệp hướng dẫn hệ thống thiết kế thương hiệu lớn (Apple, Claude, Linear, Stripe...) cho AI coding agent.">
+  <title>Awesome DESIGN.md — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="guide.css">
+  <link rel="stylesheet" href="guide-nav.css">
+  <script defer src="guide-catalog.js"></script>
+  <script defer src="guide-nav.js"></script>
+  <script defer src="guide.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="../index.html#skills">Kho Skill</a>
+      <a href="../prompts.html">Prompt nâng cao</a>
+      <a class="active" href="index.html" data-guide-nav aria-current="page">Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Awesome DESIGN.md</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="../index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Awesome DESIGN.md</span>
+    </div>
+
+    <header class="guide-header">
+      <h1>Awesome DESIGN.md — Định hình phong cách UI cho Coding Agent qua Design Tokens</h1>
+      <p class="guide-lead">Bộ sưu tập các tệp <code>DESIGN.md</code> phân tích chi tiết hệ thống thiết kế của các thương hiệu và sản phẩm công nghệ hàng đầu thế giới (Apple, Claude, Linear, Stripe, Airbnb...). Chỉ cần thả tệp vào thư mục gốc dự án để AI coding agent tự động sinh giao diện chuẩn xác đến từng pixel.</p>
+
+      <div class="guide-meta-bar">
+        <span class="guide-tag accent">Hệ thống thiết kế</span>
+        <span class="guide-tag">Tác giả: VoltAgent</span>
+        <span class="guide-tag">Giấy phép: MIT</span>
+        <span class="guide-tag">Bộ sưu tập: 100+ Brands</span>
+        <a class="guide-link-btn" href="https://github.com/VoltAgent/awesome-design-md" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository (124k+ ★)
+        </a>
+      </div>
+    </header>
+
+    <nav class="toc-bar" aria-label="Mục lục bài viết">
+      <a href="#tong-quan">1. Tổng quan</a>
+      <a href="#cau-truc-file">2. Cấu trúc một tệp DESIGN.md chuẩn</a>
+      <a href="#cac-thuong-hieu">3. Danh mục thương hiệu tiêu biểu</a>
+      <a href="#cach-su-dung">4. Cách sử dụng với Claude Code / Cursor / Copilot</a>
+      <a href="#cong-cu-stitch">5. Tích hợp nhanh qua công cụ Stitch</a>
+      <a href="#tai-lieu">6. Nguồn tham khảo & Tài liệu</a>
+    </nav>
+
+    <!-- 1. Tổng quan -->
+    <section class="guide-section" id="tong-quan">
+      <h2>1. Tổng quan: Tệp DESIGN.md là gì và tại sao lại hiệu quả?</h2>
+      <p>Khi lập trình viên bảo AI: <em>"Hãy làm cho tôi một giao diện nhìn hiện đại như Stripe"</em> hoặc <em>"làm giao diện tối phong cách Linear"</em>, mô hình thường chỉ chọn bừa một màu tím tối hoặc xám đậm, nhưng trật lấc về tỷ lệ căn lề (padding), độ cong góc (border-radius), độ tương phản của chữ và hệ thống typography.</p>
+      <p><strong>DESIGN.md</strong> là giải pháp chuẩn hóa tài liệu hướng dẫn thiết kế dành riêng cho LLM. Thay vì cung cấp một bản thiết kế Figma phức tạp mà agent khó đọc hiểu hoàn toàn, tệp <code>DESIGN.md</code> chuyển ngữ toàn bộ triết lý thẩm mỹ, thông số CSS tokens, bảng màu sắc và quy chuẩn linh kiện thành văn bản có cấu trúc rõ ràng.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card">
+          <span class="spec-label">Hình thức</span>
+          <span class="spec-value">Tập tin Markdown tĩnh đặt tại root dự án</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Cách tiếp cận</span>
+          <span class="spec-value">Design Tokens + Do's / Don'ts + Quy chuẩn thẻ</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Độ tương thích</span>
+          <span class="spec-value">Mọi coding agent đọc hiểu Markdown</span>
+        </div>
+        <div class="spec-card">
+          <span class="spec-label">Website tra cứu</span>
+          <span class="spec-value"><a href="https://getdesign.md" target="_blank" rel="noopener noreferrer">getdesign.md</a></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Cấu trúc file -->
+    <section class="guide-section" id="cau-truc-file">
+      <h2>2. Cấu trúc của một tệp DESIGN.md hoàn chỉnh</h2>
+      <p>Một tệp <code>DESIGN.md</code> chất lượng cao thường bao gồm 6 khối thông tin cốt lõi sau:</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Triết lý thiết kế (Design Philosophy & Identity)</h4>
+            <p>Mô tả tinh thần của thương hiệu: Tối giản (Minimalist), Thủ công tinh xảo (Craftsmanship), Công nghiệp cao cấp (High-tech precision) hay Ấm áp biên tập (Editorial warmth).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Bảng màu CSS Variables (Color Palette Tokens)</h4>
+            <p>Định nghĩa biến màu chuẩn xác cho cả Light mode và Dark mode: màu nền (ground/canvas), bề mặt nâng (surface/card), đường viền (border), chữ chính (ink), chữ mờ (muted) và màu điểm nhấn (accent).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Hệ thống Typography & Tỷ lệ cấp bậc</h4>
+            <p>Font chữ ưu tiên (Geist, Inter, SF Pro...), thang kích thước (fluid font scale), tracking (khoảng cách chữ), leading (khoảng cách dòng) cho tiêu đề lớn, tiêu đề phụ và nội dung văn bản.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Bán kính góc bo & Khoảng cách (Radii & Spacing Grid)</h4>
+            <p>Quy định kích thước bo góc nhất quán (ví dụ 6px cho nút, 10px cho thẻ card), khoảng cách lề ngoài (page gutters) và khoảng cách giữa các khối (section rhythm).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Bản thiết kế mẫu linh kiện (Component Blueprints)</h4>
+            <p>Mẫu HTML/CSS cho các phần tử cơ bản: nút chính (primary button), nút phụ (secondary button), thanh tìm kiếm, thẻ thông tin, bảng dữ liệu và thanh điều hướng.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Danh sách Cấm & Nên (Do's and Don'ts)</h4>
+            <p>Các chỉ dẫn phủ định sắc bén để ngăn agent sử dụng các thành phần gây phá vỡ phong cách (ví dụ: cấm dùng bóng đổ đậm, cấm dùng gradient nhiều màu).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Các thương hiệu -->
+    <section class="guide-section" id="cac-thuong-hieu">
+      <h2>3. Danh mục các thương hiệu tiêu biểu có sẵn</h2>
+      <p>Awesome DESIGN.md cung cấp hơn 100 tệp mẫu cho các sản phẩm công nghệ có ngôn ngữ thị giác nổi tiếng:</p>
+
+      <div class="table-wrap">
+        <table class="guide-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Thương hiệu</th>
+              <th style="width: 45%;">Đặc trưng phong cách nhận diện</th>
+              <th style="width: 30%;">Phù hợp xây dựng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Claude (Anthropic)</strong></td>
+              <td>Tông màu be/terracotta ấm cúng, font serif kết hợp sans-serif thanh lịch, đường nét mềm mại như trang sách in cao cấp.</td>
+              <td>Ứng dụng đọc viết, trợ lý AI hội thoại, blog kỹ thuật số, công cụ ghi chú.</td>
+            </tr>
+            <tr>
+              <td><strong>Linear</strong></td>
+              <td>Chủ đạo Dark mode cao cấp, màu tím neon viền siêu mảnh, typography chặt chẽ, tối ưu bàn phím cho lập trình viên.</td>
+              <td>Công cụ quản lý công việc (DevTools), dashboard kỹ thuật, hệ thống theo dõi lỗi.</td>
+            </tr>
+            <tr>
+              <td><strong>Stripe</strong></td>
+              <td>Các mảng màu pastel tươi sáng, góc bo mềm mại, bố cục lưới hoàn hảo, thẻ card trắng tinh khôi trên nền off-white.</td>
+              <td>Nền tảng thanh toán, cổng thương mại điện tử, dịch vụ SaaS tài chính.</td>
+            </tr>
+            <tr>
+              <td><strong>Apple</strong></td>
+              <td>Đỉnh cao của sự tối giản, font chữ SF Pro sắc nét, typography tương phản cao, hình ảnh sản phẩm chiếm trọn không gian.</td>
+              <td>Landing page giới thiệu phần cứng/phần mềm, ứng dụng phong cách macOS/iOS.</td>
+            </tr>
+            <tr>
+              <td><strong>Airbnb</strong></td>
+              <td>Màu đỏ san hô năng động, thẻ ảnh lớn với góc bo tròn mượt mà, bộ lọc nổi dạng floating pill, font chữ thân thiện.</td>
+              <td>Nền tảng đặt phòng, ứng dụng du lịch, marketplace tìm kiếm dịch vụ.</td>
+            </tr>
+            <tr>
+              <td><strong>ClickHouse / Supabase</strong></td>
+              <td>Đậm chất cơ sở dữ liệu và hạ tầng: phong cách terminal, bảng dữ liệu đậm màu, nhấn bằng vàng chanh hoặc xanh lá matrix.</td>
+              <td>Công cụ quản trị cơ sở dữ liệu, console giám sát máy chủ, dev-tool CLI.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. Cách sử dụng -->
+    <section class="guide-section" id="cach-su-dung">
+      <h2>4. Cách áp dụng vào dự án với Coding Agent</h2>
+      <p>Chỉ cần 3 bước đơn giản để kích hoạt hệ thống thiết kế:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># 1. Tải tệp DESIGN.md của thương hiệu mong muốn về thư mục gốc
+curl -o DESIGN.md https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/claude/DESIGN.md</code></pre>
+      </div>
+
+      <h3>2. Đưa yêu cầu cho Coding Agent</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">prompt</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code>Hãy đọc kỹ tệp DESIGN.md tại thư mục gốc của dự án.
+Xây dựng trang Dashboard quản lý tài khoản người dùng theo đúng các biến màu sắc, kích thước typography và linh kiện đã được đặc tả trong tệp. Tuyệt đối tuân thủ mục Banned Patterns.</code></pre>
+      </div>
+    </section>
+
+    <!-- 5. Tích hợp Stitch -->
+    <section class="guide-section" id="cong-cu-stitch">
+      <h2>5. Công cụ CLI Stitch — Quản lý Design System tự động</h2>
+      <p>Đội ngũ VoltAgent phát triển công cụ dòng lệnh <code>stitch</code> để thêm hoặc thay đổi phong cách chỉ bằng một lệnh:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" type="button">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Sao chép
+          </button>
+        </div>
+        <pre><code># Tra cứu và nạp phong cách Linear vào dự án
+npx stitch-design add linear
+
+# Chuyển đổi toàn bộ giao diện sang phong cách Stripe
+npx stitch-design add stripe --overwrite</code></pre>
+      </div>
+    </section>
+
+    <!-- 6. Tài liệu -->
+    <section class="guide-section" id="tai-lieu">
+      <h2>6. Nguồn tham khảo & Tài liệu chính thức</h2>
+      <ul>
+        <li>Kho mã nguồn chính thức: <a href="https://github.com/VoltAgent/awesome-design-md" target="_blank" rel="noopener noreferrer">https://github.com/VoltAgent/awesome-design-md</a></li>
+        <li>Website tương tác tra cứu tệp: <a href="https://getdesign.md" target="_blank" rel="noopener noreferrer">https://getdesign.md</a></li>
+        <li>Đóng góp tệp DESIGN.md mới: <a href="https://github.com/VoltAgent/awesome-design-md/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing Guide</a></li>
+      </ul>
+    </section>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="taste-skill.html">
+        <span class="nav-card-dir">← Guide trước</span>
+        <span class="nav-card-title">Taste Skill</span>
+      </a>
+      <a class="nav-card next" href="deepseek-harness.html">
+        <span class="nav-card-dir">Guide tiếp theo →</span>
+        <span class="nav-card-title">DeepSeek Harness</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
