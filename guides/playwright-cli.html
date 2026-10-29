@@ -77,33 +77,74 @@
       </div>
     </section>
 
-    <!-- 1. Vòng lặp Look-and-Fix -->
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Đôi Mắt Trực Quan Cho AI</span>
+        <span class="glance-desc">Cho phép agent nhìn thấy pixel render thật và thử click/fill trên trình duyệt.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Điểm mạnh đột phá</span>
+        <span class="glance-val">Cây a11y Snapshot</span>
+        <span class="glance-desc">Nhẹ hơn 90% so với tải toàn bộ DOM HTML, tiết kiệm token tối đa.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Quy trình cốt lõi</span>
+        <span class="glance-val">Look-and-Fix Loop</span>
+        <span class="glance-desc">Agent chụp ảnh &rarr; phát hiện lỗi &rarr; sửa CSS &rarr; kiểm chứng lại.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Lệnh nhanh</span>
+        <span class="glance-val">playwright-cli</span>
+        <span class="glance-desc"><code>screenshot &lt;url&gt;</code></span>
+      </div>
+    </div>
+
+    <!-- 1. Vòng lặp Look-and-Fix SVG -->
     <h2>1. Vòng lặp Look-and-Fix: Cơ chế tự sửa lỗi giao diện của Agent</h2>
     <p>Trước đây, AI viết CSS "trong bóng tối" (flying blind) vì không nhìn thấy kết quả render thực tế. Playwright CLI biến agent thành một tester chuyên nghiệp với chu trình khép kín:</p>
 
-    <div class="diagram-frame">
-      <div class="flow-steps">
-        <div class="step-card">
-          <span class="step-badge">1. Render</span>
-          <strong>Mở trang Headless</strong>
-          <p>Agent kích hoạt trình duyệt Chromium ngầm truy cập vào <code>localhost:3000</code>.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">2. Inspect</span>
-          <strong>Chụp ảnh & Cây a11y</strong>
-          <p>Chụp ảnh màn hình độ phân giải cao và trích xuất cấu trúc Accessibility Tree gọn nhẹ.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">3. Fix</span>
-          <strong>Sửa mã nguồn</strong>
-          <p>Phát hiện chữ bị tràn (overflow) hoặc nút bấm lệch margin để chỉnh sửa lại file CSS.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">4. Verify</span>
-          <strong>Kiểm chứng kết quả</strong>
-          <p>Chụp lại ảnh màn hình mới, so sánh diff trực quan để xác nhận lỗi đã biến mất hoàn toàn.</p>
-        </div>
-      </div>
+    <!-- Sơ đồ Vòng lặp Look-and-Fix SVG -->
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 840 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Step 1 -->
+        <rect x="20" y="30" width="180" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <text x="110" y="65" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">1. RENDER</text>
+        <text x="110" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Mở Headless</text>
+        <text x="110" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">Truy cập localhost</text>
+        <text x="110" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">Chromium / WebKit</text>
+
+        <path d="M210 100 H235" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="235,100 227,95 227,105" fill="var(--accent)"/>
+
+        <!-- Step 2 -->
+        <rect x="245" y="30" width="180" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="335" y="65" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">2. INSPECT</text>
+        <text x="335" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Chụp Ảnh &amp; a11y</text>
+        <text x="335" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">Screenshot 3 viewport</text>
+        <text x="335" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">Snapshot cây thẻ</text>
+
+        <path d="M435 100 H460" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="460,100 452,95 452,105" fill="var(--accent)"/>
+
+        <!-- Step 3 -->
+        <rect x="470" y="30" width="180" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
+        <text x="560" y="65" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">3. EDIT CSS</text>
+        <text x="560" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Sửa Mã Nguồn</text>
+        <text x="560" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">Chỉnh z-index / flex</text>
+        <text x="560" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">Xử lý overflow</text>
+
+        <path d="M660 100 H685" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="685,100 677,95 677,105" fill="var(--accent)"/>
+
+        <!-- Step 4 -->
+        <rect x="695" y="30" width="135" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <text x="762" y="65" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">4. VERIFY</text>
+        <text x="762" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Kiểm Chứng</text>
+        <text x="762" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">Chụp lại ảnh mới</text>
+        <text x="762" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">0 lỗi hiển thị</text>
+      </svg>
     </div>
 
     <!-- 2. Bảng lệnh cốt lõi của Playwright CLI -->
@@ -147,14 +188,21 @@
       </table>
     </div>
 
-    <!-- 3. Ví dụ kịch bản kiểm tra thực tế -->
-    <h2>3. Kịch bản kiểm tra giao diện tự động cho Agent</h2>
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Quy trình kiểm tra Responsive trên 3 kích thước</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép kịch bản Playwright">Sao chép</button>
+    <!-- 3. Interactive Tabs: Lệnh test Responsive vs Prompt mẫu -->
+    <h2>3. Áp dụng vào quy trình phát triển hàng ngày</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-script">Kịch bản kiểm tra Responsive</button>
+        <button class="tab-btn" data-tab="tab-prompt">Prompt giao việc cho Agent</button>
       </div>
-      <pre><code># Chụp ảnh giao diện trên Desktop (1440x900)
+
+      <div class="tab-panel active" id="tab-script">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Chụp đồng thời 3 kích thước</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép kịch bản">Sao chép</button>
+          </div>
+          <pre><code># Chụp ảnh giao diện trên Desktop (1440x900)
 npx playwright-cli screenshot http://localhost:3000 --viewport-size 1440,900 --output ./desktop.png
 
 # Chụp ảnh trên Tablet (768x1024)
@@ -162,19 +210,21 @@ npx playwright-cli screenshot http://localhost:3000 --viewport-size 768,1024 --o
 
 # Chụp ảnh trên Mobile (390x844 - iPhone 14)
 npx playwright-cli screenshot http://localhost:3000 --viewport-size 390,844 --output ./mobile.png</code></pre>
-    </div>
-
-    <!-- 4. Prompt mẫu -->
-    <h2>4. Prompt kích hoạt Agent dùng Playwright CLI</h2>
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Prompt · Yêu cầu Agent tự sửa lỗi giao diện</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép prompt Playwright">Sao chép</button>
+        </div>
       </div>
-      <pre><code>Hãy mở trang web `http://localhost:3000` bằng Playwright CLI và thực hiện các bước sau:
+
+      <div class="tab-panel" id="tab-prompt">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Prompt · Yêu cầu Agent tự sửa lỗi giao diện</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
+          </div>
+          <pre><code>Hãy mở trang web `http://localhost:3000` bằng Playwright CLI và thực hiện các bước sau:
 1. Chụp ảnh màn hình viewport mobile 390px và kiểm tra xem thanh menu điều hướng có bị che mất nút Đăng nhập không.
 2. Nếu bị che khuất, đọc file CSS liên quan để sửa lại thuộc tính z-index và flex-wrap.
 3. Chụp lại ảnh màn hình mới và giải thích lý do tại sao phương án sửa chữa này giải quyết dứt điểm vấn đề.</code></pre>
+        </div>
+      </div>
     </div>
 
     <div class="callout-tip">
@@ -183,6 +233,17 @@ npx playwright-cli screenshot http://localhost:3000 --viewport-size 390,844 --ou
         <strong>Accessibility Tree: Bí quyết tiết kiệm token</strong>
         <p>Thay vì tải về hàng nghìn dòng mã HTML rối rắm chứa đầy thẻ <code>&lt;div&gt;</code> vô nghĩa, hãy ưu tiên dùng lệnh <code>snapshot</code>. Bạn sẽ nhận được cây trợ năng tinh giản chỉ gồm vai trò (button, link, heading) và nhãn chữ, giúp agent đưa ra quyết định nhanh hơn gấp 5 lần.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="skills-manager.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Skills Manager</span>
+      </a>
+      <a class="nav-card next" href="watermarks-remover.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Watermarks Remover →</span>
+      </a>
     </div>
   </main>
 </body>

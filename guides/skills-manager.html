@@ -77,13 +77,37 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Quản Lý & Bật Tắt Skill</span>
+        <span class="glance-desc">Giao diện UI và CLI để bật/tắt, cập nhật và ngăn chặn ô nhiễm kỹ năng.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Tính năng cốt lõi</span>
+        <span class="glance-val">Phân vùng Workspace</span>
+        <span class="glance-desc">Cô lập skill Global dùng chung và skill Project đặc thù cho từng repo.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Thao tác cài đặt</span>
+        <span class="glance-val">1-Click Install</span>
+        <span class="glance-desc">Duyệt kho trực tuyến và cài đặt ngay không cần nhớ đường dẫn git.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Hỗ trợ nền tảng</span>
+        <span class="glance-val">Claude Code & Codex</span>
+        <span class="glance-desc">Đồng bộ tự động vào thư mục <code>.claude/skills/</code>.</span>
+      </div>
+    </div>
+
     <!-- 1. Cơ chế vận hành & Sơ đồ -->
     <h2>1. Nguyên lý vận hành của Skills Manager</h2>
-    <p>Thay vì chỉnh sửa thủ công các file cấu hình JSON hay sao chép thư mục kỹ năng rải rác trong máy tính, Skills Manager chuẩn hóa toàn bộ luồng nạp và giải phóng:</p>
+    <p>Thay vì chỉnh sửa thủ công các file cấu hình JSON hay sao chép thư mục kỹ năng rải rác trong máy tính, Skills Manager chuẩn hóa toàn bộ luồng nạp và giải phóng (nhấn vào ảnh để xem chi tiết):</p>
 
     <div class="ui-shot-box">
       <img src="assets/diagram-how-it-works.png" alt="Sơ đồ nguyên lý vận hành của Skills Manager">
-      <div class="ui-shot-caption">Sơ đồ cơ chế hoạt động của Skills Manager: Trung tâm điều phối nạp kỹ năng từ kho trực tuyến vào các môi trường agent cục bộ.</div>
+      <div class="ui-shot-caption"><strong>Sơ đồ cơ chế hoạt động của Skills Manager:</strong> Trung tâm điều phối nạp kỹ năng từ kho trực tuyến vào các môi trường agent cục bộ.</div>
     </div>
 
     <!-- 2. Mô hình Workspace -->
@@ -92,7 +116,7 @@
 
     <div class="ui-shot-box">
       <img src="assets/diagram-workspace-model.png" alt="Mô hình phân vùng Workspace trong Skills Manager">
-      <div class="ui-shot-caption">Mô hình phân vùng Workspace: Phân tách rõ ràng giữa Kỹ năng dùng chung toàn hệ thống (Global) và Kỹ năng đặc thù cho từng kho mã (Workspace).</div>
+      <div class="ui-shot-caption"><strong>Mô hình phân vùng Workspace:</strong> Phân tách rõ ràng giữa Kỹ năng dùng chung toàn hệ thống (Global) và Kỹ năng đặc thù cho từng kho mã (Workspace).</div>
     </div>
 
     <div class="table-wrap">
@@ -125,18 +149,16 @@
 
     <div class="ui-shot-box">
       <img src="assets/library.png" alt="Giao diện thư viện kỹ năng trực quan trong Skills Manager">
-      <div class="ui-shot-caption">Giao diện Thư viện Kỹ năng (Library): Phân loại theo danh mục, hiển thị lượt cài đặt và trạng thái kích hoạt hiện tại.</div>
+      <div class="ui-shot-caption"><strong>Giao diện Thư viện Kỹ năng (Library):</strong> Phân loại theo danh mục, hiển thị lượt cài đặt và trạng thái kích hoạt hiện tại.</div>
     </div>
 
     <div class="ui-shot-box">
       <img src="assets/install-skills.png" alt="Hộp thoại cài đặt kỹ năng dễ dàng">
-      <div class="ui-shot-caption">Quy trình cài đặt: Tự động tải về, kiểm tra xung đột biến môi trường và liên kết vào dự án mong muốn.</div>
+      <div class="ui-shot-caption"><strong>Quy trình cài đặt:</strong> Tự động tải về, kiểm tra xung đột biến môi trường và liên kết vào dự án mong muốn.</div>
     </div>
 
     <!-- 4. Lệnh dòng lệnh CLI -->
     <h2>4. Sử dụng tiện lợi qua công cụ dòng lệnh (CLI)</h2>
-    <p>Nếu bạn là người yêu thích terminal, Skills Manager cung cấp đầy đủ các lệnh quản trị nhanh chóng:</p>
-
     <div class="code-block">
       <div class="code-block-header">
         <span>Bash · Các lệnh CLI phổ biến</span>
@@ -154,11 +176,22 @@ skills-manager enable taste-skill</code></pre>
     </div>
 
     <div class="callout-tip">
-      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h2M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
         <strong>Giữ sạch ngữ cảnh cho Agent</strong>
         <p>Việc bật quá nhiều kỹ năng không liên quan cùng một lúc sẽ làm phình to system prompt và khiến agent dễ nhầm lẫn quy tắc. Hãy dùng Skills Manager để chỉ bật đúng bộ kỹ năng phục vụ cho công nghệ của dự án bạn đang làm việc.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="cindy.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Cindy</span>
+      </a>
+      <a class="nav-card next" href="playwright-cli.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Playwright CLI →</span>
+      </a>
     </div>
   </main>
 </body>

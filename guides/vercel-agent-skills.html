@@ -77,6 +77,30 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Tối ưu Frontend & RSC</span>
+        <span class="glance-desc">Loại bỏ async waterfall, nén bundle và kiểm tra 100+ checklist a11y.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Dành cho ai</span>
+        <span class="glance-val">React & Next.js Developers</span>
+        <span class="glance-desc">Lập trình viên muốn đạt điểm Core Web Vitals 95+ mà không tốn công mò thủ công.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Độ phức tạp</span>
+        <span class="glance-val">Cực kỳ nhanh</span>
+        <span class="glance-desc">Chỉ cần trỏ agent vào thư mục <code>app/</code> và yêu cầu audit.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Lệnh cài đặt</span>
+        <span class="glance-val">npx skills add</span>
+        <span class="glance-desc"><code>vercel-labs/agent-skills</code></span>
+      </div>
+    </div>
+
     <!-- 1. Bộ 8 kỹ năng cốt lõi -->
     <h2>1. Bản đồ 8 Kỹ năng cốt lõi trong hệ sinh thái</h2>
     <p>Thay vì viết prompt thủ công nhắc nhở AI "hãy code tối ưu", Vercel Labs hệ thống hóa kiến thức kỹ thuật thành 8 skill chuyên biệt. Agent sẽ kích hoạt đúng ngữ cảnh khi phân tích hoặc viết mã nguồn:</p>
@@ -135,63 +159,101 @@
       </table>
     </div>
 
-    <!-- 2. Sơ đồ 4 bước audit hiệu năng -->
-    <h2>2. Quy trình Audit hiệu năng 4 bước chuẩn mực</h2>
+    <!-- 2. Sơ đồ 4 bước audit hiệu năng trực quan SVG -->
+    <h2>2. Sơ đồ luồng Audit hiệu năng 4 bước</h2>
     <p>Khi phân tích một trang React/Next.js chậm, agent áp dụng quy trình kiểm tra tuần tự từ gốc rễ mạng đến lớp hiển thị giao diện:</p>
 
-    <div class="diagram-frame">
-      <div class="flow-steps">
-        <div class="step-card">
-          <span class="step-badge">Bước 1</span>
-          <strong>Triệt tiêu Waterfall</strong>
-          <p>Phát hiện các lời gọi <code>await fetch</code> lồng nhau. Gom lại bằng <code>Promise.all</code> hoặc đẩy xuống RSC.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Bước 2</span>
-          <strong>Thu gọn JS Bundle</strong>
-          <p>Kiểm tra thư viện nặng (lodash, moment, heavy icons). Thay thế bằng native JS hoặc dynamic import theo view.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Bước 3</span>
-          <strong>Phân tách ranh giới RSC</strong>
-          <p>Chỉ dùng <code>'use client'</code> ở lá của cây component có tương tác, giữ phần hiển thị dữ liệu tĩnh ở Server.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Bước 4</span>
-          <strong>Khóa Re-render vô ích</strong>
-          <p>Tối ưu hóa Context API thành các slice nhỏ, cố định tham chiếu callback và tránh tạo object mới trong render loop.</p>
-        </div>
-      </div>
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 860 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Step 1 -->
+        <rect x="20" y="30" width="180" height="150" rx="8" fill="var(--paper)" stroke="var(--danger)" stroke-width="2"/>
+        <text x="110" y="65" text-anchor="middle" fill="var(--danger)" font-weight="700" font-size="13">BƯỚC 1</text>
+        <text x="110" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Diệt Waterfall</text>
+        <text x="110" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Gom await fetch</text>
+        <text x="110" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">Promise.all / RSC</text>
+
+        <path d="M210 105 H235" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="235,105 227,100 227,110" fill="var(--accent)"/>
+
+        <!-- Step 2 -->
+        <rect x="245" y="30" width="180" height="150" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
+        <text x="335" y="65" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">BƯỚC 2</text>
+        <text x="335" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Nén JS Bundle</text>
+        <text x="335" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Tách dynamic import</text>
+        <text x="335" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">Bỏ icon pack nặng</text>
+
+        <path d="M435 105 H460" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="460,105 452,100 452,110" fill="var(--accent)"/>
+
+        <!-- Step 3 -->
+        <rect x="470" y="30" width="180" height="150" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="560" y="65" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">BƯỚC 3</text>
+        <text x="560" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Tách Ranh giới RSC</text>
+        <text x="560" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Đẩy 'use client'</text>
+        <text x="560" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">xuống tận lá</text>
+
+        <path d="M660 105 H685" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="685,105 677,100 677,110" fill="var(--accent)"/>
+
+        <!-- Step 4 -->
+        <rect x="695" y="30" width="150" height="150" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <text x="770" y="65" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">BƯỚC 4</text>
+        <text x="770" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Khóa Re-render</text>
+        <text x="770" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Tách Context</text>
+        <text x="770" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">Memoize chuẩn xác</text>
+      </svg>
     </div>
 
-    <!-- 3. Phân cấp mức độ nghiêm ngặt React Rules -->
-    <h2>3. Phân cấp độ ưu tiên của 40+ quy tắc React</h2>
-    <p>Bộ kỹ năng chia các lỗi hiệu năng thành 3 cấp độ rõ rệt giúp lập trình viên và agent tập trung sửa chữa đúng điểm nghẽn nghiêm trọng nhất trước:</p>
+    <!-- 3. Interactive Tabs: React Rules vs Web Design Guidelines -->
+    <h2>3. Phân cấp độ ưu tiên của 40+ quy tắc & Kiểm tra a11y</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-react">40+ Quy tắc React (Critical / High / Medium)</button>
+        <button class="tab-btn" data-tab="tab-a11y">100+ Checklist Web Design Guidelines</button>
+      </div>
 
-    <div class="arch-stack">
-      <div class="arch-layer">
-        <h4>Mức Critical (Bắt buộc sửa ngay) — Chặn nghẽn mạng & Treo giao diện</h4>
-        <p>• <strong>async-waterfall:</strong> Tuyệt đối không gọi tuần tự các API độc lập trong Server Component.<br>
-           • <strong>bundle-heavy-deps:</strong> Không import trực tiếp icon pack đồ sộ hoặc lodash không cherry-pick.<br>
-           • <strong>server-client-leak:</strong> Không truyền secret key hoặc hàm server chưa qua sanitize xuống Client Component.</p>
+      <div class="tab-panel active" id="tab-react">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Mức Critical (Bắt buộc sửa ngay) — Chặn nghẽn mạng & Treo giao diện</h4>
+            <p>• <strong>async-waterfall:</strong> Tuyệt đối không gọi tuần tự các API độc lập trong Server Component.<br>
+               • <strong>bundle-heavy-deps:</strong> Không import trực tiếp icon pack đồ sộ hoặc lodash không cherry-pick.<br>
+               • <strong>server-client-leak:</strong> Không truyền secret key hoặc hàm server chưa qua sanitize xuống Client Component.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Mức High (Khuyến nghị cao) — Tối ưu tài nguyên & Chỉ số Web Vitals</h4>
+            <p>• <strong>client-leaf-boundary:</strong> Đẩy ranh giới Client xuống sâu nhất có thể, không bọc <code>'use client'</code> trên cả trang.<br>
+               • <strong>image-lcp-priority:</strong> Hình ảnh trên màn hình đầu tiên (Above-the-fold) phải có <code>priority</code> để đạt chuẩn LCP &lt; 2.5s.<br>
+               • <strong>context-state-splatter:</strong> Tách state thường xuyên thay đổi ra khỏi context chứa state toàn cục.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Mức Medium (Hoàn thiện mã nguồn) — Clean Code & Khả năng duy trì</h4>
+            <p>• <strong>compound-slots:</strong> Ưu tiên slot pattern thay vì truyền quá nhiều cờ boolean hiển thị.<br>
+               • <strong>derived-state-memo:</strong> Tránh lưu state phụ thuộc vào props; tính toán trực tiếp hoặc memoize có chọn lọc.</p>
+          </div>
+        </div>
       </div>
-      <div class="arch-layer">
-        <h4>Mức High (Khuyến nghị cao) — Tối ưu tài nguyên & Chỉ số Web Vitals</h4>
-        <p>• <strong>client-leaf-boundary:</strong> Đẩy ranh giới Client xuống sâu nhất có thể, không bọc <code>'use client'</code> trên cả trang.<br>
-           • <strong>image-lcp-priority:</strong> Hình ảnh trên màn hình đầu tiên (Above-the-fold) phải có <code>priority</code> để đạt chuẩn LCP &lt; 2.5s.<br>
-           • <strong>context-state-splatter:</strong> Tách state thường xuyên thay đổi ra khỏi context chứa state toàn cục.</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Mức Medium (Hoàn thiện mã nguồn) — Clean Code & Khả năng duy trì</h4>
-        <p>• <strong>compound-slots:</strong> Ưu tiên slot pattern thay vì truyền quá nhiều cờ boolean hiển thị.<br>
-           • <strong>derived-state-memo:</strong> Tránh lưu state phụ thuộc vào props; tính toán trực tiếp hoặc memoize có chọn lọc.</p>
+
+      <div class="tab-panel" id="tab-a11y">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Tương phản & Khả năng đọc (Contrast & Text)</h4>
+            <p>Độ tương phản tối thiểu 4.5:1 cho văn bản thường và 3:1 cho văn bản lớn chuẩn WCAG AA. Hạn chế dùng font size dưới 12px.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Vùng chạm & Điều hướng phím (Touch Targets & Focus)</h4>
+            <p>Mọi nút bấm và liên kết trên mobile phải đạt kích thước chạm tối thiểu 44×44px. Luôn có viền <code>:focus-visible</code> rõ ràng khi nhấn Tab.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Chuyển động & Trực giác (Motion & Layout)</h4>
+            <p>Tôn trọng tùy chọn hệ thống <code>prefers-reduced-motion</code>: tắt toàn bộ animation nặng khi người dùng kích hoạt giảm chuyển động.</p>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- 4. Hướng dẫn cài đặt & tích hợp -->
     <h2>4. Cài đặt & Sử dụng ngay với Agent của bạn</h2>
-    <p>Bạn có thể cài đặt bộ kỹ năng này vào bất kỳ AI agent nào hỗ trợ định dạng chuẩn Agent Skills (như Claude Code, Codex, Antigravity, Cursor):</p>
-
     <div class="code-block">
       <div class="code-block-header">
         <span>Bash · Cài đặt toàn bộ hoặc từng skill</span>
@@ -224,6 +286,17 @@ npx skills add vercel-labs/agent-skills/web-design-guidelines</code></pre>
         <strong>Lời khuyên thực chiến từ Vercel Labs</strong>
         <p>Đừng ép agent viết mọi thứ thành Client Component chỉ để dùng state. Mô hình Server Components sinh ra là để xử lý dữ liệu nặng ở gần cơ sở dữ liệu nhất, giúp trình duyệt của người dùng chỉ cần nhận về HTML nhẹ và hydration siêu tốc.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="mattpocock-skills.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Matt Pocock Skills</span>
+      </a>
+      <a class="nav-card next" href="nuwa-skill.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Nuwa Skill (女娲) →</span>
+      </a>
     </div>
   </main>
 </body>

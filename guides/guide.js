@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  // Quản lý theme sáng/tối đồng bộ với toàn bộ Skill AI
+  // 1. Quản lý theme sáng/tối đồng bộ với toàn bộ Skill AI
   const themeToggle = document.getElementById('themeToggle');
   function applyTheme(theme) {
     const isDark = theme === 'dark';
@@ -25,7 +25,7 @@
     });
   }
 
-  // Toast notification
+  // 2. Toast notification
   let toastTimer;
   function showToast(message) {
     let toast = document.getElementById('toast');
@@ -44,7 +44,7 @@
   }
   window.showGuideToast = showToast;
 
-  // Sao chép code
+  // 3. Sao chép code
   document.addEventListener('click', async (e) => {
     const btn = e.target.closest('.copy-btn, [data-copy-target]');
     if (!btn) return;
@@ -83,7 +83,74 @@
     }
   });
 
-  // Tìm kiếm trong trang Hub Guide (nếu có ô tìm kiếm #hubSearch)
+  // 4. Interactive Tabs Switcher
+  document.addEventListener('click', (e) => {
+    const tabBtn = e.target.closest('.tab-btn');
+    if (!tabBtn) return;
+    const tabContainer = tabBtn.closest('.guide-tabs');
+    if (!tabContainer) return;
+
+    const targetId = tabBtn.dataset.tab;
+    if (!targetId) return;
+
+    tabContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    tabContainer.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+    tabBtn.classList.add('active');
+    const panel = tabContainer.querySelector(`#${targetId}`);
+    if (panel) panel.classList.add('active');
+  });
+
+  // 5. Image Lightbox Modal for Hi-res Screenshots & Diagrams
+  let lightbox = document.getElementById('guideLightbox');
+  if (!lightbox) {
+    lightbox = document.createElement('div');
+    lightbox.id = 'guideLightbox';
+    lightbox.className = 'lightbox-modal';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-label', 'Xem ảnh phóng to');
+    lightbox.innerHTML = '<img id="lightboxImg" src="" alt="Xem ảnh chi tiết">';
+    document.body.appendChild(lightbox);
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('is-active');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-active')) {
+        lightbox.classList.remove('is-active');
+      }
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const img = e.target.closest('.ui-shot-box img, .ui-shot-img');
+    if (!img) return;
+    const fullImg = document.getElementById('lightboxImg');
+    if (fullImg) {
+      fullImg.src = img.src;
+      fullImg.alt = img.alt || 'Ảnh phóng to';
+      lightbox.classList.add('is-active');
+    }
+  });
+
+  // 6. Xử lý fallback khi ảnh tải lỗi
+  document.querySelectorAll('.ui-shot-box img').forEach(img => {
+    img.addEventListener('error', () => {
+      const box = img.closest('.ui-shot-box');
+      if (box) {
+        img.style.display = 'none';
+        const fallback = document.createElement('div');
+        fallback.style.padding = '32px 20px';
+        fallback.style.textAlign = 'center';
+        fallback.style.color = 'var(--muted)';
+        fallback.style.fontSize = '14px';
+        fallback.innerHTML = `<span>⚠️ Không thể tải trước hình ảnh sơ đồ. Vui lòng tham khảo trực tiếp mã nguồn.</span>`;
+        box.insertBefore(fallback, box.querySelector('.ui-shot-caption'));
+      }
+    });
+  });
+
+  // 7. Tìm kiếm trong trang Hub Guide (nếu có ô tìm kiếm #hubSearch)
   const hubSearch = document.getElementById('hubSearch');
   if (hubSearch) {
     const cards = document.querySelectorAll('.guide-card');
@@ -99,17 +166,17 @@
         const text = (card.textContent || '').toLowerCase()
           .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd');
         const match = !q || text.includes(q);
-        card.style.display = match ? '' : 'none';
+        card.style.display = match ? 'flex' : 'none';
         if (match) totalVisible++;
       });
 
-      groupSections.forEach((section) => {
-        const visibleInGroup = section.querySelectorAll('.guide-card:not([style*="display: none"])').length;
-        section.style.display = visibleInGroup > 0 ? '' : 'none';
+      groupSections.forEach((sec) => {
+        const visibleInGroup = sec.querySelectorAll('.guide-card[style*="display: flex"]').length;
+        sec.style.display = (!q || visibleInGroup > 0) ? 'block' : 'none';
       });
 
       if (emptyNotice) {
-        emptyNotice.style.display = totalVisible === 0 ? 'block' : 'none';
+        emptyNotice.style.display = (totalVisible === 0 && q) ? 'block' : 'none';
       }
     });
   }

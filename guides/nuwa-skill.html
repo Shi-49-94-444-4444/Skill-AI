@@ -77,13 +77,37 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Cố vấn Phản biện Đa chiều</span>
+        <span class="glance-desc">Phá vỡ thiên kiến xác nhận bằng 7 góc nhìn của các bậc vĩ nhân.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Dành cho ai</span>
+        <span class="glance-val">Founders & Architects</span>
+        <span class="glance-desc">Người cần đưa ra quyết định chiến lược hoặc giải bài toán kỹ thuật lớn.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Cơ chế thực thi</span>
+        <span class="glance-val">6 Agent Song Song</span>
+        <span class="glance-desc">Mỗi tác tử giữ 1 lăng kính độc lập, tranh luận chéo rồi tổng hợp.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Lợi thế cốt lõi</span>
+        <span class="glance-val">Tránh Sai Lầm Đắt Giá</span>
+        <span class="glance-desc">Phát hiện góc khuất trước khi tốn hàng trăm giờ code sai hướng.</span>
+      </div>
+    </div>
+
     <!-- 1. Bức tranh lớn: Hội đồng cố vấn -->
     <h2>1. Hội đồng Cố vấn Đa nhân cách (Advisory Board)</h2>
     <p>Thay vì dựa vào một câu trả lời đơn điệu từ một mô hình ngôn ngữ lớn (LLM), Nuwa khởi tạo một hội đồng cố vấn gồm các nhân cách có tư duy đối nghịch nhau. Mỗi cố vấn soi chiếu vấn đề của bạn dưới lăng kính đặc thù của họ:</p>
 
     <div class="ui-shot-box">
       <img src="assets/advisory-board.png" alt="Sơ đồ Hội đồng Cố vấn Đa nhân cách trong Nuwa Skill">
-      <div class="ui-shot-caption">Giao diện vận hành Hội đồng Cố vấn (Advisory Board) trong Nuwa Skill: Mỗi tác tử giữ một lăng kính tư duy độc lập trước khi tổng hợp phương án.</div>
+      <div class="ui-shot-caption"><strong>Giao diện vận hành Hội đồng Cố vấn (Advisory Board):</strong> Mỗi tác tử đại diện cho một bộ óc kiệt xuất, giữ lăng kính tư duy độc lập (nhấn vào ảnh để xem chi tiết độ phân giải cao).</div>
     </div>
 
     <!-- 2. Bảng 7 mô hình tư duy -->
@@ -143,10 +167,14 @@
 
     <div class="ui-shot-box">
       <img src="assets/6-agents-parallel.png" alt="6 Agent chạy song song trong Nuwa Skill">
-      <div class="ui-shot-caption">Điều phối 6 tác tử hoạt động song song trong hệ thống Nuwa Skill: Tối ưu thời gian chờ và chống thiên kiến xác nhận.</div>
+      <div class="ui-shot-caption"><strong>Điều phối 6 tác tử hoạt động song song trong hệ thống Nuwa Skill:</strong> Tối ưu thời gian chờ và chống thiên kiến xác nhận.</div>
     </div>
 
     <div class="diagram-frame">
+      <div class="diagram-caption">
+        <svg viewBox="0 0 24 24"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path><path d="M18 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4"></path></svg>
+        Quy trình 4 pha từ Phân rã bài toán đến Khuyến nghị hành động
+      </div>
       <div class="flow-steps">
         <div class="step-card">
           <span class="step-badge">1. Dispatch</span>
@@ -172,9 +200,7 @@
     </div>
 
     <!-- 4. Hướng dẫn tích hợp -->
-    <h2>4. Hướng dẫn tích hợp Nuwa vào dự án</h2>
-    <p>Để kích hoạt lăng kính phản biện Nuwa vào phiên lập trình của bạn:</p>
-
+    <h2>4. Kích hoạt Hội đồng Cố vấn Nuwa vào dự án</h2>
     <div class="code-block">
       <div class="code-block-header">
         <span>Prompt · Kích hoạt Hội đồng Phản biện Nuwa</span>
@@ -195,6 +221,17 @@ Chỉ ra:
         <strong>Giá trị khác biệt của Nuwa</strong>
         <p>Nuwa không cố gắng trả lời nhanh nhất; mục tiêu của nó là ngăn bạn đưa ra những quyết định tồi tệ có chi phí sửa chữa hàng nghìn giờ làm việc về sau. Đây là vũ khí tư duy tối thượng cho Tech Lead và Solution Architect.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="vercel-agent-skills.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Vercel Agent Skills</span>
+      </a>
+      <a class="nav-card next" href="taste-skill.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Taste Skill →</span>
+      </a>
     </div>
   </main>
 </body>

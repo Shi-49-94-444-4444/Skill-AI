@@ -77,23 +77,64 @@
       </div>
     </section>
 
-    <!-- 1. Cơ chế 3 tầng tẩy rửa -->
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Tẩy Sạch Dấu Vết AI</span>
+        <span class="glance-desc">Xóa ký tự vô hình Unicode (Zero-width), metadata C2PA và EXIF máy ảnh.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Điểm đặc biệt</span>
+        <span class="glance-val">Zero pip (0 Dependency)</span>
+        <span class="glance-desc">Chỉ dùng thư viện chuẩn Python (stdlib), chạy ngay không cần cài đặt.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Chất lượng ảnh</span>
+        <span class="glance-val">Giữ 100% Điểm Ảnh</span>
+        <span class="glance-desc">Bóc tách nhị phân container, không nén lại ảnh, không suy giảm chất lượng.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Cách dùng</span>
+        <span class="glance-val">CLI & Local API</span>
+        <span class="glance-desc"><code>python watermarks_remover.py text</code></span>
+      </div>
+    </div>
+
+    <!-- 1. Cơ chế 3 tầng tẩy rửa SVG -->
     <h2>1. Quy trình làm sạch Siêu dữ liệu 3 Tầng</h2>
     <p>Các mô hình AI hiện đại thường nhúng các dấu vết ẩn để định danh nguồn gốc. Watermarks Remover quét và khử các dấu vết này qua 3 tầng lọc chuyên sâu:</p>
 
-    <div class="arch-stack">
-      <div class="arch-layer">
-        <h4>Tầng 1: Khử Ký tự Ẩn Unicode (Invisible Unicode Stripper)</h4>
-        <p>Phát hiện và xóa các ký tự zero-width (U+200B, U+200C, U+200D), ký tự ngắt âm mềm (Soft Hyphen U+00AD) và các ký tự biến thể giấu tin (Steganography) xen kẽ giữa các từ trong văn bản sinh ra bởi LLM.</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Tầng 2: Tẩy Khối Container Nhị phân (Container Chunks Scrubber)</h4>
-        <p>Bóc tách các khối siêu dữ liệu phụ trợ trong file ảnh (PNG text chunks, JPEG APP13/Photoshop metadata, WebP EXIF chunk) mà không làm suy giảm chất lượng điểm ảnh hay phải giải mã nén lại (Zero quality loss).</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Tầng 3: Khử Chữ ký Nguồn gốc C2PA & IPTC (Provenance Eraser)</h4>
-        <p>Loại bỏ các chứng chỉ xuất xứ kỹ thuật số C2PA (Content Credentials) thường được các nền tảng tự động gắn vào ảnh DALL-E, Midjourney hoặc Stable Diffusion.</p>
-      </div>
+    <!-- Sơ đồ 3 tầng lọc SVG -->
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 840 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Layer 1 -->
+        <rect x="30" y="30" width="230" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <text x="145" y="65" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">TẦNG 1: VĂN BẢN</text>
+        <text x="145" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Khử Ký tự Ẩn Unicode</text>
+        <text x="145" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">Zero-width space (U+200B)</text>
+        <text x="145" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">Chuẩn hóa Unicode NFKC</text>
+
+        <path d="M275 100 H300" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="300,100 292,95 292,105" fill="var(--accent)"/>
+
+        <!-- Layer 2 -->
+        <rect x="305" y="30" width="230" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="420" y="65" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">TẦNG 2: CONTAINER ẢNH</text>
+        <text x="420" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Bóc tách Khối Nhị phân</text>
+        <text x="420" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">PNG text chunks / XMP</text>
+        <text x="420" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">Bảo toàn 100% pixel gốc</text>
+
+        <path d="M550 100 H575" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="575,100 567,95 567,105" fill="var(--accent)"/>
+
+        <!-- Layer 3 -->
+        <rect x="580" y="30" width="230" height="140" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <text x="695" y="65" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">TẦNG 3: BẢO MẬT</text>
+        <text x="695" y="95" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Tẩy C2PA &amp; Quyền Riêng Tư</text>
+        <text x="695" y="125" text-anchor="middle" fill="var(--muted)" font-size="12">Xóa chứng chỉ nguồn gốc</text>
+        <text x="695" y="145" text-anchor="middle" fill="var(--muted)" font-size="12">Xóa GPS, tên máy chủ, model</text>
+      </svg>
     </div>
 
     <!-- 2. Bảng định dạng hỗ trợ -->
@@ -127,23 +168,41 @@
       </table>
     </div>
 
-    <!-- 3. Hướng dẫn chạy nhanh -->
+    <!-- 3. Interactive Tabs: CLI vs Microservice -->
     <h2>3. Chạy trực tiếp không cần cài đặt thư viện (Zero pip)</h2>
-    <p>Vì được viết 100% bằng thư viện chuẩn của Python, bạn có thể chạy ngay trên bất kỳ máy tính nào đã cài sẵn Python 3.8+:</p>
-
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Sử dụng dòng lệnh làm sạch file</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép lệnh Watermarks Remover">Sao chép</button>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-cli">Lệnh dòng lệnh (CLI)</button>
+        <button class="tab-btn" data-tab="tab-api">Khởi chạy dịch vụ API cục bộ</button>
       </div>
-      <pre><code># Làm sạch văn bản chứa ký tự ẩn
+
+      <div class="tab-panel active" id="tab-cli">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Sử dụng dòng lệnh làm sạch file</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+          </div>
+          <pre><code># Làm sạch văn bản chứa ký tự ẩn
 python watermarks_remover.py text --input draft.txt --output clean.txt
 
-# Làm sạch một thư mục ảnh AI
-python watermarks_remover.py image --dir ./ai_generated_images/ --strip-c2pa
+# Làm sạch một thư mục ảnh AI (xóa cả chứng chỉ C2PA)
+python watermarks_remover.py image --dir ./ai_generated_images/ --strip-c2pa</code></pre>
+        </div>
+      </div>
 
-# Khởi chạy dịch vụ API cục bộ siêu nhẹ
-python watermarks_remover.py serve --port 5000</code></pre>
+      <div class="tab-panel" id="tab-api">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Chạy microservice API nội bộ</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+          </div>
+          <pre><code># Khởi chạy dịch vụ API cục bộ siêu nhẹ trên cổng 5000
+python watermarks_remover.py serve --port 5000
+
+# Gửi tệp cần làm sạch qua curl
+curl -X POST http://localhost:5000/clean -F "file=@photo.png" -o clean_photo.png</code></pre>
+        </div>
+      </div>
     </div>
 
     <div class="callout">
@@ -152,6 +211,17 @@ python watermarks_remover.py serve --port 5000</code></pre>
         <strong>Ứng dụng bảo mật và quyền riêng tư</strong>
         <p>Bên cạnh việc tẩy dấu vết AI, công cụ này là giải pháp bảo mật dữ liệu xuất sắc trước khi phát hành tài liệu: loại bỏ tọa độ GPS, thông tin máy chủ và tên người dùng hệ thống vô tình bị lưu trong metadata của tệp tin.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="playwright-cli.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Playwright CLI</span>
+      </a>
+      <a class="nav-card next" href="index.html">
+        <span class="nav-card-dir">Về trang chủ</span>
+        <span class="nav-card-title">Trung tâm Guide & Tài liệu →</span>
+      </a>
     </div>
   </main>
 </body>

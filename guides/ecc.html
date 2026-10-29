@@ -77,6 +77,30 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Nâng Cấp Claude Code</span>
+        <span class="glance-desc">Bổ sung bản năng tự động, bộ nhớ không quên và khiên bảo mật mã nguồn.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Điểm đau giải quyết</span>
+        <span class="glance-val">Chống Quên & Phá Hoại</span>
+        <span class="glance-desc">Ngăn chặn xóa nhầm file, rò rỉ secret key và lặp lại lỗi sai cũ.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Kiến trúc bảo vệ</span>
+        <span class="glance-val">5 Tầng Kiểm Soát</span>
+        <span class="glance-desc">Skills · Instincts · Dual Memory · Guardrails · Research-First.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Bắt đầu nhanh</span>
+        <span class="glance-val">Chép vào .claude/</span>
+        <span class="glance-desc">Tự động kích hoạt ngay khi mở phiên làm việc mới.</span>
+      </div>
+    </div>
+
     <!-- 1. Bảng đối chiếu năng lực -->
     <h2>1. So sánh: Claude Code Mặc định vs Khi được trang bị ECC</h2>
     <div class="table-wrap">
@@ -113,31 +137,27 @@
       </table>
     </div>
 
-    <!-- 2. Sơ đồ 5 lớp kiến trúc -->
+    <!-- 2. Sơ đồ 5 lớp kiến trúc SVG -->
     <h2>2. Kiến trúc 5 Tầng của bộ khung ECC</h2>
     <p>ECC hoạt động như một lớp vỏ bảo vệ và định hướng thông minh, bọc quanh nhân Claude Code cơ bản:</p>
 
-    <div class="arch-stack">
-      <div class="arch-layer">
-        <h4>Tầng 1: Kỹ năng Thực thi (Skills Layer)</h4>
-        <p>Các kịch bản tự động hóa cấp cao: khảo sát kiến trúc mã nguồn, refactor hàm lớn, sinh migration database an toàn, viết integration test.</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Tầng 2: Hệ thống Bản năng (Instincts Layer)</h4>
-        <p>Phản xạ tự động không cần người dùng nhắc nhở: luôn đọc kỹ file trước khi sửa (Research-First), kiểm tra linter ngay khi lưu file.</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Tầng 3: Bộ nhớ Kép (Dual Memory Layer)</h4>
-        <p>Phân tách rạch ròi giữa bộ nhớ làm việc ngắn hạn (Scratchpad phiên hiện tại) và kho tri thức dài hạn của cả dự án (Project Knowledge Base).</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Tầng 4: Hàng rào Bảo vệ (Guardrails Layer)</h4>
-        <p>Danh sách cấm bất khả xâm phạm: ngăn chặn tiết lộ token API, ngăn chặn chạy script từ domain lạ, chặn ghi đè lịch sử git.</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Tầng 5: Nghiên cứu trước Thực thi (Research-First Pattern)</h4>
-        <p>Ép buộc agent đọc các mối quan hệ phụ thuộc trước khi sửa bất kỳ dòng mã nào, loại bỏ hoàn toàn các lỗi breaking change bất ngờ.</p>
-      </div>
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="20" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <text x="400" y="42" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">TẦNG 1: SKILLS LAYER (Tự động hóa Refactor · Migration · Test Generator)</text>
+
+        <rect x="40" y="62" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="400" y="84" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">TẦNG 2: INSTINCTS LAYER (Phản xạ Research-First · Linter tự động trước khi commit)</text>
+
+        <rect x="40" y="104" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <text x="400" y="126" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">TẦNG 3: DUAL MEMORY LAYER (Scratchpad phiên ngắn hạn &amp; Lessons.md dài hạn)</text>
+
+        <rect x="40" y="146" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
+        <text x="400" y="168" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">TẦNG 4: GUARDRAILS LAYER (Chặn rò rỉ .env · Khóa force-push · Chặn rm -rf)</text>
+
+        <rect x="40" y="188" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-pink)" stroke-width="2"/>
+        <text x="400" y="210" text-anchor="middle" fill="var(--dracula-pink)" font-weight="700" font-size="13">TẦNG 5: RESEARCH-FIRST VERIFICATION (Đọc hiểu toàn cục trước khi viết 1 dòng code)</text>
+      </svg>
     </div>
 
     <!-- 3. Danh sách cấm trong Guardrails -->
@@ -187,11 +207,22 @@ claude</code></pre>
     </div>
 
     <div class="callout-tip">
-      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h2M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
         <strong>Sức mạnh của việc học hỏi liên tục</strong>
         <p>Mỗi khi bạn chỉ ra một lỗi sai cho Claude Code, bộ nhớ ECC sẽ tự động cập nhật vào <code>.claude/memory/lessons.md</code>. Kể từ giây phút đó, mọi thành viên trong team khi chạy agent đều được thừa hưởng bài học kinh nghiệm này.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="deepseek-harness.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← DeepSeek Harness</span>
+      </a>
+      <a class="nav-card next" href="cindy.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Cindy →</span>
+      </a>
     </div>
   </main>
 </body>

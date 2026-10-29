@@ -77,18 +77,42 @@
       </div>
     </section>
 
-    <!-- 1. Minh họa thực tế -->
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Tiêu Diệt AI Slop</span>
+        <span class="glance-desc">Chấm dứt các mẫu web rập khuôn, mang lại cá tính và gu thẩm mỹ cao cấp.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Nguồn cảm hứng</span>
+        <span class="glance-val">247 Web Awwwards</span>
+        <span class="glance-desc">Đúc kết từ các site đoạt giải Site of the Day và One Page Love.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Cơ chế kiểm soát</span>
+        <span class="glance-val">The Run (Look-and-Fix)</span>
+        <span class="glance-desc">Agent dùng trình duyệt chụp ảnh thật ở 3 kích thước để tự soi lỗi.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Triết lý thiết kế</span>
+        <span class="glance-val">Sự Kiềm Chế Đỉnh Cao</span>
+        <span class="glance-desc">Mọi pixel đều có mục đích, không hiệu ứng rác để trang trí.</span>
+      </div>
+    </div>
+
+    <!-- 1. Minh họa sản phẩm thực tế -->
     <h2>1. Minh họa sản phẩm thực tế từ Taste Skill</h2>
-    <p>Thay vì sinh ra những template vô hồn, Taste Skill định hướng agent chọn phong cách thẩm mỹ phù hợp với ngành hàng, kết hợp kiểu chữ có hồn, bảng màu có chủ đích và nhịp điệu bố cục sinh động:</p>
+    <p>Thay vì sinh ra những template vô hồn, Taste Skill định hướng agent chọn phong cách thẩm mỹ phù hợp với ngành hàng, kết hợp kiểu chữ có hồn, bảng màu có chủ đích và nhịp điệu bố cục sinh động (nhấn vào ảnh để phóng to):</p>
 
     <div class="ui-shot-box">
       <img src="assets/coffee-storefront.webp" alt="Giao diện Coffee Storefront thực tế được thiết kế bằng Taste Skill">
-      <div class="ui-shot-caption">Thực đơn và bảng hiệu thương mại quán cà phê (Coffee Storefront): Tông màu ấm tự nhiên, kiểu chữ Serif có tính thủ công, lưới bố cục bất đối xứng tinh tế.</div>
+      <div class="ui-shot-caption"><strong>Thực đơn & bảng hiệu quán cà phê (Coffee Storefront):</strong> Tông màu ấm tự nhiên, kiểu chữ Serif có tính thủ công, lưới bố cục bất đối xứng tinh tế.</div>
     </div>
 
     <div class="ui-shot-box">
       <img src="assets/night-dates.webp" alt="Giao diện Night Dates với phong cách tối giản giàu cảm xúc">
-      <div class="ui-shot-caption">Ứng dụng sự kiện ban đêm (Night Dates): Tối ưu độ tương phản cao trên nền tối, không lạm dụng viền dạ quang (glow) rẻ tiền, tôn trọng khoảng trắng nội dung.</div>
+      <div class="ui-shot-caption"><strong>Ứng dụng sự kiện ban đêm (Night Dates):</strong> Tối ưu độ tương phản cao trên nền tối, không lạm dụng viền dạ quang (glow) rẻ tiền, tôn trọng khoảng trắng.</div>
     </div>
 
     <!-- 2. Bảng đối chiếu: AI Slop vs Craftsmanship -->
@@ -129,9 +153,11 @@
 
     <!-- 3. Quy trình The Run -->
     <h2>3. Quy trình "The Run" — Vòng lặp Look-and-Fix 4 giai đoạn</h2>
-    <p>Taste Skill không dừng lại ở prompt tĩnh; nó bắt buộc agent phải chạy qua vòng lặp kiểm tra thực tế bằng trình duyệt (Inspector Loop):</p>
-
     <div class="diagram-frame">
+      <div class="diagram-caption">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        4 Giai đoạn từ Nghiên cứu Art Direction đến Soi lỗi qua Browser
+      </div>
       <div class="flow-steps">
         <div class="step-card">
           <span class="step-badge">Phase 1</span>
@@ -146,7 +172,7 @@
         <div class="step-card">
           <span class="step-badge">Phase 3</span>
           <strong>Chụp màn hình Headless</strong>
-          <p>Dùng Playwright/Puppeteer mở giao diện thật ở 3 kích thước: Mobile (390px), Tablet (768px), Desktop (1440px).</p>
+          <p>Dùng Playwright mở giao diện thật ở 3 kích thước: Mobile (390px), Tablet (768px), Desktop (1440px).</p>
         </div>
         <div class="step-card">
           <span class="step-badge">Phase 4</span>
@@ -156,8 +182,48 @@
       </div>
     </div>
 
-    <!-- 4. Hướng dẫn sử dụng -->
-    <h2>4. Prompt kích hoạt Taste Skill cho Agent</h2>
+    <!-- 4. Interactive Tabs: House Rules & The Inspector -->
+    <h2>4. Chi tiết Quy tắc House Rules & Lệnh kiểm tra</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-houserules">Bộ quy tắc House Rules cấm đoán</button>
+        <button class="tab-btn" data-tab="tab-inspect">Lệnh chạy Inspector tự động</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-houserules">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Cấm thẻ trôi lơ lửng không mục đích (Zero Floating Cards)</h4>
+            <p>Tránh dùng các khối <code>card</code> nền xám có viền 1px bo cong 16px chỉ để đựng 1 đoạn text ngắn. Hãy ưu tiên danh sách phẳng, đường kẻ phân cách mảnh hoặc bố cục 2 cột.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Cấm dải màu chuyển tiếp cầu vồng (Zero Rainbow Gradients)</h4>
+            <p>Tuyệt đối không dùng gradient tím-xanh-hồng trên text tiêu đề hoặc nền card. Nếu cần điểm nhấn, hãy dùng 1 màu accent thuần khiết có độ tương phản cao.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Cấm icon đơn điệu trong ô vuông bo góc (Zero Tinted Icon Boxes)</h4>
+            <p>Không dùng icon SVG đặt trong 1 ô vuông nhỏ 40x40px có nền mờ. Hãy để nội dung hoặc hình ảnh thực tế tự truyền tải thông điệp.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-inspect">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Chạy kiểm tra đo lường độ Slop bằng Inspector</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+          </div>
+          <pre><code># Đo lường các chỉ số UI vi phạm quy tắc Taste Skill
+node .taste-skill/scripts/inspect.mjs --url http://localhost:3000
+
+# Chụp lại ảnh màn hình 3 kích thước để agent tự đánh giá
+node .taste-skill/scripts/draw.mjs --brief "Coffee shop" --keep palette,type</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Prompt mẫu -->
+    <h2>5. Prompt kích hoạt Taste Skill cho Agent</h2>
     <div class="code-block">
       <div class="code-block-header">
         <span>Prompt · Loại bỏ Slop & Tái thiết kế giao diện</span>
@@ -175,6 +241,17 @@
         <strong>Quy tắc bất biến của Taste Skill</strong>
         <p>Một thiết kế đẹp không phải là thiết kế có nhiều hiệu ứng chuyển động nhất, mà là thiết kế có sự kiềm chế cao nhất: mỗi pixel xuất hiện đều phục vụ cho trải nghiệm đọc và mục tiêu chuyển đổi của nội dung.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="nuwa-skill.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Nuwa Skill (女娲)</span>
+      </a>
+      <a class="nav-card next" href="awesome-design-md.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Awesome DESIGN.md →</span>
+      </a>
     </div>
   </main>
 </body>

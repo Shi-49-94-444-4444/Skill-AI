@@ -77,26 +77,52 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Harness Chính Hãng DeepSeek</span>
+        <span class="glance-desc">Điều phối DeepSeek-V3 & R1 gọi công cụ bash, duyệt file và code tự động.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Kiến trúc lõi</span>
+        <span class="glance-val">Cordis Microkernel</span>
+        <span class="glance-desc">Vi nhân siêu nhẹ, nạp plugin động, không bị lỗi rò rỉ bộ nhớ.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Chi phí vận hành</span>
+        <span class="glance-val">Cực kỳ tiết kiệm</span>
+        <span class="glance-desc">Tận dụng Context Caching giảm tới 90% chi phí đọc codebase.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Giao diện sẵn có</span>
+        <span class="glance-val">Web UI & CLI Stream</span>
+        <span class="glance-desc">Xem chuỗi suy luận thẻ <code>&lt;think&gt;</code> thời gian thực.</span>
+      </div>
+    </div>
+
     <!-- 1. Kiến trúc vi nhân -->
-    <h2>1. Kiến trúc vi nhân (Microkernel Architecture)</h2>
+    <h2>1. Kiến trúc Vi nhân Cordis (Microkernel Architecture)</h2>
     <p>Không giống như các thư viện agent nguyên khối (monolithic), DeepSeek Harness tách biệt nhân lõi siêu nhẹ (Cordis Core) khỏi các plugin công cụ và lớp giao tiếp mạng:</p>
 
-    <div class="arch-stack">
-      <div class="arch-layer">
-        <h4>Lớp Giao diện & Tương tác (User Layer)</h4>
-        <p>• <strong>Web UI Console:</strong> Bảng điều khiển trực quan theo dõi chuỗi suy luận (Reasoning Chain) của DeepSeek-R1.<br>
-           • <strong>CLI Terminal Streamer:</strong> Luồng văn bản phản hồi trực tiếp với thanh tiến trình gọi công cụ (tool call spinner).</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Lớp Vi nhân Cordis (Cordis Microkernel Core)</h4>
-        <p>• <strong>Event Bus & Lifecycle:</strong> Quản lý trạng thái vòng đời agent, chặn vòng lặp vô tận và xử lý gián đoạn người dùng (Interrupt).<br>
-           • <strong>Plugin Registry:</strong> Nạp và giải phóng động các công cụ (File IO, Terminal, Git, Browser) mà không cần khởi động lại tiến trình.</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Lớp Bộ điều hợp Mô hình (Model Transport Adapter)</h4>
-        <p>• <strong>DeepSeek Reasoning Adapter:</strong> Tách riêng thẻ <code>&lt;think&gt;</code> khỏi nội dung trả về để hiển thị luồng tư duy độc lập.<br>
-           • <strong>OpenAI-compatible Endpoint:</strong> Cho phép trỏ về cả DeepSeek Cloud API lẫn cụm máy chủ tự host qua vLLM / Ollama.</p>
-      </div>
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 820 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Top UI Layer -->
+        <rect x="30" y="20" width="760" height="42" rx="6" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="1.5"/>
+        <text x="410" y="46" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">LỚP TƯƠNG TÁC: Web UI Console · Terminal Streamer · Interrupt Controls</text>
+
+        <!-- Microkernel Middle -->
+        <rect x="30" y="80" width="760" height="55" rx="6" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="410" y="105" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="14">VI NHÂN CORDIS CORE (Event Bus · Plugin Registry · Lifecycle)</text>
+        <text x="410" y="123" text-anchor="middle" fill="var(--muted)" font-size="11.5">Quản lý vòng đời agent · Phân luồng công cụ an toàn · Chặn vòng lặp vô tận</text>
+
+        <!-- Bottom Model & Tool Layer -->
+        <rect x="30" y="152" width="370" height="50" rx="6" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.5"/>
+        <text x="215" y="182" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="12.5">MÔ HÌNH: DeepSeek-V3 · DeepSeek-R1</text>
+
+        <rect x="420" y="152" width="370" height="50" rx="6" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="1.5"/>
+        <text x="605" y="182" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="12.5">SANDBOX: Bash Execution · Git · File IO</text>
+      </svg>
     </div>
 
     <!-- 2. Bảng so sánh V3 vs R1 trong Harness -->
@@ -128,34 +154,21 @@
       </table>
     </div>
 
-    <!-- 3. Quy trình cài đặt & Khởi động nhanh -->
-    <h2>3. Khởi chạy DeepSeek Harness trong 3 bước</h2>
-    <div class="diagram-frame">
-      <div class="flow-steps">
-        <div class="step-card">
-          <span class="step-badge">Bước 1</span>
-          <strong>Cấu hình API Key</strong>
-          <p>Khai báo khóa API chính thức hoặc URL máy chủ cục bộ trong biến môi trường.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Bước 2</span>
-          <strong>Chạy lệnh khởi động</strong>
-          <p>Kích hoạt Web Console hoặc CLI trực tiếp qua <code>npx</code> mà không cần cài đặt nặng.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Bước 3</span>
-          <strong>Ủy quyền thực thi</strong>
-          <p>Theo dõi agent tự động duyệt codebase, chạy bash lệnh trong môi trường sandbox cô lập.</p>
-        </div>
+    <!-- 3. Interactive Tabs: Web UI vs CLI -->
+    <h2>3. Khởi chạy DeepSeek Harness trong thực tế</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-web">Giao diện Web Console (Khuyến nghị)</button>
+        <button class="tab-btn" data-tab="tab-cli">Dòng lệnh Terminal (CLI)</button>
       </div>
-    </div>
 
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Thiết lập biến môi trường & Khởi chạy</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép lệnh chạy Harness">Sao chép</button>
-      </div>
-      <pre><code># Thiết lập khóa bí mật
+      <div class="tab-panel active" id="tab-web">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Khởi chạy Web Console</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+          </div>
+          <pre><code># Thiết lập khóa bí mật
 export DEEPSEEK_API_KEY="sk-your-deepseek-api-key"
 
 # Khởi chạy giao diện Web Console trên cổng 3000
@@ -163,14 +176,41 @@ npx @deepseek-ai/dsh web
 
 # Hoặc khởi chạy trên máy chủ từ xa (Remote Server) không tự mở trình duyệt
 npx @deepseek-ai/dsh web --port 8080 --no-open</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cli">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Chạy trực tiếp trong Terminal</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+          </div>
+          <pre><code># Chạy phiên tương tác trực tiếp
+npx @deepseek-ai/dsh cli --model deepseek-reasoner
+
+# Yêu cầu giải quyết một ticket lỗi cụ thể
+npx @deepseek-ai/dsh run "Tìm và sửa lỗi Memory leak trong worker.ts"</code></pre>
+        </div>
+      </div>
     </div>
 
     <div class="callout-tip">
-      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h2M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
         <strong>Mẹo tiết kiệm chi phí với DeepSeek Harness</strong>
         <p>Tận dụng tính năng bộ đệm ngữ cảnh (Context Caching) của DeepSeek API: khi gửi cùng một cây thư mục mã nguồn nhiều lần, chi phí đọc token được giảm tới 90%, giúp agent duyệt qua các repo hàng trăm nghìn dòng code với chi phí chỉ vài cent.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="awesome-design-md.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Awesome DESIGN.md</span>
+      </a>
+      <a class="nav-card next" href="ecc.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Everything Claude Code →</span>
+      </a>
     </div>
   </main>
 </body>

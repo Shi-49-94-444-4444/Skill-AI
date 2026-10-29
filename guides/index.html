@@ -71,6 +71,30 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Quy mô thư viện</span>
+        <span class="glance-val">11 Chuyên Đề Chọn Lọc</span>
+        <span class="glance-desc">Bao quát từ Kỹ thuật TDD, Frontend Perf đến Agent Harness & Bảo mật.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Ngôn ngữ & Chiều sâu</span>
+        <span class="glance-val">100% Tiếng Việt Chuẩn</span>
+        <span class="glance-desc">Rút gọn ý chính, hướng dẫn hành động cụ thể, có code và prompt mẫu.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Tính trực quan</span>
+        <span class="glance-val">Sơ đồ SVG & Ảnh chụp</span>
+        <span class="glance-desc">Minh họa luồng dữ liệu, hỗ trợ click phóng to ảnh chi tiết.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Tra cứu</span>
+        <span class="glance-val">Tìm Kiếm Thời Gian Thực</span>
+        <span class="glance-desc">Lọc ngay lập tức theo từ khóa kỹ thuật bên dưới.</span>
+      </div>
+    </div>
+
     <div class="hub-search-box">
       <input class="hub-search-input" id="hubSearch" type="search" placeholder="Tìm kiếm nhanh guide theo tên, tính năng hoặc từ khóa (ví dụ: TDD, React, Design System, Harness, C2PA)..." autocomplete="off">
     </div>
@@ -143,44 +167,44 @@
         <a class="guide-card" href="awesome-design-md.html">
           <div class="guide-card-title">
             <span>Awesome DESIGN.md</span>
-            <span class="guide-tag">Design Systems</span>
+            <span class="guide-tag">Design Tokens</span>
           </div>
-          <p class="guide-card-desc">Kho tài liệu DESIGN.md phân tích phong cách thiết kế của các thương hiệu hàng đầu (Apple, Claude, Linear, Stripe...) để thả vào dự án cho agent tuân thủ.</p>
+          <p class="guide-card-desc">Bộ sưu tập DESIGN.md từ các thương hiệu hàng đầu (Linear, Stripe, Apple, Claude): cách chuẩn hóa tokens để AI agent viết UI khớp 100%.</p>
           <div class="guide-card-footer">
-            <span>VoltAgent/awesome-design-md · 124k ★</span>
+            <span>VoltAgent/awesome-design-md · 18k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>
       </div>
     </section>
 
-    <!-- Nhóm 3: Agent và harness -->
+    <!-- Nhóm 3: Nền tảng & Agent Harness -->
     <section class="group-section" id="group-agent-harness">
       <div class="group-header">
-        <h2>Agent và harness</h2>
-        <p>Hệ điều hành, runtime điều phối, cơ chế plugin và giải pháp mở rộng harness cho AI coding agent.</p>
+        <h2>Nền tảng & Agent Harness</h2>
+        <p>Các bộ khung điều phối vòng đời agent, quản lý tiến trình, công cụ sandbox và kết nối đa thiết bị.</p>
       </div>
       <div class="guide-card-grid">
         <a class="guide-card" href="deepseek-harness.html">
           <div class="guide-card-title">
             <span>DeepSeek Harness</span>
-            <span class="guide-tag">Plugin Architecture</span>
+            <span class="guide-tag">Microkernel</span>
           </div>
-          <p class="guide-card-desc">Nền tảng harness nguồn mở từ DeepSeek AI với triết lý "Everything is a plugin" trên vi hạt nhân Cordis, hỗ trợ Web UI và CLI điều phối linh hoạt.</p>
+          <p class="guide-card-desc">Khung điều phối agent chính thức của DeepSeek dựa trên vi nhân Cordis: nạp plugin động, tương thích DeepSeek-V3 và R1, bảng điều khiển Web UI.</p>
           <div class="guide-card-footer">
-            <span>deepseek-ai/deepseek-harness · 265k ★</span>
+            <span>deepseek-ai/deepseek-harness · 42k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>
 
         <a class="guide-card" href="ecc.html">
           <div class="guide-card-title">
-            <span>ECC (Everything Claude Code)</span>
-            <span class="guide-tag">Harness Optimization</span>
+            <span>Everything Claude Code</span>
+            <span class="guide-tag">Production Harness</span>
           </div>
-          <p class="guide-card-desc">Hệ thống tối ưu hiệu năng harness toàn diện: kết hợp skills, instincts (bản năng), persistent memory, bảo mật phân tầng và research-first playbook.</p>
+          <p class="guide-card-desc">Bộ khung hoàn chỉnh nâng cấp Claude Code: kỹ năng thực chiến, bản năng tự động, bộ nhớ liên phiên và hàng rào bảo mật guardrails.</p>
           <div class="guide-card-footer">
-            <span>affaan-m/ECC · 291k ★</span>
+            <span>affaan-m/ECC · 88k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>
@@ -188,32 +212,32 @@
         <a class="guide-card" href="cindy.html">
           <div class="guide-card-title">
             <span>Cindy</span>
-            <span class="guide-tag">Multi-Device Agent</span>
+            <span class="guide-tag">Mobile Control</span>
           </div>
-          <p class="guide-card-desc">AI companion mã nguồn mở kết nối máy tính và điện thoại: biến máy tính thành máy chủ an toàn, tích hợp Claude Code, Codex và Pi vào một giao diện.</p>
+          <p class="guide-card-desc">Điều khiển coding agent trên điện thoại và máy tính bảng: kết nối máy trạm qua WebSocket, hỗ trợ Claude Code, Codex và Pi harness.</p>
           <div class="guide-card-footer">
-            <span>makecindy/cindy · 8.1k ★</span>
+            <span>makecindy/cindy · 25k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>
       </div>
     </section>
 
-    <!-- Nhóm 4: Công cụ cho agent -->
+    <!-- Nhóm 4: Công cụ & Tiện ích -->
     <section class="group-section" id="group-tools">
       <div class="group-header">
-        <h2>Công cụ cho agent</h2>
-        <p>Ứng dụng desktop và công cụ dòng lệnh hỗ trợ quản lý skill, tự động hóa tương tác web và bảo vệ dữ liệu.</p>
+        <h2>Công cụ & Tiện ích</h2>
+        <p>Các công cụ dòng lệnh và giao diện hỗ trợ quản trị kỹ năng, tự động hóa trình duyệt và bảo vệ quyền riêng tư.</p>
       </div>
       <div class="guide-card-grid">
         <a class="guide-card" href="skills-manager.html">
           <div class="guide-card-title">
             <span>Skills Manager</span>
-            <span class="guide-tag">Desktop Tool</span>
+            <span class="guide-tag">Tooling & UI</span>
           </div>
-          <p class="guide-card-desc">Ứng dụng desktop nhẹ viết bằng Rust giúp quản lý, đồng bộ và phân bổ skill qua hơn 50 công cụ AI (Claude Code, Cursor, Copilot, Codex...) bằng Presets.</p>
+          <p class="guide-card-desc">Công cụ trực quan & CLI quản lý Claude Skills và Codex tools: cài đặt 1-click, đồng bộ preset và cô lập phạm vi workspace vs toàn cục.</p>
           <div class="guide-card-footer">
-            <span>xingkongliang/skills-manager · 7k ★</span>
+            <span>xingkongliang/skills-manager · 19k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>
@@ -223,9 +247,9 @@
             <span>Playwright CLI</span>
             <span class="guide-tag">Browser Automation</span>
           </div>
-          <p class="guide-card-desc">Công cụ CLI chính thức từ Microsoft cho phép agent duyệt web, click, nhập liệu, chụp ảnh màn hình và tự động ghi lại hành động thành code test (codegen).</p>
+          <p class="guide-card-desc">CLI chính thức từ Microsoft cho browser automation: chụp ảnh màn hình, xuất cây accessibility tinh gọn và vòng lặp look-and-fix cho AI agent.</p>
           <div class="guide-card-footer">
-            <span>microsoft/playwright-cli · 14.7k ★</span>
+            <span>microsoft/playwright-cli · 162k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>
@@ -233,11 +257,11 @@
         <a class="guide-card" href="watermarks-remover.html">
           <div class="guide-card-title">
             <span>Watermarks Remover</span>
-            <span class="guide-tag">Privacy & Hygiene</span>
+            <span class="guide-tag">Privacy & Security</span>
           </div>
-          <p class="guide-card-desc">Dịch vụ bảo vệ quyền riêng tư: bóc tách các dấu vết AI (ký tự Unicode ẩn, SynthID-Text và siêu dữ liệu C2PA/EXIF) khỏi văn bản và hình ảnh bạn sở hữu.</p>
+          <p class="guide-card-desc">Công cụ Python chuẩn (zero dependencies) tẩy sạch watermark ẩn, ký tự vô hình Unicode và siêu dữ liệu C2PA/EXIF trong tài liệu và ảnh AI.</p>
           <div class="guide-card-footer">
-            <span>guillaumemeyer/watermarks-remover · 25.4k ★</span>
+            <span>guillaumemeyer/watermarks-remover · 12k ★</span>
             <span class="read-more">Đọc hướng dẫn →</span>
           </div>
         </a>

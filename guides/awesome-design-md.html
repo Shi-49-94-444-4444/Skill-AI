@@ -77,33 +77,66 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Khóa Chặt DNA Thiết Kế</span>
+        <span class="glance-desc">Đặt 1 file Markdown ở gốc repo để ép AI tuân thủ đúng màu, font và khoảng cách.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Thư viện sẵn có</span>
+        <span class="glance-val">20+ Thương hiệu lớn</span>
+        <span class="glance-desc">Linear, Stripe, Apple, Claude, Supabase, Vercel, ClickHouse...</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Kích thước file</span>
+        <span class="glance-val">Siêu nhẹ (~60 dòng)</span>
+        <span class="glance-desc">Chỉ tốn ~400 token, không làm nghẽn bộ nhớ context của agent.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Công cụ nạp nhanh</span>
+        <span class="glance-val">stitch-design CLI</span>
+        <span class="glance-desc"><code>npx stitch-design add linear</code></span>
+      </div>
+    </div>
+
     <!-- 1. DESIGN.md là gì -->
     <h2>1. DESIGN.md là gì và tại sao AI Agent cần nó?</h2>
     <p>Nếu <code>README.md</code> dành cho con người và <code>AGENTS.md</code> dành cho chỉ thị hành vi, thì <code>DESIGN.md</code> là "cuốn kinh thánh giao diện" dành riêng cho AI coding agent. Khi bạn đặt file này ở gốc dự án, agent sẽ tự động đọc bảng tokens này trước khi xuất mã HTML, CSS hoặc React:</p>
 
-    <div class="diagram-frame">
-      <div class="flow-steps">
-        <div class="step-card">
-          <span class="step-badge">Nguồn</span>
-          <strong>Hệ thống Design System</strong>
-          <p>Màu sắc, tỉ lệ chữ, bán kính góc bo, độ đổ bóng của thương hiệu chuẩn.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">File</span>
-          <strong>Quy chuẩn DESIGN.md</strong>
-          <p>Được nén thành cú pháp Markdown súc tích mà LLM dễ dàng hiểu sâu mà không tốn token.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Agent</span>
-          <strong>Agent Context Ingestion</strong>
-          <p>Coding agent đọc tự động khi sinh component hoặc sửa giao diện.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Output</span>
-          <strong>Giao diện Pixel-Perfect</strong>
-          <p>UI đồng nhất 100%, không bị lệch màu, lệch font hay vỡ bố cục ban đầu.</p>
-        </div>
-      </div>
+    <!-- Sơ đồ Pipeline Token Ingestion SVG -->
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 840 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="30" width="160" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <text x="100" y="75" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">DESIGN SYSTEM</text>
+        <text x="100" y="105" text-anchor="middle" fill="var(--ink)" font-size="12">Figma / Hướng dẫn</text>
+        <text x="100" y="125" text-anchor="middle" fill="var(--muted)" font-size="11">Màu, font, spacing</text>
+
+        <path d="M190 90 H220" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="220,90 212,85 212,95" fill="var(--accent)"/>
+
+        <rect x="230" y="30" width="170" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="315" y="75" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">DESIGN.md</text>
+        <text x="315" y="105" text-anchor="middle" fill="var(--ink)" font-size="12">Markdown tinh gọn</text>
+        <text x="315" y="125" text-anchor="middle" fill="var(--muted)" font-size="11">~60 dòng tokens</text>
+
+        <path d="M410 90 H440" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="440,90 432,85 432,95" fill="var(--accent)"/>
+
+        <rect x="450" y="30" width="170" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
+        <text x="535" y="75" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">AI AGENT</text>
+        <text x="535" y="105" text-anchor="middle" fill="var(--ink)" font-size="12">Đọc trước khi code</text>
+        <text x="535" y="125" text-anchor="middle" fill="var(--muted)" font-size="11">Claude / Antigravity</text>
+
+        <path d="M630 90 H660" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="660,90 652,85 652,95" fill="var(--accent)"/>
+
+        <rect x="670" y="30" width="150" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <text x="745" y="75" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">PIXEL PERFECT</text>
+        <text x="745" y="105" text-anchor="middle" fill="var(--ink)" font-size="12">Giao diện nhất quán</text>
+        <text x="745" y="125" text-anchor="middle" fill="var(--muted)" font-size="11">100% khớp chuẩn</text>
+      </svg>
     </div>
 
     <!-- 2. Bảng so sánh 5 hệ thống thiết kế tiêu biểu -->
@@ -153,16 +186,21 @@
       </table>
     </div>
 
-    <!-- 3. Cấu trúc một file DESIGN.md chuẩn -->
-    <h2>3. Cấu trúc một file DESIGN.md mẫu</h2>
-    <p>Dưới đây là khung mẫu chuẩn bạn có thể sao chép trực tiếp vào thư mục gốc dự án của mình:</p>
-
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Markdown · File DESIGN.md chuẩn ở thư mục gốc</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép file DESIGN.md mẫu">Sao chép</button>
+    <!-- 3. Interactive Tabs: File mẫu vs Lệnh CLI -->
+    <h2>3. Triển khai vào dự án trong thực tế</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-template">Cấu trúc file DESIGN.md chuẩn</button>
+        <button class="tab-btn" data-tab="tab-cli">Dùng CLI nạp tự động</button>
       </div>
-      <pre><code># Design Guidelines
+
+      <div class="tab-panel active" id="tab-template">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Markdown · DESIGN.md ở thư mục gốc</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép file mẫu">Sao chép</button>
+          </div>
+          <pre><code># Design Guidelines
 
 ## Color Tokens
 - Ground: #FAF9F5 (Dark: #0E0F11)
@@ -179,18 +217,16 @@
 ## Radii & Elevation
 - Radius sm: 4px | md: 8px | lg: 12px | pill: 999px
 - Shadows: Không dùng bóng mờ đậm; chỉ dùng 1px border line kết hợp bóng khuếch tán cực nhẹ.</code></pre>
-    </div>
-
-    <!-- 4. Lệnh tự động tải hệ thống thiết kế -->
-    <h2>4. Thêm nhanh bằng công cụ dòng lệnh (CLI)</h2>
-    <p>Bạn có thể sử dụng công cụ dòng lệnh <code>stitch-design</code> để thêm ngay phong cách của công ty mong muốn vào dự án:</p>
-
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Kéo DESIGN.md của thương hiệu về dự án</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép lệnh stitch-design">Sao chép</button>
+        </div>
       </div>
-      <pre><code># Thêm chuẩn thiết kế phong cách Linear
+
+      <div class="tab-panel" id="tab-cli">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Tải chuẩn thiết kế của thương hiệu bằng stitch-design</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép lệnh CLI">Sao chép</button>
+          </div>
+          <pre><code># Thêm chuẩn thiết kế phong cách Linear
 npx stitch-design add linear
 
 # Thêm chuẩn thiết kế phong cách Stripe
@@ -198,6 +234,8 @@ npx stitch-design add stripe
 
 # Thêm chuẩn thiết kế phong cách Claude
 npx stitch-design add claude</code></pre>
+        </div>
+      </div>
     </div>
 
     <div class="callout">
@@ -206,6 +244,17 @@ npx stitch-design add claude</code></pre>
         <strong>Tối ưu hóa token khi làm việc với AI</strong>
         <p>Không nên paste toàn bộ design system dài 50 trang vào prompt. Một file <code>DESIGN.md</code> tinh giản từ 40–80 dòng Markdown là kích thước hoàn hảo nhất: đủ để AI tuân thủ nghiêm ngặt mà không làm nghẽn bộ nhớ context.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="taste-skill.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Taste Skill</span>
+      </a>
+      <a class="nav-card next" href="deepseek-harness.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">DeepSeek Harness →</span>
+      </a>
     </div>
   </main>
 </body>

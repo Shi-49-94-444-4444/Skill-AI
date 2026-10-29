@@ -77,33 +77,66 @@
       </div>
     </section>
 
+    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Code Từ Xa Trên Mobile</span>
+        <span class="glance-desc">Theo dõi terminal, duyệt git diff và bấm Approve lệnh ngay trên điện thoại.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Kiến trúc</span>
+        <span class="glance-val">Máy trạm + Mobile PWA</span>
+        <span class="glance-desc">Máy tính gánh tải nặng, điện thoại chỉ nhận luồng UI qua WebSockets.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Bảo mật kết nối</span>
+        <span class="glance-val">Mã QR One-time</span>
+        <span class="glance-desc">Không mở port công khai, chạy trong LAN hoặc mạng riêng Tailscale.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Động cơ hỗ trợ</span>
+        <span class="glance-val">Đa Engine Cắm Ngoài</span>
+        <span class="glance-desc">Hỗ trợ Claude Code, OpenAI Codex và Pi harness.</span>
+      </div>
+    </div>
+
     <!-- 1. Cấu trúc mạng phân tán -->
     <h2>1. Mô hình Phân tán: Máy trạm Host & Thiết bị Di động</h2>
     <p>Thay vì chạy mô hình nặng trên điện thoại khiến máy nóng và nhanh hết pin, Cindy sử dụng kiến trúc phân tách rạch ròi:</p>
 
-    <div class="diagram-frame">
-      <div class="flow-steps">
-        <div class="step-card">
-          <span class="step-badge">1. Server</span>
-          <strong>Máy trạm làm việc (Workstation)</strong>
-          <p>Chạy Cindy Daemon ngầm, nắm toàn bộ mã nguồn Git, Docker container và terminal thực thi.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">2. Tunnel</span>
-          <strong>Kênh kết nối Mã hóa (WebSockets)</strong>
-          <p>Truyền dữ liệu trực tiếp trong mạng LAN hoặc thông qua mạng riêng ảo Tailscale/WireGuard an toàn.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">3. Client</span>
-          <strong>Điện thoại di động (Mobile PWA)</strong>
-          <p>Giao diện cảm ứng tối ưu: đọc diff màu sắc, bấm nút Approve/Reject lệnh bash chỉ với 1 chạm.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">4. Engine</span>
-          <strong>Bộ động cơ AI cắm ngoài</strong>
-          <p>Tương thích linh hoạt với Claude Code CLI, OpenAI Codex, hoặc nhân Pi harness tùy chọn.</p>
-        </div>
-      </div>
+    <!-- Sơ đồ mạng phân tán SVG -->
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 840 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Desktop Host -->
+        <rect x="30" y="30" width="220" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <text x="140" y="70" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13.5">MÁY TRẠM (HOST)</text>
+        <text x="140" y="98" text-anchor="middle" fill="var(--ink)" font-size="12">Cindy Daemon (Node.js)</text>
+        <text x="140" y="120" text-anchor="middle" fill="var(--muted)" font-size="11">Chạy bash, Git, Docker nặng</text>
+
+        <!-- WebSocket Tunnel -->
+        <path d="M260 90 H340" stroke="var(--line)" stroke-width="2"/>
+        <text x="300" y="80" text-anchor="middle" fill="var(--dracula-cyan)" font-size="11" font-weight="600">WebSocket / LAN</text>
+        <polygon points="340,90 332,85 332,95" fill="var(--accent)"/>
+        <polygon points="260,90 268,85 268,95" fill="var(--accent)"/>
+
+        <!-- Mobile Client -->
+        <rect x="350" y="30" width="220" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <text x="460" y="70" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13.5">ĐIỆN THOẠI (CLIENT)</text>
+        <text x="460" y="98" text-anchor="middle" fill="var(--ink)" font-size="12">Mobile PWA / Browser</text>
+        <text x="460" y="120" text-anchor="middle" fill="var(--muted)" font-size="11">Duyệt diff, Approve 1-chạm</text>
+
+        <!-- AI Cloud / Local -->
+        <path d="M580 90 H660" stroke="var(--line)" stroke-width="2"/>
+        <text x="620" y="80" text-anchor="middle" fill="var(--dracula-green)" font-size="11" font-weight="600">API Call</text>
+        <polygon points="660,90 652,85 652,95" fill="var(--accent)"/>
+
+        <!-- LLM Cloud -->
+        <rect x="670" y="30" width="140" height="120" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <text x="740" y="70" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13.5">AI ENGINE</text>
+        <text x="740" y="98" text-anchor="middle" fill="var(--ink)" font-size="12">Claude / Codex</text>
+        <text x="740" y="120" text-anchor="middle" fill="var(--muted)" font-size="11">Ollama cục bộ</text>
+      </svg>
     </div>
 
     <!-- 2. Bảng so sánh 3 Engine được hỗ trợ -->
@@ -139,31 +172,37 @@
 
     <!-- 3. Hướng dẫn thiết lập & Quét mã QR -->
     <h2>3. Quy trình ghép nối 2 thiết bị trong 60 giây</h2>
-    <div class="arch-stack">
-      <div class="arch-layer">
-        <h4>Bước 1: Khởi động Cindy Server trên máy tính</h4>
-        <p>Mở terminal trên máy trạm của bạn tại thư mục dự án và chạy lệnh khởi chạy dịch vụ.</p>
+    <div class="stepper-list">
+      <div class="stepper-item">
+        <div class="stepper-number">1</div>
+        <div class="stepper-content">
+          <h4>Khởi động Cindy Server trên máy trạm</h4>
+          <p>Mở terminal trên máy trạm của bạn tại thư mục dự án và chạy lệnh khởi chạy dịch vụ:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash · Khởi chạy Cindy</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>npx makecindy start --port 4040 --engine claude-code</code></pre>
+          </div>
+        </div>
       </div>
-      <div class="arch-layer">
-        <h4>Bước 2: Quét mã QR xác thực trên màn hình</h4>
-        <p>Terminal máy tính sẽ render trực tiếp một mã QR chứa token ủy quyền bảo mật dùng một lần (One-time secure token).</p>
-      </div>
-      <div class="arch-layer">
-        <h4>Bước 3: Mở trình duyệt trên điện thoại và điều khiển</h4>
-        <p>Mở camera điện thoại quét mã QR để mở ngay giao diện Web App — không cần cài đặt ứng dụng từ App Store.</p>
-      </div>
-    </div>
 
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Khởi chạy Cindy trên máy tính trạm</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép lệnh chạy Cindy">Sao chép</button>
+      <div class="stepper-item">
+        <div class="stepper-number">2</div>
+        <div class="stepper-content">
+          <h4>Quét mã QR bảo mật trên terminal</h4>
+          <p>Terminal sẽ tự động in mã QR chứa token ủy quyền dùng một lần (One-time token). Mở camera điện thoại quét để mở ngay ứng dụng.</p>
+        </div>
       </div>
-      <pre><code># Cài đặt Cindy toàn cục hoặc chạy trực tiếp bằng npx
-npx makecindy start
 
-# Chỉ định cổng mạng và engine mặc định
-npx makecindy start --port 4040 --engine claude-code</code></pre>
+      <div class="stepper-item">
+        <div class="stepper-number">3</div>
+        <div class="stepper-content">
+          <h4>Theo dõi và phê duyệt lệnh từ xa</h4>
+          <p>Bạn có thể di chuyển ra khỏi bàn làm việc, nhận thông báo khi có lệnh cần phê duyệt và bấm nút Approve trực tiếp trên màn hình cảm ứng.</p>
+        </div>
+      </div>
     </div>
 
     <div class="callout-tip">
@@ -172,6 +211,17 @@ npx makecindy start --port 4040 --engine claude-code</code></pre>
         <strong>Trải nghiệm lập trình tự do khi di chuyển</strong>
         <p>Với Cindy, bạn có thể bắt đầu một tác vụ refactor lớn trên máy trạm tại văn phòng, sau đó ra ngoài uống cà phê và chỉ cần mở điện thoại để duyệt các bài kiểm thử và xác nhận commit git khi agent hoàn thành.</p>
       </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="ecc.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Everything Claude Code</span>
+      </a>
+      <a class="nav-card next" href="skills-manager.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Skills Manager →</span>
+      </a>
     </div>
   </main>
 </body>
