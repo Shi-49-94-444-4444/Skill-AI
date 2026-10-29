@@ -109,7 +109,7 @@
     lightbox.className = 'lightbox-modal';
     lightbox.setAttribute('role', 'dialog');
     lightbox.setAttribute('aria-label', 'Xem ảnh phóng to');
-    lightbox.innerHTML = '<img id="lightboxImg" src="" alt="Xem ảnh chi tiết">';
+    lightbox.innerHTML = '<img id="lightboxImg" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns=\'http://www.w3.org/2000/svg\'%20viewBox=\'0%200%201%201\'/%3E" alt="Xem ảnh chi tiết">';
     document.body.appendChild(lightbox);
 
     lightbox.addEventListener('click', () => {
