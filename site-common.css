@@ -598,8 +598,9 @@ html[data-theme="dark"] .hero-showcase-card:hover {
 .hero-showcase-card {
   display: block;
   width: 100%;
-  max-width: 960px;
+  max-width: 100%;
   margin: 18px 0 24px;
+  box-sizing: border-box;
   border: 2px solid var(--line) !important;
   border-radius: 0px !important;
   background: #090a0f;
