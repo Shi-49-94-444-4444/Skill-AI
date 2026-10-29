@@ -430,7 +430,7 @@
 
   <dialog id="detailDialog">
     <div class="dialog-header">
-      <div><h2 id="detailTitle"></h2><p class="dialog-meta" id="detailMeta"></p></div>
+      <div><h2 id="detailTitle"></h2><p class="dialog-meta" id="detailMeta"></p><div id="detailGuideWrap" style="margin-top:8px;display:none;"></div></div>
       <button class="quiet-button" id="closeDialog" type="button">Đóng</button>
     </div>
     <div class="dialog-body">
@@ -467,6 +467,7 @@
     window.addEventListener('DOMContentLoaded', () => { (() => {
       const $ = (selector) => document.querySelector(selector);
       const state = { records: [], version: '', query: '', categories: new Set(), domains: new Set(), page: 1, pageSize: 50, sortKey: 'skill', sortDirection: 'asc', current: null, loadedAt: null };
+      window.SkillAIState = state;
       let toastTimer;
       let renderFrame = 0;
       let renderTimer = 0;
@@ -623,7 +624,7 @@
         const visible = matches.slice(start, start + state.pageSize);
         const body = $('#resultBody');
         body.innerHTML = visible.map((record, index) => `<tr class="result-row" style="--row-index:${index}">
-          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(displaySkill(record.skill))}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(displaySkill(record.skill))}" type="button" aria-label="Sao chép ${escapeHtml(displaySkill(record.skill))}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg></button></div></td>
+          <td data-label="Skill" data-field="skill"><div class="skill-cell"><button class="skill-link" data-open="${escapeHtml(record.id)}" type="button"><code class="skill-code">${escapeHtml(displaySkill(record.skill))}</code></button><button class="copy-skill" data-copy-skill="${escapeHtml(displaySkill(record.skill))}" type="button" aria-label="Sao chép ${escapeHtml(displaySkill(record.skill))}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg></button>${record.guideSlug ? `<a class="guide-ref-pill" href="/guides/${escapeHtml(record.guideSlug)}.html" title="Xem Guide chuyên sâu">Guide ↗</a>` : ''}</div></td>
           <td data-label="Mô tả"><span class="cell-preview">${escapeHtml(record.description)}</span></td>
           <td data-label="Dùng khi"><span class="cell-preview">${escapeHtml(record.whenToUse)}</span></td>
           <td data-label="Cách dùng"><span class="cell-preview">${escapeHtml(compact(record.howToUse))}</span></td>
@@ -675,6 +676,16 @@
         $('#detailTitle').textContent = displaySkill(record.skill);
         const variants = record.duplicateCount > 1 ? ` · ${record.duplicateCount} dòng đã gộp` : '';
         $('#detailMeta').textContent = `${record.category} · ${record.domain} · dòng Excel ${record.sourceRow}${variants}`;
+        const gw = $('#detailGuideWrap');
+        if (gw) {
+          if (record.guideSlug) {
+            gw.innerHTML = `<a class="guide-ref-pill" href="/guides/${escapeHtml(record.guideSlug)}.html" style="display:inline-flex;padding:5px 12px;font-size:12px;border-radius:6px;gap:6px;">📖 Xem phân tích chuyên sâu trong Guide →</a>`;
+            gw.style.display = 'block';
+          } else {
+            gw.innerHTML = '';
+            gw.style.display = 'none';
+          }
+        }
         $('#detailDescription').textContent = record.description || 'Chưa có mô tả.';
         $('#detailWhen').textContent = record.whenToUse || 'Chưa có thông tin.';
         const how = $('#detailHow');

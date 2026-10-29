@@ -58,8 +58,8 @@
     } catch (e) {}
   }
 
-  const index = data.guides.map((guide) => ({
-    guide,
+  const guideEntries = data.guides.map((guide) => ({
+    item: guide,
     fields: [
       [normalize(guide.title), 6],
       [normalize(guide.slug.replace(/-/g, ' ')), 4],
@@ -69,11 +69,31 @@
     ]
   }));
 
+  const skillEntries = (data.skills || []).map((skill) => ({
+    item: {
+      slug: skill.guideSlug,
+      title: `${skill.command} — ${skill.title}`,
+      group: skill.group,
+      summary: skill.summary,
+      isSkill: true
+    },
+    fields: [
+      [normalize(skill.command), 7],
+      [normalize(skill.name), 6],
+      [normalize(skill.title), 5],
+      [normalize((skill.keywords || []).join(' ')), 4],
+      [normalize(skill.category), 3],
+      [normalize(skill.summary), 1]
+    ]
+  }));
+
+  const index = [...guideEntries, ...skillEntries];
+
   /** Tìm theo tên trang, nhóm, từ khóa và mô tả. Mọi từ trong truy vấn đều phải khớp. */
   function search(query) {
     const terms = normalize(query).split(' ').filter(Boolean);
     if (!terms.length) return [];
-    return index.map(({ guide, fields }) => {
+    return index.map(({ item, fields }) => {
       let score = 0;
       for (const term of terms) {
         let best = 0;
@@ -82,8 +102,8 @@
         score += best;
       }
       if (fields[0][0].startsWith(terms[0])) score += 3;
-      return { guide, score };
-    }).filter(Boolean).sort((a, b) => b.score - a.score || a.guide.title.localeCompare(b.guide.title, 'vi')).map((item) => item.guide);
+      return { item, score };
+    }).filter(Boolean).sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title, 'vi')).map((entry) => entry.item);
   }
 
   window.SkillAIGuides = Object.freeze({
@@ -144,8 +164,9 @@
 
     const itemHtml = (guide, withMeta) => {
       const current = guide.slug === currentSlug;
+      const tag = guide.isSkill ? '<span class="gnav-skill-badge" style="display:inline-block;padding:1px 6px;margin-right:6px;border-radius:4px;font-size:11px;font-weight:700;background:rgba(189,147,249,0.18);color:var(--dracula-purple);border:1px solid rgba(189,147,249,0.35);">SKILL</span>' : '';
       const meta = withMeta ? `<span class="gnav-item-meta">${escapeHtml(groupLabel(guide.group))} · ${escapeHtml(guide.summary)}</span>` : '';
-      return `<li><a class="gnav-item" href="${urlFor(guide.slug)}"${current ? ' aria-current="page"' : ''}><span class="gnav-item-title">${escapeHtml(guide.title)}${current ? '<span class="gnav-here">Đang xem</span>' : ''}</span>${meta}</a></li>`;
+      return `<li><a class="gnav-item" href="${urlFor(guide.slug)}"${current ? ' aria-current="page"' : ''}><span class="gnav-item-title">${tag}${escapeHtml(guide.title)}${current ? '<span class="gnav-here">Đang xem</span>' : ''}</span>${meta}</a></li>`;
     };
 
     function render() {

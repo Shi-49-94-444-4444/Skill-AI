@@ -234,10 +234,15 @@
     return Object.freeze({ initLightbox, initTabs, initImageFallbacks });
   })();
 
-  // 5. Spiritual Ambient Atmosphere
+  // 5. Spiritual Ambient Atmosphere & Interactive Motion
   const ambientUtils = (() => {
     function init() {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      initMotes();
+      initSpotlight();
+    }
+
+    function initMotes() {
       const shell = document.querySelector('.page-shell');
       if (!shell || shell.querySelector('.mystic-ambient-layer')) return;
 
@@ -259,6 +264,48 @@
         layer.appendChild(mote);
       }
       shell.insertBefore(layer, shell.firstChild);
+    }
+
+    function initSpotlight() {
+      if (window.matchMedia('(pointer: coarse)').matches) return; // Touch devices use touch ripple
+
+      let frame = null;
+      let targetCard = null;
+      let clientX = 0;
+      let clientY = 0;
+
+      function update() {
+        if (targetCard) {
+          const rect = targetCard.getBoundingClientRect();
+          const x = clientX - rect.left;
+          const y = clientY - rect.top;
+          targetCard.style.setProperty('--mouse-x', `${x.toFixed(1)}px`);
+          targetCard.style.setProperty('--mouse-y', `${y.toFixed(1)}px`);
+        }
+        frame = null;
+      }
+
+      document.addEventListener('pointermove', (e) => {
+        if (document.hidden) return;
+        const card = e.target.closest('.guide-card, .prompt-item, .glance-item, .quick-glance-card > div, .ui-shot-box, .result-row');
+        if (!card) {
+          targetCard = null;
+          return;
+        }
+        targetCard = card;
+        clientX = e.clientX;
+        clientY = e.clientY;
+        if (!frame) frame = requestAnimationFrame(update);
+      }, { passive: true });
+
+      // Clean up when tab becomes hidden
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && frame) {
+          cancelAnimationFrame(frame);
+          frame = null;
+          targetCard = null;
+        }
+      });
     }
 
     return Object.freeze({ init });

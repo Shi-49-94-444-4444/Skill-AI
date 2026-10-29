@@ -513,6 +513,89 @@ html[data-theme="dark"] .spiritual-mote {
   50% { box-shadow: 0 0 0 1px var(--accent), 0 0 16px var(--spirit-aura); }
 }
 
+/* ==========================================================================
+   Layer 7: Interactive Motion & Dynamic Lighting (ui-ux-pro-max)
+   ========================================================================== */
+.guide-card,
+.prompt-item,
+.glance-item,
+.quick-glance-card > div,
+.ui-shot-box {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.2s ease;
+}
+
+.guide-card::before,
+.prompt-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(189, 147, 249, 0.12), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+
+html[data-theme="dark"] .guide-card::before,
+html[data-theme="dark"] .prompt-item::before {
+  background: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(189, 147, 249, 0.18), transparent 70%);
+}
+
+.guide-card:hover::before,
+.prompt-item:hover::before {
+  opacity: 1;
+}
+
+/* Micro-interactions on buttons */
+.quiet-button,
+.theme-toggle,
+.copy-btn,
+.copy-skill,
+.skill-link {
+  transition: transform 0.14s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background-color 0.18s ease,
+              border-color 0.18s ease,
+              color 0.18s ease;
+}
+
+.quiet-button:active,
+.copy-btn:active,
+.copy-skill:active {
+  transform: scale(0.96);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+/* Guide Reference Badge in Table */
+.guide-ref-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(189, 147, 249, 0.12);
+  color: var(--dracula-purple, #bd93f9);
+  border: 1px solid rgba(189, 147, 249, 0.32);
+  white-space: nowrap;
+  margin-left: 6px;
+  transition: all 0.16s ease;
+}
+
+.guide-ref-pill:hover {
+  background: var(--dracula-purple, #bd93f9);
+  color: #191a21;
+  border-color: var(--dracula-purple, #bd93f9);
+  transform: translateY(-1px);
+}
+
 /* Reduced Motion Compliance */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -521,7 +604,9 @@ html[data-theme="dark"] .spiritual-mote {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .mystic-ambient-layer {
+  .mystic-ambient-layer,
+  .guide-card::before,
+  .prompt-item::before {
     display: none !important;
   }
 }
