@@ -13,11 +13,11 @@
     (() => { if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.dataset.embedded = 'true'; try { if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (error) { /* private browsing */ } })();
   </script>
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <script defer src="dashboard-config.js"></script>
-  <script defer src="advanced-prompts.js"></script>
-  <link rel="stylesheet" href="guides/guide-nav.css">
-  <script defer src="guides/guide-catalog.js"></script>
-  <script defer src="guides/guide-nav.js"></script>
+  <script defer src="dashboard-config.js?v=20261029_fix4"></script>
+  <script defer src="advanced-prompts.js?v=20261029_fix4"></script>
+  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_fix4">
+  <script defer src="guides/guide-catalog.js?v=20261029_fix4"></script>
+  <script defer src="guides/guide-nav.js?v=20261029_fix4"></script>
   <style>
     :root { color-scheme: light; --ink:#17231f; --muted:#65716c; --line:#e2e2e2; --ground:#f8f8f8; --paper:#fff; --soft:#eee; --accent:#141414; --accent-strong:#0a0a0a; --danger:#a43f3f; --focus:rgba(20,20,20,.2); --type-display:clamp(28px,3vw,38px); --type-heading:24px; --type-subheading:17px; --type-body:15px; --type-secondary:14px; --type-label:13px; }
     html[data-theme="dark"] { color-scheme:dark; --ink:#f8f8f2; --muted:#c7c9d3; --line:#44475a; --ground:#282a36; --paper:#343746; --soft:#44475a; --accent:#bd93f9; --accent-strong:#ff79c6; --danger:#ff5555; --focus:rgba(189,147,249,.38); }

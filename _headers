@@ -5,20 +5,23 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.sheetjs.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://raw.githubusercontent.com https://cdn.sheetjs.com https://cdn.jsdelivr.net; img-src 'self' data:; base-uri 'self'; form-action 'none'; frame-ancestors 'self'
 
-# Cache tối ưu cho assets tĩnh (CSS, JS, Fonts)
+# Cache cho code (CSS, JS, HTML): Luôn revalidate để nhận cập nhật tức thì, không lưu cache cũ
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
 /*.css
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*.js
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 /guides/*.css
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 /guides/*.js
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
-# Cache vĩnh viễn cho hình ảnh và vector icons
+# Cache dài hạn cho hình ảnh tĩnh và vector icons
 /guides/assets/*
   Cache-Control: public, max-age=2592000, immutable
 
