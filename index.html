@@ -19,12 +19,20 @@
       if (isPrompts) document.documentElement.classList.add('is-prompts');
     })();
   </script>
+  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
+  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
+  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
+  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
+  <link rel="stylesheet" href="site-common.css?v=20261029_v3">
+  <link rel="stylesheet" href="guides/guide-nav.css?v=20261029_v3">
   <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
-  <script defer src="site-common.js?v=20261029_v2"></script>
-  <script defer src="dashboard-config.js?v=20261029_fix4"></script>
-  <script defer src="excel-data-loader.js?v=20261029_fix4"></script><link rel="stylesheet" href="guides/guide-nav.css?v=20261029_fix4"><script defer src="guides/guide-catalog.js?v=20261029_fix4"></script><script defer src="guides/guide-nav.js?v=20261029_fix4"></script>
+  <script defer src="site-common.js?v=20261029_v3"></script>
+  <script defer src="dashboard-config.js?v=20261029_v3"></script>
+  <script defer src="excel-data-loader.js?v=20261029_v3"></script>
+  <script defer src="guides/guide-catalog.js?v=20261029_v3"></script>
+  <script defer src="guides/guide-nav.js?v=20261029_v3"></script>
   <style>
     :root {
       color-scheme: light;
@@ -310,13 +318,14 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="#" aria-label="Skill AI">
+    <a class="brand" href="/index.html" aria-label="Skill AI">
       <span class="brand-mark" aria-hidden="true">SA</span>
       <span><span class="brand-name">Skill AI</span><span class="brand-subtitle">Thư viện tra cứu</span></span>
     </a>
     <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
-      <a class="active" href="#skills" data-app-view="skills" aria-current="page">Kho Skill</a>
-      <a href="#prompts" data-app-view="prompts">Prompt nâng cao</a><a href="guides/index.html" data-guide-nav>Guide</a>
+      <a class="active" href="/index.html#skills" data-app-view="skills" aria-current="page">Kho Skill</a>
+      <a href="/index.html#prompts" data-app-view="prompts">Prompt nâng cao</a>
+      <a href="/guides/index.html" data-guide-nav>Guide</a>
     </nav>
     <div class="sidebar-stats" aria-label="Tóm tắt dữ liệu">
       <div class="sidebar-stat"><strong id="sidebarUnique" class="loading-value">—</strong><span>Skill duy nhất</span></div>
@@ -495,8 +504,10 @@
       const promptFrame = $('#promptPageFrame');
       let skillScrollY = 0;
       function sizePromptFrame() {
+        if (!promptFrame) return;
         const mobile = window.matchMedia('(max-width: 900px)').matches;
-        const headerHeight = mobile ? document.querySelector('.site-header').getBoundingClientRect().height : 0;
+        const header = document.querySelector('.site-header');
+        const headerHeight = mobile && header ? header.getBoundingClientRect().height : 0;
         const frameHeight = Math.max(360, window.innerHeight - headerHeight);
         promptFrame.style.height = `${frameHeight}px`;
         const main = $('#catalogue') || document.querySelector('.page-shell');
@@ -509,7 +520,7 @@
         const main = $('#catalogue') || document.querySelector('.page-shell');
         if (!main) return;
         const wasPrompts = main.classList.contains('is-prompts');
-        if (prompts && !promptFrame.dataset.loaded) {
+        if (prompts && promptFrame && !promptFrame.dataset.loaded) {
           promptFrame.src = 'prompts.html?embed=1';
           promptFrame.dataset.loaded = 'true';
         }
@@ -518,9 +529,11 @@
         const applyView = () => {
           document.documentElement.dataset.initialView = prompts ? 'prompts' : 'skills';
           document.documentElement.classList.toggle('is-prompts', prompts);
+          if (document.body) document.body.classList.toggle('is-prompts', prompts);
           main.classList.toggle('is-prompts', prompts);
-          promptHost.setAttribute('aria-hidden', String(!prompts));
+          if (promptHost) promptHost.setAttribute('aria-hidden', String(!prompts));
           appNav.forEach((link) => {
+            if (!link) return;
             const active = link.dataset.appView === (prompts ? 'prompts' : 'skills');
             link.classList.toggle('active', active);
             if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
@@ -541,9 +554,11 @@
         else {
           applyView();
           const visibleView = prompts ? promptHost : main;
-          visibleView.classList.remove('is-entering');
-          void visibleView.offsetWidth;
-          visibleView.classList.add('is-entering');
+          if (visibleView && visibleView.classList) {
+            visibleView.classList.remove('is-entering');
+            void visibleView.offsetWidth;
+            visibleView.classList.add('is-entering');
+          }
         }
         if (push) history.pushState({ view: prompts ? 'prompts' : 'skills' }, '', prompts ? '#prompts' : '#skills');
       }

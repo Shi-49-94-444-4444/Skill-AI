@@ -19,17 +19,28 @@
   const normalize = (value) => window.SkillAI?.text?.normalize(value) ?? String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLocaleLowerCase('vi-VN').replace(/\s+/g, ' ').trim();
   const escapeHtml = (value) => window.SkillAI?.text?.escapeHtml(value) ?? String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
 
-  const urlFor = (slug) => new URL(slug === 'index' ? 'index.html' : `${slug}.html`, base).href;
+  const urlFor = (slug) => {
+    const filename = slug === 'index' ? 'index.html' : `${slug}.html`;
+    try {
+      return new URL(`/guides/${filename}`, location.origin).href;
+    } catch (e) {
+      return new URL(filename, base).href;
+    }
+  };
   const groupLabel = (id) => groupsById.get(id)?.label || '';
 
   // Nhận diện trang hiện tại, hỗ trợ cả /guides/x.html, /guides/x (clean URL của Cloudflare Pages) và /guides/.
   const currentSlug = (() => {
-    const path = decodeURI(location.pathname);
-    const root = decodeURI(base.pathname);
-    if (!path.startsWith(root)) return null;
-    const rest = path.slice(root.length).replace(/\.html$/i, '').replace(/\/$/, '');
-    if (!rest || rest === 'index') return 'index';
-    return data.guides.some((guide) => guide.slug === rest) ? rest : null;
+    try {
+      const path = decodeURI(location.pathname);
+      const m = path.match(/\/guides(?:\/([^\/.]+))?(?:\.html)?$/i);
+      if (!m) return null;
+      const name = m[1];
+      if (!name || name === 'index') return 'index';
+      return data.guides.some((guide) => guide.slug === name) ? name : null;
+    } catch (e) {
+      return null;
+    }
   })();
 
   // Native Browser Prefetching (không can thiệp router hay pushState)
