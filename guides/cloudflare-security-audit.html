@@ -109,7 +109,7 @@
         <img src="assets/cloudflare-audit-editorial-hero.png" alt="Cloudflare Security Audit 6 Phases and Coverage Ledger" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · QUY TRÌNH KIỂM TOÁN ĐA TẦNG (CLOUDFLARE AUDIT VULNERABILITY HARNESS):</strong> Sắc cam bảo mật công nghiệp kết hợp đen than Obsidian, minh họa 6 pha kiểm soát nghiêm ngặt ngăn chặn báo động giả.</div>
+      <div class="ui-shot-caption"><strong>// 01 · QUY TRÌNH KIỂM TOÁN ĐA TẦNG (CLOUDFLARE AUDIT VULNERABILITY HARNESS):</strong> Sắc cam hổ phách công nghiệp kết hợp đen than Obsidian, minh họa 6 pha kiểm soát nghiêm ngặt với biệt đội Hunter độc lập và Verifier phản biện.</div>
     </div>
 
     <h2>1. Bảng đối chiếu: Rủi ro bảo mật truyền thống & Giải pháp Cloudflare</h2>
@@ -155,7 +155,7 @@
         <img src="assets/cloudflare-audit-editorial-concept.png" alt="Adversarial Verification Protocol và Phân cấp kết quả" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · GIAO THỨC PHẢN BIỆN ĐỐI KHÁNG (ADVERSARIAL VERIFICATION PROTOCOL):</strong> Cơ chế 3 trạng thái phán quyết (Confirmed, Needs Validation, Rejected) được kiểm định tự động bằng zero-dependency script.</div>
+      <div class="ui-shot-caption"><strong>// 02 · PHÂN LOẠI MỐI NGUY 10 CHIẾN TUYẾN (ATTACK CLASS TAXONOMY):</strong> Hệ thống phân loại rủi ro toàn diện từ lỗ hổng bộ nhớ native, DOM injection, RPC streaming đến Prompt Injection và chiếm quyền gọi công cụ AI.</div>
     </div>
 
     <h2>2. Quy trình kiểm toán 6 pha chuẩn Cloudflare</h2>
@@ -168,7 +168,7 @@
         <div class="step-card accent">
           <span class="step-badge">Pha 1</span>
           <strong>Trinh sát kiến trúc</strong>
-          <p>Lập bản đồ ranh giới tin cậy, bề mặt đầu vào trong <code>architecture.md</code> và khởi tạo <code>coverage-ledger.json</code>.</p>
+          <p>Lập bản đồ ranh giới tin cậy (trust boundaries), bề mặt đầu vào trong <code>architecture.md</code> và khởi tạo sổ cái <code>coverage-ledger.json</code>.</p>
         </div>
         <div class="step-card">
           <span class="step-badge">Pha 2</span>
@@ -204,7 +204,7 @@
         <img src="assets/cloudflare-audit-editorial-detail.png" alt="Coverage Ledger Engine và Zero Dependency Validator" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · CƠ CHẾ SỔ CÁI ĐỘ PHỦ (COVERAGE LEDGER & VALIDATOR MATRIX):</strong> Trình xác thực Node.js độc lập bảo đảm 100% tệp tin và luồng logic đều được chứng minh an toàn.</div>
+      <div class="ui-shot-caption"><strong>// 03 · XÁC MINH CƠ HỌC &amp; ĐỘ PHỦ 100% (FINDINGS SCHEMA &amp; LEDGER AUDIT):</strong> Bộ kiểm định JSON schema độc lập bảo đảm từng phát hiện đều có source trace không thể phản bác.</div>
     </div>
 
     <h2>3. Minh họa trực quan: Mô hình Hunter vs. Independent Verifier</h2>
@@ -244,22 +244,23 @@
     </div>
 
     <!-- 4. Interactive Tabs: Các lớp tấn công chuyên sâu -->
-    <h2>4. 8 Lớp tấn công chuyên sâu (Specialized Attack Classes)</h2>
+    <h2>4. 10 Lớp tấn công chuyên sâu (Specialized Attack Classes)</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-web">Web Protocol & Auth</button>
-        <button class="tab-btn" data-tab="tab-ai">AI & LLM Security</button>
-        <button class="tab-btn" data-tab="tab-supply">Supply Chain & Cloud</button>
+        <button class="tab-btn active" data-tab="tab-web">Web Protocol &amp; Auth</button>
+        <button class="tab-btn" data-tab="tab-ai">AI &amp; LLM Security</button>
+        <button class="tab-btn" data-tab="tab-supply">Supply Chain &amp; Cloud</button>
+        <button class="tab-btn" data-tab="tab-binary">Binary &amp; Local IPC</button>
       </div>
 
       <div class="tab-panel active" id="tab-web">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>HTTP Request Framing & Cache Poisoning</h4>
+            <h4>HTTP Request Framing &amp; Cache Poisoning</h4>
             <p>Rà soát các lỗi đồng bộ HTTP giữa reverse proxy và backend, rủi ro phân mảnh tiêu đề, cache key không đầy đủ gây lộ dữ liệu cá nhân giữa các người dùng.</p>
           </div>
           <div class="arch-layer">
-            <h4>Client-side DOM Injection & Prototype Pollution</h4>
+            <h4>Client-side DOM Injection &amp; Prototype Pollution</h4>
             <p>Kiểm tra các luồng gán dữ liệu vào <code>innerHTML</code>, xử lý thông điệp <code>postMessage</code> thiếu kiểm tra nguồn gốc và ô nhiễm nguyên mẫu đối tượng.</p>
           </div>
         </div>
@@ -268,11 +269,11 @@
       <div class="tab-panel" id="tab-ai">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Prompt Injection & Tool Hijacking</h4>
+            <h4>Prompt Injection &amp; Tool Hijacking</h4>
             <p>Săn lùng các lỗ hổng khi mô hình AI nhận đầu vào không tin cậy và tự động kích hoạt công cụ (Tool Call) có quyền ghi file hoặc thực thi lệnh shell.</p>
           </div>
           <div class="arch-layer">
-            <h4>Output Handling & Indirect Data Exfiltration</h4>
+            <h4>Output Handling &amp; Indirect Data Exfiltration</h4>
             <p>Ngăn chặn kẻ tấn công lợi dụng việc hiển thị định dạng Markdown hoặc render ảnh để bí mật gửi token phiên làm việc ra máy chủ bên ngoài.</p>
           </div>
         </div>
@@ -281,12 +282,25 @@
       <div class="tab-panel" id="tab-supply">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Dependency Confusion & Malicious Packages</h4>
+            <h4>Dependency Confusion &amp; Malicious Packages</h4>
             <p>Kiểm tra cấu hình registry trong <code>package.json</code>, lockfile integrity và rủi ro bị chiếm quyền điều khiển qua các script <code>postinstall</code>.</p>
           </div>
           <div class="arch-layer">
-            <h4>IAM & Serverless Ingress Policy</h4>
-            <p>Phân tích các file cấu hình Terraform, Cloudflare Workers wrangle.toml và kiểm toán quyền hạn tối thiểu (Least Privilege).</p>
+            <h4>IAM &amp; Serverless Ingress Policy</h4>
+            <p>Phân tích các file cấu hình Terraform, Cloudflare Workers wrangler.toml và kiểm toán quyền hạn tối thiểu (Least Privilege).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-binary">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Memory Safety &amp; Native Binary Analysis</h4>
+            <p>Rà soát tràn bộ đệm (buffer overflow), use-after-free, uninitialized memory trong các thư viện native C/C++/Rust.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>Desktop, Mobile &amp; Local IPC</h4>
+            <p>Phân tích kênh giao tiếp liên tiến trình (IPC) trong ứng dụng Electron, xử lý custom protocol URL (deep-links) và lỗ hổng webview bridge.</p>
           </div>
         </div>
       </div>

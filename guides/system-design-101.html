@@ -109,41 +109,41 @@
         <img src="assets/system-design-editorial-hero.png" alt="ByteByteGo System Design 101 Visual Architecture" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · KIẾN TRÚC PHÂN TÁN HYPER-SCALE (ENTERPRISE SYSTEM ARCHITECTURE):</strong> Sắc vàng kiến trúc Architectural Yellow kết hợp xanh lam kỹ thuật, sơ đồ hóa các tầng gateway, caching và dữ liệu phân mảnh.</div>
+      <div class="ui-shot-caption"><strong>// 01 · KIẾN TRÚC PHÂN TÁN HYPER-SCALE (ENTERPRISE SYSTEM ARCHITECTURE):</strong> Phân tầng Ingress Routing, Redis Cluster và Database Sharding chịu tải &gt;100.000 QPS, triệt tiêu điểm nghẽn đơn độc (Zero SPOF) và bảo đảm độ sẵn sàng 99.999% SLA.</div>
     </div>
 
     <h2>1. Bảng đối chiếu: Code AI ngây thơ vs. Kiến trúc Phân tán Chuẩn mực</h2>
-    <p>Khi yêu cầu AI viết backend, phản xạ tự nhiên của agent là ném tất cả vào một file server đơn lẻ (monolith) và kết nối trực tiếp vào một cơ sở dữ liệu duy nhất. System Design 101 giải phóng agent khỏi tư duy chắp vá này:</p>
+    <p>Khi yêu cầu AI viết backend, phản xạ tự nhiên của agent là ném tất cả vào một file server đơn lẻ (monolith) và kết nối trực tiếp vào một cơ sở dữ liệu duy nhất. System Design 101 giải phóng agent khỏi tư duy chắp vá này bằng cách phân lập rõ ràng các miền chịu lỗi (failure domains):</p>
     
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 25%;">Thành phần</th>
-            <th style="width: 35%;">Thiết kế AI ngây thơ (Naive Code)</th>
-            <th style="width: 40%;">Kiến trúc Phân tán ByteByteGo</th>
+            <th style="width: 20%;">Thành phần</th>
+            <th style="width: 38%;">Thiết kế AI ngây thơ (Naive Code)</th>
+            <th style="width: 42%;">Kiến trúc Phân tán ByteByteGo</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Điểm truy cập (Ingress)</strong></td>
-            <td>Client gọi thẳng vào server API, dễ sập khi có lượng truy cập đột biến.</td>
-            <td>Qua Reverse Proxy / API Gateway có Rate Limiting, SSL Termination và Circuit Breaker.</td>
+            <td>Client gọi thẳng vào server API, dễ sập khi có lượng truy cập đột biến. Không có cơ chế bảo vệ hay điều tiết.</td>
+            <td>Reverse Proxy / API Gateway (Envoy/Kong) với Layer 7 Routing, Token Bucket Rate Limiting, SSL Termination và Circuit Breaker.</td>
           </tr>
           <tr>
             <td><strong>Chiến lược Caching</strong></td>
-            <td>Mọi yêu cầu đều truy vấn thẳng vào cơ sở dữ liệu SQL, gây tắc nghẽn I/O.</td>
-            <td>Caching đa tầng: Cache-Aside, Write-Through với Redis/Memcached và CDN Edge cache.</td>
+            <td>Mọi yêu cầu đều truy vấn thẳng vào cơ sở dữ liệu SQL, gây tắc nghẽn I/O và chết kết nối connection pool.</td>
+            <td>Caching đa tầng (Cache-Aside, Write-Through với Redis Cluster), phòng thủ 3 mối nguy: Cache Breakdown (SingleFlight), Cache Penetration (Bloom Filter), Cache Avalanche (Jittered TTL).</td>
           </tr>
           <tr>
             <td><strong>Mở rộng cơ sở dữ liệu</strong></td>
-            <td>Chỉ dùng một máy chủ DB duy nhất; khi dữ liệu phình to thì hệ thống đứng hình.</td>
-            <td>Phân mảnh dữ liệu (Sharding) bằng Consistent Hashing, tách biệt Read Replica và Write Master.</td>
+            <td>Chỉ dùng một máy chủ DB duy nhất; khi dữ liệu phình to vượt RAM/Disk thì hệ thống đứng hình, khóa bảng (table lock).</td>
+            <td>Phân mảnh dữ liệu ngang (Horizontal Sharding) qua Consistent Hashing với 256 nút ảo/shard, tách biệt Read Replica và Write Master, Session Sticky cho Read-After-Write.</td>
           </tr>
           <tr>
-            <td><strong>Xử lý tác vụ nặng</strong></td>
-            <td>Chạy đồng bộ trong vòng lặp request-response, khiến client bị treo timeout.</td>
-            <td>Tách rời bất đồng bộ qua Message Queue (Kafka, RabbitMQ) với cơ chế Retry & Dead-Letter.</td>
+            <td><strong>Giao tiếp liên dịch vụ</strong></td>
+            <td>Gọi HTTP REST đồng bộ nối chuỗi (A gọi B, B gọi C), thời gian chờ cộng dồn, chỉ một dịch vụ chậm là cả chuỗi sụp đổ.</td>
+            <td>Giao thức gRPC nhị phân hiệu năng cao cho giao tiếp nội bộ; tách rời bất đồng bộ qua Kafka Event Bus với Idempotent Producer và Dead-Letter Queue (DLQ).</td>
           </tr>
         </tbody>
       </table>
@@ -155,35 +155,35 @@
         <img src="assets/system-design-editorial-concept.png" alt="Sơ đồ kiến trúc 4 trụ cột phân tán" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · BỐN TRỤ CỘT HỆ THỐNG (FOUR PILLARS OF DISTRIBUTED RESILIENCY):</strong> Cân bằng tải, lưu tạm đa tầng, phân mảnh dữ liệu và điều phối thông điệp bất đồng bộ chống quá tải.</div>
+      <div class="ui-shot-caption"><strong>// 02 · BỐN TRỤ CỘT HỆ THỐNG PHÂN TÁN (FOUR PILLARS OF DISTRIBUTED RESILIENCY):</strong> Điều phối lưu lượng biên WAF, lưới lưu tạm phân tán, cơ sở dữ liệu băm nhất quán và bus sự kiện Kafka hấp thụ xung tải.</div>
     </div>
 
-    <h2>2. Bốn trụ cột kiến trúc phân tán cốt lõi</h2>
+    <h2>2. Bốn trụ cột kiến trúc phân tán cốt lõi & Cơ chế phòng vệ</h2>
     <div class="diagram-frame">
       <div class="diagram-caption">
         <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Các khối xây dựng nền tảng của hệ thống phân tán chịu lỗi
+        Các khối xây dựng nền tảng của hệ thống phân tán chịu lỗi cao
       </div>
       <div class="flow-steps">
         <div class="step-card accent">
           <span class="step-badge">1</span>
-          <strong>API Gateway & Ingress</strong>
-          <p>Điều phối lưu lượng, xác thực người dùng tập trung, giới hạn tốc độ (Rate Limiting) và bảo vệ dịch vụ phía sau.</p>
+          <strong>API Gateway & Ingress Mesh</strong>
+          <p>Điều phối lưu lượng L7, xác thực JWT tập trung, thuật toán Token Bucket / Leaky Bucket giới hạn tốc độ và bảo vệ dịch vụ lõi phía sau qua Circuit Breaker.</p>
         </div>
         <div class="step-card">
           <span class="step-badge">2</span>
-          <strong>Multi-Tier Caching</strong>
-          <p>Giảm tải cho cơ sở dữ liệu: áp dụng Cache-Aside pattern, xử lý triệt để bài toán Cache Breakdown và Cache Avalanche.</p>
+          <strong>Multi-Tier Caching Mesh</strong>
+          <p>Hấp thụ 90%+ lưu lượng đọc: áp dụng Cache-Aside, phòng chống triệt để Cache Breakdown bằng SingleFlight Mutex và chống Avalanche bằng thời gian sống ngẫu nhiên (Jittered TTL).</p>
         </div>
         <div class="step-card accent">
           <span class="step-badge">3</span>
           <strong>Database Sharding & Replicas</strong>
-          <p>Băm nhất quán (Consistent Hashing) để chia dữ liệu thành nhiều shard độc lập, nhân bản đọc nâng cao năng lực phục vụ.</p>
+          <p>Băm nhất quán (Consistent Hashing) với 256 nút ảo trên mỗi shard vật lý, phân tán đều khóa phân vùng (partition keys) và tách rời luồng đọc/ghi độc lập.</p>
         </div>
         <div class="step-card">
           <span class="step-badge">4</span>
           <strong>Event-Driven Asynchronous Broker</strong>
-          <p>Sử dụng Kafka / RabbitMQ để hấp thụ các xung lưu lượng lớn và đảm bảo hệ thống không bị sập nguồn khi tải cao.</p>
+          <p>Sử dụng Apache Kafka để hấp thụ các xung lưu lượng triệu yêu cầu/giây, đảm bảo tin cậy với cơ chế phân vùng theo khóa và Dead-Letter Queue tự động retry.</p>
         </div>
       </div>
     </div>
@@ -194,11 +194,11 @@
         <img src="assets/system-design-editorial-detail.png" alt="Quy trình ra quyết định kiến trúc doanh nghiệp" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · MA TRẬN ĐÁNH ĐỔI THIẾT KẾ (CAP THEOREM & TRADEOFF MATRIX):</strong> Định hướng agent luôn tính toán băng thông, số lượng QPS và đánh đổi giữa tính nhất quán (Consistency) và tính sẵn sàng (Availability).</div>
+      <div class="ui-shot-caption"><strong>// 03 · MA TRẬN PHÂN BỔ BĂM NHẤT QUÁN &amp; ĐÁNH ĐỔI CAP (CONSISTENT HASHING &amp; TRADEOFF MATRIX):</strong> 256 nút ảo trên mỗi shard vật lý triệt tiêu điểm nóng dữ liệu, khóa phân tán SingleFlight triệt tiêu sụp đổ bộ đệm.</div>
     </div>
 
     <h2>3. Minh họa trực quan: Luồng xử lý dữ liệu chuẩn phân tán</h2>
-    <p>Một kiến trúc sản xuất hoàn chỉnh vận hành tuần tự qua các trạm kiểm soát để bảo đảm độ trễ thấp và độ sẵn sàng 99.999%:</p>
+    <p>Một kiến trúc sản xuất hoàn chỉnh vận hành tuần tự qua các trạm kiểm soát để bảo đảm độ trễ dưới 2ms và độ sẵn sàng 99.999% SLA:</p>
 
     <div class="svg-diagram-frame">
       <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -245,19 +245,25 @@
     </div>
 
     <!-- 4. Interactive Tabs: Các Case Study Kinh Điển -->
-    <h2>4. Ba bài học kiến trúc thực tế từ các gã khổng lồ</h2>
+    <h2>4. Bốn bài học kiến trúc thực tế từ các gã khổng lồ công nghệ</h2>
     <div class="guide-tabs">
       <div class="tab-list">
         <button class="tab-btn active" data-tab="tab-figma">Figma: Mở rộng 100x Postgres</button>
-        <button class="tab-btn" data-tab="tab-netflix">Netflix: Caching đa tầng</button>
-        <button class="tab-btn" data-tab="tab-uber">Uber: CI/CD Microservices</button>
+        <button class="tab-btn" data-tab="tab-netflix">Netflix: Caching 4 tầng</button>
+        <button class="tab-btn" data-tab="tab-mcdonalds">McDonald's: Event-Driven Kafka</button>
+        <button class="tab-btn" data-tab="tab-pinterest">Pinterest: Giảm 99% Clone</button>
       </div>
 
       <div class="tab-panel active" id="tab-figma">
         <div class="arch-stack">
           <div class="arch-layer">
             <h4>Phân tách cơ sở dữ liệu không cần viết lại toàn bộ ứng dụng</h4>
-            <p>Figma bắt đầu bằng việc chia tách dọc (vertical partitioning) theo từng domain dữ liệu, sau đó áp dụng băm phân vùng ngang (horizontal sharding) để mở rộng cơ sở dữ liệu PostgreSQL gấp 100 lần mà không làm gián đoạn người dùng.</p>
+            <p>Khi lượng truy cập tăng vọt, cơ sở dữ liệu PostgreSQL đơn khối của Figma chạm ngưỡng giới hạn CPU và kết nối. Thay vì mạo hiểm di chuyển sang cơ sở dữ liệu NoSQL khác, Figma giải quyết bài toán qua 3 giai đoạn chiến lược:</p>
+            <ul style="margin: 12px 0 0 20px; line-height: 1.6; color: var(--muted);">
+              <li><strong>Giai đoạn 1 (Vertical Partitioning):</strong> Phân tách dọc các bảng lớn (bảng người dùng, bảng bình luận, bảng file canvas) sang các cụm DB độc lập để giảm tải I/O.</li>
+              <li><strong>Giai đoạn 2 (Read Replicas & Proxy Routing):</strong> Thiết lập tầng proxy điều phối truy vấn trung gian. Mọi truy vấn đọc (SELECT) được đẩy sang cụm bản sao, dành riêng Master cho tác vụ ghi.</li>
+              <li><strong>Giai đoạn 3 (Horizontal Sharding):</strong> Áp dụng Consistent Hashing để chia nhỏ các bảng khổng lồ theo <code>org_id</code> hoặc <code>file_id</code> sang hàng chục shard PostgreSQL nhỏ, mở rộng năng lực xử lý lên gấp 100 lần mà không làm gián đoạn người dùng.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -265,17 +271,41 @@
       <div class="tab-panel" id="tab-netflix">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Bốn chiến lược lưu tạm giữ chân người xem</h4>
-            <p>Netflix kết hợp cache cạnh mạng (Open Connect CDN), cache bộ nhớ cụm (EVCache phân tán) và pre-fetching dự đoán sở thích để phục vụ danh mục phim gần như tức thì.</p>
+            <h4>Bốn chiến lược lưu tạm giữ chân 260+ triệu người xem</h4>
+            <p>Netflix xây dựng kiến trúc phân phối nội dung với độ trễ tính bằng mili-giây qua 4 tầng caching chuyên biệt:</p>
+            <ul style="margin: 12px 0 0 20px; line-height: 1.6; color: var(--muted);">
+              <li><strong>Tầng 1 (Open Connect CDN):</strong> Đặt máy chủ cache phần cứng trực tiếp tại các nhà mạng viễn thông (ISP) trên toàn cầu, lưu sẵn 95%+ các bộ phim đang thịnh hành gần người dùng nhất.</li>
+              <li><strong>Tầng 2 (EVCache Cluster):</strong> Cụm Memcached phân tán lưu trữ phiên người dùng, lịch sử xem và danh sách phim đang xem dở trên RAM máy chủ đám mây AWS.</li>
+              <li><strong>Tầng 3 (Local SSD Fast Cache):</strong> Bộ nhớ đệm SSD đệm các siêu dữ liệu phim (metadata, ảnh bìa, danh sách diễn viên) tại từng microservice instance.</li>
+              <li><strong>Tầng 4 (Predictive Pre-fetching):</strong> Thuật toán máy học dự đoán bộ phim hoặc tập tiếp theo mà người dùng sắp bấm để nạp sẵn vài giây video đầu tiên vào RAM máy trạm client.</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-uber">
+      <div class="tab-panel" id="tab-mcdonalds">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Điều phối hàng nghìn microservices</h4>
-            <p>Sử dụng giao thức RPC hiệu năng cao (gRPC) và hệ thống Apache Kafka để xử lý hàng triệu tọa độ xe chạy và lệnh đặt chuyến mỗi giây.</p>
+            <h4>Hấp thụ hàng triệu đơn hàng giờ cao điểm với Apache Kafka</h4>
+            <p>Vào khung giờ ăn trưa, lưu lượng đặt món từ ứng dụng di động, quầy kiosk và đối tác giao đồ ăn tăng vọt gấp 50 lần mức bình thường. Mô hình REST API truyền thống trước đây thường gây lỗi treo timeout hoặc trừ tiền trùng lặp:</p>
+            <ul style="margin: 12px 0 0 20px; line-height: 1.6; color: var(--muted);">
+              <li><strong>Tách rời hoàn toàn luồng đặt món (Decoupling):</strong> Khi khách bấm đặt hàng, API Gateway chỉ ghi sự kiện <code>OrderPlacedEvent</code> vào Kafka topic có partition key là <code>store_id</code> và phản hồi ngay mã đơn 202 Accepted cho khách trong &lt;50ms.</li>
+              <li><strong>Xử lý bất đồng bộ tuần tự (Ordered Ingest):</strong> Dịch vụ nhà bếp và kho nguyên liệu đọc sự kiện theo đúng thứ tự đến từng giây, bảo đảm không bị nhầm lẫn món ăn.</li>
+              <li><strong>Idempotency & Dead-Letter Queue:</strong> Mỗi giao dịch mang một UUID duy nhất để loại bỏ yêu cầu gửi lại (retry); các đơn lỗi ngân hàng được đẩy vào Dead-Letter Queue để xử lý hoàn tiền tự động mà không nghẽn luồng chính.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-pinterest">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Giảm 99% thời gian Clone kho mã nguồn khổng lồ</h4>
+            <p>Tại quy mô hàng nghìn kỹ sư, mỗi lượt clone repository monorepo tại Pinterest mất từ 40 đến 60 phút do chứa hàng triệu commit và tệp nhị phân lịch sử:</p>
+            <ul style="margin: 12px 0 0 20px; line-height: 1.6; color: var(--muted);">
+              <li><strong>Sparse-Checkout & Shallow Clone:</strong> Chỉ tải các thư mục và tập tin mà kỹ sư đang trực tiếp làm việc, kết hợp <code>--filter=blob:none</code> để chỉ tải nội dung file khi thực sự mở xem.</li>
+              <li><strong>Bài học cho AI Coding Agent:</strong> Không bao giờ nạp toàn bộ repo mã nguồn vào ngữ cảnh agent. Chỉ nạp cây thư mục hoặc file tóm tắt AST (như Graphify) trước khi đi sâu vào file cụ thể.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -283,6 +313,41 @@
 
     <!-- 5. Hướng dẫn bắt đầu ngay -->
     <h2>5. Ép Coding Agent tuân thủ tiêu chuẩn kiến trúc</h2>
+    
+    <div class="table-wrap" style="margin-bottom: 24px;">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Chỉ số ước tính</th>
+            <th style="width: 45%;">Công thức tính toán nhanh (Back-of-the-envelope)</th>
+            <th style="width: 30%;">Ví dụ thực tế (5M DAU)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>QPS trung bình</strong></td>
+            <td><code>(DAU × Số request mỗi ngày) / 86.400 giây</code></td>
+            <td>5.000.000 × 20 / 86.400 ≈ <strong>1.157 QPS</strong></td>
+          </tr>
+          <tr>
+            <td><strong>QPS đỉnh (Peak QPS)</strong></td>
+            <td><code>QPS trung bình × Hệ số đỉnh (thường từ 2x đến 3x)</code></td>
+            <td>1.157 × 2.5 ≈ <strong>2.890 Peak QPS</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Dung lượng ổ cứng / ngày</strong></td>
+            <td><code>QPS ghi × Kích thước payload trung bình × 86.400</code></td>
+            <td>300 write QPS × 2KB × 86.400 ≈ <strong>51.8 GB / ngày</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Băng thông mạng cần thiết</strong></td>
+            <td><code>QPS tổng × Kích thước phản hồi trung bình (Response Payload)</code></td>
+            <td>2.890 QPS × 50KB ≈ <strong>144.5 MB/s (~1.15 Gbps)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="stepper-list">
       <div class="stepper-item">
         <div class="stepper-number">1</div>
@@ -320,8 +385,13 @@
       <div class="stepper-item">
         <div class="stepper-number">3</div>
         <div class="stepper-content">
-          <h4>Rà soát kiến trúc độc lập</h4>
-          <p>Yêu cầu agent tự phản biện lại thiết kế: "Nếu Redis sập thì database có chịu nổi không?", "Nếu shard số 3 chết thì dữ liệu được phục hồi ra sao?".</p>
+          <h4>Rà soát kiến trúc độc lập (Architecture Audit Checklist)</h4>
+          <p>Yêu cầu agent tự phản biện lại thiết kế bằng danh sách kiểm tra nghiêm ngặt:</p>
+          <ul style="margin: 8px 0 0 20px; line-height: 1.6; color: var(--muted);">
+            <li><strong>Chống sập tầng dưới:</strong> "Nếu Redis cluster sập hoặc khởi động lại, cơ sở dữ liệu phía sau có bị chết nghẽn bởi Cache Avalanche không? Đã có cơ chế SingleFlight và jitter TTL chưa?"</li>
+            <li><strong>Chống rò rỉ dữ liệu khi Sharding:</strong> "Nếu một shard cơ sở dữ liệu bị mất kết nối, hệ thống xử lý failover ra sao? Băm nhất quán có hỗ trợ thêm bớt nút mà không phải di chuyển quá 1/N dữ liệu không?"</li>
+            <li><strong>Xử lý mạng chập chờn:</strong> "Mọi API ghi đã có Idempotency Key chưa? Giao tiếp giữa các service có đặt Timeout và Exponential Backoff khi retry không?"</li>
+          </ul>
         </div>
       </div>
     </div>
