@@ -151,9 +151,9 @@
     .search-field input { width: 100%; height: 44px; box-sizing: border-box; border: 1px solid var(--line); border-radius: 6px; padding: 11px 13px; background: var(--paper); color: var(--ink); }
     .search-field input::placeholder { color: #8a9691; }
     .filter-menu { position: relative; }
-    .filter-menu summary { list-style: none; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); padding: 0 13px; height: 44px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; box-sizing: border-box; }
+    .filter-menu summary { list-style: none; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); padding: 0 14px; height: 44px; display: flex; align-items: center; justify-content: flex-start; gap: 8px; cursor: pointer; user-select: none; box-sizing: border-box; font-size: 14px; }
     .filter-menu summary::-webkit-details-marker { display: none; }
-    .filter-menu summary::after { content: "⌄"; float: right; color: var(--muted); }
+    .filter-menu summary::after { display: none !important; }
     .filter-menu[open] summary { border-color: var(--accent); }
     .filter-options { position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; width: min(320px, 88vw); max-height: 300px; overflow: auto; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: 0 14px 32px rgba(10, 10, 10, .12); /* taste-skill-ignore: real floating filter menu */ }
     .filter-options label { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: start; min-height: 36px; padding: 8px 6px; color: var(--ink); font-size: 15px; line-height: 1.45; font-weight: 400; cursor: pointer; }
@@ -290,7 +290,7 @@
       .header-status { display: grid; grid-column: 2; grid-row: 1; gap: 5px; margin: 0; text-align: right; font-size: 11px; }
       .header-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
       .header-status button { margin: 0; }
-      .header-status .theme-toggle { width: 54px; min-width: 54px; }
+      .header-status .theme-toggle { width: 62px; min-width: 62px; }
       .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }
       h1 { font-size: 30px; } .intro-copy { font-size: 16px; }
       .source-note { font-size: 15px; }
@@ -299,7 +299,7 @@
       .search-field > label, .filter-fields > .control > label { display: none !important; }
       .filter-fields { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 8px; width: 100%; }
       .filter-fields > .control { min-width: 0; width: 100%; }
-      .filter-menu summary { min-height: 44px; height: 44px; padding: 0 12px; font-size: 13.5px; border-radius: 6px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; }
+      .filter-menu summary { min-height: 44px; height: 44px; padding: 0 12px; font-size: 13.5px; border-radius: 6px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; }
       .filter-menu[open] > .filter-options { position: fixed; top: auto; right: 10px; bottom: max(10px, env(safe-area-inset-bottom)); left: 10px; width: auto; max-width: none; max-height: min(65dvh, 520px); padding: 12px; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); z-index: 250 !important; }
       .filter-options label { display: grid !important; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; min-height: 40px; gap: 10px; padding: 8px 10px; font-size: 14px; line-height: 1.35; color: var(--ink); border-radius: 6px; }
       .filter-options label:hover, .filter-options label:active { background: var(--soft); }
@@ -524,8 +524,8 @@
       .brand-name { font-size: 14px; }
       .brand-subtitle { font-size: 10px; }
       .header-status { font-size: 10px; }
-      .header-actions { grid-template-columns: 48px auto; }
-      .header-status .theme-toggle { width: 48px; min-width: 48px; }
+      .header-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+      .header-status .theme-toggle { width: 62px; min-width: 62px; }
       .header-actions .quiet-button:not(.theme-toggle) { padding: 8px 10px; }
       .page-shell { padding: 20px 14px 36px; }
       .intro { padding-bottom: 18px; }
@@ -534,7 +534,7 @@
       .search-field input { padding: 12px; }
       .search-field input { padding: 10px 12px; font-size: 14px; }
       .filter-fields { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .filter-menu summary { height: 42px; font-size: 13.5px; padding: 0 10px; }
+      .filter-menu summary { height: 42px; font-size: 13.5px; padding: 0 10px; display: flex; align-items: center; justify-content: center; text-align: center; }
       .catalogue-toolbar { flex-direction: row; align-items: center; }
       .catalogue-toolbar p, .page-size { font-size: var(--type-secondary); }
     }

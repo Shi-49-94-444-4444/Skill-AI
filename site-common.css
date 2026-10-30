@@ -244,7 +244,7 @@ a:focus-visible {
   justify-content: center;
   width: 62px;
   min-width: 62px;
-  padding: 4px;
+  padding: 4px !important;
 }
 
 .theme-switch-track {
@@ -428,12 +428,9 @@ html:not([data-theme="dark"]) .theme-switch-static-sun {
     gap: 6px;
   }
 
-  .header-actions .theme-toggle {
-    width: 54px;
-    min-width: 54px;
-  }
+  .header-actions .theme-toggle { width: 62px; min-width: 62px; }
 
-  .header-actions button:last-child {
+  .header-actions .quiet-button:not(.theme-toggle) {
     padding: 8px 10px;
   }
 }
@@ -465,12 +462,9 @@ html:not([data-theme="dark"]) .theme-switch-static-sun {
     gap: 5px;
   }
 
-  .header-actions .theme-toggle {
-    width: 48px;
-    min-width: 48px;
-  }
+  .header-actions .theme-toggle { width: 62px; min-width: 62px; }
 
-  .header-actions button:last-child {
+  .header-actions .quiet-button:not(.theme-toggle) {
     padding: 8px 9px;
   }
 }
@@ -533,8 +527,6 @@ html[data-theme="dark"] .spiritual-mote {
    ========================================================================== */
 .guide-card,
 .prompt-item,
-.glance-item,
-.quick-glance-card > div,
 .ui-shot-box,
 .hero-showcase-card {
   position: relative;
@@ -576,8 +568,6 @@ html[data-theme="dark"] .ui-shot-box::before {
 /* 3D Tilt Response on Hover */
 .guide-card:hover,
 .prompt-item:hover,
-.glance-item:hover,
-.quick-glance-card > div:hover,
 .hero-showcase-card:hover {
   border-color: rgba(189, 147, 249, 0.45) !important;
   box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.25),

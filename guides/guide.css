@@ -6,11 +6,11 @@
 :root {
   color-scheme: light;
   --ink: #17231f;
-  --muted: #5a6661;
-  --line: #e2e5e3;
+  --muted: #65716c;
+  --line: #e2e2e2;
   --ground: #f8f8f8;
   --paper: #ffffff;
-  --soft: #edf0ee;
+  --soft: #eeeeee;
   --accent: #141414;
   --accent-strong: #0a0a0a;
   --danger: #a43f3f;
@@ -37,11 +37,11 @@
 html[data-theme="dark"] {
   color-scheme: dark;
   --ink: #f8f8f2;
-  --muted: #9aa5ce;
-  --line: rgba(255, 255, 255, 0.1);
+  --muted: #c7c9d3;
+  --line: #44475a;
   --ground: #282a36;
-  --paper: #21222c;
-  --soft: #343746;
+  --paper: #343746;
+  --soft: #44475a;
   --accent: #bd93f9;
   --accent-strong: #ff79c6;
   --danger: #ff5555;
@@ -358,34 +358,58 @@ p {
   line-height: 1.6;
 }
 .guide-side-meta {
-  padding-left: 18px;
+  padding: 12px 16px;
   border-left: 3px solid var(--accent);
   color: var(--muted);
   font-size: var(--type-secondary);
-  background: rgba(189, 147, 249, 0.03);
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-radius: 0 6px 6px 0;
+  background: rgba(189, 147, 249, 0.04);
+  border-radius: 0 8px 8px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 14px;
 }
 .guide-side-meta strong {
+  grid-column: 1;
+  grid-row: 1;
   display: block;
   color: var(--ink);
   font-size: 15px;
-  margin-bottom: 4px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.35;
 }
 .guide-side-meta a {
+  grid-column: 2;
+  grid-row: 1;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 8px;
+  margin: 0;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--accent);
   text-decoration: none;
-  font-weight: 600;
-  transition: color .15s ease;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: rgba(189, 147, 249, 0.08);
+  border: 1px solid rgba(189, 147, 249, 0.22);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .guide-side-meta a:hover {
+  background: rgba(189, 147, 249, 0.18);
+  border-color: var(--accent);
   color: var(--accent-strong);
-  text-decoration: underline;
+  transform: translateY(-1px);
+}
+.guide-side-meta span {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
 }
 .guide-side-meta svg,
 .guide-side-meta a svg {
@@ -419,7 +443,18 @@ p {
 .glance-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 8px !important;
+  border: 1px solid rgba(189, 147, 249, 0.1);
+  background: rgba(189, 147, 249, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glance-item:hover {
+  background: rgba(189, 147, 249, 0.08);
+  border-color: rgba(189, 147, 249, 0.5) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(189, 147, 249, 0.3) !important;
+  transform: translateY(-2px);
 }
 .glance-label {
   font-size: 11px;
@@ -740,7 +775,6 @@ html:not([data-theme="dark"]) .ui-shot-img {
 
 /* Industrial Brutalism Layout Overrides: Sharp rectangular geometry */
 .quick-glance-card,
-.glance-item,
 .step-card,
 .table-wrap,
 .guide-tabs,
@@ -1271,7 +1305,7 @@ p code, li code, td code {
     justify-content: flex-end;
     gap: 6px;
   }
-  .header-status .theme-toggle { width: 54px; min-width: 54px; }
+  .header-status .theme-toggle { width: 62px; min-width: 62px; }
   .page-shell {
     width: 100%;
     margin: 0;
@@ -1295,8 +1329,13 @@ p code, li code, td code {
   .brand-mark { width: 30px; height: 30px; }
   .brand-name { font-size: 14px; }
   .brand-subtitle, .header-status { font-size: 10px; }
-  .header-actions { grid-template-columns: 48px auto; }
-  .header-actions .theme-toggle { width: 48px; min-width: 48px; }
+  .header-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+  .header-actions .theme-toggle { width: 62px; min-width: 62px; }
+  .guide-side-meta { padding: 10px 12px; gap: 6px 8px; }
+  .guide-side-meta strong { font-size: 13.5px; }
+  .guide-side-meta a { padding: 4px 8px; font-size: 12px; gap: 4px; }
+  .guide-side-meta span { font-size: 12px; }
+  .glance-item { padding: 12px 14px; }
   .page-shell { padding: 18px 12px 36px; }
   .page-heading { padding-bottom: 16px; }
   h1 { font-size: 24px; }
