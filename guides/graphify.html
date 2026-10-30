@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn chi tiết Graphify: biến mọi codebase, tài liệu, sơ đồ và PDF thành biểu đồ tri thức AST có thể truy vấn, tiết kiệm 71.5x token, tích hợp MCP và Obsidian.">
+  <title>Graphify — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../site-common.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide-nav.css?v=20261029_v4">
+  <script defer src="../site-common.js?v=20261029_v4"></script>
+  <script defer src="guide-catalog.js?v=20261029_v4"></script>
+  <script defer src="guide-nav.js?v=20261029_v4"></script>
+  <script defer src="guide.js?v=20261029_v4"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="/index.html#skills">Kho Skill</a>
+      <a href="/index.html#prompts">Prompt nâng cao</a>
+      <a class="active" href="/guides/index.html" data-guide-nav>Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>Graphify Knowledge Graph</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="/index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="/guides/index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">Graphify</span>
+    </div>
+
+    <section class="page-heading">
+      <div>
+        <h1>Graphify — Biểu Đồ Tri Thức AST cho Codebase & Tài Liệu Đa Phương Thức</h1>
+        <p class="intro-copy">Kỹ năng mã nguồn mở hàng đầu (hơn 138.000 sao) giải quyết bài toán "quên ngữ cảnh" của coding agent. Phân tích cú pháp AST cục bộ với tree-sitter, kết nối code, PDF, ảnh sơ đồ thành đồ thị tri thức nhất quán mà không cần cơ sở dữ liệu vector, giảm tới 71.5 lần lượng token tiêu hao.</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>Graphify-Labs/graphify · 139k ★</strong>
+        <span>Tác giả: Safi Shamsi · Giấy phép Apache 2.0</span>
+        <a href="https://github.com/Graphify-Labs/graphify" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          Mã nguồn GitHub chính thức
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick Glance Card -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Giảm 71.5x Token</span>
+        <span class="glance-desc">Truy vấn kiến trúc và hàm liên quan mà không cần agent đọc lại toàn bộ file thô.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Dành cho ai</span>
+        <span class="glance-val">Kỹ sư Phần mềm & Lead</span>
+        <span class="glance-desc">Làm việc trên các dự án lớn, nhiều module phức tạp, nhiều file tài liệu và sơ đồ.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Thời gian làm quen</span>
+        <span class="glance-val">~3 Phút</span>
+        <span class="glance-desc">Chỉ cần cài qua <code>pip install graphifyy</code> và gõ <code>/graphify .</code></span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Hành động cốt lõi</span>
+        <span class="glance-val">Trích xuất Đồ thị AST</span>
+        <span class="glance-desc">Cơ chế tất định với Tree-sitter: minh bạch tuyệt đối giữa quan hệ tìm thấy vs suy đoán.</span>
+      </div>
+    </div>
+
+    <!-- UI Shot 1: Hero Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/graphify-editorial-hero.png" alt="Graphify AST Tree-Sitter Knowledge Engine" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 01 · ĐỒ THỊ TRI THỨC TOÀN DIỆN (TREE-SITTER MULTIMODAL KNOWLEDGE ENGINE):</strong> Sắc xanh ngọc lục bảo Emerald kết hợp đen than Cyber, kiến tạo biểu đồ liên kết giữa mã nguồn, tài liệu PDF và ảnh chụp bảng viết.</div>
+    </div>
+
+    <h2>1. Bảng đối chiếu: RAG Vector Store vs. Graphify AST Knowledge Graph</h2>
+    <p>Nhiều lập trình viên cố gắng nhồi nhét tài liệu vào Vector Database để làm RAG (Retrieval-Augmented Generation), nhưng thường gặp tình trạng mất ngữ cảnh mối quan hệ giữa các module. Graphify tiếp cận theo cách hoàn toàn khác:</p>
+    
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Tiêu chí</th>
+            <th style="width: 35%;">RAG Vector DB truyền thống</th>
+            <th style="width: 40%;">Graphify Knowledge Graph</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Mối quan hệ module</strong></td>
+            <td>Rời rạc từng đoạn văn bản (chunking), không biết hàm A gọi hàm B ở đâu.</td>
+            <td>Chính xác tuyệt đối qua cây cú pháp AST (Tree-sitter) và đường đi call-graph trực tiếp.</td>
+          </tr>
+          <tr>
+            <td><strong>Chi phí token</strong></td>
+            <td>Mỗi câu hỏi nạp lại hàng loạt đoạn văn bản thô, tốn token theo cấp số nhân.</td>
+            <td>Tiết kiệm 71.5 lần: chỉ trích xuất các nút (nodes) và cạnh nối (edges) trực tiếp liên quan.</td>
+          </tr>
+          <tr>
+            <td><strong>Hạ tầng phụ thuộc</strong></td>
+            <td>Cần máy chủ cơ sở dữ liệu vector (Pinecone, Qdrant, Chroma, embedding models).</td>
+            <td>Zero Vector DB: Chạy cục bộ 100% bằng Python, lưu trữ file JSON và Markdown sạch sẽ.</td>
+          </tr>
+          <tr>
+            <td><strong>Khả năng trực quan hóa</strong></td>
+            <td>Dữ liệu vector trừu tượng trong không gian nhiều chiều, không thể nhìn bằng mắt.</td>
+            <td>Tự động xuất <code>graph.html</code> tương tác, xuất kho Obsidian Vault và đồ thị Gephi.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- UI Shot 2: Concept Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/graphify-editorial-concept.png" alt="God Nodes, Communities và Multimodal Knowledge" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 02 · NÚT TRUNG TÂM & QUẦN THỂ ĐỒ THỊ (GOD NODES & GRAPH COMMUNITIES):</strong> Tự động chỉ ra các module gánh vác trọng trách lớn nhất trong hệ thống và những kết nối bất ngờ giữa các tầng kiến trúc.</div>
+    </div>
+
+    <h2>2. Cấu trúc thư mục đầu ra `graphify-out/`</h2>
+    <div class="diagram-frame">
+      <div class="diagram-caption">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        Hệ sinh thái tệp tin xuất bản độc lập của Graphify
+      </div>
+      <div class="flow-steps">
+        <div class="step-card accent">
+          <span class="step-badge">1</span>
+          <strong>graph.html</strong>
+          <p>Trang web trực quan hóa đồ thị: nhấp vào nút để xem định nghĩa, tìm kiếm và lọc theo cộng đồng module.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">2</span>
+          <strong>obsidian/</strong>
+          <p>Thư mục markdown liên kết 2 chiều (wikilinks), mở được ngay như một Obsidian Vault chuyên nghiệp.</p>
+        </div>
+        <div class="step-card accent">
+          <span class="step-badge">3</span>
+          <strong>GRAPH_REPORT.md</strong>
+          <p>Báo cáo phân tích chuyên sâu: phát hiện các "God Nodes", các liên kết bất thường và câu hỏi gợi ý.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">4</span>
+          <strong>graph.json & cache/</strong>
+          <p>Lưu trạng thái đồ thị bền vững: các lần chạy sau chỉ tính toán lại các tệp có SHA256 thay đổi.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- UI Shot 3: Detail Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/graphify-editorial-detail.png" alt="Graphify CLI và MCP Server Telemetry" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 03 · KẾT NỐI MCP & TRUY VẤN DƯỚI 12MS (MCP STDIO SERVER TELEMETRY):</strong> Agent trực tiếp truy vấn đường đi ngắn nhất giữa hai hàm hoặc giải thích cụm logic mà không cần tải lại file.</div>
+    </div>
+
+    <h2>3. Minh họa trực quan: Quy trình phân tích đa phương thức</h2>
+    <p>Graphify không chỉ đọc mã nguồn mà còn hòa trộn các tài liệu kiến trúc, tài liệu PDF khoa học và ảnh vẽ phác thảo thành một thể thống nhất:</p>
+
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Input Sources -->
+        <rect x="40" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <circle cx="140" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
+        <text x="140" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="16">INPUT MATRIX</text>
+        <text x="140" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Mã nguồn + PDF + Ảnh</text>
+        <text x="140" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">14+ ngôn ngữ & diagram</text>
+
+        <!-- Arrow 1 -> 2 -->
+        <path d="M250 115 H280" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="280,115 272,110 272,120" fill="var(--dracula-purple)"/>
+
+        <!-- AST & Vision Processing -->
+        <rect x="290" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <circle cx="400" cy="80" r="24" fill="rgba(189, 147, 249, 0.15)"/>
+        <text x="400" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="16">TREE-SITTER & AI</text>
+        <text x="400" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Khảo sát AST Call-Graph</text>
+        <text x="400" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Khai thác trích dẫn & khái niệm</text>
+
+        <!-- Arrow 2 -> 3 -->
+        <path d="M520 115 H550" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="550,115 542,110 542,120" fill="var(--dracula-cyan)"/>
+
+        <!-- Output Knowledge Graph -->
+        <rect x="560" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <circle cx="660" cy="80" r="24" fill="rgba(139, 233, 253, 0.15)"/>
+        <text x="660" y="86" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="16">PERSISTENT GRAPH</text>
+        <text x="660" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">graphify-out/</text>
+        <text x="660" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">MCP + Obsidian + Web</text>
+      </svg>
+    </div>
+
+    <!-- 4. Interactive Tabs: Các lệnh điều hành chính -->
+    <h2>4. Các nhóm lệnh điều khiển Graphify</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-query">Truy vấn & Giải thích</button>
+        <button class="tab-btn" data-tab="tab-build">Xây dựng & Cập nhật</button>
+        <button class="tab-btn" data-tab="tab-export">Xuất bản & Tích hợp</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-query">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>/graphify query "quan hệ giữa Auth và Session?"</h4>
+            <p>Tìm kiếm mọi nút liên quan và đường đi kết nối hai khái niệm, trả lời dựa trên đồ thị AST thay vì đoán mò.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>/graphify path "NodeA" "NodeB"</h4>
+            <p>Tìm đường đi ngắn nhất (shortest execution path) giữa 2 thực thể trong codebase để phục vụ tái cấu trúc.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>/graphify explain "ClassName"</h4>
+            <p>Giải thích toàn diện về một class hoặc module: ai phụ thuộc vào nó, nó gọi những ai và đóng vai trò gì.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-build">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>/graphify . — Khởi tạo đồ thị toàn thư mục</h4>
+            <p>Quét mã nguồn, tài liệu, file PDF và ảnh trong thư mục hiện tại để tạo ra cấu trúc đồ thị ban đầu.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>/graphify --update — Đồng bộ phần thay đổi</h4>
+            <p>Sử dụng cơ chế băm SHA256 để chỉ đọc và phân tích những file vừa được chỉnh sửa, tiết kiệm tối đa thời gian.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-export">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>/graphify --mcp — Khởi động MCP Server</h4>
+            <p>Cung cấp giao thức Model Context Protocol qua Stdio để Claude Code hoặc Cursor tra cứu đồ thị thời gian thực.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>graphify hook install — Git Post-Commit Hook</h4>
+            <p>Tự động cập nhật đồ thị sau mỗi commit Git, bảo đảm kiến trúc lưu trữ luôn đồng bộ với mã nguồn mới nhất.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Hướng dẫn bắt đầu ngay -->
+    <h2>5. Thiết lập Graphify trong 3 bước</h2>
+    <div class="stepper-list">
+      <div class="stepper-item">
+        <div class="stepper-number">1</div>
+        <div class="stepper-content">
+          <h4>Cài đặt gói công cụ qua pip</h4>
+          <p>Cài đặt gói PyPI và thiết lập kỹ năng dòng lệnh cho hệ điều hành:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash · Cài đặt Graphify</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>pip install graphifyy && graphify install</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-item">
+        <div class="stepper-number">2</div>
+        <div class="stepper-content">
+          <h4>Khởi tạo đồ thị tri thức cho dự án của bạn</h4>
+          <p>Mở phiên làm việc trong Claude Code hoặc Antigravity và kích hoạt lệnh tạo đồ thị:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Slash Command · Khởi tạo Graph</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>/graphify .</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-item">
+        <div class="stepper-number">3</div>
+        <div class="stepper-content">
+          <h4>Xem trực quan trên trình duyệt hoặc Obsidian</h4>
+          <p>Mở tệp giao diện trực quan vừa được tạo ra trong thư mục kết quả:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash · Mở biểu đồ HTML tương tác</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>open graphify-out/graph.html</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Kinh nghiệm thực tế từ Andrej Karpathy</strong>
+        <p>Thay vì lưu hàng trăm bài báo, tweet và ghi chú vào một thư mục rồi để quên, việc dựng đồ thị tri thức sẽ biến những mảnh thông tin rời rạc thành một mạng lưới tri thức sống động. Agent có thể trả lời những câu hỏi tổng hợp đa tầng mà không bao giờ bị vượt quá giới hạn cửa sổ ngữ cảnh (Context Window).</p>
+      </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="cloudflare-security-audit.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Cloudflare Security Audit</span>
+      </a>
+      <a class="nav-card next" href="markitdown.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Microsoft MarkItDown →</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

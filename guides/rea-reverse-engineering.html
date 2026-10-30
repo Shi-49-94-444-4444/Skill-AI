@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn chi tiết REA (Reverse Engineer Anything): bộ công cụ dịch ngược mã nguồn và hành vi ứng dụng đa tầng (Native, Electron, JS, .NET) với 409k sao cho coding agent.">
+  <title>REA — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../site-common.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide-nav.css?v=20261029_v4">
+  <script defer src="../site-common.js?v=20261029_v4"></script>
+  <script defer src="guide-catalog.js?v=20261029_v4"></script>
+  <script defer src="guide-nav.js?v=20261029_v4"></script>
+  <script defer src="guide.js?v=20261029_v4"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="/index.html#skills">Kho Skill</a>
+      <a href="/index.html#prompts">Prompt nâng cao</a>
+      <a class="active" href="/guides/index.html" data-guide-nav>Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>REA Reverse Engineering</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="/index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="/guides/index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">REA</span>
+    </div>
+
+    <section class="page-heading">
+      <div>
+        <h1>REA — Dịch Ngược Mã Nguồn Mọi Ứng Dụng với Coding Agent & MCP</h1>
+        <p class="intro-copy">Dự án mã nguồn mở bùng nổ bậc nhất với hơn 408.000 sao trên GitHub. "Thấy một tính năng hay. Hiểu cách nó vận hành xuống tận cấp độ nhị phân." REA kết nối coding agent với các công cụ dịch ngược hàng đầu (Hopper, Ghidra, IDA, Kuna, Chrome DevTools) qua giao thức MCP để phân tích ứng dụng không cần mã nguồn gốc.</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>morluto/rea · 409k ★</strong>
+        <span>Tác giả: Morluto · Giấy phép MIT</span>
+        <a href="https://github.com/morluto/rea" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          Mã nguồn GitHub chính thức
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick Glance Card -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Dịch ngược không cần Source</span>
+        <span class="glance-desc">Soi sâu cơ chế hoạt động bên trong ứng dụng và tái hiện lại bằng code sạch.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Dành cho ai</span>
+        <span class="glance-val">Reverse Engineer & Senior Dev</span>
+        <span class="glance-desc">Muốn tìm hiểu cơ chế thuật toán, giao thức ngầm hoặc audit mã độc.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Thời gian làm quen</span>
+        <span class="glance-val">~5 Phút</span>
+        <span class="glance-desc">Thiết lập tự động cho mọi agent qua <code>npx rea-agents setup</code>.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Hành động cốt lõi</span>
+        <span class="glance-val">Bằng chứng thực tế</span>
+        <span class="glance-desc">Không ảo giác — mọi kết luận đều đi kèm bằng chứng cụ thể từ asm/decompiled code.</span>
+      </div>
+    </div>
+
+    <!-- UI Shot 1: Hero Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/rea-editorial-hero.png" alt="REA Reverse Engineer Anything 400k Stars" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 01 · NỀN TẢNG DỊCH NGƯỢC ĐA TẦNG (BINARY INTROSPECTION HARNESS):</strong> Sắc đỏ Laser Crimson kết hợp đen than sâu thẳm, kết nối trực tiếp AI agent với các công cụ dịch ngược nhị phân cấp công nghiệp.</div>
+    </div>
+
+    <h2>1. Bảng đối chiếu: Phỏng đoán tính năng vs. Dịch ngược có bằng chứng</h2>
+    <p>Khi muốn tái hiện một tính năng phức tạp từ phần mềm khác, việc chỉ nhìn giao diện bên ngoài thường dẫn đến việc hiểu sai cơ chế cốt lõi. REA đem lại sự minh bạch ở cấp độ vi mô:</p>
+    
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Phương thức</th>
+            <th style="width: 35%;">Quan sát hộp đen (Black-box guess)</th>
+            <th style="width: 40%;">Dịch ngược bằng REA qua MCP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Độ chính xác thuật toán</strong></td>
+            <td>Phỏng đoán mơ hồ, dễ bỏ sót các trường hợp biên và cơ chế nén/mã hóa.</td>
+            <td>Chính xác tuyệt đối qua luồng điều khiển (Control Flow Graph) và bảng symbol thực.</td>
+          </tr>
+          <tr>
+            <td><strong>Ứng dụng đóng gói Electron</strong></td>
+            <td>Không thể xem được file mã nguồn bị đóng gói bên trong file <code>app.asar</code>.</td>
+            <td>Tự động giải nén, gỡ rối và khôi phục cây thư mục mã nguồn JavaScript/TypeScript sạch sẽ.</td>
+          </tr>
+          <tr>
+            <td><strong>Định dạng file nhị phân</strong></td>
+            <td>Mất hàng tuần ngồi mò cấu trúc header và byte alignment bằng tay.</td>
+            <td>Agent tự động đọc cấu trúc struct từ decompiler và sinh mã parser tương thích 100%.</td>
+          </tr>
+          <tr>
+            <td><strong>An toàn pháp lý (Clean-room)</strong></td>
+            <td>Nguy cơ sao chép nguyên văn mã nguồn gây tranh chấp bản quyền sở hữu trí tuệ.</td>
+            <td>Tách biệt giữa phân tích bằng chứng và viết lại mã nguồn mới độc lập hoàn toàn.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- UI Shot 2: Concept Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/rea-editorial-concept.png" alt="Kiểm tra nhị phân, Electron, JavaScript và Net" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 02 · KHẢO SÁT TOÀN DIỆN MỌI MÔI TRƯỜNG (FULL-SPECTRUM REVERSE ENGINEERING):</strong> Hỗ trợ từ các tệp nhị phân gốc C/C++ x86/ARM, ứng dụng Electron (Slack, VS Code, Discord) tới mã trung gian .NET.</div>
+    </div>
+
+    <h2>2. Bốn lớp kiến trúc phân tích của REA</h2>
+    <div class="diagram-frame">
+      <div class="diagram-caption">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        Các tầng phân tích được REA hỗ trợ tự động qua giao thức MCP
+      </div>
+      <div class="flow-steps">
+        <div class="step-card accent">
+          <span class="step-badge">1</span>
+          <strong>Native Binaries (Mach-O, ELF, PE)</strong>
+          <p>Cầu nối tự động tới Hopper Disassembler hoặc Ghidra để phân tích hàm, thanh ghi và assembly.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">2</span>
+          <strong>Electron & Node.js Apps</strong>
+          <p>Mở bung gói ASAR, phục hồi mã nguồn frontend bị minify và phân tích các module Node nội bộ.</p>
+        </div>
+        <div class="step-card accent">
+          <span class="step-badge">3</span>
+          <strong>Web Runtime & Single Page Apps</strong>
+          <p>Kết nối Chrome DevTools để chụp luồng mạng WebSocket, trích xuất GraphQL schema và API ẩn.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">4</span>
+          <strong>.NET Assemblies & Bytecode</strong>
+          <p>Giải mã các tệp DLL trung gian và khôi phục cấu trúc lớp C# gần như nguyên gốc.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- UI Shot 3: Detail Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/rea-editorial-detail.png" alt="Phân tích cục bộ và tái cấu trúc mã sạch" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 03 · QUY TRÌNH PHÒNG SẠCH (CLEAN-ROOM REBUILD FLOW):</strong> Agent giải trình rõ ràng các giới hạn và bằng chứng đằng sau mỗi kết luận trước khi tự tay viết mã triển khai mới.</div>
+    </div>
+
+    <h2>3. Minh họa trực quan: Mô hình Clean-Room Reverse Engineering</h2>
+    <p>REA vận hành nghiêm ngặt theo nguyên tắc kỹ thuật phòng sạch: hiểu rõ bản chất vấn đề, trích xuất đặc tả logic và viết mã nguồn độc lập:</p>
+
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Target Binary -->
+        <rect x="40" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--danger)" stroke-width="2"/>
+        <circle cx="140" cy="80" r="24" fill="rgba(255, 51, 102, 0.15)"/>
+        <text x="140" y="86" text-anchor="middle" fill="var(--danger)" font-weight="700" font-size="16">TARGET APP</text>
+        <text x="140" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">File nhị phân / ASAR</text>
+        <text x="140" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Không có source code</text>
+
+        <!-- Arrow 1 -> 2 -->
+        <path d="M250 115 H280" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="280,115 272,110 272,120" fill="var(--dracula-purple)"/>
+
+        <!-- REA MCP Bridge -->
+        <rect x="290" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+        <circle cx="400" cy="80" r="24" fill="rgba(189, 147, 249, 0.15)"/>
+        <text x="400" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="16">REA MCP ENGINE</text>
+        <text x="400" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Hopper & Ghidra Bridge</text>
+        <text x="400" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Trích xuất bằng chứng logic</text>
+
+        <!-- Arrow 2 -> 3 -->
+        <path d="M520 115 H550" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="550,115 542,110 542,120" fill="var(--dracula-green)"/>
+
+        <!-- Clean Implementation -->
+        <rect x="560" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <circle cx="660" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
+        <text x="660" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="16">CLEAN CODE</text>
+        <text x="660" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Code mới cho Dự án</text>
+        <text x="660" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">100% An toàn bản quyền</text>
+      </svg>
+    </div>
+
+    <!-- 4. Interactive Tabs: Các công cụ liên kết -->
+    <h2>4. Hệ thống công cụ dịch ngược tích hợp sẵn</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-hopper">Hopper & Ghidra</button>
+        <button class="tab-btn" data-tab="tab-electron">Electron ASAR Extractor</button>
+        <button class="tab-btn" data-tab="tab-net">DevTools & Protocol Sniffing</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-hopper">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Phân tích nhị phân cấp máy</h4>
+            <p>Tự động khởi động cầu nối Hopper hoặc Ghidra, tìm kiếm các hàm quan trọng, dịch mã máy sang mã giả C và giải thích luồng thực thi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-electron">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Gỡ gói các ứng dụng Desktop hiện đại</h4>
+            <p>Trích xuất toàn bộ file bundle bên trong các ứng dụng máy tính phổ biến (Slack, Notion, Cursor, Figma) để xem cách họ giải quyết các vấn đề hiệu năng phức tạp.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-net">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Bắt gói tin và hợp đồng API</h4>
+            <p>Quan sát các lệnh gọi API kín, phân tích cấu trúc dữ liệu protobuf hoặc nhị phân được truyền qua WebSocket trong thời gian thực.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Hướng dẫn bắt đầu ngay -->
+    <h2>5. Thiết lập REA cho Coding Agent trong 3 bước</h2>
+    <div class="stepper-list">
+      <div class="stepper-item">
+        <div class="stepper-number">1</div>
+        <div class="stepper-content">
+          <h4>Khởi chạy trình cài đặt tự động của REA</h4>
+          <p>Mở Terminal và chạy trình cấu hình chính thức:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash · Chạy setup REA</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>npx rea-agents setup</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-item">
+        <div class="stepper-number">2</div>
+        <div class="stepper-content">
+          <h4>Chọn các agent bạn đang sử dụng</h4>
+          <p>Trình thiết lập sẽ tự động phát hiện Claude Code, Codex, Antigravity, Cursor và thêm cấu hình máy chủ MCP tương ứng.</p>
+        </div>
+      </div>
+
+      <div class="stepper-item">
+        <div class="stepper-number">3</div>
+        <div class="stepper-content">
+          <h4>Bắt đầu điều tra một ứng dụng hoặc tệp tin</h4>
+          <p>Khởi động agent và ra lệnh phân tích:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Prompt · Ra lệnh phân tích</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
+            </div>
+            <pre><code>Hãy dùng REA để phân tích tệp binary này tại ./dist/app. Dịch ngược hàm serializeConfig, giải thích cách nó mã hóa dữ liệu và viết lại hàm đó bằng TypeScript cho dự án của tôi.</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Nguyên tắc kỹ thuật phòng sạch (Clean-room Engineering)</strong>
+        <p>Mục đích của việc dịch ngược là học hỏi kiến trúc và cơ chế kỹ thuật để tạo ra sản phẩm tốt hơn. Hãy luôn tuân thủ nguyên tắc phòng sạch: sử dụng bằng chứng logic để viết lại mã nguồn mới bằng ngôn ngữ và tư duy thiết kế của chính bạn, không bao giờ sao chép trực tiếp các đoạn mã có bản quyền.</p>
+      </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="hyperframes.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← Hyperframes Video Framework</span>
+      </a>
+      <a class="nav-card next" href="system-design-101.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">System Design 101 →</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

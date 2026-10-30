@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hướng dẫn chi tiết 8 Skill thiết kế web hàng đầu cho Claude Code: Taste Skill v2, Emil Kowalski micro-interactions, Vercel guidelines, hệ thống 3 núm xoay thẩm mỹ chống thiết kế AI rập khuôn.">
+  <title>8 Skill Thiết Kế Web Cho Claude — Hướng dẫn & Phân tích — Skill AI</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      try {
+        if (localStorage.getItem('skill-ai-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="../site-common.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide.css?v=20261029_v4">
+  <link rel="stylesheet" href="guide-nav.css?v=20261029_v4">
+  <script defer src="../site-common.js?v=20261029_v4"></script>
+  <script defer src="guide-catalog.js?v=20261029_v4"></script>
+  <script defer src="guide-nav.js?v=20261029_v4"></script>
+  <script defer src="guide.js?v=20261029_v4"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/index.html" aria-label="Skill AI">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span>
+        <span class="brand-name">Skill AI</span>
+        <span class="brand-subtitle">Thư viện tra cứu</span>
+      </span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng thư viện">
+      <a href="/index.html#skills">Kho Skill</a>
+      <a href="/index.html#prompts">Prompt nâng cao</a>
+      <a class="active" href="/guides/index.html" data-guide-nav>Guide</a>
+    </nav>
+    <div class="header-status">
+      <span>8 Skill Thiết Kế Web Cho Claude</span>
+      <div class="header-actions">
+        <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
+          <span class="theme-switch-track" aria-hidden="true">
+            <span class="theme-switch-icon theme-switch-static-moon"><svg class="theme-icon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg></span>
+            <span class="theme-switch-icon theme-switch-static-sun"><svg class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span>
+            <span class="theme-switch-thumb">
+              <svg class="theme-thumb-icon" id="themeThumbMoon" viewBox="0 0 24 24"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 8.7 8.7 0 1 0 20.5 15.2Z"></path></svg>
+              <svg class="theme-thumb-icon" id="themeThumbSun" viewBox="0 0 24 24" hidden><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="breadcrumbs">
+      <a href="/index.html">Skill AI</a>
+      <span class="sep">/</span>
+      <a href="/guides/index.html">Guide</a>
+      <span class="sep">/</span>
+      <span class="current">8 Skill Thiết Kế Web Cho Claude</span>
+    </div>
+
+    <section class="page-heading">
+      <div>
+        <h1>8 Skill Thiết Kế Web Cho Claude Code — Chống Thiết Kế AI Rập Khuôn</h1>
+        <p class="intro-copy">Tuyển tập 8 kỹ năng và bộ công cụ hàng đầu giúp AI coding agent thoát khỏi lối mòn thiết kế generic. Khắc phục triệt để các dấu hiệu "web do AI làm" (gradient tím xanh sáo rỗng, hero căn giữa vô hồn, card lặp lại máy móc) bằng hệ thống 3 núm xoay thẩm mỹ và vòng lặp look-and-fix qua trình duyệt thật.</p>
+      </div>
+      <div class="guide-side-meta">
+        <strong>cuongmeai.com/tai-lieu · Tuyển tập Web AI</strong>
+        <span>Biên soạn: Cường Mê AI · Giấy phép MIT / Apache</span>
+        <a href="https://cuongmeai.com/tai-lieu/8-skill-thiet-ke-web-cho-claude" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          Tài liệu gốc chính thức
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick Glance Card -->
+    <div class="quick-glance-card">
+      <div class="glance-item">
+        <span class="glance-label">Mục đích chính</span>
+        <span class="glance-val">Chống AI Slop</span>
+        <span class="glance-desc">Nạp tư duy thẩm mỹ cho agent, tạo website có cá tính thương hiệu rõ nét.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Dành cho ai</span>
+        <span class="glance-val">Frontend Dev & Founder</span>
+        <span class="glance-desc">Cần dựng landing page, marketing site hoặc dashboard đẹp chuẩn Awwwards.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Thời gian làm quen</span>
+        <span class="glance-val">~5 Phút</span>
+        <span class="glance-desc">Kéo thả file SKILL.md hoặc cài qua <code>npx skills add</code>.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Hành động cốt lõi</span>
+        <span class="glance-val">3 Núm xoay thẩm mỹ</span>
+        <span class="glance-desc">Tự do chỉnh DESIGN_VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY từ 1-10.</span>
+      </div>
+    </div>
+
+    <!-- UI Shot 1: Hero Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/web-design-editorial-hero.png" alt="8 Curated Web Design Skills and Zero Generic Slop" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 01 · BẢN NGUYÊN THẨM MỸ (ANTI-SLOP DESIGN MATRIX):</strong> Sắc hồng neon Cyber kết hợp đen than tương phản, minh họa ma trận loại bỏ hoàn toàn các mẫu giao diện AI rập khuôn.</div>
+    </div>
+
+    <h2>1. Bảng đối chiếu: Dấu hiệu "Web do AI làm" vs. Tiêu chuẩn Thiết kế Chuyên nghiệp</h2>
+    <p>Nếu không có sự định hướng về gu thẩm mỹ, AI luôn chọn giải pháp an toàn nhất và sinh ra những trang web trông giống hệt nhau:</p>
+    
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Thành phần</th>
+            <th style="width: 35%;">Thiết kế AI mặc định (Slop)</th>
+            <th style="width: 40%;">Sau khi nạp Skill Thiết Kế</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Màu sắc & Gradient</strong></td>
+            <td>Lạm dụng gradient tím sang xanh dương (#6366f1 sang #3b82f6), trông rẻ tiền.</td>
+            <td>Bảng màu tối giản có chủ đích (Monochrome, Brutalist, hoặc bản sắc thương hiệu riêng).</td>
+          </tr>
+          <tr>
+            <td><strong>Bố cục Hero</strong></td>
+            <td>Tiêu đề to căn giữa màn hình, phụ đề bé tí, nút CTA bo tròn bóng bẩy đơn điệu.</td>
+            <td>Bố cục bất đối xứng, lưới biên soạn dạng tạp chí editorial, nhịp điệu typography đa tầng.</td>
+          </tr>
+          <tr>
+            <td><strong>Cấu trúc nội dung</strong></td>
+            <td>Các hàng card 3 cột giống hệt nhau lặp đi lặp lại từ section này sang section khác.</td>
+            <td>Phối hợp linh hoạt: bento grid, danh sách tương phản, bảng dữ liệu số liệu dày đặc.</td>
+          </tr>
+          <tr>
+            <td><strong>Chuyển động (Motion)</strong></td>
+            <td>Hiệu ứng fade-in giật cục hoặc hoàn toàn không có chuyển động tương tác.</td>
+            <td>Vi tương tác vật lý (Spring physics) của Emil Kowalski, chuyển động mượt mà và tinh tế.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- UI Shot 2: Concept Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/web-design-editorial-concept.png" alt="Hệ thống 3 núm xoay thẩm mỹ và kho vũ khí 8 skill" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 02 · BA NÚM XOAY ĐIỀU KHIỂN (THE THREE-KNOB CONTROLLER):</strong> Dễ dàng tinh chỉnh Độ phá cách bố cục (Variance), Cường độ chuyển động (Motion) và Mật độ thông tin (Density) theo đúng mục đích sản phẩm.</div>
+    </div>
+
+    <h2>2. Điểm mặt 8 Skill thiết kế đáng dùng nhất</h2>
+    <div class="diagram-frame">
+      <div class="diagram-caption">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        8 vũ khí thiết kế giao diện cho Claude Code
+      </div>
+      <div class="flow-steps">
+        <div class="step-card accent">
+          <span class="step-badge">1</span>
+          <strong>Taste Skill v2</strong>
+          <p>Chỉ đạo nghệ thuật đúc kết từ 247 website Awwwards, cấm các khuôn mẫu AI sáo rỗng.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">2</span>
+          <strong>Emil Kowalski</strong>
+          <p>Kỹ năng vi tương tác và animation tinh tế dựa trên vật lý chuyển động thực tế.</p>
+        </div>
+        <div class="step-card accent">
+          <span class="step-badge">3</span>
+          <strong>Web Design Guidelines</strong>
+          <p>Bộ tiêu chuẩn thiết kế từ Vercel: rà soát accessibility, responsive và độ chuẩn typography.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">4</span>
+          <strong>Playwright CLI</strong>
+          <p>Mở trình duyệt thật, chụp ảnh màn hình để agent tự soi và sửa các lỗi lệch giao diện.</p>
+        </div>
+        <div class="step-card accent">
+          <span class="step-badge">5</span>
+          <strong>Awesome DESIGN.md</strong>
+          <p>Tệp token tham chiếu chuẩn mực từ Linear, Stripe, Apple, Supabase.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">6</span>
+          <strong>Image to Code</strong>
+          <p>Biến ảnh chụp màn hình thiết kế thành mã nguồn HTML/Tailwind chính xác từng pixel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- UI Shot 3: Detail Editorial -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/web-design-editorial-detail.png" alt="Vòng lặp Look and Fix qua trình duyệt thật" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 03 · VÒNG LẶP KIỂM ĐỊNH TRÌNH DUYỆT (HEADLESS LOOK-AND-FIX LOOP):</strong> Playwright chụp ảnh màn hình thực tế, agent tự động phát hiện chi tiết thừa và tinh chỉnh mã nguồn trước khi bàn giao.</div>
+    </div>
+
+    <h2>3. Minh họa trực quan: Bộ đôi hoàn hảo Taste Skill + Playwright CLI</h2>
+    <p>Cách phối hợp hiệu quả nhất trong thực tế là ghép một kỹ năng lo phần "cái đẹp" và một công cụ lo phần "kiểm chứng mắt thấy":</p>
+
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Taste Skill -->
+        <rect x="40" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-pink)" stroke-width="2"/>
+        <circle cx="150" cy="80" r="24" fill="rgba(255, 42, 133, 0.15)"/>
+        <text x="150" y="86" text-anchor="middle" fill="var(--dracula-pink)" font-weight="700" font-size="16">TASTE SKILL</text>
+        <text x="150" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Định hình Thẩm mỹ</text>
+        <text x="150" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Loại bỏ slop, chọn bố cục phá cách</text>
+
+        <!-- Arrow 1 -> 2 -->
+        <path d="M270 115 H300" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="300,115 292,110 292,120" fill="var(--dracula-cyan)"/>
+
+        <!-- Playwright CLI -->
+        <rect x="310" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+        <circle cx="420" cy="80" r="24" fill="rgba(0, 240, 255, 0.15)"/>
+        <text x="420" y="86" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="16">PLAYWRIGHT CLI</text>
+        <text x="420" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Mở Trình Duyệt Thật</text>
+        <text x="420" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Chụp ảnh màn hình & đo đạc pixel</text>
+
+        <!-- Arrow 2 -> 3 -->
+        <path d="M540 115 H570" stroke="var(--line)" stroke-width="2"/>
+        <polygon points="570,115 562,110 562,120" fill="var(--dracula-green)"/>
+
+        <!-- Final Web Page -->
+        <rect x="580" y="40" width="180" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
+        <circle cx="670" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
+        <text x="670" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="16">FINAL UI</text>
+        <text x="670" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Chuẩn Awwwards</text>
+        <text x="670" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">100% Không Lệch Hàng</text>
+      </svg>
+    </div>
+
+    <!-- 4. Interactive Tabs: Ba con số cấu hình thẩm mỹ -->
+    <h2>4. Cấu hình 3 núm xoay cho từng kiểu dự án</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-landing">Landing Page Bán Hàng</button>
+        <button class="tab-btn" data-tab="tab-dashboard">Dashboard Quản Trị</button>
+        <button class="tab-btn" data-tab="tab-portfolio">Portfolio Cá Nhân</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-landing">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>VARIANCE: 7 | MOTION: 5 | DENSITY: 3</h4>
+            <p>Bố cục phá cách ấn tượng, khoảng trắng thoáng đãng tạo cảm giác cao cấp, chuyển động mượt mà khi cuộn chuột để giữ chân khách hàng.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-dashboard">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>VARIANCE: 3 | MOTION: 2 | DENSITY: 8</h4>
+            <p>Bố cục lưới chuẩn xác, tập trung vào mật độ hiển thị số liệu, chuyển động tối giản để người dùng thao tác nhanh mà không bị phân tâm.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-portfolio">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>VARIANCE: 9 | MOTION: 7 | DENSITY: 4</h4>
+            <p>Đột phá tối đa về cấu trúc lưới editorial, typography đậm nét có tính tuyên ngôn, hiệu ứng tương tác chuột mang đậm phong cách nghệ thuật số.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Hướng dẫn bắt đầu ngay -->
+    <h2>5. Cài đặt bộ đôi Taste Skill + Playwright CLI</h2>
+    <div class="stepper-list">
+      <div class="stepper-item">
+        <div class="stepper-number">1</div>
+        <div class="stepper-content">
+          <h4>Cài đặt Taste Skill vào Claude Code</h4>
+          <p>Sử dụng công cụ Skills CLI để cài đặt bản chuẩn v2:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash · Cài đặt Taste Skill</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend" --global</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-item">
+        <div class="stepper-number">2</div>
+        <div class="stepper-content">
+          <h4>Cài đặt Playwright CLI để agent nhìn thấy màn hình</h4>
+          <p>Thêm kỹ năng điều khiển trình duyệt của Microsoft:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash · Cài đặt Playwright CLI</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+            </div>
+            <pre><code>npx skills add microsoft/playwright-cli --global</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-item">
+        <div class="stepper-number">3</div>
+        <div class="stepper-content">
+          <h4>Ra lệnh dựng trang kèm chỉ định thẩm mỹ</h4>
+          <p>Yêu cầu agent tạo trang web với các tham số mong muốn:</p>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Prompt · Dựng giao diện chuẩn gu</span>
+              <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
+            </div>
+            <pre><code>Hãy dựng trang landing page giới thiệu khóa học AI. Áp dụng Taste Skill với VARIANCE: 7, MOTION: 5, DENSITY: 3. Sau khi viết xong code HTML/Tailwind, hãy dùng Playwright mở trang và chụp ảnh màn hình để tự kiểm tra lỗi lệch giao diện.</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-tip">
+      <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      <div>
+        <strong>Lời khuyên: Bắt đầu tối giản trước khi thêm skill</strong>
+        <p>Đừng cài cả 8 kỹ năng cùng lúc vì Claude có thể bị "rối" trước quá nhiều chỉ dẫn thẩm mỹ chồng chéo. Hãy bắt đầu với bộ đôi vàng <strong>Taste Skill + Playwright CLI</strong>: một bên lo tính nghệ thuật, một bên lo kiểm tra thực tế trên trình duyệt.</p>
+      </div>
+    </div>
+
+    <div class="guide-bottom-nav">
+      <a class="nav-card" href="anthropic-plugins.html">
+        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-title">← 11 Plugin Anthropic</span>
+      </a>
+      <a class="nav-card next" href="hyperframes.html">
+        <span class="nav-card-dir">Kế tiếp</span>
+        <span class="nav-card-title">Hyperframes Video Framework →</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
