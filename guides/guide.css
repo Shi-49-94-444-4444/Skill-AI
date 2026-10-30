@@ -665,11 +665,26 @@ html:not([data-theme="dark"]) .ui-shot-media::after {
   opacity: 1 !important;
 }
 
-.ui-shot-media.is-loaded::before,
-.ui-shot-media.is-loaded::after {
+.ui-shot-media.is-loaded::before {
   opacity: 0 !important;
   visibility: hidden !important;
   animation: none !important;
+}
+
+/* Cybernetic Scan Beam for Guide shots */
+.ui-shot-media.is-loaded::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 5%, var(--accent) 30%, #8be9fd 60%, transparent 95%);
+  box-shadow: 0 0 14px var(--accent), 0 0 6px #8be9fd;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 5;
+  visibility: visible !important;
+  animation: cyberScanSweep 9s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
 }
 
 .ui-shot-media:hover img {

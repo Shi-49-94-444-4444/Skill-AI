@@ -262,6 +262,23 @@
       .clear-button { grid-column: 3; align-self: end; height: 44px; }
     }
     @media (max-width: 900px) {
+      #catalogue.is-prompts {
+        width: 100% !important;
+        margin-left: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+      }
+      #promptPageHost {
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #promptPageFrame {
+        width: 100% !important;
+      }
       .site-header { position: static; width: auto; min-height: 76px; border-right: 0; border-bottom: 1px solid var(--line); /* taste-skill-ignore */ display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px 12px; padding: 12px 16px; }
       .brand { min-width: 0; }
       .sidebar-nav { display: flex; grid-column: 1 / -1; grid-row: 2; gap: 6px; margin: 0; overflow-x: auto; scrollbar-width: none; }
@@ -275,27 +292,149 @@
       .page-shell { width: 100%; margin: 0; padding: 24px 16px 44px; }
       h1 { font-size: 30px; } .intro-copy { font-size: 16px; }
       .source-note { font-size: 15px; }
-      .controls { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 18px 0 16px; }
-      .search-field, .filter-fields { grid-column: 1 / -1; }
-      .filter-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 10px; }
-      .filter-fields > .control { min-width: 0; }
-      .filter-menu summary { min-height: 44px; padding: 10px 11px; font-size: 15px; }
-      .filter-menu[open] > .filter-options { position: fixed; top: auto; right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); left: 8px; width: auto; max-width: none; max-height: min(62dvh, 520px); padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 16px; box-shadow: 0 16px 48px rgba(20, 30, 55, .24); }
-      .filter-options label { min-height: 42px; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; gap: 11px; padding: 9px 10px; font-size: 15px; line-height: 1.35; }
+      .controls { grid-template-columns: 1fr; gap: 10px; padding: 16px 0 14px; }
+      .search-field, .filter-fields { grid-column: 1 / -1; width: 100%; }
+      .search-field label, .filter-fields .control label { display: none !important; }
+      .filter-fields { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 8px; width: 100%; }
+      .filter-fields > .control { min-width: 0; width: 100%; }
+      .filter-menu summary { min-height: 42px; height: 42px; padding: 0 11px; font-size: 13.5px; border-radius: 6px; box-sizing: border-box; }
+      .filter-menu[open] > .filter-options { position: fixed; top: auto; right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); left: 8px; width: auto; max-width: none; max-height: min(62dvh, 520px); padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; box-shadow: 0 16px 48px rgba(10, 10, 20, .35); }
+      .filter-options label { min-height: 40px; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 10px; font-size: 14px; line-height: 1.35; }
       .filter-options input { width: 18px; height: 18px; margin: 0; }
-      .clear-button { grid-column: 1 / -1; justify-self: start; text-align: left; padding: 4px 0; }
+      .clear-button { grid-column: 1 / -1; width: 100%; height: 38px; display: none; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; border: 1px dashed var(--line); border-radius: 6px; background: var(--paper); color: var(--muted); cursor: pointer; transition: all .15s ease; }
+      .clear-button.is-active { display: inline-flex; }
       .summary-row, .guide-strip { display: none; }
-      .catalogue-toolbar { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .table-wrap { overflow: visible; border-top-width: 1px; }
-      .loading-row td { height: 620px; }
-      .skeleton-stack { min-height: 620px; }
+      .catalogue-toolbar { display: flex; align-items: center; justify-content: space-between; flex-direction: row; gap: 8px; padding: 12px 0 10px; }
+      .table-wrap { overflow: visible; border: 0; background: transparent; min-height: 0; }
+      .loading-row td { height: 320px; }
+      .skeleton-stack { min-height: 320px; }
       .skeleton-grid { grid-template-columns: 1fr 1fr; min-height: 88px; }
-      table, tbody, tr, td { display: block; min-width: 0; width: 100%; } table { table-layout: auto; } thead { display: none; }
-      tr { padding: 15px 14px 10px; border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; }
-      td { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; padding: 5px 0; border: 0; }
-      td::before { content: attr(data-label); color: var(--muted); font-size: var(--type-label); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
-      td[data-field="skill"] { display: block; padding-bottom: 9px; } td[data-field="skill"]::before { display: none; }
-      .cell-preview { -webkit-line-clamp: 4; } .dialog-header, .dialog-body { padding: 18px; }
+      table, tbody { display: flex; flex-direction: column; width: 100%; min-width: 0; border: 0; }
+      table { table-layout: auto; }
+      thead, colgroup { display: none !important; }
+      tr.result-row {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        margin-bottom: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        position: relative;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+      html[data-theme="dark"] tr.result-row {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+      tr.result-row:hover {
+        border-color: rgba(189, 147, 249, 0.45);
+      }
+      tr.result-row > td { display: block; padding: 0; border: 0; width: 100%; min-width: 0; box-sizing: border-box; margin-bottom: 10px; }
+      tr.result-row > td::before { display: none !important; }
+      td[data-field="skill"] { display: block; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+      .skill-cell { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+      .skill-link {
+        flex: 1;
+        min-width: 0;
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 10px;
+        background: rgba(189, 147, 249, 0.08);
+        border: 1px solid rgba(189, 147, 249, 0.28);
+        border-radius: 6px;
+        color: var(--accent);
+        text-decoration: none;
+      }
+      html[data-theme="dark"] .skill-link {
+        background: rgba(189, 147, 249, 0.12);
+        color: #ff79c6;
+        border-color: rgba(189, 147, 249, 0.35);
+      }
+      .skill-code { font-size: 14.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .copy-skill {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--soft);
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .copy-skill:hover { color: var(--accent-strong); border-color: var(--accent); }
+      td[data-label="Mô tả"] .cell-preview {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--ink);
+      }
+      td[data-label="Dùng khi"] {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+      td[data-label="Dùng khi"]::before {
+        content: "⚡ Khi nào: ";
+        display: inline !important;
+        font-weight: 600;
+        color: var(--ink);
+        flex-shrink: 0;
+      }
+      td[data-label="Cách dùng"] {
+        margin-top: 2px;
+      }
+      td[data-label="Cách dùng"] .cell-preview {
+        display: block;
+        padding: 7px 11px;
+        border-radius: 6px;
+        background: #14161f;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-family: monospace;
+        font-size: 12.5px;
+        line-height: 1.45;
+        color: #50fa7b;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      html:not([data-theme="dark"]) td[data-label="Cách dùng"] .cell-preview {
+        background: #f1f3f2;
+        border-color: var(--line);
+        color: #0b7347;
+      }
+      tr.result-row > td[data-label="Category"],
+      tr.result-row > td[data-label="Lĩnh vực"] {
+        display: inline-block !important;
+        width: auto !important;
+        vertical-align: middle;
+        margin-top: 4px;
+        margin-bottom: 0;
+        margin-right: 8px;
+      }
+      .tag-line {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 8px;
+        border-radius: 4px;
+        background: var(--soft);
+        color: var(--muted);
+        font-size: 11.5px;
+        font-weight: 500;
+      }
+      .dialog-header, .dialog-body { padding: 18px; }
     }
     @media (max-width: 520px) {
       .site-header { padding: 11px 14px; }
@@ -312,15 +451,11 @@
       h1 { font-size: 28px; }
       .source-note { font-size: var(--type-secondary); }
       .search-field input { padding: 12px; }
-      .filter-fields { grid-template-columns: 1fr; gap: 10px; }
+      .search-field input { padding: 10px 12px; font-size: 14px; }
+      .filter-fields { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .filter-menu summary { height: 42px; font-size: 13.5px; padding: 0 10px; }
       .catalogue-toolbar { flex-direction: row; align-items: center; }
       .catalogue-toolbar p, .page-size { font-size: var(--type-secondary); }
-      .table-wrap { min-height: 620px; }
-      tr { padding: 12px 0 10px; }
-      td { grid-template-columns: 76px minmax(0, 1fr); gap: 8px; font-size: 14px; }
-      td::before { font-size: var(--type-label); }
-      .skill-link { padding: 8px 9px; }
-      .cell-preview { min-height: 0; -webkit-line-clamp: 5; }
     }
     @media (prefers-reduced-motion: reduce) { .result-row, #catalogue.is-entering > :not(#promptPageHost), #promptPageHost.is-entering { animation: none; } .table-wrap { transition: none; } }
   </style>
@@ -527,10 +662,14 @@
         const mobile = window.matchMedia('(max-width: 900px)').matches;
         const header = document.querySelector('.site-header');
         const headerHeight = mobile && header ? header.getBoundingClientRect().height : 0;
-        const frameHeight = Math.max(360, window.innerHeight - headerHeight);
+        const frameHeight = Math.max(360, window.innerHeight - (mobile ? headerHeight : 0));
         promptFrame.style.height = `${frameHeight}px`;
         const main = $('#catalogue') || document.querySelector('.page-shell');
         if (main && main.classList.contains('is-prompts')) {
+          if (mobile) {
+            main.style.marginLeft = '0';
+            main.style.width = '100%';
+          }
           main.style.height = `${frameHeight}px`;
         }
       }
@@ -633,6 +772,16 @@
         if (state.categories.size) active.push(`${state.categories.size} category`);
         if (state.domains.size) active.push(`${state.domains.size} lĩnh vực`);
         $('#activeSummary').textContent = active.length ? active.join(' · ') : 'Chưa áp dụng bộ lọc';
+        const clearBtn = $('#clearButton');
+        if (clearBtn) {
+          const hasActive = Boolean(state.query || state.categories.size || state.domains.size);
+          clearBtn.classList.toggle('is-active', hasActive);
+          if (hasActive) {
+            clearBtn.textContent = `Xóa bộ lọc (${active.length || 1}) ×`;
+          } else {
+            clearBtn.textContent = 'Xóa tìm kiếm và bộ lọc';
+          }
+        }
       }
 
       function render() {

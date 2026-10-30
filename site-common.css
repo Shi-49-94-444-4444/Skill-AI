@@ -619,7 +619,10 @@ html[data-theme="dark"] .hero-showcase-card:hover {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #090a0f;
+  background-color: #090a0f;
+  background-image: linear-gradient(rgba(189, 147, 249, 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(189, 147, 249, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
   overflow: hidden;
   border-radius: 0px !important;
   display: flex;
@@ -685,11 +688,33 @@ html:not([data-theme="dark"]) .hero-showcase-media::after {
   opacity: 1 !important;
 }
 
-.hero-showcase-media.is-loaded::before,
-.hero-showcase-media.is-loaded::after {
+.hero-showcase-media.is-loaded::before {
   opacity: 0 !important;
   visibility: hidden !important;
   animation: none !important;
+}
+
+/* Cybernetic Laser Scan Beam across the Codex */
+.hero-showcase-media.is-loaded::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 5%, #50fa7b 25%, #8be9fd 50%, #bd93f9 75%, transparent 95%);
+  box-shadow: 0 0 16px #8be9fd, 0 0 8px #50fa7b;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 5;
+  visibility: visible !important;
+  animation: cyberScanSweep 8s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+}
+
+@keyframes cyberScanSweep {
+  0%, 35% { top: -10px; opacity: 0; }
+  38% { opacity: 0.75; }
+  72% { top: calc(100% + 10px); opacity: 0.75; }
+  73%, 100% { top: calc(100% + 10px); opacity: 0; }
 }
 
 .hero-showcase-card:hover .hero-showcase-img {
@@ -703,17 +728,35 @@ html:not([data-theme="dark"]) .hero-showcase-media::after {
   z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   padding: 5px 12px;
   border-radius: 0px !important;
-  background: rgba(11, 14, 20, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(11, 14, 20, 0.9);
+  border: 1px solid rgba(139, 233, 253, 0.35);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
   color: #8be9fd;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.hero-badge::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #50fa7b;
+  box-shadow: 0 0 8px #50fa7b;
+  animation: beaconPulse 2s ease-in-out infinite;
+  margin-right: 1px;
+}
+
+@keyframes beaconPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
 }
 
 .hero-zoom-hint {
