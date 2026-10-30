@@ -69,6 +69,22 @@
     return result;
   }
 
+  function getCategorySlug(cat) {
+    const norm = normalize(cat);
+    if (norm.includes('front') || norm.includes('ui') || norm.includes('ux')) return 'cyan';
+    if (norm.includes('full') || norm.includes('debug')) return 'purple';
+    if (norm.includes('gen') || norm.includes('image') || norm.includes('anh')) return 'pink';
+    if (norm.includes('business') || norm.includes('seo') || norm.includes('marketing')) return 'orange';
+    if (norm.includes('learn') || norm.includes('lang') || norm.includes('tieng') || norm.includes('hoc')) return 'green';
+    if (norm.includes('personal') || norm.includes('ca nhan')) return 'yellow';
+    return 'cyan';
+  }
+
+  function formatPromptBody(text) {
+    const escaped = escapeHtml(text);
+    return escaped.replace(/\[([^\]\n]+)\]/g, '<span class="prompt-var">[$1]</span>');
+  }
+
   function render() {
     const query = normalize($('#promptSearch').value);
     const filtered = prompts.filter((item) => (!query || item.searchText.includes(query))
@@ -78,12 +94,61 @@
       $('#promptList').innerHTML = '<p class="empty-state">Không tìm thấy prompt phù hợp. Hãy đổi từ khóa hoặc chọn “Tất cả nhóm”.</p>';
       return;
     }
-    $('#promptList').innerHTML = filtered.map((item, index) => `<article class="prompt-item"><header><div><h3>${escapeHtml(item.title)}</h3><div class="prompt-categories">${item.categories.map((categoryName) => `<span>${escapeHtml(categoryName)}</span>`).join('')}</div></div><button class="quiet-button copy-prompt" type="button" data-copy-index="${prompts.indexOf(item)}" aria-label="Sao chép prompt: ${escapeHtml(item.title)}">Sao chép</button></header><p class="prompt-text">${escapeHtml(item.prompt)}</p></article>`).join('');
+    $('#promptList').innerHTML = filtered.map((item) => {
+      const pIndex = prompts.indexOf(item);
+      const vars = item.prompt.match(/\[([^\]\n]+)\]/g) || [];
+      const varsCount = vars.length;
+      return `<article class="prompt-item" data-index="${pIndex}">
+        <header class="prompt-card-header">
+          <div class="prompt-meta-row">
+            <div class="prompt-categories">
+              ${item.categories.map((c) => `<span class="prompt-tag prompt-tag-${getCategorySlug(c)}">${escapeHtml(c)}</span>`).join('')}
+            </div>
+            <button class="quiet-button copy-prompt" type="button" data-copy-index="${pIndex}" aria-label="Sao chép prompt: ${escapeHtml(item.title)}">
+              <svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+              <span class="copy-label">Sao chép</span>
+            </button>
+          </div>
+          <h3 class="prompt-title">${escapeHtml(item.title)}</h3>
+        </header>
+        <div class="prompt-terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="terminal-badge">PROMPT // TEMPLATE</span>
+            <span class="terminal-vars-indicator">${varsCount > 0 ? `${varsCount} tham số [ ]` : 'Template chuẩn'}</span>
+          </div>
+          <div class="prompt-text-block">
+            <p class="prompt-text">${formatPromptBody(item.prompt)}</p>
+          </div>
+        </div>
+        <footer class="prompt-card-footer">
+          <div class="prompt-compat">
+            <span class="compat-icon" aria-hidden="true">⚡</span>
+            <span>Sẵn sàng cho Claude · GPT-4o · Cursor</span>
+          </div>
+          <span class="prompt-quick-copy" data-copy-index="${pIndex}">Nhấp để chép</span>
+        </footer>
+      </article>`;
+    }).join('');
   }
 
   function skeletonMarkup() {
-    const bar = (className) => `<span class="skeleton-bar ${className}"></span>`;
-    return Array.from({ length: 4 }, () => `<div class="prompt-skeleton" aria-hidden="true">${bar('skeleton-title')}${bar('skeleton-tag')}${bar('skeleton-tag')}${bar('skeleton-copy')}${bar('skeleton-copy')}${bar('skeleton-copy short')}</div>`).join('');
+    return Array.from({ length: 4 }, () => `<div class="prompt-skeleton" aria-hidden="true">
+      <div class="skeleton-meta-row">
+        <span class="skeleton-bar skeleton-pill"></span>
+        <span class="skeleton-bar skeleton-btn"></span>
+      </div>
+      <span class="skeleton-bar skeleton-title"></span>
+      <div class="skeleton-terminal">
+        <span class="skeleton-bar skeleton-line"></span>
+        <span class="skeleton-bar skeleton-line"></span>
+        <span class="skeleton-bar skeleton-line short"></span>
+      </div>
+    </div>`).join('');
   }
 
   function queueRender() {
@@ -106,13 +171,25 @@
     }
   }
 
-  async function copyPrompt(index) {
-    const value = prompts[index]?.prompt;
+  async function copyPrompt(index, triggerElement) {
+    const item = prompts[index];
+    const value = item?.prompt;
     if (value === undefined) return;
     if (window.SkillAI?.clipboard?.copy) {
-      await window.SkillAI.clipboard.copy(value, 'Đã sao chép prompt.');
+      await window.SkillAI.clipboard.copy(value, `Đã sao chép: ${item.title || 'prompt'}`);
     } else {
-      notify('Đã sao chép prompt.');
+      notify(`Đã sao chép: ${item.title || 'prompt'}`);
+    }
+    const card = triggerElement?.closest('.prompt-item') || $(`[data-index="${index}"]`);
+    const btn = card?.querySelector('.copy-prompt');
+    if (btn) {
+      btn.classList.add('is-copied');
+      const label = btn.querySelector('.copy-label');
+      if (label) label.textContent = 'Đã chép!';
+      setTimeout(() => {
+        btn.classList.remove('is-copied');
+        if (label) label.textContent = 'Sao chép';
+      }, 1600);
     }
   }
 
@@ -170,8 +247,8 @@
       if (!event.target.closest('#promptCategoryMenu')) $('#promptCategoryMenu').removeAttribute('open');
     });
     $('#promptList').addEventListener('click', (event) => {
-      const button = event.target.closest('[data-copy-index]');
-      if (button) copyPrompt(Number(button.dataset.copyIndex));
+      const trigger = event.target.closest('[data-copy-index]');
+      if (trigger) copyPrompt(Number(trigger.dataset.copyIndex), trigger);
     });
     window.addEventListener('message', (event) => {
       if (event.origin !== location.origin || event.source !== window.parent || !event.data) return;
