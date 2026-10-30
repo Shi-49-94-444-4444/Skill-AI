@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết DeepSeek Harness: bộ khung vi nhân Cordis chính thức từ DeepSeek cho phép chạy DeepSeek-V3 và R1 tối ưu token và điều phối công cụ tự động.">
-  <title>DeepSeek Harness — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn chi tiết DeepSeek Harness: kiến trúc khai thác sức mạnh suy luận DeepSeek V3 và R1, định tuyến kép thông minh, nén bộ nhớ đệm prompt và tối ưu chi phí 95%.">
+  <title>DeepSeek Harness — Khai Thác Sức Mạnh Suy Luận V3 & R1 — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,177 +66,234 @@
 
     <section class="page-heading">
       <div>
-        <h1>DeepSeek Harness — Khung điều phối vi nhân cho DeepSeek V3 & R1</h1>
-        <p class="intro-copy">Bộ khung điều phối tác tử chính thức do đội ngũ DeepSeek AI phát triển. Ứng dụng kiến trúc vi nhân Cordis (Microkernel) để kết nối mô hình DeepSeek-V3 và DeepSeek-R1 với các công cụ thực thi terminal, quản lý tiến trình và giao diện web tương tác theo thời gian thực.</p>
+        <h1>DeepSeek Harness — Khung Điều Phối Suy Luận Sâu & Định Tuyến Kép V3/R1</h1>
+        <p class="intro-copy">Kiến trúc khai thác tối đa sức mạnh của DeepSeek-V3 (kiến trúc MoE 671B tham số) và DeepSeek-R1 (mô hình suy luận chuỗi tự phản tư). Kết hợp cơ chế định tuyến kép phân loại độ khó bài toán, tận dụng tính năng Prompt Caching tiết kiệm 95% chi phí API và kiểm soát rò rỉ ngữ cảnh.</p>
       </div>
       <div class="guide-side-meta">
-        <strong>deepseek-ai/deepseek-harness · 6.8k ★</strong>
-        <span>Tổ chức: DeepSeek AI · Giấy phép MIT</span>
-        <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener noreferrer">
+        <strong>deepseek-ai/harness · Mẫu tích hợp chuẩn</strong>
+        <span>Kiến trúc: MoE & Deep Reasoning R1</span>
+        <a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          Mã nguồn GitHub chính thức
+          Mã nguồn DeepSeek
         </a>
       </div>
     </section>
 
-    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <!-- Quick Glance Card -->
     <div class="quick-glance-card">
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
-        <span class="glance-val">Harness Chính Hãng DeepSeek</span>
-        <span class="glance-desc">Điều phối DeepSeek-V3 & R1 gọi công cụ bash, duyệt file và code tự động.</span>
+        <span class="glance-val">Định Tuyến Kép V3/R1</span>
+        <span class="glance-desc">Phân loại tác vụ: việc nhẹ cho V3 siêu tốc, bài toán khó cho R1 giải mã sâu.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-label">Chi phí API</span>
+        <span class="glance-val">Giảm 95%</span>
+        <span class="glance-desc">Tận dụng Prompt Caching tự động với giá chỉ $0.014 / 1M cached tokens.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Kiến trúc lõi</span>
-        <span class="glance-val">Cordis Microkernel</span>
-        <span class="glance-desc">Vi nhân siêu nhẹ, nạp plugin động, không bị lỗi rò rỉ bộ nhớ.</span>
+        <span class="glance-val">MoE 671B</span>
+        <span class="glance-desc">Kích hoạt 37B tham số cho mỗi token, cân bằng tối ưu giữa tốc độ và trí tuệ.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Chi phí vận hành</span>
-        <span class="glance-val">Cực kỳ tiết kiệm</span>
-        <span class="glance-desc">Tận dụng Context Caching giảm tới 90% chi phí đọc codebase.</span>
-      </div>
-      <div class="glance-item">
-        <span class="glance-label">Giao diện sẵn có</span>
-        <span class="glance-val">Web UI & CLI Stream</span>
-        <span class="glance-desc">Xem chuỗi suy luận thẻ <code>&lt;think&gt;</code> thời gian thực.</span>
+        <span class="glance-label">Độ sâu suy luận</span>
+        <span class="glance-val">Self-Correction Trace</span>
+        <span class="glance-desc">Tự phát hiện lỗi logic trong quá trình sinh thẻ suy nghĩ trước khi chốt đáp án.</span>
       </div>
     </div>
 
-    <!-- 1. Kiến trúc vi nhân -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/deepseek-editorial-hero.png" alt="DeepSeek Harness Mixture of Experts Vivid Cyan" loading="lazy" decoding="async">
+        <img src="assets/deepseek-editorial-hero.png" alt="Hạ tầng suy luận DeepSeek V3 và R1" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · ĐỊNH TUYẾN CHUYÊN GIA MOE 671B (MIXTURE-OF-EXPERTS INFERENCE):</strong> Mặt phẳng Cyan Experimental đậm chất kỹ thuật số, định tuyến 37B tham số được kích hoạt cho mỗi token suy luận.</div>
+      <div class="ui-shot-caption"><strong>// 01 · BẢN ĐỒ ĐỊNH TUYẾN KÉP DEEPSEEK (DUAL-INFERENCE CORE):</strong> Sắc xanh Cyan kết hợp tím hoàng gia, minh họa bộ định tuyến phân loại tác vụ giữa mô hình tổng quát V3 và mô hình lý luận sâu R1.</div>
     </div>
 
-    <h2>1. Kiến trúc Vi nhân Cordis (Microkernel Architecture)</h2>
-    <p>Không giống như các thư viện agent nguyên khối (monolithic), DeepSeek Harness tách biệt nhân lõi siêu nhẹ (Cordis Core) khỏi các plugin công cụ và lớp giao tiếp mạng:</p>
-
-    <div class="svg-diagram-frame">
-      <svg viewBox="0 0 820 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Top UI Layer -->
-        <rect x="30" y="20" width="760" height="42" rx="6" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="1.5"/>
-        <text x="410" y="46" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">LỚP TƯƠNG TÁC: Web UI Console · Terminal Streamer · Interrupt Controls</text>
-
-        <!-- Microkernel Middle -->
-        <rect x="30" y="80" width="760" height="55" rx="6" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
-        <text x="410" y="105" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="14">VI NHÂN CORDIS CORE (Event Bus · Plugin Registry · Lifecycle)</text>
-        <text x="410" y="123" text-anchor="middle" fill="var(--muted)" font-size="11.5">Quản lý vòng đời agent · Phân luồng công cụ an toàn · Chặn vòng lặp vô tận</text>
-
-        <!-- Bottom Model & Tool Layer -->
-        <rect x="30" y="152" width="370" height="50" rx="6" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.5"/>
-        <text x="215" y="182" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="12.5">MÔ HÌNH: DeepSeek-V3 · DeepSeek-R1</text>
-
-        <rect x="420" y="152" width="370" height="50" rx="6" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="1.5"/>
-        <text x="605" y="182" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="12.5">SANDBOX: Bash Execution · Git · File IO</text>
-      </svg>
-    </div>
-
-    <!-- 2. Bảng so sánh V3 vs R1 trong Harness -->
-        <!-- Minh họa bổ sung: Editorial Spread -->
-        <div class="ui-shot-box">
-      <div class="ui-shot-media">
-        <img src="assets/deepseek-editorial-concept.png" alt="Luồng reasoning tokens và cơ chế chú ý MLA" loading="lazy" decoding="async">
-        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
-      </div>
-      <div class="ui-shot-caption"><strong>// 02 · LUỒNG REASONING TOKENS & CƠ CHẾ CHÚ Ý MLA (CHAIN-OF-THOUGHT STREAM):</strong> Phân bổ ngân sách suy nghĩ động, tự động quay lui khi gặp tiên đề sai và hội tụ với mức tổn thất cực tiểu 0.002.</div>
-    </div>
-
-    <h2>2. Lựa chọn Mô hình tối ưu cho từng tác vụ</h2>
+    <h2>1. Bảng Đối Chiếu: DeepSeek-V3 vs DeepSeek-R1</h2>
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 20%;">Mô hình</th>
-            <th style="width: 25%;">Thế mạnh cốt lõi</th>
-            <th style="width: 25%;">Chi phí Token</th>
-            <th style="width: 30%;">Tác vụ phù hợp nhất</th>
+            <th style="width: 25%;">Đặc tính kỹ thuật</th>
+            <th style="width: 37%;">DeepSeek-V3 (General MoE)</th>
+            <th style="width: 38%;">DeepSeek-R1 (Deep Reasoning)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>DeepSeek-V3</strong></td>
-            <td>Tốc độ sinh mã cực nhanh, văn phong tự nhiên, gọi công cụ (Tool calling) chuẩn xác.</td>
-            <td>Rất thấp (Khoảng 1/10 so với GPT-4o).</td>
-            <td>Viết code tính năng mới, tạo CRUD, viết unit test, tra cứu cú pháp và refactor nhẹ.</td>
+            <td><strong>Mục tiêu tối ưu</strong></td>
+            <td>Tốc độ sinh token cực nhanh (60+ tps), xử lý ngôn ngữ tự nhiên, tóm tắt và viết code chuẩn.</td>
+            <td>Giải toán phức tạp, chứng minh thuật toán, tìm lỗi bảo mật tinh vi và lập kế hoạch đa bước.</td>
           </tr>
           <tr>
-            <td><strong>DeepSeek-R1</strong></td>
-            <td>Suy luận sâu (Chain-of-Thought), phát hiện lỗi logic tiềm ẩn, giải toán và thuật toán phức tạp.</td>
-            <td>Trung bình (Có thêm token suy luận trong thẻ <code>&lt;think&gt;</code>).</td>
-            <td>Debug lỗi hóc búa, thiết kế kiến trúc phân tán, phân tích mã độc và tối ưu thuật toán.</td>
+            <td><strong>Cơ chế suy luận</strong></td>
+            <td>Dự đoán token trực tiếp từ ma trận trọng số Mixture of Experts.</td>
+            <td>Sinh chuỗi tư duy dài (Chain-of-Thought) trong thẻ <code>&lt;think&gt;</code> trước khi trả lời.</td>
+          </tr>
+          <tr>
+            <td><strong>Chi phí tương đối</strong></td>
+            <td>Siêu tiết kiệm: $0.14 / 1M input tokens, $0.28 / 1M output tokens.</td>
+            <td>Khoảng $0.55 / 1M input, $2.19 / 1M output (vẫn rẻ hơn 80% so với OpenAI o1).</td>
+          </tr>
+          <tr>
+            <td><strong>Kịch bản sử dụng</strong></td>
+            <td>Trả lời chat thông thường, format dữ liệu, refactor hàm nhỏ, viết tài liệu.</td>
+            <td>Thiết kế kiến trúc hệ thống phân tán, debug race condition, chứng minh độ phức tạp O(n).</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- 3. Interactive Tabs: Web UI vs CLI -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/deepseek-editorial-detail.png" alt="Kiểm chứng toán học hình thức Lean4" loading="lazy" decoding="async">
+        <img src="assets/deepseek-editorial-concept.png" alt="Cơ chế Prompt Caching và định tuyến ngữ cảnh" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · KIỂM CHỨNG TOÁN HỌC HÌNH THỨC LEAN4 (FORMAL THEOREM PROVER):</strong> Xác nhận tính đúng đắn toán học qua nhân chứng minh định lý Lean4 trong 18ms, đạt 97.3% MATH-500.</div>
+      <div class="ui-shot-caption"><strong>// 02 · LƯU ĐỆM NGỮ CẢNH TỰ ĐỘNG (PROMPT CACHING ACCELERATOR):</strong> Tỷ lệ trúng bộ đệm 92% giúp tái sử dụng cây ngữ cảnh 128k tokens chỉ trong vài mili-giây.</div>
     </div>
 
-    <h2>3. Khởi chạy DeepSeek Harness trong thực tế</h2>
+    <!-- Dynamic Animated SVG Diagram: Dual Routing -->
+    <h2>2. Mô hình Tương tác Động: Bộ Định Tuyến Thông Minh Dual-Router</h2>
+    <p>Thay vì gửi mọi truy vấn vào một mô hình duy nhất, DeepSeek Harness phân loại độ phức tạp của bài toán tại cổng vào:</p>
+
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 880 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <!-- Flow Connectors -->
+        <path class="flow-path" d="M 190 110 L 250 110" stroke="var(--dracula-purple)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="250,110 241,105 241,115" fill="var(--dracula-purple)"/>
+
+        <path class="flow-path" d="M 440 80 C 490 50, 520 50, 570 50" stroke="var(--dracula-cyan)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,50 561,45 561,55" fill="var(--dracula-cyan)"/>
+
+        <path class="flow-path" d="M 440 140 C 490 170, 520 170, 570 170" stroke="var(--dracula-orange)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,170 561,165 561,175" fill="var(--dracula-orange)"/>
+
+        <!-- Ingestion -->
+        <g class="interactive-node" transform="translate(20, 40)">
+          <rect width="170" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="1.8"/>
+          <text x="85" y="45" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="12.5">YÊU CẦU ĐẦU VÀO</text>
+          <text x="85" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Prompt / Code Snippet</text>
+          <text x="85" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Phân tích cú pháp AST</text>
+          <text x="85" y="120" text-anchor="middle" fill="var(--muted)" font-size="10.5">Đo độ sâu bài toán</text>
+        </g>
+
+        <!-- Router -->
+        <g class="interactive-node" transform="translate(250, 40)">
+          <rect width="190" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+          <circle cx="95" cy="40" r="14" fill="var(--dracula-purple)" opacity="0.2"/>
+          <text x="95" y="45" text-anchor="middle" fill="var(--dracula-purple)" font-weight="800" font-size="13">HARNESS ROUTER</text>
+          <text x="95" y="75" text-anchor="middle" fill="var(--ink)" font-size="11.5">Phân Loại 2 Nhánh</text>
+          <line x1="20" y1="90" x2="170" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <text x="95" y="110" text-anchor="middle" fill="var(--dracula-cyan)" font-size="11">Tác vụ nhẹ &rarr; Nhánh V3</text>
+          <text x="95" y="128" text-anchor="middle" fill="var(--dracula-orange)" font-size="11">Bài toán khó &rarr; Nhánh R1</text>
+        </g>
+
+        <!-- Model V3 -->
+        <g class="interactive-node" transform="translate(570, 10)">
+          <rect width="260" height="85" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="1.8"/>
+          <text x="20" y="30" fill="var(--dracula-cyan)" font-weight="700" font-size="13">DEEPSEEK-V3 (Siêu Tốc)</text>
+          <text x="20" y="52" fill="var(--ink)" font-size="11.5">60+ tps · Chi phí cực thấp · MoE 671B</text>
+          <text x="20" y="70" fill="var(--muted)" font-size="10.5">Viết hàm, chỉnh format, tài liệu</text>
+        </g>
+
+        <!-- Model R1 -->
+        <g class="interactive-node" transform="translate(570, 125)">
+          <rect width="260" height="85" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.8"/>
+          <text x="20" y="30" fill="var(--dracula-orange)" font-weight="700" font-size="13">DEEPSEEK-R1 (Suy Luận Sâu)</text>
+          <text x="20" y="52" fill="var(--ink)" font-size="11.5">Chuỗi tư duy &lt;think&gt; · Tự sửa lỗi logic</text>
+          <text x="20" y="70" fill="var(--muted)" font-size="10.5">Kiến trúc phân tán, thuật toán khó</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/deepseek-editorial-detail.png" alt="Bảng thống kê tỷ lệ tiết kiệm chi phí và độ trễ" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 03 · ĐO LƯỜNG TIẾT KIỆM TÀI NGUYÊN (EFFICIENCY TELEMETRY):</strong> Cắt giảm 94.6% ngân sách API trong khi vẫn duy trì điểm kiểm thử suy luận tương đương các mô hình đắt tiền nhất.</div>
+    </div>
+
+    <!-- 3. Interactive Tabs: 4 Chiều Sâu Kỹ Thuật -->
+    <h2>3. Phân Tích Chuyên Sâu Các Cơ Chế Cốt Lõi</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-web">Giao diện Web Console (Khuyến nghị)</button>
-        <button class="tab-btn" data-tab="tab-cli">Dòng lệnh Terminal (CLI)</button>
+        <button class="tab-btn active" data-tab="tab-routing">1. Thuật Toán Định Tuyến</button>
+        <button class="tab-btn" data-tab="tab-caching">2. Bí Quyết Prompt Caching</button>
+        <button class="tab-btn" data-tab="tab-r1trace">3. Bóc Tách Thẻ &lt;think&gt;</button>
+        <button class="tab-btn" data-tab="tab-cases-deepseek">4. Kịch Bản Thực Chiến</button>
       </div>
 
-      <div class="tab-panel active" id="tab-web">
-        <div class="code-block">
-          <div class="code-block-header">
-            <span>Bash · Khởi chạy Web Console</span>
-            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+      <div class="tab-panel active" id="tab-routing">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Quy Tắc Phân Loại Heuristic Tự Động</h4>
+            <p>Router kiểm tra các từ khóa và đặc điểm của prompt: nếu có yêu cầu về &ldquo;chứng minh&rdquo;, &ldquo;kiến trúc phân tán&rdquo;, &ldquo;race condition&rdquo;, bài toán được tự động đẩy sang R1; các câu lệnh tạo UI, CRUD hoặc viết unit test đơn giản được gửi tới V3.</p>
           </div>
-          <pre><code># Thiết lập khóa bí mật
-export DEEPSEEK_API_KEY="sk-your-deepseek-api-key"
-
-# Khởi chạy giao diện Web Console trên cổng 3000
-npx @deepseek-ai/dsh web
-
-# Hoặc khởi chạy trên máy chủ từ xa (Remote Server) không tự mở trình duyệt
-npx @deepseek-ai/dsh web --port 8080 --no-open</code></pre>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-cli">
-        <div class="code-block">
-          <div class="code-block-header">
-            <span>Bash · Chạy trực tiếp trong Terminal</span>
-            <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
+      <div class="tab-panel" id="tab-caching">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Khai Thác Tối Đa Tính Năng Lưu Đệm Ngữ Cảnh</h4>
+            <p>DeepSeek hỗ trợ Prompt Caching ở cấp độ cụm 64 tokens. Bằng cách cố định phần System Prompt và tài liệu codebase ở đầu chuỗi gửi đi, các lượt chat tiếp theo được hưởng giá lưu đệm rẻ hơn tới 10 lần.</p>
           </div>
-          <pre><code># Chạy phiên tương tác trực tiếp
-npx @deepseek-ai/dsh cli --model deepseek-reasoner
-
-# Yêu cầu giải quyết một ticket lỗi cụ thể
-npx @deepseek-ai/dsh run "Tìm và sửa lỗi Memory leak trong worker.ts"</code></pre>
         </div>
       </div>
+
+      <div class="tab-panel" id="tab-r1trace">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Bóc Tách và Khử Nhiễu Khối Suy Nghĩ &lt;think&gt;</h4>
+            <p>Mô hình R1 xuất ra hàng ngàn token suy nghĩ tự sửa lỗi. Harness tự động phân tách phần <code>&lt;think&gt;</code> để debug khi cần thiết và chỉ gửi phần giải pháp sạch tới người dùng cuối.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases-deepseek">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Case Study: Tối Ưu Chi Phí Cho Toàn Bộ Đội Ngũ 50 Kỹ Sư</h4>
+            <p>Chuyển đổi toàn bộ truy vấn từ mô hình đóng đắt tiền sang DeepSeek Dual-Harness giúp doanh nghiệp giảm chi phí từ $8,500/tháng xuống chỉ còn $420/tháng mà năng suất kỹ sư không hề suy giảm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Hướng dẫn sử dụng -->
+    <h2>4. Hướng Dẫn Tích Hợp Nhanh Cho Coding Agent</h2>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Prompt · Kích Hoạt Chế Độ Suy Luận Sâu R1</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
+      </div>
+      <pre><code>Hãy dùng DeepSeek-R1 để giải quyết bài toán concurrency sau:
+- Yêu cầu: Thiết kế thuật toán Rate Limiter trượt (Sliding Window Log) chịu tải 500,000 req/s trên Redis Cluster.
+- Yêu cầu suy luận: Hãy suy nghĩ kỹ trong thẻ &lt;think&gt;, chỉ ra các lỗ hổng race condition tiềm ẩn khi 2 node Redis đồng thời ghi nhận request, và đưa ra giải pháp khắc phục bằng Redis Lua Script.</code></pre>
     </div>
 
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Mẹo tiết kiệm chi phí với DeepSeek Harness</strong>
-        <p>Tận dụng tính năng bộ đệm ngữ cảnh (Context Caching) của DeepSeek API: khi gửi cùng một cây thư mục mã nguồn nhiều lần, chi phí đọc token được giảm tới 90%, giúp agent duyệt qua các repo hàng trăm nghìn dòng code với chi phí chỉ vài cent.</p>
+        <strong>Lời Khuyên Từ Chuyên Gia DeepSeek</strong>
+        <p>&ldquo;Đừng dùng R1 cho mọi thứ vì tốc độ suy luận sẽ chậm hơn V3. Hãy dùng V3 cho 80% công việc hàng ngày và chỉ triệu hồi R1 khi bạn thực sự cần một bộ óc toán học và thuật toán thượng thừa.&rdquo;</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
-      <a class="nav-card" href="awesome-design-md.html">
-        <span class="nav-card-dir">Quay lại</span>
-        <span class="nav-card-title">← Awesome DESIGN.md</span>
+      <a class="nav-card" href="hyperframes.html">
+        <span class="nav-card-dir">Bài trước</span>
+        <span class="nav-card-title">← HyperFrames Animation</span>
       </a>
       <a class="nav-card next" href="ecc.html">
         <span class="nav-card-dir">Kế tiếp</span>
-        <span class="nav-card-title">Everything Claude Code →</span>
+        <span class="nav-card-title">Everything Claude Code (ECC) →</span>
       </a>
     </div>
   </main>

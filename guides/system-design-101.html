@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết System Design 101: cẩm nang trực quan hóa kiến trúc hệ thống phân tán từ ByteByteGo cho coding agent, bao quát API Gateway, Caching, Database Sharding.">
-  <title>System Design 101 — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn chi tiết System Design 101: cẩm nang trực quan hóa kiến trúc hệ thống phân tán từ ByteByteGo cho coding agent, bao quát API Gateway, Caching, Database Sharding, Consistent Hashing, và 2PC vs Saga.">
+  <title>System Design 101 — Hướng dẫn Kiến trúc Hệ thống Phân tán — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,13 +16,13 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="../site-common.css?v=20261029_v4">
-  <link rel="stylesheet" href="guide.css?v=20261029_v4">
-  <link rel="stylesheet" href="guide-nav.css?v=20261029_v4">
-  <script defer src="../site-common.js?v=20261029_v4"></script>
-  <script defer src="guide-catalog.js?v=20261029_v4"></script>
-  <script defer src="guide-nav.js?v=20261029_v4"></script>
-  <script defer src="guide.js?v=20261029_v4"></script>
+  <link rel="stylesheet" href="../site-common.css?v=20261030_v5">
+  <link rel="stylesheet" href="guide.css?v=20261030_v5">
+  <link rel="stylesheet" href="guide-nav.css?v=20261030_v5">
+  <script defer src="../site-common.js?v=20261030_v5"></script>
+  <script defer src="guide-catalog.js?v=20261030_v5"></script>
+  <script defer src="guide-nav.js?v=20261030_v5"></script>
+  <script defer src="guide.js?v=20261030_v5"></script>
 </head>
 <body>
   <header class="site-header">
@@ -66,14 +66,14 @@
 
     <section class="page-heading">
       <div>
-        <h1>System Design 101 — Kiến Trúc Hệ Thống Phân Tán Trực Quan cho Coding Agent</h1>
-        <p class="intro-copy">Kho tri thức thiết kế hệ thống phân tán nổi tiếng nhất của ByteByteGo (hơn 91.000 sao). Giúp lập trình viên và AI agent nâng cấp tư duy từ những đoạn code đơn lẻ (script) thành những kiến trúc chịu tải triệu người dùng: phân luồng tải qua API Gateway, caching đa tầng, phân mảnh cơ sở dữ liệu (sharding) và xử lý bất đồng bộ qua message queue.</p>
+        <h1>System Design 101 — Cẩm Nang Thiết Kế Kiến Trúc Phân Tán Triệu Người Dùng</h1>
+        <p class="intro-copy">Kho tri thức thiết kế hệ thống phân tán nổi tiếng nhất từ ByteByteGo (hơn 91.000 stars của Alex Xu). Cung cấp nền tảng tư duy vững chắc cho lập trình viên và coding agent: từ giải thuật Consistent Hashing, kiểm soát xung đột giao dịch 2PC vs. Saga, chống sập bộ nhớ đệm (Cache Stampede qua XFetch), phân luồng Kafka không độ trễ cho đến kinh nghiệm scale 100x của Figma, Discord, Netflix và Shopify.</p>
       </div>
       <div class="guide-side-meta">
         <strong>ByteByteGoHq/system-design-101 · 91k ★</strong>
         <span>Tác giả: Alex Xu & ByteByteGo Team</span>
         <a href="https://github.com/ByteByteGoHq/system-design-101" target="_blank" rel="noopener noreferrer">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           Mã nguồn GitHub chính thức
         </a>
       </div>
@@ -84,17 +84,17 @@
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
         <span class="glance-val">Kiến trúc Chịu tải cao</span>
-        <span class="glance-desc">Định hướng agent thiết kế hệ thống bền vững, không có điểm nghẽn đơn độc (SPOF).</span>
+        <span class="glance-desc">Định hướng agent thiết kế hệ thống bền vững, triệt tiêu điểm nghẽn đơn độc (SPOF).</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Dành cho ai</span>
-        <span class="glance-val">Tech Lead & Backend Dev</span>
-        <span class="glance-desc">Kỹ sư cần xây dựng nền tảng vững chắc cho microservices và dữ liệu lớn.</span>
+        <span class="glance-val">Tech Lead & Backend Architect</span>
+        <span class="glance-desc">Kỹ sư cần xây dựng nền tảng vững chắc cho microservices và dữ liệu phân mảnh.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Thời gian làm quen</span>
-        <span class="glance-val">~10 Phút</span>
-        <span class="glance-desc">Nạp các quy chuẩn kiến trúc vào System Prompt của agent.</span>
+        <span class="glance-label">Độ sâu kỹ thuật</span>
+        <span class="glance-val">Enterprise Grade</span>
+        <span class="glance-desc">Bao quát Consistent Hashing, WAL, Bloom Filter, Saga và PACELC.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Hành động cốt lõi</span>
@@ -106,44 +106,51 @@
     <!-- UI Shot 1: Hero Editorial -->
     <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/system-design-editorial-hero.png" alt="ByteByteGo System Design 101 Visual Architecture" loading="lazy" decoding="async">
+        <img src="assets/system-design-editorial-hero.png" alt="The Monolithic Slabs of the Ingress River - System Design 101 Visual Architecture" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
       <div class="ui-shot-caption"><strong>// 01 · KIẾN TRÚC PHÂN TÁN HYPER-SCALE (ENTERPRISE SYSTEM ARCHITECTURE):</strong> Sắc vàng kiến trúc Architectural Yellow kết hợp xanh lam kỹ thuật, sơ đồ hóa các tầng gateway, caching và dữ liệu phân mảnh.</div>
     </div>
 
     <h2>1. Bảng đối chiếu: Code AI ngây thơ vs. Kiến trúc Phân tán Chuẩn mực</h2>
-    <p>Khi yêu cầu AI viết backend, phản xạ tự nhiên của agent là ném tất cả vào một file server đơn lẻ (monolith) và kết nối trực tiếp vào một cơ sở dữ liệu duy nhất. System Design 101 giải phóng agent khỏi tư duy chắp vá này:</p>
-    
+    <p>Khi yêu cầu AI viết backend, phản xạ tự nhiên của agent là ném tất cả vào một file server đơn lẻ (monolith) và kết nối trực tiếp vào một cơ sở dữ liệu duy nhất. Bảng dưới đây so sánh sự khác biệt mang tính sống còn khi hệ thống đạt ngưỡng tải 50,000 QPS:</p>
+
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 25%;">Thành phần</th>
-            <th style="width: 35%;">Thiết kế AI ngây thơ (Naive Code)</th>
+            <th style="width: 22%;">Thành phần</th>
+            <th style="width: 38%;">Thiết kế AI ngây thơ (Naive Script)</th>
             <th style="width: 40%;">Kiến trúc Phân tán ByteByteGo</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Điểm truy cập (Ingress)</strong></td>
-            <td>Client gọi thẳng vào server API, dễ sập khi có lượng truy cập đột biến.</td>
-            <td>Qua Reverse Proxy / API Gateway có Rate Limiting, SSL Termination và Circuit Breaker.</td>
+            <td>Client gọi thẳng vào server API, dễ sập toàn diện khi có xung lưu lượng (Traffic Spike). Không có giới hạn IP, không có xác thực tập trung.</td>
+            <td>Qua Reverse Proxy / API Gateway có thuật toán Token Bucket Rate Limiting, SSL Termination, xác thực JWT tập trung và Circuit Breaker ngắt kết nối xấu.</td>
           </tr>
           <tr>
             <td><strong>Chiến lược Caching</strong></td>
-            <td>Mọi yêu cầu đều truy vấn thẳng vào cơ sở dữ liệu SQL, gây tắc nghẽn I/O.</td>
-            <td>Caching đa tầng: Cache-Aside, Write-Through với Redis/Memcached và CDN Edge cache.</td>
+            <td>Mọi yêu cầu đều truy vấn trực tiếp vào SQL database. Dễ xảy ra hiện tượng Cache Stampede và Thundering Herd khi bản ghi hết hạn.</td>
+            <td>Caching 3 tầng: CDN Edge Cache $
+ightarrow$ Cụm Redis phân tán (Cache-Aside + thuật toán XFetch gia hạn sớm) $
+ightarrow$ Local in-memory LRU cache.</td>
           </tr>
           <tr>
             <td><strong>Mở rộng cơ sở dữ liệu</strong></td>
-            <td>Chỉ dùng một máy chủ DB duy nhất; khi dữ liệu phình to thì hệ thống đứng hình.</td>
-            <td>Phân mảnh dữ liệu (Sharding) bằng Consistent Hashing, tách biệt Read Replica và Write Master.</td>
+            <td>Dùng một máy chủ DB duy nhất; khi dữ liệu phình to vượt quá RAM/Disk thì tăng cấu hình (Vertical Scale), chi phí đội trần mà vẫn chậm.</td>
+            <td>Phân mảnh dữ liệu ngang (Horizontal Sharding) bằng thuật toán Consistent Hashing với Virtual Nodes; tách cụm Primary (ghi) và Read Replicas (đọc).</td>
           </tr>
           <tr>
             <td><strong>Xử lý tác vụ nặng</strong></td>
-            <td>Chạy đồng bộ trong vòng lặp request-response, khiến client bị treo timeout.</td>
-            <td>Tách rời bất đồng bộ qua Message Queue (Kafka, RabbitMQ) với cơ chế Retry & Dead-Letter.</td>
+            <td>Chạy đồng bộ trong vòng lặp request-response, khiến client bị treo timeout khi xử lý thanh toán, xuất hóa đơn hoặc gửi thông báo.</td>
+            <td>Tách rời bất đồng bộ qua Message Queue (Apache Kafka / RabbitMQ) với cơ chế Retry lũy thừa lùi (Exponential Backoff) và hàng đợi chết (Dead-Letter Queue).</td>
+          </tr>
+          <tr>
+            <td><strong>Toàn vẹn giao dịch</strong></td>
+            <td>Dùng câu lệnh transaction SQL thông thường trên một bảng, hoàn toàn vô hiệu khi dữ liệu nằm rải rác trên nhiều microservices.</td>
+            <td>Áp dụng mẫu hình Saga Pattern (Orchestration/Choreography) kết hợp Transactional Outbox Pattern và Idempotency Keys chống trùng lặp.</td>
           </tr>
         </tbody>
       </table>
@@ -158,32 +165,32 @@
       <div class="ui-shot-caption"><strong>// 02 · BỐN TRỤ CỘT HỆ THỐNG (FOUR PILLARS OF DISTRIBUTED RESILIENCY):</strong> Cân bằng tải, lưu tạm đa tầng, phân mảnh dữ liệu và điều phối thông điệp bất đồng bộ chống quá tải.</div>
     </div>
 
-    <h2>2. Bốn trụ cột kiến trúc phân tán cốt lõi</h2>
+    <h2>2. Bốn trụ cột kiến trúc phân tán cốt lõi & Cơ chế Giải thuật</h2>
     <div class="diagram-frame">
       <div class="diagram-caption">
         <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Các khối xây dựng nền tảng của hệ thống phân tán chịu lỗi
+        Các khối xây dựng nền tảng của hệ thống phân tán chịu lỗi cao
       </div>
       <div class="flow-steps">
         <div class="step-card accent">
           <span class="step-badge">1</span>
-          <strong>API Gateway & Ingress</strong>
-          <p>Điều phối lưu lượng, xác thực người dùng tập trung, giới hạn tốc độ (Rate Limiting) và bảo vệ dịch vụ phía sau.</p>
+          <strong>API Gateway & Rate Limiting</strong>
+          <p>Điều phối lưu lượng, xác thực tập trung, giới hạn tốc độ qua thuật toán <em>Token Bucket</em> hoặc <em>Sliding Window Counter</em>, chống tấn công DDoS.</p>
         </div>
         <div class="step-card">
           <span class="step-badge">2</span>
-          <strong>Multi-Tier Caching</strong>
-          <p>Giảm tải cho cơ sở dữ liệu: áp dụng Cache-Aside pattern, xử lý triệt để bài toán Cache Breakdown và Cache Avalanche.</p>
+          <strong>Multi-Tier Caching & XFetch</strong>
+          <p>Lưu tạm đa tầng với chiến lược <em>Cache-Aside</em>; giải quyết triệt để Cache Avalanche và Cache Breakdown bằng giải thuật xác suất <em>XFetch</em>.</p>
         </div>
         <div class="step-card accent">
           <span class="step-badge">3</span>
-          <strong>Database Sharding & Replicas</strong>
-          <p>Băm nhất quán (Consistent Hashing) để chia dữ liệu thành nhiều shard độc lập, nhân bản đọc nâng cao năng lực phục vụ.</p>
+          <strong>Database Sharding & Consistent Hashing</strong>
+          <p>Phân mảnh ngang dữ liệu qua vòng băm nhất quán với <em>Virtual Nodes</em>, giảm thiểu tối đa việc di chuyển dữ liệu khi thêm máy chủ mới.</p>
         </div>
         <div class="step-card">
           <span class="step-badge">4</span>
-          <strong>Event-Driven Asynchronous Broker</strong>
-          <p>Sử dụng Kafka / RabbitMQ để hấp thụ các xung lưu lượng lớn và đảm bảo hệ thống không bị sập nguồn khi tải cao.</p>
+          <strong>Event-Driven Broker & Saga</strong>
+          <p>Sử dụng Kafka / RabbitMQ để hấp thụ các xung lưu lượng lớn, điều phối giao dịch phân tán qua Saga và bảo đảm tính bất biến (Idempotency).</p>
         </div>
       </div>
     </div>
@@ -197,104 +204,217 @@
       <div class="ui-shot-caption"><strong>// 03 · MA TRẬN ĐÁNH ĐỔI THIẾT KẾ (CAP THEOREM & TRADEOFF MATRIX):</strong> Định hướng agent luôn tính toán băng thông, số lượng QPS và đánh đổi giữa tính nhất quán (Consistency) và tính sẵn sàng (Availability).</div>
     </div>
 
-    <h2>3. Minh họa trực quan: Luồng xử lý dữ liệu chuẩn phân tán</h2>
-    <p>Một kiến trúc sản xuất hoàn chỉnh vận hành tuần tự qua các trạm kiểm soát để bảo đảm độ trễ thấp và độ sẵn sàng 99.999%:</p>
+    <h2>3. Minh họa trực quan: Sơ đồ tương tác luồng dữ liệu phân tán (Interactive Data Flow)</h2>
+    <p>Di chuột hoặc chạm vào từng khối trạm để xem chi tiết cơ chế phòng ngự và phân luồng. Luồng sáng chuyển động liên tục mô phỏng các gói tin được xử lý tuần tự qua các chốt kiểm soát an toàn:</p>
 
+    <!-- Interactive SVG Architecture Visualizer with Animated Glowing Data Path -->
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Client / Ingress -->
-        <rect x="40" y="40" width="160" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-yellow)" stroke-width="2"/>
-        <circle cx="120" cy="80" r="24" fill="rgba(241, 250, 140, 0.15)"/>
-        <text x="120" y="86" text-anchor="middle" fill="var(--dracula-yellow)" font-weight="700" font-size="16">API GATEWAY</text>
-        <text x="120" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Auth & Ingress</text>
-        <text x="120" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Rate Limit & SSL</text>
+      <svg viewBox="0 0 920 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+        <defs>
+          <linearGradient id="gradGate" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--paper)"/>
+            <stop offset="100%" stop-color="rgba(241, 250, 140, 0.08)"/>
+          </linearGradient>
+          <linearGradient id="gradCache" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--paper)"/>
+            <stop offset="100%" stop-color="rgba(139, 233, 253, 0.08)"/>
+          </linearGradient>
+          <linearGradient id="gradService" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--paper)"/>
+            <stop offset="100%" stop-color="rgba(189, 147, 249, 0.08)"/>
+          </linearGradient>
+          <linearGradient id="gradQueue" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--paper)"/>
+            <stop offset="100%" stop-color="rgba(255, 184, 108, 0.08)"/>
+          </linearGradient>
+          <linearGradient id="gradDB" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--paper)"/>
+            <stop offset="100%" stop-color="rgba(80, 250, 123, 0.08)"/>
+          </linearGradient>
+        </defs>
 
-        <!-- Arrow 1 -> 2 -->
-        <path d="M210 115 H240" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="240,115 232,110 232,120" fill="var(--dracula-cyan)"/>
+        <!-- Dynamic Animated Connecting Flow Line -->
+        <path d="M 170 120 L 230 120 M 370 120 L 430 120 M 570 120 L 630 120 M 770 120 L 810 120" stroke="var(--line)" stroke-width="3" />
+        <path class="flow-path" d="M 30 120 L 900 120" stroke="var(--spirit-cyan)" stroke-width="2.5" stroke-linecap="round"/>
 
-        <!-- Cache Layer -->
-        <rect x="250" y="40" width="160" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
-        <circle cx="330" cy="80" r="24" fill="rgba(139, 233, 253, 0.15)"/>
-        <text x="330" y="86" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="16">REDIS CACHE</text>
-        <text x="330" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Sub-ms Lookup</text>
-        <text x="330" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Cache-aside 90% hits</text>
+        <!-- 1. Client & Ingress Gateway -->
+        <g class="interactive-node" tabindex="0">
+          <rect x="30" y="40" width="150" height="160" rx="12" fill="url(#gradGate)" stroke="var(--dracula-yellow)" stroke-width="2.2"/>
+          <circle cx="105" cy="80" r="22" fill="rgba(241, 250, 140, 0.2)" class="flow-pulse"/>
+          <text x="105" y="86" text-anchor="middle" fill="var(--dracula-yellow)" font-weight="700" font-size="15">API GATEWAY</text>
+          <text x="105" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="13">Token Bucket Rate</text>
+          <text x="105" y="148" text-anchor="middle" fill="var(--muted)" font-size="11">SSL & Circuit Breaker</text>
+          <text x="105" y="178" text-anchor="middle" fill="var(--dracula-yellow)" font-size="11" font-weight="700">&lt; 2ms Ingress</text>
+        </g>
 
-        <!-- Arrow 2 -> 3 -->
-        <path d="M420 115 H450" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="450,115 442,110 442,120" fill="var(--dracula-purple)"/>
+        <!-- 2. Distributed Cache -->
+        <g class="interactive-node" tabindex="0">
+          <rect x="230" y="40" width="150" height="160" rx="12" fill="url(#gradCache)" stroke="var(--dracula-cyan)" stroke-width="2.2"/>
+          <circle cx="305" cy="80" r="22" fill="rgba(139, 233, 253, 0.2)" class="flow-pulse"/>
+          <text x="305" y="86" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="15">REDIS CLUSTER</text>
+          <text x="305" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="13">Multi-Tier Cache</text>
+          <text x="305" y="148" text-anchor="middle" fill="var(--muted)" font-size="11">XFetch Early Refresh</text>
+          <text x="305" y="178" text-anchor="middle" fill="var(--dracula-cyan)" font-size="11" font-weight="700">92% Hit Ratio</text>
+        </g>
 
-        <!-- App Service -->
-        <rect x="460" y="40" width="150" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
-        <circle cx="535" cy="80" r="24" fill="rgba(189, 147, 249, 0.15)"/>
-        <text x="535" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="16">SERVICES</text>
-        <text x="535" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Stateless Nodes</text>
-        <text x="535" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Auto-scaled pods</text>
+        <!-- 3. Stateless Microservices -->
+        <g class="interactive-node" tabindex="0">
+          <rect x="430" y="40" width="150" height="160" rx="12" fill="url(#gradService)" stroke="var(--dracula-purple)" stroke-width="2.2"/>
+          <circle cx="505" cy="80" r="22" fill="rgba(189, 147, 249, 0.2)" class="flow-pulse"/>
+          <text x="505" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="15">APP SERVICES</text>
+          <text x="505" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="13">Stateless Pods</text>
+          <text x="505" y="148" text-anchor="middle" fill="var(--muted)" font-size="11">gRPC / Autoscaled</text>
+          <text x="505" y="178" text-anchor="middle" fill="var(--dracula-purple)" font-size="11" font-weight="700">Zero-State K8s</text>
+        </g>
 
-        <!-- Arrow 3 -> 4 -->
-        <path d="M620 115 H650" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="650,115 642,110 642,120" fill="var(--dracula-green)"/>
+        <!-- 4. Async Event Broker -->
+        <g class="interactive-node" tabindex="0">
+          <rect x="630" y="40" width="150" height="160" rx="12" fill="url(#gradQueue)" stroke="var(--dracula-orange)" stroke-width="2.2"/>
+          <circle cx="705" cy="80" r="22" fill="rgba(255, 184, 108, 0.2)" class="flow-pulse"/>
+          <text x="705" y="86" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="15">KAFKA BROKER</text>
+          <text x="705" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="13">Partitioned Topics</text>
+          <text x="705" y="148" text-anchor="middle" fill="var(--muted)" font-size="11">Outbox & Idempotency</text>
+          <text x="705" y="178" text-anchor="middle" fill="var(--dracula-orange)" font-size="11" font-weight="700">Zero Msg Loss</text>
+        </g>
 
-        <!-- Sharded Database -->
-        <rect x="660" y="40" width="110" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
-        <circle cx="715" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
-        <text x="715" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="14">SHARDS</text>
-        <text x="715" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="13">DB Cluster</text>
-        <text x="715" y="150" text-anchor="middle" fill="var(--muted)" font-size="11">Replicated</text>
+        <!-- 5. Sharded Storage Cluster -->
+        <g class="interactive-node" tabindex="0">
+          <rect x="800" y="40" width="110" height="160" rx="12" fill="url(#gradDB)" stroke="var(--dracula-green)" stroke-width="2.2"/>
+          <circle cx="855" cy="80" r="22" fill="rgba(80, 250, 123, 0.2)" class="flow-pulse"/>
+          <text x="855" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="14">DB SHARDS</text>
+          <text x="855" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="12">Virtual Nodes</text>
+          <text x="855" y="148" text-anchor="middle" fill="var(--muted)" font-size="10">WAL & Replicas</text>
+          <text x="855" y="178" text-anchor="middle" fill="var(--dracula-green)" font-size="11" font-weight="700">99.999% SLA</text>
+        </g>
       </svg>
     </div>
 
-    <!-- 4. Interactive Tabs: Các Case Study Kinh Điển -->
-    <h2>4. Ba bài học kiến trúc thực tế từ các gã khổng lồ</h2>
+    <!-- 4. Interactive Tabs: Bốn Khối Kiến Thức Chuyên Sâu -->
+    <h2>4. Kho Kiến Thức Chuyên Sâu (Deep Architectural Reference)</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-figma">Figma: Mở rộng 100x Postgres</button>
-        <button class="tab-btn" data-tab="tab-netflix">Netflix: Caching đa tầng</button>
-        <button class="tab-btn" data-tab="tab-uber">Uber: CI/CD Microservices</button>
+        <button class="tab-btn active" data-tab="tab-algorithms">Thuật toán & Cơ chế Cốt lõi</button>
+        <button class="tab-btn" data-tab="tab-tradeoffs">Ma trận Đánh đổi (CAP / PACELC)</button>
+        <button class="tab-btn" data-tab="tab-casestudies">Nghiên cứu Tình huống (Figma, Discord, Netflix, Shopify)</button>
+        <button class="tab-btn" data-tab="tab-troubleshoot">Chẩn đoán Sự cố & Failure Modes</button>
       </div>
 
-      <div class="tab-panel active" id="tab-figma">
+      <!-- Tab 1: Algorithms -->
+      <div class="tab-panel active" id="tab-algorithms">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Phân tách cơ sở dữ liệu không cần viết lại toàn bộ ứng dụng</h4>
-            <p>Figma bắt đầu bằng việc chia tách dọc (vertical partitioning) theo từng domain dữ liệu, sau đó áp dụng băm phân vùng ngang (horizontal sharding) để mở rộng cơ sở dữ liệu PostgreSQL gấp 100 lần mà không làm gián đoạn người dùng.</p>
+            <h4>1. Thuật toán Băm Nhất quán (Consistent Hashing với Virtual Nodes)</h4>
+            <p>Trong kiến trúc băm truyền thống <code>serverIndex = hash(key) % N</code>, khi thêm hoặc bớt 1 server thì hầu hết các khóa đều bị băm lại, gây ra thảm họa đè sập cơ sở dữ liệu. Consistent Hashing đưa khóa và máy chủ vào một vòng tròn không gian <code>[0, 2^32 - 1]</code>. Khi thêm một node mới, chỉ có trung bình <code>K/N</code> khóa cần tái phân phối.</p>
+            <p><strong>Cơ chế Virtual Nodes (Node ảo):</strong> Để tránh tình trạng phân bố không đều (hot spots), mỗi máy chủ vật lý được gắn hàng trăm node ảo (ví dụ: <code>Server1#1</code>, <code>Server1#2</code>...) rải đều khắp vòng tròn, bảo đảm độ lệch chuẩn lưu lượng nhỏ hơn 5%.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>2. Thuật toán Giới hạn Tốc độ (Token Bucket vs. Sliding Window)</h4>
+            <p><strong>Token Bucket:</strong> Một thùng chứa tối đa <code>B</code> token, mỗi giây được nạp thêm <code>R</code> token. Mỗi request tiêu tốn 1 token; nếu hết token thì từ chối ngay lập tức. Ưu điểm: cho phép các đợt lưu lượng đột biến ngắn (Burst) nhưng chặn đứng lưu lượng vượt tải kéo dài.</p>
+            <p><strong>Sliding Window Counter:</strong> Kết hợp độ chính xác của Sliding Log và bộ nhớ cực nhẹ của Fixed Window. Công thức tính request: <code>Requests = (Số request trong cửa sổ trước * Trọng số thời gian còn lại) + Số request cửa sổ hiện tại</code>.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>3. Giải thuật Xác suất XFetch chống Cache Stampede</h4>
+            <p>Khi một cache key có hàng nghìn request/giây bị hết hạn đúng một thời điểm, toàn bộ request sẽ tràn thẳng vào Database. XFetch sử dụng công thức xác suất: <code>delta * beta * ln(rand()) > TTL - now</code> để quyết định đọc lại dữ liệu và nạp mới ngầm trước khi key thực sự hết hạn, triệt tiêu 100% hiện tượng Thundering Herd.</p>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-netflix">
+      <!-- Tab 2: CAP & Tradeoffs -->
+      <div class="tab-panel" id="tab-tradeoffs">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Bốn chiến lược lưu tạm giữ chân người xem</h4>
-            <p>Netflix kết hợp cache cạnh mạng (Open Connect CDN), cache bộ nhớ cụm (EVCache phân tán) và pre-fetching dự đoán sở thích để phục vụ danh mục phim gần như tức thì.</p>
+            <h4>Định lý CAP & Định lý Mở rộng PACELC</h4>
+            <p>Trong hệ thống phân tán, khi xảy ra phân vùng mạng (Partition - P), bắt buộc phải chọn giữa Tính Nhất quán (Consistency - C) hoặc Tính Sẵn sàng (Availability - A).</p>
+            <p><strong>Định lý PACELC (Daniel Abadi):</strong> Nếu có Partition (P), hệ thống đánh đổi giữa Availability (A) và Consistency (C); <em>Else (E)</em> trong trạng thái mạng bình thường, hệ thống đánh đổi giữa Độ trễ (Latency - L) và Tính Nhất quán (Consistency - C):</p>
+            <div class="table-wrap">
+              <table class="guide-table">
+                <thead>
+                  <tr>
+                    <th>Hệ thống</th>
+                    <th>Phân loại PACELC</th>
+                    <th>Đặc điểm vận hành thực tế</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Amazon DynamoDB</strong></td>
+                    <td>PA/EL</td>
+                    <td>Ưu tiên Sẵn sàng khi đứt cáp (PA); khi bình thường ưu tiên Độ trễ cực thấp (EL). Chấp nhận Eventual Consistency.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Google Spanner</strong></td>
+                    <td>PC/EC</td>
+                    <td>Dùng đồng hồ nguyên tử TrueTime API để đạt cấp độ nhất quán nghiêm ngặt (Strict Serializability), đánh đổi chút độ trễ.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Apache Cassandra</strong></td>
+                    <td>PA/EL</td>
+                    <td>Cấu hình được quorum theo từng câu lệnh (<code>ONE</code>, <code>QUORUM</code>, <code>ALL</code>). Mặc định ưu tiên tốc độ ghi cực nhanh.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>PostgreSQL Sharded</strong></td>
+                    <td>PC/EC</td>
+                    <td>Tuân thủ chuẩn ACID. Nếu mạng đứt kết nối giữa các node replica thì từ chối ghi để bảo vệ tính đúng đắn dữ liệu.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-uber">
+      <!-- Tab 3: Case Studies -->
+      <div class="tab-panel" id="tab-casestudies">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Điều phối hàng nghìn microservices</h4>
-            <p>Sử dụng giao thức RPC hiệu năng cao (gRPC) và hệ thống Apache Kafka để xử lý hàng triệu tọa độ xe chạy và lệnh đặt chuyến mỗi giây.</p>
+            <h4>1. Figma: Phân mảnh ngang mở rộng 100x PostgreSQL</h4>
+            <p>Khi bảng dữ liệu người dùng và canvas vẽ phình to gây tắc nghẽn IOPS trên AWS RDS, Figma không chuyển sang NoSQL mà giữ lại PostgreSQL bằng cách thiết lập <strong>Horizontal Partitioning</strong>. Họ chọn <code>File_ID</code> làm Sharding Key, viết proxy định tuyến nội bộ phân tách 1 cơ sở dữ liệu khổng lồ thành hàng trăm cụm PostgreSQL nhỏ độc lập, mở rộng dung lượng gấp 100 lần mà không làm gián đoạn người dùng.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>2. Discord: Lưu trữ hàng nghìn tỷ tin nhắn (Cassandra sang ScyllaDB)</h4>
+            <p>Discord từng lưu hàng nghìn tỷ tin nhắn trên Apache Cassandra. Tuy nhiên, các đợt thu gom rác (Garbage Collection pauses) của JVM khiến độ trễ thỉnh thoảng vọt lên hàng giây. Discord đã di chuyển toàn bộ dữ liệu sang <strong>ScyllaDB</strong> (viết bằng C++ theo kiến trúc share-nothing và asynchronous seastar framework), giảm 99% độ trễ đuôi (p99 latency) từ vài giây xuống còn vài mili-giây.</p>
+          </div>
+          <div class="arch-layer">
+            <h4>3. Shopify: 10 Nguyên tắc vàng của Hệ thống Thanh toán Chịu lỗi</h4>
+            <p>Shopify xử lý hàng chục tỷ USD trong ngày Black Friday với nguyên tắc bất biến: <strong>Mọi request ghi đều phải có Idempotency-Key</strong>. Khi client bị timeout và gửi lại yêu cầu thanh toán lần thứ hai, hệ thống kiểm tra khóa trong Redis; nếu khóa đã tồn tại thì trả về ngay kết quả giao dịch trước đó, ngăn chặn hoàn toàn việc khách hàng bị trừ tiền hai lần.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Troubleshooting -->
+      <div class="tab-panel" id="tab-troubleshoot">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Chẩn đoán & Xử lý 4 Lỗi Kiến trúc Phổ biến Nhất</h4>
+            <ul>
+              <li><strong>Thundering Herd Problem:</strong> Hàng chục luồng cùng lao vào tính toán một tác vụ nặng khi cache hết hạn. <em>Giải pháp:</em> Dùng Distributed Lock (Redlock) hoặc giải thuật XFetch để chỉ duy nhất 1 luồng được quyền tính toán lại, các luồng khác nhận giá trị cũ (stale value) trong thời gian chờ.</li>
+              <li><strong>Split-Brain Syndrome:</strong> Khi kết nối mạng giữa 2 trung tâm dữ liệu bị đứt, cả 2 bên đều tự bầu mình làm Master, dẫn đến dữ liệu bị phân kỳ không thể cứu vãn. <em>Giải pháp:</em> Bắt buộc số lượng node tham gia biểu quyết phải là số lẻ (3, 5, 7) và chỉ cho phép ghi khi đạt quá bán (Quorum: <code>N/2 + 1</code>).</li>
+              <li><strong>Cascading Failure (Sập dây chuyền):</strong> Khi Service A chậm, Service B tiếp tục gửi request làm cạn kiệt connection pool của Service B, sau đó lây lan sang Service C. <em>Giải pháp:</em> Bọc mọi kết nối ngoại vi bằng Circuit Breaker (Netflix Hystrix / Resilience4j pattern) và thiết lập Timeout nghiêm ngặt ở mức mili-giây.</li>
+              <li><strong>Dead Letter Queue (DLQ) Recovery:</strong> Tin nhắn lỗi trong Kafka/RabbitMQ làm nghẽn toàn bộ consumer group. <em>Giải pháp:</em> Bắt exception, đẩy tin nhắn lỗi sang hàng đợi riêng DLQ để kỹ sư phân tích sau, tiếp tục xử lý các tin nhắn hợp lệ khác.</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 5. Hướng dẫn bắt đầu ngay -->
-    <h2>5. Ép Coding Agent tuân thủ tiêu chuẩn kiến trúc</h2>
+    <h2>5. Ép Coding Agent tuân thủ tiêu chuẩn kiến trúc ByteByteGo</h2>
     <div class="stepper-list">
       <div class="stepper-item">
         <div class="stepper-number">1</div>
         <div class="stepper-content">
-          <h4>Bắt buộc agent ước tính tải lượng trước khi thiết kế</h4>
-          <p>Yêu cầu agent tính toán QPS và dung lượng lưu trữ dự kiến trong 3 năm tới:</p>
+          <h4>Bắt buộc agent ước tính tải lượng thực tế (Back-of-the-envelope)</h4>
+          <p>Yêu cầu agent tính toán QPS, băng thông mạng và dung lượng lưu trữ dự kiến trước khi viết bất kỳ dòng mã nào:</p>
           <div class="code-block">
             <div class="code-block-header">
-              <span>Prompt · Ước tính quy mô</span>
+              <span>Prompt · Ước tính quy mô chuẩn xác</span>
               <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
             </div>
-            <pre><code>Trước khi viết code, hãy tính toán back-of-the-envelope estimation cho hệ thống: dự kiến 5 triệu người dùng hàng ngày (DAU), 10% người dùng thực hiện giao dịch, tính toán QPS đỉnh (Peak QPS) và dung lượng ổ cứng cần thiết mỗi tháng.</code></pre>
+            <pre><code>Trước khi bắt tay vào viết code, hãy tính toán back-of-the-envelope estimation cho hệ thống:
+1. Dự kiến 5 triệu người dùng hàng ngày (DAU), tỷ lệ đọc/ghi là 10:1.
+2. Tính toán QPS trung bình và QPS đỉnh (Peak QPS = 2x trung bình).
+3. Ước tính dung lượng lưu trữ cần thiết cho metadata và media trong vòng 3 năm.
+4. Trình bày bảng tính toán chi tiết và kết luận xem nên dùng cơ sở dữ liệu quan hệ (PostgreSQL) hay cơ sở dữ liệu NoSQL (Cassandra/DynamoDB).</code></pre>
           </div>
         </div>
       </div>
@@ -302,17 +422,17 @@
       <div class="stepper-item">
         <div class="stepper-number">2</div>
         <div class="stepper-content">
-          <h4>Chỉ định các mẫu thiết kế chống quá tải</h4>
-          <p>Yêu cầu agent bổ sung đầy đủ các chốt chặn an toàn trong mã nguồn:</p>
+          <h4>Chỉ định các mẫu thiết kế chống quá tải chuẩn doanh nghiệp</h4>
+          <p>Yêu cầu agent bổ sung đầy đủ các chốt chặn an toàn trong mã nguồn xử lý backend:</p>
           <div class="code-block">
             <div class="code-block-header">
-              <span>Prompt · Áp dụng mẫu phân tán</span>
+              <span>Prompt · Áp dụng mẫu phân tán chịu lỗi</span>
               <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
             </div>
             <pre><code>Hãy thiết kế module dịch vụ thanh toán tuân thủ các nguyên tắc ByteByteGo:
-1. Áp dụng Idempotency Key để chống trừ tiền hai lần khi retry.
-2. Thêm Circuit Breaker để tự ngắt khi ngân hàng đối tác bị trễ.
-3. Đẩy tác vụ gửi email thông báo sang hàng đợi RabbitMQ bất đồng bộ.</code></pre>
+1. Bắt buộc nhận Idempotency-Key từ request header; lưu trạng thái xử lý vào Redis với TTL 24 giờ để chống trừ tiền hai lần khi client retry.
+2. Tích hợp Circuit Breaker xung quanh các cuộc gọi đến cổng thanh toán đối tác (ngưỡng lỗi 50% trong 10 giây thì chuyển sang trạng thái OPEN).
+3. Đẩy tác vụ gửi email thông báo và xuất hóa đơn sang hàng đợi Kafka bất đồng bộ qua Transactional Outbox Pattern.</code></pre>
           </div>
         </div>
       </div>
@@ -320,8 +440,8 @@
       <div class="stepper-item">
         <div class="stepper-number">3</div>
         <div class="stepper-content">
-          <h4>Rà soát kiến trúc độc lập</h4>
-          <p>Yêu cầu agent tự phản biện lại thiết kế: "Nếu Redis sập thì database có chịu nổi không?", "Nếu shard số 3 chết thì dữ liệu được phục hồi ra sao?".</p>
+          <h4>Phản biện độc lập và kiểm tra tính chịu lỗi (Failure Mode Analysis)</h4>
+          <p>Trước khi nghiệm thu code của agent, hãy đặt 3 câu hỏi phỏng vấn hóc búa: "Nếu Redis cluster bị sập thì database có bị quá tải không?", "Nếu mạng đứt giữa 2 node replica thì cơ chế đồng thuận Raft/Paxos xử lý thế nào?", "Hệ thống có tự phục hồi khi service hồi sinh không?".</p>
         </div>
       </div>
     </div>
@@ -330,7 +450,7 @@
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
         <strong>Lời khuyên từ Alex Xu (Tác giả ByteByteGo)</strong>
-        <p>Không có hệ thống nào là "hoàn hảo tuyệt đối", chỉ có kiến trúc "phù hợp nhất với các đánh đổi". Khi yêu cầu agent thiết kế hệ thống, hãy luôn bắt nó nêu rõ lý do chọn SQL hay NoSQL, đánh đổi giữa độ trễ (latency) và tính toàn vẹn (durability) thay vì chỉ chọn công nghệ theo trào lưu.</p>
+        <p>Không có hệ thống nào là "hoàn hảo tuyệt đối", chỉ có kiến trúc "phù hợp nhất với các đánh đổi". Khi yêu cầu AI agent thiết kế hệ thống, hãy luôn bắt nó nêu rõ lý do chọn SQL hay NoSQL, đánh đổi giữa độ trễ (latency) và tính toàn vẹn (durability) theo định lý PACELC, thay vì chỉ chọn công nghệ theo trào lưu nhất thời.</p>
       </div>
     </div>
 

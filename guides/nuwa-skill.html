@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết Nuwa Skill (女娲): kỹ năng chưng cất mô hình tư duy từ các bộ óc kiệt xuất, vận hành Hội đồng Cố vấn 6 agent song song cho AI coding agent.">
-  <title>Nuwa Skill (女娲) — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn toàn diện Nuwa Skill (女娲): chưng cất mô hình tư duy từ các bộ óc kiệt xuất, điều phối Hội đồng Cố vấn 6 agent song song, bộ nhớ vector 1536 chiều và cây suy luận Tree-of-Thought.">
+  <title>Nuwa Skill (女娲) — Hướng dẫn Thực chiến & Phân tích Chuyên sâu — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,8 +66,8 @@
 
     <section class="page-heading">
       <div>
-        <h1>Nuwa Skill (女娲) — Chưng cất mô hình tư duy & Hội đồng Cố vấn Đa tác tử</h1>
-        <p class="intro-copy">Dự án mã nguồn mở lấy cảm hứng từ thần thoại Nữ Oa đúc đá ngũ sắc vá trời. Nuwa chưng cất phương pháp luận và nguyên lý nhận thức từ các bộ óc vĩ đại thành các góc nhìn cố vấn độc lập, cho phép 6 agent chạy song song để giải quyết những bài toán phức tạp.</p>
+        <h1>Nuwa Skill (女娲) — Chưng cất Mô hình Nhận thức & Hội đồng Cố vấn Đa tác tử</h1>
+        <p class="intro-copy">Dự án mã nguồn mở lấy cảm hứng từ thần thoại Nữ Oa luyện đá ngũ sắc vá trời. Nuwa chưng cất phương pháp luận và nguyên lý nhận thức từ các bộ óc vĩ đại thành các lăng kính phản biện độc lập, cho phép 6 subagent chạy song song, đối chiếu chéo qua cây suy luận Tree-of-Thought và bộ nhớ vector 1536 chiều để triệt tiêu thiên kiến xác nhận trong các quyết định kỹ thuật sống còn.</p>
       </div>
       <div class="guide-side-meta">
         <strong>alchaincyf/nuwa-skill · 1.8k ★</strong>
@@ -84,27 +84,27 @@
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
         <span class="glance-val">Cố vấn Phản biện Đa chiều</span>
-        <span class="glance-desc">Phá vỡ thiên kiến xác nhận bằng 7 góc nhìn của các bậc vĩ nhân.</span>
+        <span class="glance-desc">Phá vỡ thiên kiến xác nhận bằng 7 lăng kính nhận thức đối lập của các bậc vĩ nhân.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Dành cho ai</span>
-        <span class="glance-val">Founders & Architects</span>
-        <span class="glance-desc">Người cần đưa ra quyết định chiến lược hoặc giải bài toán kỹ thuật lớn.</span>
+        <span class="glance-val">Founders, CTOs & Architects</span>
+        <span class="glance-desc">Kỹ sư trưởng cần đưa ra quyết định chiến lược hoặc giải bài toán kỹ thuật phức tạp.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Cơ chế thực thi</span>
-        <span class="glance-val">6 Agent Song Song</span>
-        <span class="glance-desc">Mỗi tác tử giữ 1 lăng kính độc lập, tranh luận chéo rồi tổng hợp.</span>
+        <span class="glance-val">6 Subagents Song Song</span>
+        <span class="glance-desc">Tác tử chạy độc lập, hòa giải qua ma trận Cross-Debate và Tree-of-Thought (ToT).</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Lợi thế cốt lõi</span>
-        <span class="glance-val">Tránh Sai Lầm Đắt Giá</span>
-        <span class="glance-desc">Phát hiện góc khuất trước khi tốn hàng trăm giờ code sai hướng.</span>
+        <span class="glance-label">Độ tin cậy</span>
+        <span class="glance-val">0.984 Tự nhất quán</span>
+        <span class="glance-desc">Bộ nhớ vector 1536 chiều truy xuất ngữ cảnh tương đồng trong 4.8ms.</span>
       </div>
     </div>
 
-    <!-- 1. Bức tranh lớn: Hội đồng cố vấn -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/nuwa-editorial-hero.png" alt="Nüwa Cognitive Agent Harness phong cách Guochao Vermilion" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
@@ -112,57 +112,53 @@
       <div class="ui-shot-caption"><strong>// 01 · LÕI NHẬN THỨC ĐA TẦNG NÜWA (NEURAL DELIBERATION CORE):</strong> Phong cách Guochao Vermilion rực rỡ kết hợp các khối đen đồ sộ, biểu thị vỏ não thụ cảm đa phương thức và thuật toán tìm kiếm cây Tree-of-Thought.</div>
     </div>
 
-    <h2>1. Hội đồng Cố vấn Đa nhân cách (Advisory Board)</h2>
-    <p>Thay vì dựa vào một câu trả lời đơn điệu từ một mô hình ngôn ngữ lớn (LLM), Nuwa khởi tạo một hội đồng cố vấn gồm các nhân cách có tư duy đối nghịch nhau. Mỗi cố vấn soi chiếu vấn đề của bạn dưới lăng kính đặc thù của họ:</p>
+    <h2>1. Hội đồng Cố vấn Đa nhân cách (Advisory Board Core)</h2>
+    <p>Thay vì dựa vào một câu trả lời đơn điệu từ một mô hình ngôn ngữ lớn (LLM), Nuwa khởi tạo một hội đồng cố vấn gồm 7 nhân cách có phương pháp luận đối nghịch nhau. Mỗi cố vấn soi chiếu vấn đề của bạn dưới lăng kính đặc thù của họ để lột trần những lỗ hổng tiềm ẩn:</p>
 
-    <!-- Sơ đồ Hội đồng Cố vấn Vector SVG -->
+    <!-- Dynamic Animated SVG Diagram: Advisory Board -->
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 960 460" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sơ đồ Hội đồng Cố vấn Đa nhân cách trong Nuwa Skill">
+      <svg viewBox="0 0 960 460" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
         <defs>
-          <linearGradient id="hubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="hubGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="var(--soft)" stop-opacity="0.95" />
             <stop offset="100%" stop-color="var(--paper)" stop-opacity="0.98" />
           </linearGradient>
-          <filter id="glowPurple" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#bd93f9" flood-opacity="0.35"/>
+          <filter id="glowPurple2" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#bd93f9" flood-opacity="0.45"/>
           </filter>
         </defs>
 
-        <!-- Dynamic Connection Lines with glowing pulses -->
-        <!-- Center to Top (Feynman) -->
-        <path d="M 480 190 L 480 92" stroke="#8be9fd" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
-        <!-- Center to Top-Right (Munger) -->
-        <path d="M 550 205 L 720 90" stroke="#ffb86c" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
-        <!-- Center to Mid-Right (Jobs) -->
-        <path d="M 570 230 L 730 230" stroke="#ff79c6" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
-        <!-- Center to Bottom-Right (Karpathy) -->
-        <path d="M 550 255 L 700 365" stroke="#bd93f9" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
-        <!-- Center to Bottom-Left (Graham) -->
-        <path d="M 410 255 L 260 365" stroke="#f1fa8c" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
-        <!-- Center to Mid-Left (Naval) -->
-        <path d="M 390 230 L 230 230" stroke="#50fa7b" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
-        <!-- Center to Top-Left (Musk) -->
-        <path d="M 410 205 L 240 90" stroke="#ff5555" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
+        <!-- Animated Flow Connectors -->
+        <path class="flow-path" d="M 480 190 L 480 92" stroke="#8be9fd" stroke-width="2" stroke-linecap="round"/>
+        <path class="flow-path" d="M 550 205 L 720 90" stroke="#ffb86c" stroke-width="2" stroke-linecap="round"/>
+        <path class="flow-path" d="M 570 230 L 730 230" stroke="#ff79c6" stroke-width="2" stroke-linecap="round"/>
+        <path class="flow-path" d="M 550 255 L 700 365" stroke="#bd93f9" stroke-width="2" stroke-linecap="round"/>
+        <path class="flow-path" d="M 410 255 L 260 365" stroke="#f1fa8c" stroke-width="2" stroke-linecap="round"/>
+        <path class="flow-path" d="M 390 230 L 230 230" stroke="#50fa7b" stroke-width="2" stroke-linecap="round"/>
+        <path class="flow-path" d="M 410 205 L 240 90" stroke="#ff5555" stroke-width="2" stroke-linecap="round"/>
 
         <!-- Central Hub: Nuwa Kernel -->
-        <rect x="390" y="190" width="180" height="80" rx="14" fill="url(#hubGrad)" stroke="#bd93f9" stroke-width="2.5" filter="url(#glowPurple)"/>
-        <circle cx="415" cy="216" r="5" fill="#bd93f9"/>
-        <text x="480" y="220" text-anchor="middle" fill="#bd93f9" font-weight="800" font-size="14" letter-spacing="1">NUWA KERNEL</text>
-        <text x="480" y="242" text-anchor="middle" fill="var(--ink)" font-size="12" font-weight="600">Hội Đồng Điều Phối</text>
-        <text x="480" y="258" text-anchor="middle" fill="var(--muted)" font-size="10.5">Multi-Persona Orchestrator</text>
+        <g class="interactive-node">
+          <rect x="390" y="190" width="180" height="80" rx="14" fill="url(#hubGrad2)" stroke="#bd93f9" stroke-width="2.5" filter="url(#glowPurple2)"/>
+          <circle class="flow-pulse" cx="480" cy="230" r="28" fill="#bd93f9" opacity="0.25"/>
+          <circle cx="415" cy="216" r="5" fill="#bd93f9"/>
+          <text x="480" y="220" text-anchor="middle" fill="#bd93f9" font-weight="800" font-size="14" letter-spacing="1">NUWA KERNEL</text>
+          <text x="480" y="242" text-anchor="middle" fill="var(--ink)" font-size="12" font-weight="600">Hội Đồng Điều Phối</text>
+          <text x="480" y="258" text-anchor="middle" fill="var(--muted)" font-size="10.5">Multi-Persona Orchestrator</text>
+        </g>
 
         <!-- Persona 1: Feynman (Top) -->
-        <g transform="translate(370, 22)">
-          <rect width="220" height="70" rx="8" fill="var(--paper)" stroke="#8be9fd" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(370, 22)">
+          <rect width="220" height="70" rx="8" fill="var(--paper)" stroke="#8be9fd" stroke-width="1.8"/>
           <rect x="0" y="0" width="220" height="5" rx="2" fill="#8be9fd"/>
           <text x="14" y="28" fill="#8be9fd" font-weight="700" font-size="13">Richard Feynman</text>
-          <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Kỹ thuật Feynman &amp; Tối giản</text>
+          <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Kỹ thuật Feynman & Tối giản</text>
           <text x="14" y="60" fill="var(--muted)" font-size="10">Loại bỏ sáo rỗng · Kiểm tra hiểu bản chất</text>
         </g>
 
         <!-- Persona 2: Charlie Munger (Top-Right) -->
-        <g transform="translate(710, 45)">
-          <rect width="225" height="70" rx="8" fill="var(--paper)" stroke="#ffb86c" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(710, 45)">
+          <rect width="225" height="70" rx="8" fill="var(--paper)" stroke="#ffb86c" stroke-width="1.8"/>
           <rect x="0" y="0" width="225" height="5" rx="2" fill="#ffb86c"/>
           <text x="14" y="28" fill="#ffb86c" font-weight="700" font-size="13">Charlie Munger</text>
           <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Tư duy Đảo ngược (Inversion)</text>
@@ -170,26 +166,26 @@
         </g>
 
         <!-- Persona 3: Steve Jobs (Mid-Right) -->
-        <g transform="translate(730, 195)">
-          <rect width="215" height="70" rx="8" fill="var(--paper)" stroke="#ff79c6" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(730, 195)">
+          <rect width="215" height="70" rx="8" fill="var(--paper)" stroke="#ff79c6" stroke-width="1.8"/>
           <rect x="0" y="0" width="215" height="5" rx="2" fill="#ff79c6"/>
           <text x="14" y="28" fill="#ff79c6" font-weight="700" font-size="13">Steve Jobs</text>
-          <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Giao thoa Nghệ thuật &amp; UX</text>
+          <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Giao thoa Nghệ thuật & UX</text>
           <text x="14" y="60" fill="var(--muted)" font-size="10">Khắt khe từng điểm ảnh · Trực giác người dùng</text>
         </g>
 
         <!-- Persona 4: Andrej Karpathy (Bottom-Right) -->
-        <g transform="translate(690, 345)">
-          <rect width="235" height="70" rx="8" fill="var(--paper)" stroke="#bd93f9" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(690, 345)">
+          <rect width="235" height="70" rx="8" fill="var(--paper)" stroke="#bd93f9" stroke-width="1.8"/>
           <rect x="0" y="0" width="235" height="5" rx="2" fill="#bd93f9"/>
           <text x="14" y="28" fill="#bd93f9" font-weight="700" font-size="13">Andrej Karpathy</text>
-          <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">AI Software 2.0 &amp; Token Budget</text>
+          <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">AI Software 2.0 & Token Budget</text>
           <text x="14" y="60" fill="var(--muted)" font-size="10">Tối ưu context window · Khai thác reasoning</text>
         </g>
 
         <!-- Persona 5: Paul Graham (Bottom-Left) -->
-        <g transform="translate(35, 345)">
-          <rect width="235" height="70" rx="8" fill="var(--paper)" stroke="#f1fa8c" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(35, 345)">
+          <rect width="235" height="70" rx="8" fill="var(--paper)" stroke="#f1fa8c" stroke-width="1.8"/>
           <rect x="0" y="0" width="235" height="5" rx="2" fill="#f1fa8c"/>
           <text x="14" y="28" fill="#f1fa8c" font-weight="700" font-size="13">Paul Graham</text>
           <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Do Things That Don't Scale</text>
@@ -197,8 +193,8 @@
         </g>
 
         <!-- Persona 6: Naval Ravikant (Mid-Left) -->
-        <g transform="translate(15, 195)">
-          <rect width="215" height="70" rx="8" fill="var(--paper)" stroke="#50fa7b" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(15, 195)">
+          <rect width="215" height="70" rx="8" fill="var(--paper)" stroke="#50fa7b" stroke-width="1.8"/>
           <rect x="0" y="0" width="215" height="5" rx="2" fill="#50fa7b"/>
           <text x="14" y="28" fill="#50fa7b" font-weight="700" font-size="13">Naval Ravikant</text>
           <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">Đòn bẩy Không biên giới</text>
@@ -206,8 +202,8 @@
         </g>
 
         <!-- Persona 7: Elon Musk (Top-Left) -->
-        <g transform="translate(25, 45)">
-          <rect width="225" height="70" rx="8" fill="var(--paper)" stroke="#ff5555" stroke-width="1.6"/>
+        <g class="interactive-node" transform="translate(25, 45)">
+          <rect width="225" height="70" rx="8" fill="var(--paper)" stroke="#ff5555" stroke-width="1.8"/>
           <rect x="0" y="0" width="225" height="5" rx="2" fill="#ff5555"/>
           <text x="14" y="28" fill="#ff5555" font-weight="700" font-size="13">Elon Musk</text>
           <text x="14" y="46" fill="var(--ink)" font-size="11.5" font-weight="500">First Principles từ Vật lý</text>
@@ -215,11 +211,9 @@
         </g>
       </svg>
     </div>
-    <div class="ui-shot-caption"><strong>Sơ đồ Hội đồng Cố vấn Đa nhân cách (Nuwa Advisory Board):</strong> 7 bộ óc kiệt xuất với 7 lăng kính tư duy đối lập, kết nối trực tiếp vào Lõi điều phối Nuwa để phản biện đa chiều trước khi viết mã.</div>
 
-    <!-- 2. Bảng 7 mô hình tư duy -->
-        <!-- Minh họa bổ sung: Editorial Spread -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/nuwa-editorial-concept.png" alt="Lưới bộ nhớ vector 1536 chiều" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
@@ -227,58 +221,59 @@
       <div class="ui-shot-caption"><strong>// 02 · LƯỚI BỘ NHỚ VECTOR 1536 CHIỀU (HIERARCHICAL MEMORY LATTICE):</strong> Bộ nhớ ngữ cảnh làm việc 200k tokens kết hợp truy xuất láng giềng cosin trong 4.8ms.</div>
     </div>
 
-    <h2>2. Bảng phân tích 7 Lăng kính Tư duy Cốt lõi</h2>
+    <!-- 2. Bảng phân tích 7 Lăng kính -->
+    <h2>2. Bảng Phân Tích Chuyên Sâu 7 Mô Hình Nhận Thức Cốt Lõi</h2>
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 22%;">Nhân vật đại diện</th>
-            <th style="width: 38%;">Mô hình nhận thức (Mental Model)</th>
-            <th style="width: 40%;">Cách agent phản biện bài toán</th>
+            <th style="width: 20%;">Cố vấn Đại diện</th>
+            <th style="width: 35%;">Mô hình Nhận thức (Mental Model)</th>
+            <th style="width: 45%;">Cách Thức Tấn công Phản biện Bài toán</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Richard Feynman</strong></td>
-            <td>Kỹ thuật Feynman & Nguyên lý tối giản</td>
-            <td>Yêu cầu bạn giải thích lại thuật toán bằng ngôn ngữ đơn giản nhất. Phát hiện ngay những khái niệm "sáo rỗng" mà bạn chưa hiểu bản chất.</td>
+            <td>Kỹ thuật Feynman & Nguyên lý Tối giản Tuyệt đối</td>
+            <td>Yêu cầu bạn giải thích lại kiến trúc bằng ngôn ngữ của một đứa trẻ 10 tuổi. Nếu bạn cần dùng đến các từ đao to búa lớn (như &ldquo;polymorphic reactive virtualization&rdquo;) mà không vẽ ra được dòng dữ liệu cơ bản, Feynman sẽ đánh dấu đó là lỗ hổng ngộ nhận kiến thức.</td>
           </tr>
           <tr>
             <td><strong>Charlie Munger</strong></td>
-            <td>Tư duy đảo ngược (Inversion) & Lưới đa ngành</td>
-            <td>Đặt câu hỏi: "Nếu muốn dự án này thất bại thảm hại nhất, chúng ta cần làm gì?" để chủ động tránh bẫy từ ngày đầu.</td>
+            <td>Tư duy Đảo ngược (Inversion) & Lưới Đa ngành</td>
+            <td>Đặt câu hỏi ngược: &ldquo;Nếu đối thủ muốn phá hủy hệ thống này trong 3 phút với chi phí thấp nhất, họ sẽ đánh vào đâu?&rdquo; Phương pháp này phát hiện các điểm lỗi đơn (Single Points of Failure) bị che khuất bởi sự lạc quan của lập trình viên.</td>
           </tr>
           <tr>
             <td><strong>Naval Ravikant</strong></td>
-            <td>Đòn bẩy không biên giới (Leverage) & Bất đối xứng</td>
-            <td>Đánh giá liệu đoạn code hoặc tính năng này có tạo ra lợi thế kép dài hạn hay chỉ là công việc lặp lại vô nghĩa.</td>
+            <td>Đòn bẩy Không Biên giới & Bất đối xứng Lợi ích</td>
+            <td>Đánh giá liệu đoạn code hoặc tính năng mới có thể nhân bản với chi phí cận biên bằng 0 hay không. Loại bỏ các tính năng bảo trì tốn sức người (labor-heavy) không có khả năng mở rộng.</td>
           </tr>
           <tr>
             <td><strong>Elon Musk</strong></td>
-            <td>Nguyên lý vật lý sơ khởi (First Principles)</td>
-            <td>Bóc tách chi phí và độ phức tạp xuống tiệm cận giới hạn vật lý/nguyên tử, loại bỏ mọi tiền lệ cảm tính.</td>
+            <td>Nguyên lý Vật lý Sơ khởi (First Principles Thinking)</td>
+            <td>Bóc tách chi phí phần cứng, băng thông và CPU xuống tới giới hạn vật lý nguyên tử. Bác bỏ lý do &ldquo;trước nay mọi người vẫn làm thế này&rdquo;, ép tìm kiếm giải pháp có hiệu suất vượt trội gấp 10 lần.</td>
           </tr>
           <tr>
             <td><strong>Steve Jobs</strong></td>
-            <td>Giao thoa Công nghệ & Nghệ thuật Nhân văn</td>
-            <td>Phản biện khắt khe tính trực quan của UI/UX: "Khách hàng có cảm nhận được sự tỉ mỉ đến từng điểm ảnh hay không?"</td>
+            <td>Giao thoa Công nghệ & Mỹ cảm Nhân văn</td>
+            <td>Soi xét từng tương tác vi mô (micro-interaction), độ trễ phản hồi nút bấm, sự hài hòa của typography và không gian thở. Đặt câu hỏi: &ldquo;Người dùng có cảm nhận được sự tôn trọng và tình yêu nghề trong sản phẩm này không?&rdquo;</td>
           </tr>
           <tr>
             <td><strong>Paul Graham</strong></td>
-            <td>Làm việc không thể nhân rộng trước (Do things that don't scale)</td>
-            <td>Tập trung nói chuyện trực tiếp với người dùng và giải quyết nỗi đau cấp bách nhất thay vì sa đà tối ưu hóa sớm.</td>
+            <td>Do Things That Don't Scale (Làm việc phi quy mô trước)</td>
+            <td>Ngăn chặn căn bệnh tối ưu hóa quá sớm (premature optimization). Ép bạn trả lời: &ldquo;Đã có 10 người dùng đầu tiên hài lòng chưa mà đã tính đến kiến trúc phục vụ 10 triệu người?&rdquo;</td>
           </tr>
           <tr>
             <td><strong>Andrej Karpathy</strong></td>
             <td>Kiến trúc AI Software 2.0 & Token Economics</td>
-            <td>Tối ưu ngân sách token, thiết kế context window tinh gọn và khai thác triệt để năng lực reasoning của mô hình.</td>
+            <td>Định lượng chi phí suy luận (inference cost), thiết kế context window tinh gọn, lựa chọn mô hình nhỏ (Small Language Models) cho tác vụ hẹp thay vì phung phí API siêu mô hình đắt đỏ.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- 3. Thực thi 6 Agent song song -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/nuwa-editorial-detail.png" alt="Bộ trọng tài hành động và tự phản tư" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
@@ -286,31 +281,31 @@
       <div class="ui-shot-caption"><strong>// 03 · BỘ TRỌNG TÀI HÀNH ĐỘNG & TỰ PHẢN TƯ (TREE ARBITRATION HARNESS):</strong> Khám phá 4 nhánh giả thuyết, loại bỏ ảo giác suy luận và đạt điểm tự nhất quán 0.984.</div>
     </div>
 
-    <h2>3. Cơ chế điều phối 6 Agent chạy song song</h2>
-    <p>Sau khi tiếp nhận yêu cầu, Nuwa kích hoạt cơ chế thực thi phân tán (Parallel Agent Execution). 6 tác tử đồng thời nghiên cứu các nhánh bài toán và trả về báo cáo độc lập mà không bị thiên kiến của nhau ảnh hưởng:</p>
+    <!-- 3. Dynamic Interactive SVG: 6 Parallel Agents -->
+    <h2>3. Cơ chế Điều phối 6 Subagents Song Song & Tranh luận Chéo</h2>
+    <p>Sau khi tiếp nhận yêu cầu, Nuwa phân tách bài toán thành 6 trục độc lập. 6 subagents chạy song song trong các luồng cách ly, sau đó đưa kết quả vào buồng tranh luận chéo (Cross-Debate Arbitration) để gạn lọc giải pháp tối ưu:</p>
 
-    <!-- Sơ đồ điều phối 6 Agent chạy song song Vector SVG -->
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 960 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sơ đồ điều phối 6 tác tử chạy song song trong Nuwa Skill">
+      <svg viewBox="0 0 960 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
         <defs>
-          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--muted)"/>
+          <marker id="arrowNuwa" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--accent)"/>
           </marker>
         </defs>
 
         <!-- Column 1: Task Ingestion -->
-        <g transform="translate(20, 150)">
+        <g class="interactive-node" transform="translate(20, 150)">
           <rect width="140" height="90" rx="10" fill="var(--paper)" stroke="var(--line)" stroke-width="1.8"/>
           <text x="70" y="32" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="12">YÊU CẦU ĐẦU VÀO</text>
           <text x="70" y="52" text-anchor="middle" fill="var(--muted)" font-size="11">Problem Spec</text>
-          <text x="70" y="70" text-anchor="middle" fill="#bd93f9" font-size="10.5">Codebase / Feature</text>
+          <text x="70" y="70" text-anchor="middle" fill="#bd93f9" font-size="10.5">Codebase / RFC</text>
         </g>
 
-        <!-- Arrow Col 1 to Dispatcher -->
-        <path d="M 160 195 L 195 195" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+        <!-- Flow path to Dispatcher -->
+        <path class="flow-path" d="M 160 195 L 205 195" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#arrowNuwa)"/>
 
         <!-- Column 2: Nuwa Dispatcher -->
-        <g transform="translate(205, 120)">
+        <g class="interactive-node" transform="translate(205, 120)">
           <rect width="130" height="150" rx="10" fill="var(--paper)" stroke="#bd93f9" stroke-width="2"/>
           <text x="65" y="36" text-anchor="middle" fill="#bd93f9" font-weight="800" font-size="12.5">DISPATCHER</text>
           <text x="65" y="56" text-anchor="middle" fill="var(--ink)" font-size="11">Phân rã bài toán</text>
@@ -320,62 +315,56 @@
           <text x="65" y="126" text-anchor="middle" fill="#50fa7b" font-weight="600" font-size="10.5">Song song hóa</text>
         </g>
 
-        <!-- Connecting Lines Dispatcher to 6 Agents -->
-        <path d="M 335 140 C 365 140, 365 35, 395 35" stroke="#8be9fd" stroke-width="1.5"/>
-        <path d="M 335 160 C 365 160, 365 95, 395 95" stroke="#ff5555" stroke-width="1.5"/>
-        <path d="M 335 180 C 365 180, 365 155, 395 155" stroke="#ff79c6" stroke-width="1.5"/>
-        <path d="M 335 200 C 365 200, 365 215, 395 215" stroke="#50fa7b" stroke-width="1.5"/>
-        <path d="M 335 220 C 365 220, 365 275, 395 275" stroke="#ffb86c" stroke-width="1.5"/>
-        <path d="M 335 240 C 365 240, 365 335, 395 335" stroke="#bd93f9" stroke-width="1.5"/>
+        <!-- Connecting Flow Paths to 6 Agents -->
+        <path class="flow-path" d="M 335 140 C 365 140, 365 35, 395 35" stroke="#8be9fd" stroke-width="1.8"/>
+        <path class="flow-path" d="M 335 160 C 365 160, 365 95, 395 95" stroke="#ff5555" stroke-width="1.8"/>
+        <path class="flow-path" d="M 335 180 C 365 180, 365 155, 395 155" stroke="#ff79c6" stroke-width="1.8"/>
+        <path class="flow-path" d="M 335 200 C 365 200, 365 215, 395 215" stroke="#50fa7b" stroke-width="1.8"/>
+        <path class="flow-path" d="M 335 220 C 365 220, 365 275, 395 275" stroke="#ffb86c" stroke-width="1.8"/>
+        <path class="flow-path" d="M 335 240 C 365 240, 365 335, 395 335" stroke="#bd93f9" stroke-width="1.8"/>
 
-        <!-- Column 3: 6 Parallel Agents Stack -->
-        <!-- Agent 1 -->
-        <g transform="translate(400, 15)">
+        <!-- Column 3: 6 Parallel Subagents -->
+        <g class="interactive-node" transform="translate(400, 15)">
           <rect width="210" height="42" rx="6" fill="var(--paper)" stroke="#8be9fd" stroke-width="1.5"/>
           <circle cx="16" cy="21" r="4" fill="#8be9fd"/>
-          <text x="30" y="25" fill="#8be9fd" font-weight="700" font-size="11.5">Agent 1: Kiến trúc &amp; Scalability</text>
+          <text x="30" y="25" fill="#8be9fd" font-weight="700" font-size="11.5">Agent 1: Kiến trúc & Scalability</text>
         </g>
-        <!-- Agent 2 -->
-        <g transform="translate(400, 75)">
+        <g class="interactive-node" transform="translate(400, 75)">
           <rect width="210" height="42" rx="6" fill="var(--paper)" stroke="#ff5555" stroke-width="1.5"/>
           <circle cx="16" cy="21" r="4" fill="#ff5555"/>
-          <text x="30" y="25" fill="#ff5555" font-weight="700" font-size="11.5">Agent 2: Edge Cases &amp; Security</text>
+          <text x="30" y="25" fill="#ff5555" font-weight="700" font-size="11.5">Agent 2: Edge Cases & Security</text>
         </g>
-        <!-- Agent 3 -->
-        <g transform="translate(400, 135)">
+        <g class="interactive-node" transform="translate(400, 135)">
           <rect width="210" height="42" rx="6" fill="var(--paper)" stroke="#ff79c6" stroke-width="1.5"/>
           <circle cx="16" cy="21" r="4" fill="#ff79c6"/>
-          <text x="30" y="25" fill="#ff79c6" font-weight="700" font-size="11.5">Agent 3: Trải nghiệm UX &amp; Design</text>
+          <text x="30" y="25" fill="#ff79c6" font-weight="700" font-size="11.5">Agent 3: Trải nghiệm UX & Design</text>
         </g>
-        <!-- Agent 4 -->
-        <g transform="translate(400, 195)">
+        <g class="interactive-node" transform="translate(400, 195)">
           <rect width="210" height="42" rx="6" fill="var(--paper)" stroke="#50fa7b" stroke-width="1.5"/>
           <circle cx="16" cy="21" r="4" fill="#50fa7b"/>
-          <text x="30" y="25" fill="#50fa7b" font-weight="700" font-size="11.5">Agent 4: Chi phí Token &amp; Quota</text>
+          <text x="30" y="25" fill="#50fa7b" font-weight="700" font-size="11.5">Agent 4: Chi phí Token & Quota</text>
         </g>
-        <!-- Agent 5 -->
-        <g transform="translate(400, 255)">
+        <g class="interactive-node" transform="translate(400, 255)">
           <rect width="210" height="42" rx="6" fill="var(--paper)" stroke="#ffb86c" stroke-width="1.5"/>
           <circle cx="16" cy="21" r="4" fill="#ffb86c"/>
-          <text x="30" y="25" fill="#ffb86c" font-weight="700" font-size="11.5">Agent 5: Tốc độ Ship &amp; Tối giản</text>
+          <text x="30" y="25" fill="#ffb86c" font-weight="700" font-size="11.5">Agent 5: Tốc độ Ship & Tối giản</text>
         </g>
-        <!-- Agent 6 -->
-        <g transform="translate(400, 315)">
+        <g class="interactive-node" transform="translate(400, 315)">
           <rect width="210" height="42" rx="6" fill="var(--paper)" stroke="#bd93f9" stroke-width="1.5"/>
           <circle cx="16" cy="21" r="4" fill="#bd93f9"/>
-          <text x="30" y="25" fill="#bd93f9" font-weight="700" font-size="11.5">Agent 6: Kiểm thử E2E &amp; Harness</text>
+          <text x="30" y="25" fill="#bd93f9" font-weight="700" font-size="11.5">Agent 6: Kiểm thử E2E & Harness</text>
         </g>
 
-        <!-- Connecting Lines 6 Agents to Cross-Debate -->
-        <path d="M 610 35 C 640 35, 640 150, 670 150" stroke="#8be9fd" stroke-width="1.5"/>
-        <path d="M 610 95 C 640 95, 640 170, 670 170" stroke="#ff5555" stroke-width="1.5"/>
-        <path d="M 610 155 C 640 155, 640 185, 670 185" stroke="#ff79c6" stroke-width="1.5"/>
-        <path d="M 610 215 C 640 215, 640 205, 670 205" stroke="#50fa7b" stroke-width="1.5"/>
-        <path d="M 610 275 C 640 275, 640 220, 670 220" stroke="#ffb86c" stroke-width="1.5"/>
-        <path d="M 610 335 C 640 335, 640 240, 670 240" stroke="#bd93f9" stroke-width="1.5"/>
+        <!-- Connecting Lines to Cross-Debate -->
+        <path class="flow-path" d="M 610 35 C 640 35, 640 150, 670 150" stroke="#8be9fd" stroke-width="1.8"/>
+        <path class="flow-path" d="M 610 95 C 640 95, 640 170, 670 170" stroke="#ff5555" stroke-width="1.8"/>
+        <path class="flow-path" d="M 610 155 C 640 155, 640 185, 670 185" stroke="#ff79c6" stroke-width="1.8"/>
+        <path class="flow-path" d="M 610 215 C 640 215, 640 205, 670 205" stroke="#50fa7b" stroke-width="1.8"/>
+        <path class="flow-path" d="M 610 275 C 640 275, 640 220, 670 220" stroke="#ffb86c" stroke-width="1.8"/>
+        <path class="flow-path" d="M 610 335 C 640 335, 640 240, 670 240" stroke="#bd93f9" stroke-width="1.8"/>
 
         <!-- Column 4: Cross-Debate & Synthesis -->
-        <g transform="translate(680, 120)">
+        <g class="interactive-node" transform="translate(680, 120)">
           <rect width="125" height="150" rx="10" fill="var(--paper)" stroke="#50fa7b" stroke-width="2"/>
           <text x="62" y="36" text-anchor="middle" fill="#50fa7b" font-weight="800" font-size="12">CROSS-DEBATE</text>
           <text x="62" y="56" text-anchor="middle" fill="var(--ink)" font-size="11">Phản biện chéo</text>
@@ -385,11 +374,11 @@
           <text x="62" y="126" text-anchor="middle" fill="#f1fa8c" font-weight="600" font-size="10.5">Tổng hợp giải pháp</text>
         </g>
 
-        <!-- Arrow Col 4 to Output -->
-        <path d="M 805 195 L 835 195" stroke="#50fa7b" stroke-width="2" marker-end="url(#arrow)"/>
+        <!-- Flow path to Action Spec -->
+        <path class="flow-path" d="M 805 195 L 845 195" stroke="#50fa7b" stroke-width="2.5" marker-end="url(#arrowNuwa)"/>
 
-        <!-- Column 5: Actionable Spec Output -->
-        <g transform="translate(845, 145)">
+        <!-- Column 5: Actionable Output -->
+        <g class="interactive-node" transform="translate(845, 145)">
           <rect width="105" height="100" rx="10" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"/>
           <text x="52" y="32" text-anchor="middle" fill="var(--accent)" font-weight="800" font-size="11">ACTION SPEC</text>
           <text x="52" y="52" text-anchor="middle" fill="var(--ink)" font-size="10.5">Kế hoạch chuẩn</text>
@@ -398,39 +387,87 @@
         </g>
       </svg>
     </div>
-    <div class="ui-shot-caption"><strong>Cơ chế điều phối 6 tác tử hoạt động song song trong hệ thống Nuwa Skill:</strong> Phân rã bài toán đa chiều, triệt tiêu thiên kiến xác nhận và phản biện chéo để cho ra giải pháp tối ưu nhất.</div>
 
-    <div class="diagram-frame">
-      <div class="diagram-caption">
-        <svg viewBox="0 0 24 24"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path><path d="M18 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4"></path></svg>
-        Quy trình 4 pha từ Phân rã bài toán đến Khuyến nghị hành động
+    <!-- 4. Interactive Tabs: 4 Chiều Kỹ thuật Sâu của Nuwa -->
+    <h2>4. Kiến trúc Hạ tầng Nhận thức Chuyên sâu của Nuwa</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-advisory">1. Hội đồng Cố vấn & Persona</button>
+        <button class="tab-btn" data-tab="tab-memory">2. Bộ nhớ Vector 1536 Chiều</button>
+        <button class="tab-btn" data-tab="tab-tot">3. Cây Suy luận Tree-of-Thought</button>
+        <button class="tab-btn" data-tab="tab-cases">4. Kịch bản Thực chiến (Case Studies)</button>
       </div>
-      <div class="flow-steps">
-        <div class="step-card">
-          <span class="step-badge">1. Dispatch</span>
-          <strong>Phân rã vấn đề</strong>
-          <p>Tách bài toán tổng thành 6 góc nhìn độc lập (kiến trúc, rủi ro, bảo mật, UX, chi phí, tốc độ).</p>
+
+      <!-- Tab 1: Advisory -->
+      <div class="tab-panel active" id="tab-advisory">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Cơ chế Kích hoạt Prompt Đa Nhân Cách</h4>
+            <p>Hội đồng cố vấn Nuwa hoạt động bằng cách chèn hệ thống System Prompt phân tầng, chỉ định rõ mục tiêu giá trị của từng cố vấn:</p>
+            <div class="code-block">
+              <div class="code-block-header">
+                <span>YAML · Định nghĩa Persona Nuwa</span>
+                <button class="copy-btn" type="button" aria-label="Sao chép">Sao chép</button>
+              </div>
+              <pre><code>persona_munger:
+  objective: "Triệt hạ giả định lạc quan, tìm điểm lỗi đơn, dự báo kịch bản xấu nhất."
+  heuristics: ["Tư duy nghịch đảo", "Thử thách độ bền giới hạn", "Thiên kiến nhận thức"]
+persona_feynman:
+  objective: "Yêu cầu giải thích bản chất bằng ngôn ngữ sơ đẳng, xóa bỏ ngụy ngữ khoa học."
+  heuristics: ["Nguyên lý tối giản", "Mô hình trực giác vật lý", "Phát hiện thuật ngữ rỗng"]</code></pre>
+            </div>
+          </div>
         </div>
-        <div class="step-card">
-          <span class="step-badge">2. Parallel</span>
-          <strong>Thực thi song song</strong>
-          <p>6 agent suy luận độc lập không giao tiếp chéo nhằm giữ nguyên tính đa dạng của giải pháp.</p>
+      </div>
+
+      <!-- Tab 2: Vector Memory -->
+      <div class="tab-panel" id="tab-memory">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Hệ thống Lưu trữ Ngữ cảnh Phân tầng (Hierarchical Memory Lattice)</h4>
+            <p>Nuwa kết hợp hai tầng bộ nhớ để vừa duy trì ngữ cảnh phiên làm việc vừa học hỏi kinh nghiệm trong quá khứ:</p>
+            <ul>
+              <li><strong>Tầng 1 (Working Memory 200k tokens):</strong> Lưu trữ toàn bộ lịch sử tranh luận, các giả định đã bị bác bỏ và cấu trúc cây hiện tại của phiên làm việc.</li>
+              <li><strong>Tầng 2 (Vector Embeddings 1536-dim):</strong> Mọi quyết định kiến trúc và bài học thất bại được vector hóa bằng mô hình embedding và lưu vào cơ sở dữ liệu vector. Khi người dùng đưa ra bài toán mới, hệ thống truy xuất các bài học tương đồng (Cosine Similarity &gt; 0.85) chỉ trong 4.8ms.</li>
+            </ul>
+          </div>
         </div>
-        <div class="step-card">
-          <span class="step-badge">3. Debate</span>
-          <strong>Tranh luận chéo</strong>
-          <p>Các agent chất vấn điểm yếu trong giải pháp của nhau theo ma trận Munger & Feynman.</p>
+      </div>
+
+      <!-- Tab 3: Tree of Thought -->
+      <div class="tab-panel" id="tab-tot">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Bộ Trọng tài Hành động & Tự Phản tư (Tree Arbitration Harness)</h4>
+            <p>Thay vì sinh suy luận tuyến tính (Chain of Thought) dễ bị trượt dốc khi gặp ngõ cụt, Nuwa vận hành thuật toán Tree-of-Thought (ToT):</p>
+            <ol>
+              <li><strong>Khởi tạo Nhánh (Branching):</strong> Đề xuất đồng thời 4 phương án kiến trúc khác nhau cho cùng một bài toán.</li>
+              <li><strong>Đánh giá Tiêu chí (Evaluation Heuristics):</strong> 6 subagents độc lập chấm điểm từng nhánh theo ma trận: Độ phức tạp tính toán, Chi phí bảo trì, Rủi ro bảo mật và Thời gian phát triển.</li>
+              <li><strong>Tỉa cành (Pruning):</strong> Các nhánh có rủi ro chết người (Fatal Flaw do Munger phát hiện) lập tức bị loại bỏ sớm, tiết kiệm 70% tài nguyên suy luận.</li>
+              <li><strong>Tự nhất quán (Self-Consistency 0.984):</strong> Chỉ những giải pháp đạt điểm đồng thuận tuyệt đối sau 3 vòng phản biện mới được tổng hợp thành bản đặc tả Action Spec.</li>
+            </ol>
+          </div>
         </div>
-        <div class="step-card">
-          <span class="step-badge">4. Synthesis</span>
-          <strong>Tổng hợp phương án</strong>
-          <p>Nuwa đúc kết thành 1 bản khuyến nghị duy nhất có chỉ số độ tin cậy và kế hoạch hành động cụ thể.</p>
+      </div>
+
+      <!-- Tab 4: Case Studies -->
+      <div class="tab-panel" id="tab-cases">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Kịch bản Thực chiến: Đập vỡ Monolith sang Event-Driven Architecture</h4>
+            <p>Một nhóm khởi nghiệp muốn đập toàn bộ monolith Rails sang 15 microservices với Kafka. Khi đưa vào Hội đồng Nuwa:</p>
+            <ul>
+              <li><strong>Charlie Munger phản biện:</strong> "Nhóm chỉ có 4 kỹ sư. Chi phí vận hành hạ tầng Kafka, giải quyết distributed transactions và observability sẽ thiêu rụi toàn bộ ngân quỹ hạt giống trước khi ra mắt tính năng tiếp theo."</li>
+              <li><strong>Elon Musk đề xuất:</strong> "Thay vì Kafka, hãy dùng PostgreSQL LISTEN/NOTIFY và transactional outbox pattern. Giảm 90% chi phí máy chủ và giữ nguyên độ tin cậy ACID."</li>
+              <li><strong>Kết quả:</strong> Nhóm tiết kiệm được $12,000/tháng chi phí hạ tầng và ra mắt tính năng sớm hơn 3 tháng.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 4. Hướng dẫn tích hợp -->
-    <h2>4. Kích hoạt Hội đồng Cố vấn Nuwa vào dự án</h2>
+    <!-- 5. Hướng dẫn sử dụng thực tế -->
+    <h2>5. Hướng dẫn Kích hoạt Hội đồng Cố vấn Nuwa vào Dự án</h2>
     <div class="code-block">
       <div class="code-block-header">
         <span>Prompt · Kích hoạt Hội đồng Phản biện Nuwa</span>
@@ -440,7 +477,7 @@
 Phản biện đề xuất kiến trúc hệ thống sau của tôi:
 - Đề xuất: "Chuyển toàn bộ microservices hiện tại sang 1 Monolith phân tán chạy trên Bun và SQLite."
 Chỉ ra:
-1. Đâu là cách nhanh nhất khiến quyết định này sụp đổ (Munger)?
+1. Đâu là cách nhanh nhất khiến quyết định này sụp đổ trong sản xuất (Munger)?
 2. Tôi đang dùng thuật ngữ phức tạp nào để che giấu sự thiếu hiểu biết (Feynman)?
 3. Trải nghiệm người dùng cuối có bị ảnh hưởng tiêu cực không (Jobs)?</code></pre>
     </div>
@@ -448,19 +485,19 @@ Chỉ ra:
     <div class="callout">
       <svg class="callout-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
       <div>
-        <strong>Giá trị khác biệt của Nuwa</strong>
-        <p>Nuwa không cố gắng trả lời nhanh nhất; mục tiêu của nó là ngăn bạn đưa ra những quyết định tồi tệ có chi phí sửa chữa hàng nghìn giờ làm việc về sau. Đây là vũ khí tư duy tối thượng cho Tech Lead và Solution Architect.</p>
+        <strong>Giá trị Khác biệt Cốt lõi của Nuwa</strong>
+        <p>Nuwa không cố gắng trả lời nhanh nhất; mục tiêu tối thượng của nó là ngăn bạn đưa ra những quyết định kỹ thuật tồi tệ có chi phí sửa chữa hàng nghìn giờ làm việc về sau. Đây là công cụ tư duy chiến lược dành riêng cho Tech Lead, CTO và Solution Architect.</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
       <a class="nav-card" href="vercel-agent-skills.html">
-        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-dir">Bài trước</span>
         <span class="nav-card-title">← Vercel Agent Skills</span>
       </a>
-      <a class="nav-card next" href="taste-skill.html">
+      <a class="nav-card next" href="human-3-0.html">
         <span class="nav-card-dir">Kế tiếp</span>
-        <span class="nav-card-title">Taste Skill →</span>
+        <span class="nav-card-title">Human 3.0 Framework →</span>
       </a>
     </div>
   </main>

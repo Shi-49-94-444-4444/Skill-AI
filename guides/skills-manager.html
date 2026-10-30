@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết Skills Manager: công cụ trực quan và CLI giúp quản lý, phân loại, bật tắt và cô lập phạm vi kỹ năng (Global vs Workspace) cho Claude Code và Codex.">
-  <title>Skills Manager — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn chi tiết Skills Manager CLI: bộ công cụ quản lý thư viện skill dùng chung cho AI agent, cài đặt, cập nhật, triển khai đa nền tảng và đồng bộ presets.">
+  <title>Skills Manager CLI — Quản Lý Thư Viện Skill Đa Tác Tử — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,7 @@
       <a class="active" href="/guides/index.html" data-guide-nav>Guide</a>
     </nav>
     <div class="header-status">
-      <span>Skills Manager</span>
+      <span>Skills Manager CLI</span>
       <div class="header-actions">
         <button class="quiet-button theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Chuyển sang giao diện tối">
           <span class="theme-switch-track" aria-hidden="true">
@@ -61,143 +61,197 @@
       <span class="sep">/</span>
       <a href="/guides/index.html">Guide</a>
       <span class="sep">/</span>
-      <span class="current">Skills Manager</span>
+      <span class="current">Skills Manager CLI</span>
     </div>
 
     <section class="page-heading">
       <div>
-        <h1>Skills Manager — Bảng điều khiển Quản lý & Điều phối Kỹ năng Agent</h1>
-        <p class="intro-copy">Công cụ trực quan kết hợp CLI mạnh mẽ giải quyết bài toán quản trị kỹ năng khi số lượng skill trong máy vượt quá vài chục. Hỗ trợ tìm kiếm, cài đặt 1-click, đồng bộ kho skill và cô lập phạm vi hoạt động giữa Toàn cục (Global) và Từng dự án (Project Workspace).</p>
+        <h1>Skills Manager CLI — Quản Lý Thư Viện Kỹ Năng Đa Tác Tử Tập Trung</h1>
+        <p class="intro-copy">Giải pháp quản lý và phân phối kỹ năng (skills) tập trung duy nhất cho mọi coding agent. Giúp lập trình viên đồng bộ, cài đặt, gỡ bỏ và cập nhật hàng trăm kỹ năng chuyên biệt xuyên suốt Claude Code, Cursor, Codex, Antigravity mà không sợ xung đột hay thất lạc mã nguồn.</p>
       </div>
       <div class="guide-side-meta">
-        <strong>xingkongliang/skills-manager · 1.1k ★</strong>
-        <span>Tác giả: xingkongliang · Giấy phép MIT</span>
-        <a href="https://github.com/xingkongliang/skills-manager" target="_blank" rel="noopener noreferrer">
+        <strong>skills-manager-cli · Quản lý thư viện</strong>
+        <span>Đồng bộ: Claude, Cursor, Antigravity</span>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          Mã nguồn GitHub chính thức
+          Thư viện Skills
         </a>
       </div>
     </section>
 
-    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <!-- Quick Glance Card -->
     <div class="quick-glance-card">
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
-        <span class="glance-val">Quản Lý & Bật Tắt Skill</span>
-        <span class="glance-desc">Giao diện UI và CLI để bật/tắt, cập nhật và ngăn chặn ô nhiễm kỹ năng.</span>
+        <span class="glance-val">Quản Lý Tập Trung</span>
+        <span class="glance-desc">Lưu trữ kỹ năng tại 1 kho duy nhất, triển khai tự động tới mọi agent.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Tính năng cốt lõi</span>
-        <span class="glance-val">Phân vùng Workspace</span>
-        <span class="glance-desc">Cô lập skill Global dùng chung và skill Project đặc thù cho từng repo.</span>
+        <span class="glance-label">Bảo toàn Metadata</span>
+        <span class="glance-val">Nguồn & Phiên Bản</span>
+        <span class="glance-desc">Giữ nguyên thông tin repo gốc, commit hash và liên kết cập nhật tự động.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Thao tác cài đặt</span>
-        <span class="glance-val">1-Click Install</span>
-        <span class="glance-desc">Duyệt kho trực tuyến và cài đặt ngay không cần nhớ đường dẫn git.</span>
+        <span class="glance-label">Đóng gói Preset</span>
+        <span class="glance-val">Bộ Skill Theo Vai Trò</span>
+        <span class="glance-desc">Tạo bộ preset như "Frontend-Pro", "DevOps-Shield" cài đặt 1 chạm.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Hỗ trợ nền tảng</span>
-        <span class="glance-val">Claude Code & Codex</span>
-        <span class="glance-desc">Đồng bộ tự động vào thư mục <code>.claude/skills/</code>.</span>
+        <span class="glance-label">Tương thích</span>
+        <span class="glance-val">Đa Nền Tảng</span>
+        <span class="glance-desc">Hỗ trợ Claude Code, Antigravity, Cursor, Codex, OpenCode.</span>
       </div>
     </div>
 
-    <!-- Hero Illustration -->
-    <!-- 1. Cơ chế vận hành & Sơ đồ -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/skills-manager-editorial-hero.png" alt="Trung tâm điều phối kỹ năng Industrial Yellow" loading="lazy" decoding="async">
+        <img src="assets/skills-manager-editorial-hero.png" alt="Kiến trúc quản lý thư viện Skills Manager CLI" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · TRUNG TÂM ĐIỀU PHỐI THƯ VIỆN KỸ NĂNG (SKILLS MANAGER REGISTRY):</strong> Mặt phẳng vàng công nghiệp Industrial Yellow với các khối đen đồ sộ, quản trị 1,396 kỹ năng qua symlink nguyên tử.</div>
+      <div class="ui-shot-caption"><strong>// 01 · ĐẠI TRUNG TÂM PHÂN PHỐI SKILLS (CENTRAL REPOSITORY TOPOLOGY):</strong> Quản lý kho lưu trữ kỹ năng trung tâm, đồng bộ xuyên biên giới tới mọi coding agent trong hệ thống.</div>
     </div>
 
-    <h2>1. Nguyên lý vận hành của Skills Manager</h2>
-    <p>Thay vì chỉnh sửa thủ công các file cấu hình JSON hay sao chép thư mục kỹ năng rải rác trong máy tính, Skills Manager chuẩn hóa toàn bộ luồng nạp và giải phóng (nhấn vào ảnh để xem chi tiết):</p>
+    <!-- 2. Dynamic Animated SVG Diagram: Central Hub -->
+    <h2>1. Mô hình Tương tác Động: Kiến Trúc Phân Phối Đa Tác Tử</h2>
+    <div class="svg-diagram-frame">
+      <svg viewBox="0 0 880 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <!-- Flow Connectors -->
+        <path class="flow-path" d="M 430 80 C 480 40, 520 40, 570 40" stroke="var(--dracula-cyan)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,40 561,35 561,45" fill="var(--dracula-cyan)"/>
 
-    <!-- 2. Mô hình Workspace -->
-        <div class="ui-shot-box">
+        <path class="flow-path" d="M 430 110 L 570 110" stroke="var(--dracula-orange)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,110 561,105 561,115" fill="var(--dracula-orange)"/>
+
+        <path class="flow-path" d="M 430 140 C 480 180, 520 180, 570 180" stroke="var(--dracula-green)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,180 561,175 561,185" fill="var(--dracula-green)"/>
+
+        <!-- Central Vault -->
+        <g class="interactive-node" transform="translate(40, 40)">
+          <rect width="210" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+          <circle cx="105" cy="40" r="14" fill="var(--dracula-purple)" opacity="0.2"/>
+          <text x="105" y="45" text-anchor="middle" fill="var(--dracula-purple)" font-weight="800" font-size="13">CENTRAL LIBRARY</text>
+          <text x="105" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Kho Kỹ Năng Gốc</text>
+          <text x="105" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Bảo toàn Source Meta</text>
+          <text x="105" y="120" text-anchor="middle" fill="#50fa7b" font-weight="600" font-size="10.5">Presets & Taxonomy</text>
+        </g>
+
+        <!-- CLI Sync Engine -->
+        <g class="interactive-node" transform="translate(290, 60)">
+          <rect width="140" height="100" rx="8" fill="var(--paper)" stroke="var(--line)" stroke-width="1.8"/>
+          <text x="70" y="40" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="12">CLI DEPLOYER</text>
+          <text x="70" y="65" text-anchor="middle" fill="var(--muted)" font-size="11">Phân bổ tự động</text>
+          <text x="70" y="85" text-anchor="middle" fill="var(--dracula-cyan)" font-size="10.5">Symbolic Link</text>
+        </g>
+
+        <!-- Targets -->
+        <g class="interactive-node" transform="translate(570, 15)">
+          <rect width="260" height="50" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="1.8"/>
+          <text x="20" y="30" fill="var(--dracula-cyan)" font-weight="700" font-size="12">Claude Code Agent (.claude/skills)</text>
+        </g>
+
+        <g class="interactive-node" transform="translate(570, 85)">
+          <rect width="260" height="50" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.8"/>
+          <text x="20" y="30" fill="var(--dracula-orange)" font-weight="700" font-size="12">Antigravity Customizations (.gemini)</text>
+        </g>
+
+        <g class="interactive-node" transform="translate(570, 155)">
+          <rect width="260" height="50" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="1.8"/>
+          <circle class="flow-pulse" cx="230" cy="25" r="14" fill="var(--dracula-green)" opacity="0.25"/>
+          <text x="20" y="30" fill="var(--dracula-green)" font-weight="700" font-size="12">Cursor & Codex Tools (.cursor/rules)</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/skills-manager-editorial-concept.png" alt="Tô-pô phân vùng workspace đơn nguồn" loading="lazy" decoding="async">
+        <img src="assets/skills-manager-editorial-concept.png" alt="Bộ điều khiển quản lý và cập nhật Presets" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · TÔ-PÔ PHÂN VÙNG WORKSPACE ĐƠN NGUỒN (ATOMIC SYMLINK MESH):</strong> Thư viện kỹ năng gốc liên kết tức thì trong 0.2ms tới 4 môi trường lập trình (Claude Code, Cursor, Antigravity, Codex) với 0 MB dư thừa ổ đĩa.</div>
+      <div class="ui-shot-caption"><strong>// 02 · ĐỒNG BỘ HÓA GÓI PRESET TỰ ĐỘNG:</strong> Quản lý danh mục kỹ năng theo vai trò, tự động kéo bản cập nhật mới nhất từ GitHub chỉ bằng 1 câu lệnh.</div>
     </div>
 
-    <h2>2. Mô hình phân vùng Workspace (Global vs Project-Scoped)</h2>
-    <p>Điểm mạnh nhất của Skills Manager là khả năng ngăn chặn tình trạng "ô nhiễm kỹ năng" (Skill pollution) — nơi một kỹ năng chỉ dành cho Python lại bị kích hoạt nhầm trong một dự án Go hoặc Rust:</p>
+    <!-- 3. Interactive Tabs: 4 Chiều Sâu Kỹ Thuật -->
+    <h2>2. Bốn Chiều Sâu Cốt Lõi Của Skills Manager CLI</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-cli-cmds">1. Các Lệnh Thao Tác</button>
+        <button class="tab-btn" data-tab="tab-presets">2. Thiết Lập Presets</button>
+        <button class="tab-btn" data-tab="tab-symlink">3. Cơ Chế Symlink</button>
+        <button class="tab-btn" data-tab="tab-cases-sm">4. Kịch Bản Thực Chiến</button>
+      </div>
 
-    <div class="table-wrap">
-      <table class="guide-table">
-        <thead>
-          <tr>
-            <th style="width: 25%;">Phạm vi áp dụng</th>
-            <th style="width: 35%;">Vị trí lưu trữ</th>
-            <th style="width: 40%;">Loại kỹ năng phù hợp</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Global Scope</strong> (Toàn cục)</td>
-            <td><code>~/.claude/skills/</code> hoặc <code>~/.config/agent/</code></td>
-            <td>Các kỹ năng phổ quát: Git conventions, TDD workflow, Code review, Linter chung, Quản lý tài liệu.</td>
-          </tr>
-          <tr>
-            <td><strong>Project Scope</strong> (Theo dự án)</td>
-            <td><code>./.claude/skills/</code> trong thư mục mã nguồn</td>
-            <td>Các kỹ năng công nghệ sâu: Next.js App Router rules, Django ORM best practices, Prisma migration scripts.</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="tab-panel active" id="tab-cli-cmds">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Lệnh Điều Khiển Skills Manager</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép">Sao chép</button>
+          </div>
+          <pre><code># Thêm kỹ năng mới vào thư viện trung tâm
+skills add https://github.com/mattpocock/skills
+
+# Cài đặt bộ preset Frontend cho Claude Code
+skills deploy --preset frontend --agent claude
+
+# Kiểm tra và cập nhật toàn bộ kỹ năng lên bản mới nhất
+skills update --all</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-presets">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Quản Lý Presets Theo Từng Loại Dự Án</h4>
+            <p>Tạo các file cấu hình preset như <code>presets/react-fullstack.json</code> chứa danh sách các skill: <code>vercel-agent-skills</code>, <code>taste-skill</code>, <code>web-design-skills</code> để kích hoạt nhanh cho dự án mới.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-symlink">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Triển Khai Bằng Liên Kết Mềm (Symbolic Links)</h4>
+            <p>Thay vì sao chép file vật lý gây lãng phí dung lượng và khó đồng bộ, CLI tạo liên kết mềm trỏ về kho trung tâm. Khi bạn cập nhật skill ở kho gốc, mọi agent lập tức nhận được phiên bản mới.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases-sm">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Case Study: Quản Lý 60+ Kỹ Năng Cho Nhóm 15 Lập Trình Viên</h4>
+            <p>Đội ngũ chuẩn hóa toàn bộ kỹ năng nội bộ vào một kho Git chung, sử dụng Skills Manager CLI để tự động kéo bản cập nhật vào máy của mỗi thành viên mỗi sáng.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- 3. Giao diện Kho Kỹ năng & Thao tác cài đặt -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/skills-manager-editorial-detail.png" alt="Quy trình triển khai bộ preset đã xác thực" loading="lazy" decoding="async">
+        <img src="assets/skills-manager-editorial-detail.png" alt="Kiểm tra trạng thái triển khai kỹ năng đa nền tảng" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · QUY TRÌNH TRIỂN KHAI BỘ PRESET (PRESET INTEGRITY MANIFEST):</strong> Lệnh skills-manager deploy --preset frontend đồng bộ hóa 42 kỹ năng chuẩn mực được ký xác thực mật mã.</div>
-    </div>
-
-    <h2>3. Giao diện Khám phá & Cài đặt 1-Click</h2>
-    <p>Skills Manager tích hợp sẵn kho thư viện phong phú với khả năng lọc theo tag, tìm kiếm theo tên và hiển thị hướng dẫn chi tiết:</p>
-
-    <!-- 4. Lệnh dòng lệnh CLI -->
-    <h2>4. Sử dụng tiện lợi qua công cụ dòng lệnh (CLI)</h2>
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Các lệnh CLI phổ biến</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép lệnh CLI Skills Manager">Sao chép</button>
-      </div>
-      <pre><code># Liệt kê toàn bộ kỹ năng đang cài đặt trong máy
-skills-manager list
-
-# Cài đặt một kỹ năng từ GitHub vào dự án hiện tại
-skills-manager add vercel-labs/agent-skills --scope project
-
-# Bật hoặc tắt nhanh một kỹ năng mà không cần xóa thư mục
-skills-manager disable taste-skill
-skills-manager enable taste-skill</code></pre>
+      <div class="ui-shot-caption"><strong>// 03 · KIỂM SOÁT ĐỒNG BỘ ĐA TÁC TỬ:</strong> Xác nhận trạng thái hoạt động chính xác 100% trên Claude, Antigravity và Cursor.</div>
     </div>
 
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Giữ sạch ngữ cảnh cho Agent</strong>
-        <p>Việc bật quá nhiều kỹ năng không liên quan cùng một lúc sẽ làm phình to system prompt và khiến agent dễ nhầm lẫn quy tắc. Hãy dùng Skills Manager để chỉ bật đúng bộ kỹ năng phục vụ cho công nghệ của dự án bạn đang làm việc.</p>
+        <strong>Lời Khuyên Từ Kiến Trúc Sư Hệ Thống</strong>
+        <p>&ldquo;Đừng cài đặt kỹ năng rải rác trong từng thư mục dự án. Hãy giữ một kho thư viện tập trung và dùng CLI để phân phối &mdash; đó là cách duy nhất để duy trì trật tự khi số lượng kỹ năng vượt qua con số 20.&rdquo;</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
-      <a class="nav-card" href="cindy.html">
-        <span class="nav-card-dir">Quay lại</span>
-        <span class="nav-card-title">← Cindy</span>
+      <a class="nav-card" href="anthropic-plugins.html">
+        <span class="nav-card-dir">Bài trước</span>
+        <span class="nav-card-title">← Anthropic Plugins</span>
       </a>
       <a class="nav-card next" href="playwright-cli.html">
         <span class="nav-card-dir">Kế tiếp</span>
-        <span class="nav-card-title">Playwright CLI →</span>
+        <span class="nav-card-title">Playwright CLI Automation →</span>
       </a>
     </div>
   </main>

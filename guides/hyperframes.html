@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết Hyperframes: khung công nghệ mã nguồn mở của HeyGen biến HTML, CSS và animation thành video MP4 tất định bằng 7 kỹ năng chuyên biệt cho AI coding agent.">
-  <title>Hyperframes — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn toàn diện Hyperframes: khung công nghệ mã nguồn mở từ HeyGen biến HTML, CSS và animation thành video MP4 tất định 60 FPS bằng 7 kỹ năng chuyên biệt cho AI coding agent.">
+  <title>Hyperframes — Dựng Video Programmatic Tất Định từ HTML & CSS — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +67,7 @@
     <section class="page-heading">
       <div>
         <h1>Hyperframes — Dựng Video Programmatic Tất Định từ HTML & CSS</h1>
-        <p class="intro-copy">Khung công nghệ kết xuất video mã nguồn mở do HeyGen phát triển (hơn 75.000 sao). "Viết HTML. Xuất Video. Xây dựng cho Agent." Cho phép lập trình viên và coding agent dùng cú pháp quen thuộc (HTML, CSS, seekable animation) để sản xuất video MP4 60 FPS chuẩn xác tới từng khung hình mà không cần mở các phần mềm dựng video phức tạp.</p>
+        <p class="intro-copy">Khung công nghệ kết xuất video mã nguồn mở do HeyGen phát triển (hơn 75.000 sao). &ldquo;Viết HTML. Xuất Video. Xây dựng cho Agent.&rdquo; Cho phép lập trình viên và coding agent dùng cú pháp quen thuộc (HTML, CSS, seekable animation) để sản xuất video MP4 60 FPS chuẩn xác tới từng khung hình mà không cần mở các phần mềm dựng video phức tạp.</p>
       </div>
       <div class="guide-side-meta">
         <strong>heygen-com/hyperframes · 76k ★</strong>
@@ -103,7 +103,7 @@
       </div>
     </div>
 
-    <!-- UI Shot 1: Hero Editorial -->
+    <!-- Visual Media Shot Box -->
     <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/hyperframes-editorial-hero.png" alt="Hyperframes Write HTML Render 60 FPS Video" loading="lazy" decoding="async">
@@ -112,7 +112,7 @@
       <div class="ui-shot-caption"><strong>// 01 · KẾT XUẤT VIDEO TẤT ĐỊNH (PROGRAMMATIC VIDEO COMPILER):</strong> Sắc tím điện tử Violet kết hợp xanh Cobalt rực rỡ, kiến trúc biên dịch mã HTML và CSS thành video MP4 60 FPS tốc độ cao.</div>
     </div>
 
-    <h2>1. Bảng đối chiếu: Dựng Video truyền thống vs. Hyperframes Programmatic</h2>
+    <h2>1. Bảng Đối Chiếu: Dựng Video Truyền Thống vs. Hyperframes Programmatic</h2>
     <p>Thay vì mất hàng giờ kéo thả timeline thủ công trong Premiere hoặc After Effects, Hyperframes đưa sức mạnh của mã nguồn vào quy trình sản xuất video:</p>
     
     <div class="table-wrap">
@@ -138,201 +138,188 @@
           <tr>
             <td><strong>Tái sử dụng & Mở rộng</strong></td>
             <td>Thay đổi số liệu hoặc văn bản phải mở lại project và render lại từ đầu bằng tay.</td>
-            <td>Chỉ cần truyền biến dữ liệu mới (JSON/Props) là tự động sinh hàng nghìn video biến thể.</td>
+            <td>Chỉ cần truyền tham số JSON mới qua API, tạo hàng ngàn video cá nhân hóa tự động.</td>
           </tr>
           <tr>
-            <td><strong>Tích hợp vào CI/CD</strong></td>
-            <td>Hầu như không thể tích hợp vào pipeline kiểm thử hoặc triển khai tự động.</td>
-            <td>Chạy headless qua CLI hoặc Docker container trên bất kỳ máy chủ Linux nào.</td>
+            <td><strong>Hạ tầng thực thi</strong></td>
+            <td>Yêu cầu GPU đắt đỏ và phần mềm bản quyền nặng nề.</td>
+            <td>Chạy trên headless Chromium và FFmpeg trong môi trường CI/CD hoặc Cloud Serverless.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- UI Shot 2: Concept Editorial -->
+    <!-- Visual Media Shot Box -->
     <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/hyperframes-editorial-concept.png" alt="Timeline tất định và tích hợp âm thanh đa tầng" loading="lazy" decoding="async">
+        <img src="assets/hyperframes-editorial-concept.png" alt="Kiến trúc trích xuất khung hình Chrome DevTools Protocol" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · TRỤC THỜI GIAN TRUY VẤN (SEEKABLE ANIMATION TIMELINE):</strong> Đồng bộ chính xác giữa chuyển động giao diện, phụ đề động và các kênh âm thanh nền không độ trễ.</div>
+      <div class="ui-shot-caption"><strong>// 02 · TRÍCH XUẤT KHUNG HÌNH TẤT ĐỊNH (CDP FRAME EXTRACTION PIPELINE):</strong> Tích hợp giao thức Chrome DevTools Protocol để dừng dòng thời gian CSS tại từng mili-giây và trích xuất ảnh đệm chuẩn xác.</div>
     </div>
 
-    <h2>2. Vòng lặp sản xuất video 4 bước cho Coding Agent</h2>
-    <div class="diagram-frame">
-      <div class="diagram-caption">
-        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Quy trình chuẩn hóa sản xuất video bằng mã nguồn
-      </div>
-      <div class="flow-steps">
-        <div class="step-card accent">
-          <span class="step-badge">1</span>
-          <strong>Lập kịch bản phân cảnh</strong>
-          <p>Agent xác định thời lượng, nhịp điệu (beats), tỷ lệ khung hình (16:9 hoặc 9:16) và các mốc chuyển cảnh.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">2</span>
-          <strong>Dựng bố cục HTML Canvas</strong>
-          <p>Viết mã HTML và CSS chuẩn, bố trí typography, logo, bảng biểu và hiệu ứng nền.</p>
-        </div>
-        <div class="step-card accent">
-          <span class="step-badge">3</span>
-          <strong>Gắn Keyframe có thể tua</strong>
-          <p>Sử dụng các class và thuộc tính CSS animation gắn chặt với đồng hồ thời gian nội bộ của Hyperframes.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">4</span>
-          <strong>Kết xuất Headless MP4</strong>
-          <p>Chạy lệnh kết xuất để tổng hợp các frame thành file video MP4 chất lượng cao sẵn sàng phát hành.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- UI Shot 3: Detail Editorial -->
-    <div class="ui-shot-box">
-      <div class="ui-shot-media">
-        <img src="assets/hyperframes-editorial-detail.png" alt="Hyperframes CLI và 7 kỹ năng chuyên sâu" loading="lazy" decoding="async">
-        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
-      </div>
-      <div class="ui-shot-caption"><strong>// 03 · BỘ CÔNG CỤ ĐA NĂNG (THE HYPERFRAMES PRODUCTION SUITE):</strong> Tích hợp trọn gói từ plugin Figma, chuyển đổi Remotion sang Hyperframes tới thư viện catalog khối đồ họa có sẵn.</div>
-    </div>
-
-    <h2>3. Minh họa trực quan: Cơ chế kết xuất từ DOM sang MP4</h2>
-    <p>Hyperframes kết hợp nhân Chromium headless siêu tốc với thư viện FFMPEG được tăng tốc phần cứng:</p>
+    <!-- Dynamic Animated SVG Diagram: Render Pipeline -->
+    <h2>2. Mô hình Tương tác Động: Pipeline Kết Xuất Khung Hình Tất Định</h2>
+    <p>Hyperframes điều khiển đồng hồ thời gian của trang web, chụp lại từng khung hình riêng lẻ thông qua CDP và đưa trực tiếp vào ống dẫn FFmpeg để ghép nối thành video MP4:</p>
 
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- HTML/CSS Source -->
-        <rect x="40" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
-        <circle cx="140" cy="80" r="24" fill="rgba(189, 147, 249, 0.15)"/>
-        <text x="140" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="16">MÃ NGUỒN</text>
-        <text x="140" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">HTML + CSS + Media</text>
-        <text x="140" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Seekable timeline</text>
+      <svg viewBox="0 0 880 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <!-- Flow Connectors -->
+        <path class="flow-path" d="M 190 100 L 240 100" stroke="var(--dracula-purple)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="240,100 231,95 231,105" fill="var(--dracula-purple)"/>
 
-        <!-- Arrow 1 -> 2 -->
-        <path d="M250 115 H280" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="280,115 272,110 272,120" fill="var(--dracula-cyan)"/>
+        <path class="flow-path" d="M 430 100 L 480 100" stroke="var(--dracula-cyan)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="480,100 471,95 471,105" fill="var(--dracula-cyan)"/>
 
-        <!-- Headless Chromium Engine -->
-        <rect x="290" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
-        <circle cx="400" cy="80" r="24" fill="rgba(139, 233, 253, 0.15)"/>
-        <text x="400" y="86" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="16">VIRTUAL CLOCK</text>
-        <text x="400" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Chromium Snapshot</text>
-        <text x="400" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">60 khung hình/giây tất định</text>
+        <path class="flow-path" d="M 660 100 L 710 100" stroke="var(--dracula-green)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="710,100 701,95 701,105" fill="var(--dracula-green)"/>
 
-        <!-- Arrow 2 -> 3 -->
-        <path d="M520 115 H550" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="550,115 542,110 542,120" fill="var(--dracula-green)"/>
+        <!-- Step 1: HTML & CSS Code -->
+        <g class="interactive-node" transform="translate(20, 30)">
+          <rect width="170" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="1.8"/>
+          <text x="85" y="45" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="12.5">HTML / CSS CODE</text>
+          <text x="85" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Keyframe Animations</text>
+          <text x="85" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Tailwind / GSAP / SVG</text>
+          <text x="85" y="120" text-anchor="middle" fill="var(--muted)" font-size="10.5">Dễ đọc & dễ sửa</text>
+        </g>
 
-        <!-- Final MP4 Video -->
-        <rect x="560" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
-        <circle cx="660" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
-        <text x="660" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="16">OUTPUT MP4</text>
-        <text x="660" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Chuẩn 60 FPS Video</text>
-        <text x="660" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Âm thanh đồng bộ hoàn hảo</text>
+        <!-- Step 2: Headless CDP Clock -->
+        <g class="interactive-node" transform="translate(240, 30)">
+          <rect width="190" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="1.8"/>
+          <text x="95" y="45" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="12.5">CDP TIMELINE CLOCK</text>
+          <text x="95" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Khóa chặt currentTime</text>
+          <text x="95" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Tick 16.6ms / frame</text>
+          <text x="95" y="120" text-anchor="middle" fill="#50fa7b" font-weight="600" font-size="10.5">Chuẩn 60 FPS tất định</text>
+        </g>
+
+        <!-- Step 3: Frame Buffer -->
+        <g class="interactive-node" transform="translate(480, 30)">
+          <rect width="180" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.8"/>
+          <text x="90" y="45" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="12.5">FRAME BUFFER</text>
+          <text x="90" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Chụp ảnh RAW</text>
+          <text x="90" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Truyền qua pipe stdin</text>
+          <text x="90" y="120" text-anchor="middle" fill="var(--muted)" font-size="10.5">Không tốn I/O đĩa</text>
+        </g>
+
+        <!-- Step 4: FFmpeg Encoder -->
+        <g class="interactive-node" transform="translate(710, 30)">
+          <rect width="150" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="1.8"/>
+          <circle class="flow-pulse" cx="75" cy="40" r="18" fill="var(--dracula-green)" opacity="0.25"/>
+          <text x="75" y="45" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="12.5">FFMPEG MP4</text>
+          <text x="75" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Mã hóa H.264</text>
+          <text x="75" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Hardware Encode</text>
+          <text x="75" y="120" text-anchor="middle" fill="#50fa7b" font-weight="600" font-size="10.5">Video Sẵn Sàng</text>
+        </g>
       </svg>
     </div>
 
-    <!-- 4. Interactive Tabs: Hệ sinh thái 7 Kỹ năng -->
-    <h2>4. Hệ sinh thái 7 kỹ năng chuyên sâu của Hyperframes</h2>
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/hyperframes-editorial-detail.png" alt="Bộ điều khiển dòng thời gian và thư viện components" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 03 · KHO HIỆU ỨNG SẴN DÙNG (HYPERFRAMES REGISTRY SUITE):</strong> Tích hợp hơn 450 khối hiệu ứng dựng sẵn (chuyển cảnh, tiêu đề động học, biểu đồ tương tác) sẵn sàng chèn vào timeline.</div>
+    </div>
+
+    <!-- 3. Interactive Tabs: 4 Chiều Sâu Kỹ Thuật -->
+    <h2>3. Hệ Thống 7 Kỹ Năng & Kiến Trúc Chuyên Sâu</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-core">Kỹ năng Cốt lõi (Core)</button>
-        <button class="tab-btn" data-tab="tab-plugins">Mở rộng & Tích hợp</button>
+        <button class="tab-btn active" data-tab="tab-determinism">1. Cơ Chế Tất Định 60 FPS</button>
+        <button class="tab-btn" data-tab="tab-7skills">2. Bộ 7 Kỹ Năng Chuyên Biệt</button>
+        <button class="tab-btn" data-tab="tab-cli-registry">3. HyperFrames CLI & Registry</button>
+        <button class="tab-btn" data-tab="tab-cases-video">4. Video Marketing Thực Chiến</button>
       </div>
 
-      <div class="tab-panel active" id="tab-core">
+      <div class="tab-panel active" id="tab-determinism">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>/hyperframes — Trợ lý Đạo diễn Kỹ thuật</h4>
-            <p>Kỹ năng trung tâm chứa toàn bộ hợp đồng sản xuất: định dạng phim, bố cục tiêu đề phụ, overlay và quy chuẩn motion.</p>
-          </div>
-          <div class="arch-layer">
-            <h4>/hyperframes-cli & /media-use — Quản lý Tài nguyên & Render</h4>
-            <p>Tự động hóa lệnh dòng lệnh kết xuất video, tải video mẫu và xử lý đồng bộ các tệp âm thanh, hình ảnh cục bộ.</p>
+            <h4>Bí Mật Của Tính Tất Định (Deterministic Clocking)</h4>
+            <p>Trình duyệt thông thường render animation dựa trên <code>requestAnimationFrame</code> phụ thuộc vào tải CPU thời gian thực. Hyperframes ghi đè hàm thời gian toàn cục, dừng mọi hoạt ảnh và dịch chuyển thời gian thủ công từng bước 16.666ms (tương ứng với 1/60 giây). Nhờ đó, bất kể máy tính nhanh hay chậm, video đầu ra luôn có tốc độ khung hình và hiệu ứng trùng khớp 100%.</p>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-plugins">
+      <div class="tab-panel" id="tab-7skills">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>/figma — Chuyển đổi Thiết kế Figma sang Video</h4>
-            <p>Nhập trực tiếp các frame từ Figma và biến chúng thành các cảnh chuyển động sống động.</p>
+            <h4>Bộ 7 Kỹ Năng Đóng Gói Toàn Diện Của HeyGen</h4>
+            <ul>
+              <li><code>hyperframes</code>: Quy chuẩn làm việc cốt lõi và hợp đồng kết xuất.</li>
+              <li><code>hyperframes-cli</code>: Bộ lệnh điều khiển render cục bộ và đám mây.</li>
+              <li><code>hyperframes-registry</code>: Hơn 450 component dựng sẵn (kinetic type, glitch, charts).</li>
+              <li><code>remotion-best-practices</code>: Định tuyến tối ưu mã chuyển động.</li>
+              <li><code>remotion-to-hyperframes</code>: Chuyển đổi mã Remotion sang HTML/CSS.</li>
+              <li><code>media-use</code>: Xử lý âm thanh, voiceover, hình ảnh và video nền.</li>
+              <li><code>slideshow</code>: Tạo slide trình chiếu tương tác cao cấp.</li>
+            </ul>
           </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cli-registry">
+        <div class="arch-stack">
           <div class="arch-layer">
-            <h4>/remotion-to-hyperframes — Di chuyển Dự án</h4>
-            <p>Chuyển đổi các composition viết bằng Remotion React sang định dạng chuẩn HTML/CSS nhẹ nhàng hơn của Hyperframes.</p>
+            <h4>Lệnh Sử Dụng CLI Nhanh</h4>
+            <div class="code-block">
+              <div class="code-block-header">
+                <span>Bash · Lệnh Dựng Video Hyperframes</span>
+                <button class="copy-btn" type="button" aria-label="Sao chép">Sao chép</button>
+              </div>
+              <pre><code># Khởi tạo dự án video mới
+npx hyperframes init my-video
+
+# Thêm hiệu ứng kinetic-title từ registry
+npx hyperframes add kinetic-title
+
+# Render video chất lượng cao MP4 60FPS
+npx hyperframes render --output out.mp4</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases-video">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Kịch Bản Thực Chiến: Tự Động Tạo 100 Video Giới Thiệu Tính Năng</h4>
+            <p>Kết hợp script Node.js đọc dữ liệu từ cơ sở dữ liệu sản phẩm, điền thông số vào template HTML và gọi lệnh render Hyperframes tự động tạo ra 100 video ngắn cho từng khách hàng mà không cần nhân sự đồ họa.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. Hướng dẫn bắt đầu ngay -->
-    <h2>5. Tạo video đầu tiên bằng mã nguồn trong 3 bước</h2>
-    <div class="stepper-list">
-      <div class="stepper-item">
-        <div class="stepper-number">1</div>
-        <div class="stepper-content">
-          <h4>Cập nhật bộ kỹ năng Hyperframes</h4>
-          <p>Mở cửa sổ dòng lệnh và cài đặt nhóm kỹ năng cốt lõi cho agent:</p>
-          <div class="code-block">
-            <div class="code-block-header">
-              <span>Bash · Cập nhật skills</span>
-              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
-            </div>
-            <pre><code>npx hyperframes skills update</code></pre>
-          </div>
-        </div>
+    <!-- 4. Hướng dẫn sử dụng -->
+    <h2>4. Hướng Dẫn Sử Dụng Nhanh Cho Coding Agent</h2>
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Prompt · Tạo Video Bằng Mã Nguồn HTML</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
       </div>
-
-      <div class="stepper-item">
-        <div class="stepper-number">2</div>
-        <div class="stepper-content">
-          <h4>Yêu cầu agent tạo một đoạn video ngắn</h4>
-          <p>Ra lệnh bằng ngôn ngữ tự nhiên trong phiên làm việc của Claude Code hoặc Antigravity:</p>
-          <div class="code-block">
-            <div class="code-block-header">
-              <span>Prompt · Tạo video giới thiệu</span>
-              <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
-            </div>
-            <pre><code>Dùng /hyperframes tạo đoạn video giới thiệu sản phẩm dài 10 giây với tiêu đề fade-in nổi bật, nền hạt chuyển động chậm và hiệu ứng âm thanh xuất hiện ở giây thứ 2.</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <div class="stepper-item">
-        <div class="stepper-number">3</div>
-        <div class="stepper-content">
-          <h4>Xem trước và kết xuất video</h4>
-          <p>Chạy lệnh kết xuất video MP4 cục bộ trên máy tính:</p>
-          <div class="code-block">
-            <div class="code-block-header">
-              <span>Bash · Kết xuất MP4</span>
-              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
-            </div>
-            <pre><code>npx hyperframes render --output ./intro.mp4</code></pre>
-          </div>
-        </div>
-      </div>
+      <pre><code>Hãy dùng Hyperframes để tạo 1 đoạn video mở đầu (Intro Video) dài 5 giây độ phân giải 1080x1920 (9:16) cho TikTok:
+1. Nền đen sâu với gradient phát quang nhẹ ở giữa.
+2. Tiêu đề "Skill AI — Thư Viện Tra Cứu" xuất hiện với hiệu ứng Kinetic Type mượt mà ở giây thứ 1.5.
+3. Chèn hiệu ứng vệt sáng quét ngang ở giây thứ 3.0.
+4. Đảm bảo toàn bộ animation điều khiển bằng CSS keyframes có thể seekable tất định.</code></pre>
     </div>
 
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Lời khuyên từ HeyGen Framework Team</strong>
-        <p>Bí quyết của video chất lượng cao nằm ở việc dùng chuyển động seekable thay vì chuyển động dựa trên thời gian thực tế (wall-clock). Nhờ vậy, dù máy chủ kết xuất mất 0.1 giây hay 5 giây cho một frame phức tạp, video thành phẩm vẫn giữ vững tốc độ khung hình 60 FPS mượt mà không bao giờ bị giật hình.</p>
+        <strong>Lời Khuyên Từ HeyGen</strong>
+        <p>&ldquo;Đừng dựng video như một video editor truyền thống. Hãy tư duy như một frontend developer: dùng sức mạnh của DOM, CSS grid, SVG và tính toán động học để tạo ra những video có thể tùy biến vô tận bằng code.&rdquo;</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
       <a class="nav-card" href="web-design-skills.html">
-        <span class="nav-card-dir">Quay lại</span>
-        <span class="nav-card-title">← 8 Skill Thiết Kế Web Cho Claude</span>
+        <span class="nav-card-dir">Bài trước</span>
+        <span class="nav-card-title">← Web Design Guidelines</span>
       </a>
-      <a class="nav-card next" href="rea-reverse-engineering.html">
+      <a class="nav-card next" href="deepseek-harness.html">
         <span class="nav-card-dir">Kế tiếp</span>
-        <span class="nav-card-title">REA Reverse Engineer Anything →</span>
+        <span class="nav-card-title">DeepSeek Harness →</span>
       </a>
     </div>
   </main>

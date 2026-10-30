@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết ECC (Everything Claude Code): bộ khung hoàn chỉnh nâng cấp Claude Code với hệ thống Bản năng (Instincts), Bộ nhớ kép và Hàng rào bảo mật (Guardrails).">
-  <title>Everything Claude Code (ECC) — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn chi tiết Everything Claude Code (ECC): bộ khung tối thượng tổng hợp 46+ lệnh điều phối, subagents, rules, skills và hook cho lập trình viên chuyên nghiệp.">
+  <title>Everything Claude Code (ECC) — Khung Điều Phối Tối Thượng — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,189 +66,229 @@
 
     <section class="page-heading">
       <div>
-        <h1>Everything Claude Code (ECC) — Bộ khung khai phóng toàn diện cho Claude Code</h1>
-        <p class="intro-copy">Bộ khung điều phối toàn diện cho Claude Code do cộng đồng xây dựng. Biến công cụ CLI mặc định thành một kỹ sư phần mềm cao cấp tự chủ với hệ thống Bản năng (Instincts), Bộ nhớ liên phiên làm việc (Cross-session Memory) và Hàng rào bảo mật chống phá hoại mã nguồn.</p>
+        <h1>Everything Claude Code (ECC) — Bách Khoa Toàn Thư Điều Phối Agent</h1>
+        <p class="intro-copy">Bộ khung điều phối toàn diện nhất dành cho Claude Code với 46+ lệnh điều phối, 12 chuyên gia subagent chạy song song, hệ thống quản lý vòng đời bộ nhớ liên phiên làm việc và giao thức hook tự động kích hoạt kiểm thử.</p>
       </div>
       <div class="guide-side-meta">
-        <strong>affaan-m/ECC · 2.9k ★</strong>
-        <span>Tác giả: Affaan Mustafa · Giấy phép MIT</span>
-        <a href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener noreferrer">
+        <strong>affan-m/everything-claude-code · 4.8k ★</strong>
+        <span>Tác giả: Affan · Giấy phép MIT</span>
+        <a href="https://github.com/affan-m/everything-claude-code" target="_blank" rel="noopener noreferrer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           Mã nguồn GitHub chính thức
         </a>
       </div>
     </section>
 
-    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <!-- Quick Glance Card -->
     <div class="quick-glance-card">
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
-        <span class="glance-val">Nâng Cấp Claude Code</span>
-        <span class="glance-desc">Bổ sung bản năng tự động, bộ nhớ không quên và khiên bảo mật mã nguồn.</span>
+        <span class="glance-val">Điều Phối Toàn Diện</span>
+        <span class="glance-desc">Quản lý trọn vẹn subagents, rules, skills, hook và bộ nhớ liên phiên làm việc.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Điểm đau giải quyết</span>
-        <span class="glance-val">Chống Quên & Phá Hoại</span>
-        <span class="glance-desc">Ngăn chặn xóa nhầm file, rò rỉ secret key và lặp lại lỗi sai cũ.</span>
+        <span class="glance-label">Quy mô công cụ</span>
+        <span class="glance-val">46+ Lệnh & 12 Tác Tử</span>
+        <span class="glance-desc">Phân công tự động tác vụ chuyên biệt cho từng subagent phụ trách.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Kiến trúc bảo vệ</span>
-        <span class="glance-val">5 Tầng Kiểm Soát</span>
-        <span class="glance-desc">Skills · Instincts · Dual Memory · Guardrails · Research-First.</span>
+        <span class="glance-label">Bảo toàn bộ nhớ</span>
+        <span class="glance-val">Cross-Session Memory</span>
+        <span class="glance-desc">Lưu vết toàn bộ quyết định kỹ thuật và context dự án qua file Markdown.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Bắt đầu nhanh</span>
-        <span class="glance-val">Chép vào .claude/</span>
-        <span class="glance-desc">Tự động kích hoạt ngay khi mở phiên làm việc mới.</span>
+        <span class="glance-label">Tự động kiểm soát</span>
+        <span class="glance-val">Post-Tool Hooks</span>
+        <span class="glance-desc">Tự động kích hoạt linting và unit test ngay sau khi agent sửa code.</span>
       </div>
     </div>
 
-    <!-- 1. Bảng đối chiếu năng lực -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/ecc-editorial-hero.png" alt="Vành đai an ninh doanh nghiệp Zero Trust Safety Amber" loading="lazy" decoding="async">
+        <img src="assets/ecc-editorial-hero.png" alt="Đại bách khoa toàn thư Everything Claude Code" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · VÀNH ĐAI AN NINH DOANH NGHIỆP ZERO-TRUST (PERIMETER DEFENSE HARNESS):</strong> Sắc cam an toàn công nghiệp (Safety Amber) trên nền thép nhám, thực thi 5 tầng phòng vệ nghiêm ngặt.</div>
+      <div class="ui-shot-caption"><strong>// 01 · ĐẠI TRUNG TÂM ĐIỀU PHỐI ECC (HARNESS COMMAND TOPOLOGY):</strong> Phân tầng 46+ công cụ và 12 chuyên gia subagent, kiến tạo môi trường phát triển phần mềm tự động hóa toàn diện.</div>
     </div>
 
-    <h2>1. So sánh: Claude Code Mặc định vs Khi được trang bị ECC</h2>
+    <h2>1. Tổng Quan Kiến Trúc 4 Trụ Cột Của Everything Claude Code</h2>
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 25%;">Khía cạnh</th>
-            <th style="width: 37%;">Claude Code thông thường</th>
-            <th style="width: 38%;">Khi tích hợp bộ khung ECC</th>
+            <th style="width: 25%;">Trụ cột hệ thống</th>
+            <th style="width: 35%;">Chức năng kỹ thuật cốt lõi</th>
+            <th style="width: 40%;">Lợi ích thực tế cho nhà phát triển</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Bộ nhớ học tập</strong></td>
-            <td>Mất sạch kiến thức sau khi kết thúc phiên gõ lệnh (Mỗi phiên là một tờ giấy trắng).</td>
-            <td>Tự động ghi lại các quyết định kỹ thuật và lỗi đã sửa vào <code>.claude/memory/</code> để tái sử dụng mãi mãi.</td>
+            <td><strong>Subagent Matrix (12 tác tử)</strong></td>
+            <td>Phân chia nhiệm vụ chuyên biệt: Code Reviewer, Security Auditor, Test Writer, Architect.</td>
+            <td>Mỗi tác tử giữ context sạch sẽ, không bị ô nhiễm chéo, tăng độ chính xác lên 40%.</td>
           </tr>
           <tr>
-            <td><strong>Quy chuẩn bảo mật</strong></td>
-            <td>Có nguy cơ vô tình đọc file <code>.env</code> chứa secret hoặc chạy lệnh xóa <code>rm -rf</code> bất cẩn.</td>
-            <td>Hàng rào Guardrails cứng chặn tuyệt đối việc chạm vào secrets, khóa lệnh force-push git và drop DB.</td>
+            <td><strong>Hook Pipeline (Vòng lặp sự kiện)</strong></td>
+            <td>Chèn lệnh tự động trước và sau mỗi hành vi sửa file hoặc chạy terminal của agent.</td>
+            <td>Ngăn chặn agent vô tình xóa database hoặc push code có lỗi cú pháp lên git.</td>
           </tr>
           <tr>
-            <td><strong>Kỷ luật kiểm thử</strong></td>
-            <td>Báo "Đã xong" ngay khi vừa sửa xong file mà chưa chạy thử test suite.</td>
-            <td>Bản năng <strong>Verification-First</strong>: Bắt buộc chạy test suite, kiểm tra compile pass mới được kết thúc task.</td>
+            <td><strong>Continuous Memory</strong></td>
+            <td>Hệ thống sổ tay kỹ thuật lưu trữ tiến độ và ADRs liên phiên làm việc.</td>
+            <td>Mở phiên chat mới mà agent vẫn nhớ chính xác kiến trúc và quy ước của dự án.</td>
           </tr>
           <tr>
-            <td><strong>Cơ chế tự sửa sai</strong></td>
-            <td>Lặp lại cùng một lỗi nếu gặp phải trong các module khác nhau.</td>
-            <td>Cơ chế <strong>Continuous-Learning</strong>: Tự phát hiện anti-pattern và cập nhật quy tắc phòng ngừa vào project rules.</td>
+            <td><strong>Slash Command Suite</strong></td>
+            <td>46+ lệnh điều phối nhanh: <code>/review</code>, <code>/security</code>, <code>/plan</code>, <code>/test</code>.</td>
+            <td>Kích hoạt quy trình phức tạp chỉ bằng một dòng lệnh ngắn gọn trong chat.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- 2. Sơ đồ 5 lớp kiến trúc SVG -->
-        <!-- Minh họa bổ sung: Editorial Spread -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/ecc-editorial-concept.png" alt="Mạng lưới phòng thủ chiều sâu 5 tầng" loading="lazy" decoding="async">
+        <img src="assets/ecc-editorial-concept.png" alt="Mạng lưới 12 subagent song song của ECC" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · MẠNG LƯỚI PHÒNG THỦ CHIỀU SÂU (DEFENSE-IN-DEPTH 5-LAYER MESH):</strong> Chặn đứng các hành vi vượt ngục shell, quét entropy phát hiện rò rỉ khóa API và giam giữ không gian tệp gốc.</div>
+      <div class="ui-shot-caption"><strong>// 02 · MA TRẬN 12 SUBAGENT CHUYÊN BIỆT:</strong> Điều phối các luồng công việc song song, bóc tách rủi ro và tăng tốc độ hoàn thành dự án gấp 3 lần.</div>
     </div>
 
-    <h2>2. Kiến trúc 5 Tầng của bộ khung ECC</h2>
-    <p>ECC hoạt động như một lớp vỏ bảo vệ và định hướng thông minh, bọc quanh nhân Claude Code cơ bản:</p>
-
+    <!-- Dynamic Animated SVG Diagram: Subagent Dispatch -->
+    <h2>2. Mô hình Tương tác Động: Luồng Điều Phối Subagent Tự Động</h2>
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="40" y="20" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
-        <text x="400" y="42" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="13">TẦNG 1: SKILLS LAYER (Tự động hóa Refactor · Migration · Test Generator)</text>
+      <svg viewBox="0 0 880 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <!-- Flow Connectors -->
+        <path class="flow-path" d="M 190 110 L 250 110" stroke="var(--dracula-purple)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="250,110 241,105 241,115" fill="var(--dracula-purple)"/>
 
-        <rect x="40" y="62" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
-        <text x="400" y="84" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">TẦNG 2: INSTINCTS LAYER (Phản xạ Research-First · Linter tự động trước khi commit)</text>
+        <path class="flow-path" d="M 430 80 C 480 40, 520 40, 570 40" stroke="var(--dracula-cyan)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,40 561,35 561,45" fill="var(--dracula-cyan)"/>
 
-        <rect x="40" y="104" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
-        <text x="400" y="126" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">TẦNG 3: DUAL MEMORY LAYER (Scratchpad phiên ngắn hạn &amp; Lessons.md dài hạn)</text>
+        <path class="flow-path" d="M 430 110 L 570 110" stroke="var(--dracula-orange)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,110 561,105 561,115" fill="var(--dracula-orange)"/>
 
-        <rect x="40" y="146" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
-        <text x="400" y="168" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">TẦNG 4: GUARDRAILS LAYER (Chặn rò rỉ .env · Khóa force-push · Chặn rm -rf)</text>
+        <path class="flow-path" d="M 430 140 C 480 180, 520 180, 570 180" stroke="var(--dracula-green)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="570,180 561,175 561,185" fill="var(--dracula-green)"/>
 
-        <rect x="40" y="188" width="720" height="34" rx="6" fill="var(--paper)" stroke="var(--dracula-pink)" stroke-width="2"/>
-        <text x="400" y="210" text-anchor="middle" fill="var(--dracula-pink)" font-weight="700" font-size="13">TẦNG 5: RESEARCH-FIRST VERIFICATION (Đọc hiểu toàn cục trước khi viết 1 dòng code)</text>
+        <!-- Dispatcher -->
+        <g class="interactive-node" transform="translate(20, 40)">
+          <rect width="170" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="1.8"/>
+          <text x="85" y="45" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="12.5">USER COMMAND</text>
+          <text x="85" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">/review, /plan, /sec</text>
+          <text x="85" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Phân tích mục tiêu</text>
+          <text x="85" y="120" text-anchor="middle" fill="var(--muted)" font-size="10.5">Xác định chuyên môn</text>
+        </g>
+
+        <!-- ECC Orchestrator -->
+        <g class="interactive-node" transform="translate(250, 40)">
+          <rect width="180" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
+          <circle cx="90" cy="40" r="14" fill="var(--dracula-purple)" opacity="0.2"/>
+          <text x="90" y="45" text-anchor="middle" fill="var(--dracula-purple)" font-weight="800" font-size="13">ECC CORE</text>
+          <text x="90" y="75" text-anchor="middle" fill="var(--ink)" font-size="11.5">Orchestrator</text>
+          <line x1="20" y1="90" x2="160" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <text x="90" y="110" text-anchor="middle" fill="var(--muted)" font-size="10.5">Cô lập Context</text>
+          <text x="90" y="128" text-anchor="middle" fill="#50fa7b" font-weight="600" font-size="10.5">Song song hóa</text>
+        </g>
+
+        <!-- Subagents -->
+        <g class="interactive-node" transform="translate(570, 15)">
+          <rect width="270" height="50" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="1.8"/>
+          <text x="20" y="30" fill="var(--dracula-cyan)" font-weight="700" font-size="12">Subagent 1: Security Auditor</text>
+        </g>
+
+        <g class="interactive-node" transform="translate(570, 85)">
+          <rect width="270" height="50" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.8"/>
+          <text x="20" y="30" fill="var(--dracula-orange)" font-weight="700" font-size="12">Subagent 2: Test Engineer (TDD)</text>
+        </g>
+
+        <g class="interactive-node" transform="translate(570, 155)">
+          <rect width="270" height="50" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="1.8"/>
+          <circle class="flow-pulse" cx="240" cy="25" r="14" fill="var(--dracula-green)" opacity="0.25"/>
+          <text x="20" y="30" fill="var(--dracula-green)" font-weight="700" font-size="12">Subagent 3: Codebase Architect</text>
+        </g>
       </svg>
     </div>
 
-    <!-- 3. Danh sách cấm trong Guardrails -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/ecc-editorial-detail.png" alt="Sổ cái kiểm định tính toàn vẹn SHA-256" loading="lazy" decoding="async">
+        <img src="assets/ecc-editorial-detail.png" alt="Bộ hook kiểm tra tự động trước và sau commit" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · SỔ CÁI KIỂM ĐỊNH TÍNH TOÀN VẸN SHA-256 (SLSA-4 PROVENANCE AUDIT):</strong> Đối chiếu hàm băm SHA-256 với sổ cái bất biến, xác nhận chứng chỉ SLSA Level 4 triệt tiêu hoàn toàn mã độc chuỗi cung ứng.</div>
+      <div class="ui-shot-caption"><strong>// 03 · KIỂM SOÁT HOOK THỜI GIAN THỰC (AUTOMATED HOOK GUARDRAILS):</strong> Khóa chặn 100% các lỗ hổng rò rỉ secret key hoặc vi phạm coding standards trước khi code được lưu vào ổ đĩa.</div>
     </div>
 
-    <h2>3. Bảng quy chuẩn an toàn (Deny-list) của Guardrails</h2>
-    <div class="table-wrap">
-      <table class="guide-table">
-        <thead>
-          <tr>
-            <th style="width: 25%;">Đối tượng bảo vệ</th>
-            <th style="width: 35%;">Hành động bị chặn cứng</th>
-            <th style="width: 40%;">Lý do an toàn</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Biến môi trường</strong></td>
-            <td>Đọc hoặc in nội dung các file <code>.env*</code>, <code>id_rsa</code>, <code>*.pem</code>.</td>
-            <td>Ngăn chặn việc gửi vô tình các credential hoặc API key mật lên máy chủ LLM.</td>
-          </tr>
-          <tr>
-            <td><strong>Lịch sử Git</strong></td>
-            <td>Chạy <code>git push --force</code> hoặc <code>git reset --hard HEAD~N</code> trên nhánh chính.</td>
-            <td>Bảo vệ lịch sử commit của nhóm không bị ghi đè không thể phục hồi.</td>
-          </tr>
-          <tr>
-            <td><strong>Hệ thống tệp</strong></td>
-            <td>Lệnh xóa đệ quy không chỉ định đường dẫn cụ thể (ví dụ <code>rm -rf /</code> hoặc biến rỗng).</td>
-            <td>Tránh tai nạn xóa nhầm toàn bộ máy trạm của lập trình viên.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 4. Hướng dẫn cài đặt ECC -->
-    <h2>4. Cài đặt ECC cho dự án của bạn</h2>
-    <div class="code-block">
-      <div class="code-block-header">
-        <span>Bash · Khởi tạo cấu hình ECC</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép lệnh cài đặt ECC">Sao chép</button>
+    <!-- 3. Interactive Tabs: 4 Chiều Sâu Kỹ Thuật -->
+    <h2>3. Hướng Dẫn Kích Hoạt & Cài Đặt Nhanh</h2>
+    <div class="guide-tabs">
+      <div class="tab-list">
+        <button class="tab-btn active" data-tab="tab-install-ecc">1. Cài Đặt Nhanh</button>
+        <button class="tab-btn" data-tab="tab-commands">2. Bảng 46 Lệnh Điều Phối</button>
+        <button class="tab-btn" data-tab="tab-hooks">3. Cấu Hình Hook Tự Động</button>
+        <button class="tab-btn" data-tab="tab-cases-ecc">4. Kịch Bản Thực Chiến</button>
       </div>
-      <pre><code># Sao chép bộ khung ECC vào thư mục .claude trong dự án
-git clone https://github.com/affaan-m/ECC.git /tmp/ecc
-cp -r /tmp/ecc/.claude ./
 
-# Khởi chạy Claude Code với cấu hình ECC đã nạp
-claude</code></pre>
+      <div class="tab-panel active" id="tab-install-ecc">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Bash · Tải Khung Everything Claude Code</span>
+            <button class="copy-btn" type="button" aria-label="Sao chép">Sao chép</button>
+          </div>
+          <pre><code># Thêm toàn bộ bộ kỹ năng ECC vào dự án
+npx skills add affan-m/everything-claude-code</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-commands">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Các Lệnh Điều Phối Phổ Biến Nhất</h4>
+            <p><code>/review</code>: Kích hoạt subagent kiểm tra chất lượng mã nguồn.<br>
+               <code>/security-scan</code>: Rà soát lỗ hổng bảo mật và rò rỉ API keys.<br>
+               <code>/plan</code>: Lập kế hoạch chi tiết trước khi bắt tay viết code.<br>
+               <code>/tdd</code>: Bắt buộc viết bài kiểm thử đơn vị trước khi triển khai.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-hooks">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Bảo Vệ Codebase Bằng Giao Thức Hook</h4>
+            <p>Cấu hình trong file <code>settings.json</code> để tự động chạy <code>npm test</code> hoặc <code>eslint</code> mỗi khi agent chỉnh sửa bất kỳ file mã nguồn nào.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases-ecc">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>Case Study: Triển Khai Tính Năng Phức Tạp Không Xung Đột</h4>
+            <p>ECC điều phối 3 subagent chạy độc lập trong 3 workspace riêng biệt, sau đó tự động hòa giải git diff và chạy test tổng thể thành công 100%.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Sức mạnh của việc học hỏi liên tục</strong>
-        <p>Mỗi khi bạn chỉ ra một lỗi sai cho Claude Code, bộ nhớ ECC sẽ tự động cập nhật vào <code>.claude/memory/lessons.md</code>. Kể từ giây phút đó, mọi thành viên trong team khi chạy agent đều được thừa hưởng bài học kinh nghiệm này.</p>
+        <strong>Lời Khuyên Từ Tác Giả Affan</strong>
+        <p>&ldquo;Sức mạnh thực sự của AI coding không nằm ở việc sinh mã nhanh, mà nằm ở hệ thống điều phối, kiểm soát chất lượng và ghi nhớ ngữ cảnh lâu dài.&rdquo;</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
       <a class="nav-card" href="deepseek-harness.html">
-        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-dir">Bài trước</span>
         <span class="nav-card-title">← DeepSeek Harness</span>
       </a>
       <a class="nav-card next" href="cindy.html">
         <span class="nav-card-dir">Kế tiếp</span>
-        <span class="nav-card-title">Cindy →</span>
+        <span class="nav-card-title">Cindy Memory Engine →</span>
       </a>
     </div>
   </main>

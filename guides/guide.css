@@ -1547,6 +1547,182 @@ html[data-guide-group="skill-collections"] .svg-diagram-frame::after {
   }
 }
 
+/* ==========================================================================
+   Smooth Spring Physics & Dynamic Data-Flow Effects (Interactive SVGs & Tabs)
+   ========================================================================== */
+.tab-panel.active {
+  display: block;
+  animation: tabSpringIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tabSpringIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SVG Data-Flow Animations */
+.flow-path {
+  stroke-dasharray: 8 6;
+  animation: flowStroke 3s linear infinite;
+}
+
+@keyframes flowStroke {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.flow-pulse {
+  animation: nodePulse 3.5s ease-in-out infinite;
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(139, 233, 253, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(139, 233, 253, 0.75));
+  }
+}
+
+.interactive-node {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+  cursor: pointer;
+}
+
+.interactive-node:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 14px rgba(189, 147, 249, 0.5));
+}
+
+/* Visual Metaphor Vision Card */
+.visual-metaphor-card {
+  margin: 24px 0 32px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, rgba(189, 147, 249, 0.08) 0%, rgba(139, 233, 253, 0.05) 100%), var(--paper);
+  border: 1px solid var(--spirit-border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.visual-metaphor-card::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, var(--spirit-aura) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.visual-metaphor-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.visual-metaphor-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0 0 14px 0;
+}
+
+.visual-metaphor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.visual-metaphor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  background: rgba(189, 147, 249, 0.18);
+  color: var(--accent);
+  border: 1px solid rgba(189, 147, 249, 0.35);
+}
+
+.visual-metaphor-preview {
+  margin: 14px 0 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(189, 147, 249, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  background: #191a21;
+}
+
+.visual-metaphor-img {
+  width: 100%;
+  height: auto;
+  max-height: 440px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.visual-metaphor-preview:hover .visual-metaphor-img {
+  transform: scale(1.02);
+}
+
+.visual-metaphor-prompt-box {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(40, 42, 54, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+.prompt-box-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--spirit-cyan);
+  margin-bottom: 6px;
+}
+
+.visual-metaphor-prompt-box code {
+  color: #f1fa8c;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
 /* 6. Trợ năng & Giảm chuyển động (Accessibility First) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

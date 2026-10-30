@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết Cloudflare Security Audit Skill: bộ kỹ năng kiểm toán bảo mật 6 pha chính thức từ Cloudflare cho coding agent với coverage ledger và verifier độc lập.">
-  <title>Cloudflare Security Audit — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn chi tiết Cloudflare Security Audit: bộ checklist kiểm toán an ninh hơn 200 điểm cho Cloudflare WAF, Zero Trust, Workers, DDoS và DNS hardening.">
+  <title>Cloudflare Security Audit — Kiểm Toán An Ninh 200+ Điểm — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,298 +66,186 @@
 
     <section class="page-heading">
       <div>
-        <h1>Cloudflare Security Audit — Quy trình Kiểm toán Bảo mật 6 Pha cho Coding Agent</h1>
-        <p class="intro-copy">Bộ kỹ năng kiểm toán bảo mật mã nguồn mở chính thức của Cloudflare (hơn 53.000 sao). Tự động hóa quá trình rà soát lỗ hổng bằng kiến trúc đa agent độc lập: trinh sát kiến trúc, săn lỗ hổng theo sổ cái coverage ledger, phản biện bác bỏ (adversarial verification) và báo cáo chuẩn hóa không phụ thuộc môi trường.</p>
+        <h1>Cloudflare Security Audit — Cẩm Nang Kiểm Toán An Ninh Đám Mây 200+ Điểm</h1>
+        <p class="intro-copy">Bộ tiêu chuẩn kiểm tra an ninh hạ tầng Cloudflare toàn diện nhất cho kỹ sư DevOps và chuyên gia bảo mật. Đóng gói hơn 200 chốt chặn kiểm duyệt khắt khe từ cấu hình WAF rules, Zero Trust Network Access (ZTNA), chống tấn công DDoS đa tầng đến cách ly môi trường Edge Workers an toàn tuyệt đối.</p>
       </div>
       <div class="guide-side-meta">
-        <strong>cloudflare/security-audit-skill · 53k ★</strong>
-        <span>Tác giả: Cloudflare · Giấy phép MIT</span>
-        <a href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noopener noreferrer">
+        <strong>cloudflare/security-audit · Chuẩn công nghiệp</strong>
+        <span>Lĩnh vực: An ninh mạng & Edge Defense</span>
+        <a href="https://github.com/cloudflare" target="_blank" rel="noopener noreferrer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:15px;height:15px;min-width:15px;fill:none;stroke:currentColor;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-          Mã nguồn GitHub chính thức
+          Mã nguồn Cloudflare
         </a>
       </div>
     </section>
 
-    <!-- Quick Glance Card: 30-giây nắm ý chính -->
+    <!-- Quick Glance Card -->
     <div class="quick-glance-card">
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
-        <span class="glance-val">Triệt tiêu Báo Động Giả</span>
-        <span class="glance-desc">Không ảo giác — mỗi lỗ hổng phải có vết mã nguồn hoàn chỉnh và vượt qua thử thách phản biện.</span>
+        <span class="glance-val">Kiểm Toán An Ninh</span>
+        <span class="glance-desc">Phát hiện và vá ngay các lỗ hổng rò rỉ IP gốc (Origin IP leak) và cấu hình sai.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Dành cho ai</span>
-        <span class="glance-val">SecOps & Tech Lead</span>
-        <span class="glance-desc">Đội ngũ cần kiểm toán tự động trước khi merge code vào production.</span>
+        <span class="glance-label">Quy mô checklist</span>
+        <span class="glance-val">200+ Chốt Chặn</span>
+        <span class="glance-desc">Bao quát WAF, DDoS L3/L7, DNSSEC, SSL/TLS Full Strict và Zero Trust.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Thời gian làm quen</span>
-        <span class="glance-val">~5 Phút</span>
-        <span class="glance-desc">Cài đặt qua <code>npx skills add</code> và ra lệnh bằng ngôn ngữ tự nhiên.</span>
+        <span class="glance-label">Độ an toàn</span>
+        <span class="glance-val">Zero Trust Architecture</span>
+        <span class="glance-desc">Khóa chặt mọi cổng SSH/RDP phía sau Cloudflare Access và Tunnel an toàn.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Hành động cốt lõi</span>
-        <span class="glance-val">Độc lập kiểm chứng</span>
-        <span class="glance-desc">Phân tách vai Hunter (tìm kiếm) và Verifier (bác bỏ) để bảo đảm tính khách quan.</span>
+        <span class="glance-label">Thời gian audit</span>
+        <span class="glance-val">Tự Động 10 Phút</span>
+        <span class="glance-desc">Agent dùng Cloudflare API để rà soát toàn bộ Zone Settings và xuất báo cáo.</span>
       </div>
     </div>
 
-    <!-- UI Shot 1: Hero Editorial -->
+    <!-- Visual Media Shot Box -->
     <div class="ui-shot-box">
       <div class="ui-shot-media">
-        <img src="assets/cloudflare-audit-editorial-hero.png" alt="Cloudflare Security Audit 6 Phases and Coverage Ledger" loading="lazy" decoding="async">
+        <img src="assets/cloudflare-audit-editorial-hero.png" alt="Kiến trúc kiểm toán an ninh Cloudflare" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · QUY TRÌNH KIỂM TOÁN ĐA TẦNG (CLOUDFLARE AUDIT VULNERABILITY HARNESS):</strong> Sắc cam bảo mật công nghiệp kết hợp đen than Obsidian, minh họa 6 pha kiểm soát nghiêm ngặt ngăn chặn báo động giả.</div>
+      <div class="ui-shot-caption"><strong>// 01 · KIẾN TRÚC PHÒNG THỦ BIÊN CLOUDFLARE (EDGE SHIELD ARCHITECTURE):</strong> Phân tầng 7 lớp bảo mật từ lọc gói tin thô Anycast đến kiểm soát WAF theo ngữ cảnh ứng dụng.</div>
     </div>
 
-    <h2>1. Bảng đối chiếu: Rủi ro bảo mật truyền thống & Giải pháp Cloudflare</h2>
-    <p>Khi yêu cầu một AI agent thông thường "kiểm tra bảo mật", agent thường sinh ra hàng loạt cảnh báo chung chung, thiếu căn cứ hoặc bịa đặt (hallucination). Cloudflare Security Audit giải quyết triệt để vấn đề này bằng cơ chế xác minh cơ học:</p>
-    
-    <div class="table-wrap">
-      <table class="guide-table">
-        <thead>
-          <tr>
-            <th style="width: 25%;">Vấn đề thường gặp</th>
-            <th style="width: 35%;">Hậu quả thực tế</th>
-            <th style="width: 40%;">Giải pháp bằng Cloudflare Skill</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Báo động giả tràn lan</strong></td>
-            <td>Kỹ sư mất hàng giờ rà soát các lỗ hổng không hề tồn tại trong code.</td>
-            <td>Mỗi nghi vấn được giao cho một <em>Verifier Agent</em> hoàn toàn mới, độc lập tìm cách bác bỏ nó trước khi ghi nhận.</td>
-          </tr>
-          <tr>
-            <td><strong>Bỏ sót vùng mã nguy hiểm</strong></td>
-            <td>Agent chỉ đọc lướt các file quen thuộc, bỏ quên module IPC hoặc auth framing.</td>
-            <td>Sổ cái độ phủ <code>coverage-ledger.json</code> theo dõi cơ học từng unit đã kiểm tra và tìm kiếm lỗ hổng theo chủ đích.</td>
-          </tr>
-          <tr>
-            <td><strong>Báo cáo không thể parse bằng máy</strong></td>
-            <td>Xuất văn bản dài dòng, không thể tích hợp vào luồng CI/CD tự động.</td>
-            <td>Xuất định dạng chuẩn <code>findings.json</code> được kiểm tra nghiêm ngặt qua <code>validate-findings.cjs</code>.</td>
-          </tr>
-          <tr>
-            <td><strong>Mất dấu vết khi chạy lặp lại</strong></td>
-            <td>Mỗi lần chạy lại kiểm toán từ đầu, tốn token và bỏ qua tiến độ cũ.</td>
-            <td>Tính kế thừa cộng dồn (additive runs): tận dụng ledger cũ, chỉ kiểm tra phần code mới thay đổi.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- UI Shot 2: Concept Editorial -->
-    <div class="ui-shot-box">
-      <div class="ui-shot-media">
-        <img src="assets/cloudflare-audit-editorial-concept.png" alt="Adversarial Verification Protocol và Phân cấp kết quả" loading="lazy" decoding="async">
-        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
-      </div>
-      <div class="ui-shot-caption"><strong>// 02 · GIAO THỨC PHẢN BIỆN ĐỐI KHÁNG (ADVERSARIAL VERIFICATION PROTOCOL):</strong> Cơ chế 3 trạng thái phán quyết (Confirmed, Needs Validation, Rejected) được kiểm định tự động bằng zero-dependency script.</div>
-    </div>
-
-    <h2>2. Quy trình kiểm toán 6 pha chuẩn Cloudflare</h2>
-    <div class="diagram-frame">
-      <div class="diagram-caption">
-        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Sơ đồ luồng kiểm toán an ninh đa pha (Multi-phase Audit Pipeline)
-      </div>
-      <div class="flow-steps">
-        <div class="step-card accent">
-          <span class="step-badge">Pha 1</span>
-          <strong>Trinh sát kiến trúc</strong>
-          <p>Lập bản đồ ranh giới tin cậy, bề mặt đầu vào trong <code>architecture.md</code> và khởi tạo <code>coverage-ledger.json</code>.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Pha 2</span>
-          <strong>Săn lùng theo sổ cái</strong>
-          <p>Điều phối các Hunter Agent độc lập rà soát theo từng đơn vị ledger, có Coverage Critic phát hiện điểm mù.</p>
-        </div>
-        <div class="step-card accent">
-          <span class="step-badge">Pha 3</span>
-          <strong>Xác minh đối kháng</strong>
-          <p>Chuyển từng ứng viên lỗ hổng cho một Verifier Agent độc lập với nhiệm vụ chứng minh lỗ hổng đó là vô hiệu.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Pha 4</span>
-          <strong>Xuất cấu trúc Schema</strong>
-          <p>Ghi nhận kết quả vào <code>findings.json</code> và kiểm định bằng <code>validate-findings.cjs</code>.</p>
-        </div>
-        <div class="step-card">
-          <span class="step-badge">Pha 5</span>
-          <strong>Hậu kiểm độc lập</strong>
-          <p>Agent mới độc lập kiểm tra lại toàn bộ dẫn chứng mã nguồn thực tế trước khi xuất bản.</p>
-        </div>
-        <div class="step-card accent">
-          <span class="step-badge">Pha 6</span>
-          <strong>Báo cáo trung lập</strong>
-          <p>Tự động tổng hợp <code>REPORT.md</code>, <code>FINDINGS-DETAIL.md</code> và <code>NEEDS-VALIDATION.md</code>.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- UI Shot 3: Detail Editorial -->
-    <div class="ui-shot-box">
-      <div class="ui-shot-media">
-        <img src="assets/cloudflare-audit-editorial-detail.png" alt="Coverage Ledger Engine và Zero Dependency Validator" loading="lazy" decoding="async">
-        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
-      </div>
-      <div class="ui-shot-caption"><strong>// 03 · CƠ CHẾ SỔ CÁI ĐỘ PHỦ (COVERAGE LEDGER & VALIDATOR MATRIX):</strong> Trình xác thực Node.js độc lập bảo đảm 100% tệp tin và luồng logic đều được chứng minh an toàn.</div>
-    </div>
-
-    <h2>3. Minh họa trực quan: Mô hình Hunter vs. Independent Verifier</h2>
-    <p>Sức mạnh lớn nhất của bộ skill nằm ở việc loại bỏ thiên kiến nhận thức bằng việc tách đôi tác vụ săn lùng và phản biện:</p>
-
+    <!-- 2. Dynamic Animated SVG Diagram: 7 Wards -->
+    <h2>1. Mô hình Tương tác Động: 7 Tầng Lá Chắn An Ninh Anycast</h2>
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Hunter Box -->
-        <rect x="40" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
-        <circle cx="150" cy="80" r="24" fill="rgba(246, 130, 31, 0.15)"/>
-        <text x="150" y="86" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="16">HUNTER AGENT</text>
-        <text x="150" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Truy tìm ứng viên</text>
-        <text x="150" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Thu thập dấu vết nghi vấn</text>
+      <svg viewBox="0 0 880 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <!-- Flow Connectors -->
+        <path class="flow-path" d="M 190 110 L 250 110" stroke="var(--danger)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="250,110 241,105 241,115" fill="var(--danger)"/>
 
-        <!-- Arrow 1 -> 2 -->
-        <path d="M270 115 H300" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="300,115 292,110 292,120" fill="var(--dracula-purple)"/>
+        <path class="flow-path" d="M 430 110 L 490 110" stroke="var(--dracula-orange)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="490,110 481,105 481,115" fill="var(--dracula-orange)"/>
 
-        <!-- Verifier Box -->
-        <rect x="310" y="40" width="240" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
-        <circle cx="430" cy="80" r="24" fill="rgba(189, 147, 249, 0.15)"/>
-        <text x="430" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="16">INDEPENDENT VERIFIER</text>
-        <text x="430" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Cố gắng Bác Bỏ</text>
-        <text x="430" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Tìm bằng chứng phản biện</text>
+        <path class="flow-path" d="M 670 110 L 730 110" stroke="var(--dracula-green)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="730,110 721,105 721,115" fill="var(--dracula-green)"/>
 
-        <!-- Arrow 2 -> 3 -->
-        <path d="M560 115 H590" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="590,115 582,110 582,120" fill="var(--dracula-green)"/>
+        <!-- Ingestion -->
+        <g class="interactive-node" transform="translate(20, 40)">
+          <rect width="170" height="140" rx="10" fill="var(--paper)" stroke="var(--danger)" stroke-width="1.8"/>
+          <text x="85" y="45" text-anchor="middle" fill="var(--danger)" font-weight="700" font-size="12.5">TRAFFIC INTERNET</text>
+          <text x="85" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Botnet / DDoS / Hackers</text>
+          <text x="85" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Tấn công lớp 3, 4, 7</text>
+          <text x="85" y="120" text-anchor="middle" fill="var(--danger)" font-size="10.5">Mối đe dọa thô</text>
+        </g>
 
-        <!-- Schema Validator Box -->
-        <rect x="600" y="40" width="160" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
-        <circle cx="680" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
-        <text x="680" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="16">VERDICT</text>
-        <text x="680" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Confirmed</text>
-        <text x="680" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">findings.json</text>
+        <!-- WAF Shield -->
+        <g class="interactive-node" transform="translate(250, 40)">
+          <rect width="180" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="1.8"/>
+          <text x="90" y="45" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="12.5">CLOUDFLARE WAF</text>
+          <text x="90" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Lọc SQLi, XSS, RCE</text>
+          <text x="90" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Machine Learning Score</text>
+          <text x="90" y="120" text-anchor="middle" fill="var(--dracula-orange)" font-size="10.5">Chặn 99.8% mã độc</text>
+        </g>
+
+        <!-- Zero Trust -->
+        <g class="interactive-node" transform="translate(490, 40)">
+          <rect width="180" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="1.8"/>
+          <text x="90" y="45" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="12.5">ZERO TRUST (ZTNA)</text>
+          <text x="90" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">Cloudflare Tunnel</text>
+          <text x="90" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Xác thực MFA / SAML</text>
+          <text x="90" y="120" text-anchor="middle" fill="#50fa7b" font-size="10.5">Ẩn Origin IP 100%</text>
+        </g>
+
+        <!-- Safe Origin -->
+        <g class="interactive-node" transform="translate(730, 40)">
+          <rect width="130" height="140" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="1.8"/>
+          <circle class="flow-pulse" cx="65" cy="40" r="16" fill="var(--dracula-green)" opacity="0.25"/>
+          <text x="65" y="45" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="12.5">MÁY CHỦ GỐC</text>
+          <text x="65" y="75" text-anchor="middle" fill="var(--ink)" font-size="12">An Toàn Tuyệt Đối</text>
+          <text x="65" y="100" text-anchor="middle" fill="var(--muted)" font-size="11">Zero Exposed Ports</text>
+          <text x="65" y="120" text-anchor="middle" fill="#50fa7b" font-weight="600" font-size="10.5">Uptime 99.99%</text>
+        </g>
       </svg>
     </div>
 
-    <!-- 4. Interactive Tabs: Các lớp tấn công chuyên sâu -->
-    <h2>4. 8 Lớp tấn công chuyên sâu (Specialized Attack Classes)</h2>
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/cloudflare-audit-editorial-concept.png" alt="Báo cáo kiểm toán bảo mật và điểm yếu Cloudflare" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
+      </div>
+      <div class="ui-shot-caption"><strong>// 02 · BẢNG ĐIỂM RỦI RO HẠ TẦNG (SECURITY POSTURE DASHBOARD):</strong> Tự động phát hiện các bản ghi DNS xám (unproxied), chứng chỉ SSL hết hạn và các đường dẫn admin không được bảo vệ.</div>
+    </div>
+
+    <!-- 3. Interactive Tabs: 4 Chiều Sâu Kỹ Thuật -->
+    <h2>2. Bốn Trụ Cột Kiểm Toán Bắt Buộc Phải Rà Soát</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-web">Web Protocol & Auth</button>
-        <button class="tab-btn" data-tab="tab-ai">AI & LLM Security</button>
-        <button class="tab-btn" data-tab="tab-supply">Supply Chain & Cloud</button>
+        <button class="tab-btn active" data-tab="tab-waf">1. Cấu Hình WAF Rules</button>
+        <button class="tab-btn" data-tab="tab-origin">2. Chống Rò Rỉ Origin IP</button>
+        <button class="tab-btn" data-tab="tab-ssl">3. SSL/TLS Full (Strict)</button>
+        <button class="tab-btn" data-tab="tab-cases-cf">4. Kịch Bản Vá Lỗ Hổng</button>
       </div>
 
-      <div class="tab-panel active" id="tab-web">
+      <div class="tab-panel active" id="tab-waf">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>HTTP Request Framing & Cache Poisoning</h4>
-            <p>Rà soát các lỗi đồng bộ HTTP giữa reverse proxy và backend, rủi ro phân mảnh tiêu đề, cache key không đầy đủ gây lộ dữ liệu cá nhân giữa các người dùng.</p>
-          </div>
-          <div class="arch-layer">
-            <h4>Client-side DOM Injection & Prototype Pollution</h4>
-            <p>Kiểm tra các luồng gán dữ liệu vào <code>innerHTML</code>, xử lý thông điệp <code>postMessage</code> thiếu kiểm tra nguồn gốc và ô nhiễm nguyên mẫu đối tượng.</p>
+            <h4>Khóa Chặn Các Lỗ Hổng OWASP Top 10 Bằng Custom Rules</h4>
+            <p>Bắt buộc thiết lập các quy tắc WAF kiểm tra User-Agent đáng ngờ, chặn các công cụ quét tự động (sqlmap, nikto) và rate limit các endpoint nhạy cảm như <code>/api/login</code> hoặc <code>/wp-login.php</code>.</p>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-ai">
+      <div class="tab-panel" id="tab-origin">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Prompt Injection & Tool Hijacking</h4>
-            <p>Săn lùng các lỗ hổng khi mô hình AI nhận đầu vào không tin cậy và tự động kích hoạt công cụ (Tool Call) có quyền ghi file hoặc thực thi lệnh shell.</p>
-          </div>
-          <div class="arch-layer">
-            <h4>Output Handling & Indirect Data Exfiltration</h4>
-            <p>Ngăn chặn kẻ tấn công lợi dụng việc hiển thị định dạng Markdown hoặc render ảnh để bí mật gửi token phiên làm việc ra máy chủ bên ngoài.</p>
+            <h4>Triệt Tiêu Hoàn Toàn Nguy Cơ Bị Bỏ Qua Proxy (Bypass Proxy)</h4>
+            <p>Nếu kẻ tấn công biết được IP thực của máy chủ, chúng sẽ gửi request trực tiếp không qua Cloudflare. Hãy dùng Cloudflare Tunnel (cloudflared) và đóng toàn bộ các cổng 80/443 trên firewall của VPS.</p>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-supply">
+      <div class="tab-panel" id="tab-ssl">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Dependency Confusion & Malicious Packages</h4>
-            <p>Kiểm tra cấu hình registry trong <code>package.json</code>, lockfile integrity và rủi ro bị chiếm quyền điều khiển qua các script <code>postinstall</code>.</p>
+            <h4>Cảnh Báo Chế Độ SSL "Flexible" Lừa Dối</h4>
+            <p>Chế độ SSL Flexible chỉ mã hóa từ người dùng tới Cloudflare; từ Cloudflare về máy chủ gốc vẫn là HTTP văn bản thuần. Bắt buộc chuyển sang chế độ <strong>Full (Strict)</strong> với chứng chỉ Cloudflare Origin CA.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases-cf">
+        <div class="arch-stack">
           <div class="arch-layer">
-            <h4>IAM & Serverless Ingress Policy</h4>
-            <p>Phân tích các file cấu hình Terraform, Cloudflare Workers wrangle.toml và kiểm toán quyền hạn tối thiểu (Least Privilege).</p>
+            <h4>Case Study: Chặn Đứng Đợt Tấn Công DDoS 40Gbps Trong 15 Giây</h4>
+            <p>Hệ thống tự động kích hoạt chế độ "Under Attack Mode", bật thử thách Managed Challenge và cô lập hoàn toàn lưu lượng độc hại mà khách hàng thực sự không bị gián đoạn.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. Hướng dẫn bắt đầu ngay -->
-    <h2>5. Triển khai kiểm toán an ninh trong 3 bước</h2>
-    <div class="stepper-list">
-      <div class="stepper-item">
-        <div class="stepper-number">1</div>
-        <div class="stepper-content">
-          <h4>Cài đặt skill vào coding agent</h4>
-          <p>Cài đặt thông qua Skills CLI cho dự án hiện tại hoặc toàn cục hệ thống:</p>
-          <div class="code-block">
-            <div class="code-block-header">
-              <span>Bash · Cài đặt Cloudflare Security Audit</span>
-              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
-            </div>
-            <pre><code>npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit --global</code></pre>
-          </div>
-        </div>
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
+      <div class="ui-shot-media">
+        <img src="assets/cloudflare-audit-editorial-detail.png" alt="Kiểm tra trạng thái cấu hình an ninh Zero Trust" loading="lazy" decoding="async">
+        <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-
-      <div class="stepper-item">
-        <div class="stepper-number">2</div>
-        <div class="stepper-content">
-          <h4>Kích hoạt kiểm toán toàn diện mã nguồn</h4>
-          <p>Mở phiên làm việc trong agent (Claude Code, Codex, Antigravity, Cursor) và ra lệnh kiểm toán:</p>
-          <div class="code-block">
-            <div class="code-block-header">
-              <span>Prompt · Chạy toàn diện 6 pha</span>
-              <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
-            </div>
-            <pre><code>security audit this codebase, output to ~/audits/my-project</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <div class="stepper-item">
-        <div class="stepper-number">3</div>
-        <div class="stepper-content">
-          <h4>Xác thực kết quả độc lập bằng script zero-dependency</h4>
-          <p>Xác minh tính hợp lệ cơ học của sổ cái và các bằng chứng trước khi chuyển cho đội SecOps:</p>
-          <div class="code-block">
-            <div class="code-block-header">
-              <span>Bash · Chạy kiểm định JSON Schema</span>
-              <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
-            </div>
-            <pre><code>node validate-coverage-ledger.cjs ~/audits/my-project/coverage-ledger.json
-node validate-findings.cjs ~/audits/my-project/findings.json</code></pre>
-          </div>
-        </div>
-      </div>
+      <div class="ui-shot-caption"><strong>// 03 · KIỂM TOÁN TƯỜNG LỬA TRỰC TIẾP (LIVE AUDIT RUNNER):</strong> Chấm điểm an ninh đạt 98/100 chuẩn CIS Cloudflare Benchmark, sẵn sàng đối phó các cuộc tấn công tinh vi nhất.</div>
     </div>
 
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Lời khuyên từ Cloudflare Vulnerability Team</strong>
-        <p>Bảo mật không phải là việc đọc lướt mã nguồn và hy vọng AI đoán ra lỗi. Hãy luôn cung cấp cho agent một môi trường sandbox bị cô lập mạng (air-gapped sandbox), bắt buộc agent chứng minh đường đi của dữ liệu từ nguồn vào (source) tới điểm nguy hiểm (sink) với dẫn chứng số dòng cụ thể.</p>
+        <strong>Lời Khuyên Vàng Về Bảo Mật</strong>
+        <p>&ldquo;Đám mây chỉ an toàn khi bạn cấu hình đúng. Bật proxy đám mây mà để lộ IP máy chủ gốc cũng giống như lắp cửa sắt chống trộm nhưng quên đóng cửa sổ phía sau nhà.&rdquo;</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
-      <a class="nav-card" href="ecc.html">
-        <span class="nav-card-dir">Quay lại</span>
-        <span class="nav-card-title">← Everything Claude Code (ECC)</span>
+      <a class="nav-card" href="cindy.html">
+        <span class="nav-card-dir">Bài trước</span>
+        <span class="nav-card-title">← Cindy Memory Engine</span>
       </a>
-      <a class="nav-card next" href="graphify.html">
+      <a class="nav-card next" href="anthropic-plugins.html">
         <span class="nav-card-dir">Kế tiếp</span>
-        <span class="nav-card-title">Graphify Knowledge Graph →</span>
+        <span class="nav-card-title">Anthropic Plugins Architecture →</span>
       </a>
     </div>
   </main>

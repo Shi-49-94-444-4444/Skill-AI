@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết bộ Matt Pocock Skills: bộ kỹ năng công nghệ phần mềm thực chiến cho AI coding agent, chống vibe coding, TDD và grilling session.">
-  <title>Matt Pocock Skills — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn toàn diện bộ Matt Pocock Skills: 7 kỹ năng công nghệ phần mềm thực chiến cho AI coding agent, chống vibe coding, TDD tất định, grilling session và kiến trúc deep modules.">
+  <title>Matt Pocock Skills — Hướng dẫn Thực chiến & Phân tích Chuyên sâu — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,8 +66,8 @@
 
     <section class="page-heading">
       <div>
-        <h1>Matt Pocock Skills — Kỹ thuật phần mềm thực thụ cho Coding Agent</h1>
-        <p class="intro-copy">Bộ skill tinh gọn, có khả năng kết hợp cao do Matt Pocock (Total TypeScript) phát triển. Khắc phục 4 điểm gãy kinh điển của coding agent: lệch pha yêu cầu, agent giải thích dông dài, code sinh ra không chạy được và biến codebase thành bãi rác phức tạp.</p>
+        <h1>Matt Pocock Skills — Kỷ luật Công nghệ Phần mềm Tuyệt đối cho Coding Agent</h1>
+        <p class="intro-copy">Bộ công cụ công nghệ phần mềm chính quy do Matt Pocock (Total TypeScript) sáng tạo, thiết kế đặc thù để triệt tiêu hội chứng &ldquo;vibe coding&rdquo; vô kỷ luật. Thay thế việc suy đoán mơ hồ bằng phương pháp vấn đáp Socratic khắc nghiệt (grilling), chu trình kiểm thử tất định TDD Red-Green-Refactor, bảng từ vựng bảo toàn ngữ cảnh và kiến trúc module sâu (Deep Modules).</p>
       </div>
       <div class="guide-side-meta">
         <strong>mattpocock/skills · 305k ★</strong>
@@ -84,211 +84,308 @@
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
         <span class="glance-val">Chống Vibe Coding</span>
-        <span class="glance-desc">Ép agent theo kỷ luật kiểm thử TDD và làm rõ spec trước khi code.</span>
+        <span class="glance-desc">Ép agent theo kỷ luật kiểm thử TDD và làm rõ spec tuyệt đối trước khi gõ code.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Dành cho ai</span>
-        <span class="glance-val">Lập trình viên & Tech Lead</span>
-        <span class="glance-desc">Người muốn AI tạo code chạy được ngay, dễ bảo trì lâu dài.</span>
+        <span class="glance-val">Software Engineers & Tech Leads</span>
+        <span class="glance-desc">Kỹ sư cần code chạy ổn định ngay lần chạy đầu, không sinh technical debt.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Thời gian làm quen</span>
-        <span class="glance-val">~5 Phút</span>
-        <span class="glance-desc">Chỉ cần gõ lệnh <code>/grill-me</code> và <code>/tdd</code> trong phiên chat.</span>
+        <span class="glance-val">~3 Phút</span>
+        <span class="glance-desc">Chỉ cần gõ lệnh <code>/grill-me</code> và <code>/tdd</code> trong bất kỳ phiên prompt nào.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Hành động cốt lõi</span>
-        <span class="glance-val">Agent chất vấn ngược</span>
-        <span class="glance-desc">Không đoán mò — agent hỏi sâu ca biên rồi mới viết unit test.</span>
+        <span class="glance-val">Socratic Grilling & Test Red-Green</span>
+        <span class="glance-desc">Agent phản biện ngược các giả định ngầm, viết test trượt trước rồi mới sinh code tối thiểu.</span>
       </div>
     </div>
 
-    <!-- 1. Vấn đề & Giải pháp -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/mattpocock-editorial-hero.png" alt="TypeScript Strict Rigor phong cách Electric Violet" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · ĐẠI SỐ KIỂU DỮ LIỆU & KIỂM CHỨNG TĨNH (TYPESCRIPT STRICT RIGOR):</strong> Sắc tím điện tử kết hợp vàng chanh acid lime, minh họa cơ chế suy diễn kiểu compile-time không tốn tài nguyên runtime.</div>
+      <div class="ui-shot-caption"><strong>// 01 · ĐẠI SỐ KIỂU DỮ LIỆU & KIỂM CHỨNG TĨNH (TYPESCRIPT STRICT RIGOR):</strong> Sắc tím điện tử kết hợp ánh sáng lăng kính, minh họa cơ chế suy diễn kiểu compile-time và rào chắn an toàn loại bỏ lỗi runtime.</div>
     </div>
 
-    <h2>1. Bảng đối chiếu: Vấn đề "Vibe Coding" & Giải pháp</h2>
-    <p>Trào lưu "vibe coding" (gõ prompt mơ hồ rồi hy vọng AI đoán đúng ý) tạo ra ảo giác tiến độ nhanh lúc đầu, nhưng nhanh chóng dẫn đến bế tắc khi codebase phình to. Matt Pocock Skills đưa các nguyên lý công nghệ phần mềm kinh điển vào agent:</p>
+    <h2>1. Bản chất sự cố &ldquo;Vibe Coding&rdquo; và Cơ chế Giải phẫu của Matt Pocock</h2>
+    <p>Hiện tượng <em>vibe coding</em> &mdash; khi lập trình viên đưa ra một prompt sơ sài rồi phó mặc cho mô hình ngôn ngữ lớn (LLM) đoán mò nghiệp vụ &mdash; tạo ra ảo giác năng suất cực nhanh trong 15 phút đầu, nhưng sau đó đẩy dự án vào cuộc khủng hoảng kiến trúc không thể cứu vãn. LLM có khuynh hướng tự mãn (sycophancy): nó sẽ đồng ý với mọi yêu cầu mâu thuẫn, tự suy diễn các trường hợp biên nguy hiểm mà không báo trước, và tạo ra hàng trăm dòng code "trông có vẻ đúng" nhưng thất bại ngay trong môi trường production.</p>
     
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 25%;">Vấn đề thường gặp</th>
-            <th style="width: 35%;">Hậu quả thực tế</th>
-            <th style="width: 40%;">Giải pháp bằng Skill</th>
+            <th style="width: 25%;">Hội chứng Vibe Coding</th>
+            <th style="width: 35%;">Cơ chế lỗi tiềm ẩn bên trong</th>
+            <th style="width: 40%;">Giải pháp Kỷ luật của Matt Pocock</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Agent làm sai ý bạn</strong></td>
-            <td>Code xong mới nhận ra agent hiểu sai nghiệp vụ cốt lõi.</td>
-            <td>Dùng <code>/grill-me</code> hoặc <code>/grill-with-docs</code> để agent chất vấn ngược lại bạn đến tận cùng trước khi code.</td>
+            <td><strong>Lệch pha yêu cầu ngầm</strong></td>
+            <td>Agent tự suy đoán mô hình dữ liệu dựa trên dữ liệu huấn luyện công khai thay vì logic nghiệp vụ đặc thù của công ty bạn.</td>
+            <td>Kích hoạt <code>/grill-me</code>: Agent đổi vai thành Senior Architect, dồn bạn vào chân tường bằng 5-10 câu hỏi hóc búa về edge-cases và state transitions.</td>
           </tr>
           <tr>
-            <td><strong>Agent nói dông dài tốn token</strong></td>
-            <td>Agent suy đoán thuật ngữ của dự án, dùng 20 từ thay vì 1 từ.</td>
-            <td>Tự động xây dựng bảng thuật ngữ <code>GLOSSARY.md</code> và ADRs (Architectural Decision Records).</td>
+            <td><strong>Semantic Drift & Token Bloat</strong></td>
+            <td>Càng chat dài, ngữ cảnh càng loãng. Agent dùng từ ngữ thiếu thống nhất, mô tả một khái niệm bằng 30 từ thay vì một danh từ định nghĩa chuẩn.</td>
+            <td>Khởi tạo tự động <code>maintain-glossary</code>: Lưu vết toàn bộ thuật ngữ chuyên ngành vào <code>GLOSSARY.md</code>, đóng vai trò mỏ neo ngữ nghĩa (semantic anchor).</td>
           </tr>
           <tr>
-            <td><strong>Code sinh ra không chạy được</strong></td>
-            <td>Không có vòng lặp kiểm chứng (flying blind).</td>
-            <td>Kỹ năng <code>/tdd</code>: Viết test đỏ trước, viết code xanh sau, refactor cuối cùng.</td>
+            <td><strong>Flying Blind (Code mù)</strong></td>
+            <td>Agent sinh code mà không có môi trường thực thi phản hồi, dẫn đến việc dùng API không tồn tại (hallucinated methods) hoặc vi phạm type contract.</td>
+            <td>Kỷ luật sắt <code>/tdd</code>: Bắt buộc viết test đỏ (Red) &rarr; Chạy test xác nhận thất bại &rarr; Viết code xanh tối thiểu (Green) &rarr; Tái cấu trúc sạch (Refactor).</td>
           </tr>
           <tr>
-            <td><strong>Codebase thành "đống bùn"</strong></td>
-            <td>Các module phụ thuộc chéo, kiến trúc bị vỡ.</td>
-            <td>Kỹ năng <code>/improve-codebase-architecture</code> khảo sát các cơ hội làm sâu module (deep modules).</td>
+            <td><strong>Đống bùn kiến trúc (Big Ball of Mud)</strong></td>
+            <td>Agent tạo ra các hàm nông (shallow modules), rò rỉ chi tiết cài đặt ra bên ngoài, tạo mạng lưới phụ thuộc chéo rối rắm khó kiểm thử.</td>
+            <td>Kỹ năng <code>improve-codebase-architecture</code>: Thiết kế Deep Modules theo triết lý John Ousterhout &mdash; Interface cực hẹp, chức năng cực sâu.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- 2. Sơ đồ quy trình trực quan -->
-        <!-- Minh họa bổ sung: Editorial Spread -->
-        <div class="ui-shot-box">
+    <!-- 2. Quy trình làm việc trực quan -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/mattpocock-editorial-concept.png" alt="Vòng lặp kiểm thử tất định Red Green Refactor" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · VÒNG LẶP KIỂM THỬ TẤT ĐỊNH (RED-GREEN-REFACTOR MESH):</strong> Chu trình 3 pha chuẩn mực (viết test trượt → triển khai tối thiểu → tái cấu trúc sạch) đạt 100% tỷ lệ vượt qua.</div>
+      <div class="ui-shot-caption"><strong>// 02 · VÒNG LẶP KIỂM THỬ TẤT ĐỊNH (RED-GREEN-REFACTOR MESH):</strong> Chu trình 3 pha khép kín, nơi mỗi nhát búa kiểm thử tôi luyện cấu trúc code đạt độ tin cậy tuyệt đối.</div>
     </div>
 
-    <h2>2. Quy trình làm việc trực quan (5 bước chuẩn mực)</h2>
+    <h2>2. Pipeline 5 Giai đoạn Triển khai Kỹ thuật Chuẩn mực</h2>
     <div class="diagram-frame">
       <div class="diagram-caption">
         <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        Sơ đồ luồng phát triển phần mềm có kỷ luật với Coding Agent
+        Quy trình chuẩn hóa chuỗi thực thi của Coding Agent (Matt Pocock Lifecycle)
       </div>
       <div class="flow-steps">
         <div class="step-card accent">
-          <span class="step-badge">Bước 1</span>
-          <strong>Phỏng vấn làm rõ</strong>
-          <p>Chạy <code>/grill-with-docs</code>. Agent hỏi xoáy vào các ca biên, cập nhật <code>GLOSSARY.md</code>.</p>
+          <span class="step-badge">Giai đoạn 1</span>
+          <strong>Socratic Grilling</strong>
+          <p>Kích hoạt <code>/grill-me</code>. Agent phỏng vấn đào sâu vào 3 trục: Giả định sai, Ca biên (Edge Cases), Ràng buộc bất biến (Invariants).</p>
         </div>
         <div class="step-card">
-          <span class="step-badge">Bước 2</span>
-          <strong>Đặc tả kỹ thuật</strong>
-          <p>Chạy <code>/to-spec</code> để tổng hợp kết quả phỏng vấn thành spec kỹ thuật hoàn chỉnh.</p>
+          <span class="step-badge">Giai đoạn 2</span>
+          <strong>Đặc tả Spec Kỹ thuật</strong>
+          <p>Chạy <code>/to-spec</code> để tổng hợp kết quả phỏng vấn thành file Markdown chuẩn với Scope, Non-Goals, và State Transitions.</p>
         </div>
         <div class="step-card">
-          <span class="step-badge">Bước 3</span>
-          <strong>Phân rã Tickets</strong>
-          <p>Chạy <code>/to-tickets</code> để bẻ spec thành các ticket độc lập có khai báo quan hệ phụ thuộc.</p>
+          <span class="step-badge">Giai đoạn 3</span>
+          <strong>Phân rã Atomic Tickets</strong>
+          <p>Chạy <code>/to-tickets</code> để bẻ spec thành các ticket độc lập có đồ thị phụ thuộc (DAG), giảm thiểu xung đột ngữ cảnh.</p>
         </div>
         <div class="step-card accent">
-          <span class="step-badge">Bước 4</span>
-          <strong>Triển khai TDD</strong>
-          <p>Chạy <code>/tdd</code> cho từng ticket: Test Đỏ (Fail) &rarr; Code Xanh (Pass) &rarr; Tái cấu trúc.</p>
+          <span class="step-badge">Giai đoạn 4</span>
+          <strong>Thực thi Chu trình TDD</strong>
+          <p>Chạy <code>/tdd</code> cho từng ticket: Viết test đỏ xác thực lỗi &rarr; Sinh code tối thiểu cho test xanh &rarr; Refactor giữ vững test.</p>
         </div>
         <div class="step-card">
-          <span class="step-badge">Bước 5</span>
-          <strong>Bảo dưỡng kiến trúc</strong>
-          <p>Chạy <code>/improve-codebase-architecture</code> để làm sâu module và giảm phụ thuộc chéo.</p>
+          <span class="step-badge">Giai đoạn 5</span>
+          <strong>Đóng gói Kiến trúc & ADRs</strong>
+          <p>Chạy <code>improve-codebase-architecture</code> và tự động ghi lại <code>ADR-xxx.md</code> bảo đảm các quyết định thiết kế được lưu truyền.</p>
         </div>
       </div>
     </div>
 
-    <!-- 3. Minh họa trực quan SVG: Vòng lặp Grilling & TDD -->
-        <div class="ui-shot-box">
+    <!-- 3. Dynamic Interactive SVG: Red-Green-Refactor Flow -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/mattpocock-editorial-detail.png" alt="Phân tích cây cú pháp trừu tượng AST" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · PHÂN TÍCH CÂY CÚ PHÁP TRỪU TƯỢNG (AST TYPE INFERENCE CALCULUS):</strong> Duyệt 1,420 nút AST bằng TypeScript Compiler API, loại bỏ triệt để các ép kiểu any không an toàn.</div>
+      <div class="ui-shot-caption"><strong>// 03 · PHÂN TÍCH CÂY CÚ PHÁP TRỪU TƯỢNG (AST TYPE INFERENCE CALCULUS):</strong> Phân rã 1,420 nút AST bằng TypeScript Compiler API, loại bỏ triệt để các ép kiểu any không an toàn.</div>
     </div>
 
-    <h2>3. Minh họa trực quan: Vòng lặp TDD Red-Green-Refactor</h2>
-    <p>Thay vì sinh code một lần và cầu nguyện, agent vận hành theo vòng lặp kiểm chứng liên tục được kiểm soát bằng test tự động:</p>
+    <h2>3. Mô hình Tương tác Động: Chu trình Kiểm thử Tất định TDD</h2>
+    <p>Thay vì hy vọng code chạy đúng sau một lần sinh duy nhất, mô hình này biến agent thành một thực thể kiểm chứng liên tục được kiểm soát bằng test runner tự động:</p>
 
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Step 1: Red -->
-        <rect x="40" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--danger)" stroke-width="2"/>
-        <circle cx="140" cy="80" r="24" fill="rgba(255, 85, 85, 0.15)"/>
-        <text x="140" y="86" text-anchor="middle" fill="var(--danger)" font-weight="700" font-size="16">1. RED</text>
-        <text x="140" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Viết Test thất bại</text>
-        <text x="140" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Bắt buộc test fail trước</text>
+      <svg viewBox="0 0 860 260" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <defs>
+          <linearGradient id="mpRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 85, 85, 0.25)"/>
+            <stop offset="100%" stop-color="rgba(255, 85, 85, 0.05)"/>
+          </linearGradient>
+          <linearGradient id="mpGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(80, 250, 123, 0.25)"/>
+            <stop offset="100%" stop-color="rgba(80, 250, 123, 0.05)"/>
+          </linearGradient>
+          <linearGradient id="mpPurpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(189, 147, 249, 0.25)"/>
+            <stop offset="100%" stop-color="rgba(189, 147, 249, 0.05)"/>
+          </linearGradient>
+        </defs>
 
-        <!-- Arrow 1 -> 2 -->
-        <path d="M250 115 H280" stroke="var(--line)" stroke-width="2" marker-end="url(#arrow)"/>
-        <polygon points="280,115 272,110 272,120" fill="var(--dracula-purple)"/>
+        <!-- Dynamic Animated Connectors -->
+        <path class="flow-path" d="M 240 120 L 320 120" stroke="var(--dracula-pink)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="320,120 310,114 310,126" fill="var(--dracula-pink)"/>
 
-        <!-- Step 2: Green -->
-        <rect x="290" y="40" width="220" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
-        <circle cx="400" cy="80" r="24" fill="rgba(80, 250, 123, 0.15)"/>
-        <text x="400" y="86" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="16">2. GREEN</text>
-        <text x="400" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Viết mã tối thiểu</text>
-        <text x="400" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Code vừa đủ để test pass</text>
+        <path class="flow-path" d="M 540 120 L 620 120" stroke="var(--dracula-green)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="620,120 610,114 610,126" fill="var(--dracula-green)"/>
 
-        <!-- Arrow 2 -> 3 -->
-        <path d="M520 115 H550" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="550,115 542,110 542,120" fill="var(--dracula-purple)"/>
+        <path class="flow-path" d="M 720 190 C 720 240, 140 240, 140 190" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 4" stroke-linecap="round"/>
+        <polygon points="140,190 134,200 146,200" fill="var(--accent)"/>
 
-        <!-- Step 3: Refactor -->
-        <rect x="560" y="40" width="200" height="150" rx="10" fill="var(--paper)" stroke="var(--dracula-purple)" stroke-width="2"/>
-        <circle cx="660" cy="80" r="24" fill="rgba(189, 147, 249, 0.15)"/>
-        <text x="660" y="86" text-anchor="middle" fill="var(--dracula-purple)" font-weight="700" font-size="16">3. CLEAN</text>
-        <text x="660" y="125" text-anchor="middle" fill="var(--ink)" font-weight="600" font-size="14">Tái cấu trúc mã</text>
-        <text x="660" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Làm sạch mà test vẫn xanh</text>
+        <!-- Phase 1: RED -->
+        <g class="interactive-node">
+          <rect x="40" y="45" width="200" height="150" rx="12" fill="url(#mpRedGrad)" stroke="var(--danger)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="140" cy="85" r="22" fill="var(--danger)" opacity="0.3"/>
+          <circle cx="140" cy="85" r="16" fill="var(--danger)"/>
+          <text x="140" y="90" text-anchor="middle" fill="#ffffff" font-weight="700" font-size="13">01</text>
+          <text x="140" y="128" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="15">RED: TEST THẤT BẠI</text>
+          <text x="140" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Viết test trước khi code</text>
+          <text x="140" y="168" text-anchor="middle" fill="var(--danger)" font-size="11" font-weight="600">Bắt buộc xác nhận Fail</text>
+        </g>
+
+        <!-- Phase 2: GREEN -->
+        <g class="interactive-node">
+          <rect x="320" y="45" width="220" height="150" rx="12" fill="url(#mpGreenGrad)" stroke="var(--dracula-green)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="430" cy="85" r="22" fill="var(--dracula-green)" opacity="0.3"/>
+          <circle cx="430" cy="85" r="16" fill="var(--dracula-green)"/>
+          <text x="430" y="90" text-anchor="middle" fill="#1e1f29" font-weight="700" font-size="13">02</text>
+          <text x="430" y="128" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="15">GREEN: CODE VỪA ĐỦ</text>
+          <text x="430" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Không viết trước tương lai</text>
+          <text x="430" y="168" text-anchor="middle" fill="var(--dracula-green)" font-size="11" font-weight="600">Đạt 100% Test Pass</text>
+        </g>
+
+        <!-- Phase 3: REFACTOR -->
+        <g class="interactive-node">
+          <rect x="620" y="45" width="200" height="150" rx="12" fill="url(#mpPurpleGrad)" stroke="var(--dracula-purple)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="720" cy="85" r="22" fill="var(--dracula-purple)" opacity="0.3"/>
+          <circle cx="720" cy="85" r="16" fill="var(--dracula-purple)"/>
+          <text x="720" y="90" text-anchor="middle" fill="#ffffff" font-weight="700" font-size="13">03</text>
+          <text x="720" y="128" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="15">REFACTOR: TÁI TẠO</text>
+          <text x="720" y="150" text-anchor="middle" fill="var(--muted)" font-size="12">Làm sâu module & dọn rác</text>
+          <text x="720" y="168" text-anchor="middle" fill="var(--dracula-purple)" font-size="11" font-weight="600">Bảo toàn trạng thái Xanh</text>
+        </g>
+
+        <!-- Feedback Loop Annotation -->
+        <rect x="360" y="222" width="140" height="26" rx="6" fill="var(--ground)" stroke="var(--accent)" stroke-width="1"/>
+        <text x="430" y="239" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="600">Vòng lặp Lặp lại (Cycle)</text>
       </svg>
     </div>
 
-    <!-- 4. Interactive Tabs: Khám phá từng Kỹ năng -->
-    <h2>4. Phân loại 2 tầng kỹ năng trong hệ thống</h2>
+    <!-- 4. Interactive Tabs: Khám phá Chi tiết 7 Kỹ năng -->
+    <h2>4. Phân tích Chi tiết Toàn bộ 7 Kỹ năng trong Bộ Công cụ</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-user">Kỹ năng do Người dùng gọi (User-invoked)</button>
-        <button class="tab-btn" data-tab="tab-model">Kỹ năng do Agent tự kích hoạt (Model-invoked)</button>
+        <button class="tab-btn active" data-tab="tab-grill">1. Vấn đáp Socratic (/grill-me & Spec)</button>
+        <button class="tab-btn" data-tab="tab-tdd">2. Kỷ luật TDD (/tdd & Vitest)</button>
+        <button class="tab-btn" data-tab="tab-glossary">3. Mỏ neo Từ vựng & ADRs</button>
+        <button class="tab-btn" data-tab="tab-deep">4. Tái cấu trúc Deep Modules</button>
       </div>
 
-      <div class="tab-panel active" id="tab-user">
+      <!-- Tab 1: Grilling & Spec -->
+      <div class="tab-panel active" id="tab-grill">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>/grill-me & /grill-with-docs — Vấn đáp ngược</h4>
-            <p>Agent vào vai một Senior Architect khó tính, liên tục chất vấn ngược lại bạn về các trường hợp biên, giả định ngầm, và rủi ro mở rộng trước khi bắt đầu viết code.</p>
+            <h4>/grill-me & /grill-with-docs — Cơ chế Thẩm vấn Kỹ thuật</h4>
+            <p>Thay vì ngoan ngoãn chấp nhận prompt, agent sẽ đóng vai Tech Lead khó tính nhất để chất vấn bạn:</p>
+            <ul>
+              <li><strong>Truy vấn ca biên (Boundary Edge Cases):</strong> Điều gì xảy ra khi mảng rỗng, kết nối mạng timeout ở giây thứ 29, hoặc người dùng mở cùng lúc 2 tab gửi transaction đồng thời?</li>
+              <li><strong>Ràng buộc bất biến (System Invariants):</strong> Điều kiện nào <em>tuyệt đối không bao giờ</em> được phép vi phạm? (Ví dụ: Số dư tài khoản không được âm, một đơn hàng không thể có hai mã vận đơn trùng nhau).</li>
+              <li><strong>Đối chiếu tài liệu nội bộ:</strong> Lệnh <code>/grill-with-docs</code> đọc lướt các file Markdown trong repo để phát hiện ngay sự xung đột giữa yêu cầu mới của bạn và kiến trúc hiện hữu.</li>
+            </ul>
           </div>
           <div class="arch-layer">
-            <h4>/tdd — Kỷ luật Test-Driven Development</h4>
-            <p>Ép buộc agent không bao giờ được viết code trước. Bắt đầu bằng việc viết bài kiểm thử đơn vị thất bại (Red), viết code tối thiểu để vượt qua (Green), rồi tái cấu trúc.</p>
-          </div>
-          <div class="arch-layer">
-            <h4>/to-spec & /to-tickets — Phân rã bài toán</h4>
-            <p>Chuyển đổi cuộc phỏng vấn thành bản đặc tả kỹ thuật Markdown chuẩn mực, sau đó chia nhỏ thành các ticket làm việc độc lập có quan hệ phụ thuộc rõ ràng.</p>
+            <h4>/to-spec & /to-tickets — Biến Hội thoại thành Kế hoạch Thực thi</h4>
+            <p>Sau khi cuộc phỏng vấn kết thúc, hai skill này chuyển hóa nội dung trao đổi thành văn bản kỹ thuật:</p>
+            <ul>
+              <li><strong>/to-spec:</strong> Tạo ra tài liệu đặc tả cấu trúc gồm: Bối cảnh (Context), Phạm vi (In-Scope), Giới hạn ngoài (Non-Goals), Mô hình trạng thái (State Diagram), và Tiêu chí nghiệm thu (Acceptance Criteria).</li>
+              <li><strong>/to-tickets:</strong> Phân chia spec thành các ticket độc lập có thể phân công cho các subagent chạy song song, kèm danh sách file cần sửa để tránh xung đột git merge.</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-model">
+      <!-- Tab 2: TDD Engine -->
+      <div class="tab-panel" id="tab-tdd">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>maintain-glossary — Tự động cập nhật bảng thuật ngữ</h4>
-            <p>Bất cứ khi nào bạn hoặc agent đưa ra một khái niệm mới về nghiệp vụ, skill này tự động ghi nhận vào <code>GLOSSARY.md</code> để các phiên làm việc sau không bị lệch định nghĩa.</p>
+            <h4>Kỷ luật Sắt của Chu trình /tdd</h4>
+            <p>Kỹ năng này áp đặt một bộ quy tắc nghiêm ngặt lên hành vi sinh mã của LLM:</p>
+            <ol>
+              <li><strong>Bước 1 (Red):</strong> Agent bắt buộc phải viết file kiểm thử (ví dụ: <code>feature.test.ts</code>) và chạy lệnh thực thi kiểm thử (<code>vitest run</code> hoặc <code>jest</code>). Kết quả trả về phải là <em>Failure</em>. Nếu test pass ngay từ đầu, test đó bị xem là vô giá trị và agent phải viết lại.</li>
+              <li><strong>Bước 2 (Green):</strong> Agent chỉ được phép viết lượng mã tối thiểu để biến thanh đỏ thành xanh. Cấm tuyệt đối việc suy diễn thêm tính năng phụ, viết trước các hàm tiện ích chưa được test chứng minh nhu cầu.</li>
+              <li><strong>Bước 3 (Refactor):</strong> Sau khi toàn bộ test suite màu xanh, agent mới được dọn dẹp biến, trích xuất hàm nhỏ hoặc tối ưu độ phức tạp thuật toán, với điều kiện mọi test vẫn giữ nguyên màu xanh.</li>
+            </ol>
           </div>
           <div class="arch-layer">
-            <h4>record-architecture-decision-records — Ghi chép ADRs</h4>
-            <p>Khi có quyết định kiến trúc quan trọng (chọn thư viện, đổi cấu trúc DB), agent tự động tạo file ADR để lưu lại lý do lựa chọn và các phương án đã bị loại bỏ.</p>
+            <h4>Mẫu Lệnh Thực chiến cho /tdd</h4>
+            <div class="code-block">
+              <div class="code-block-header">
+                <span>Prompt · Kích hoạt TDD với Vitest</span>
+                <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
+              </div>
+              <pre><code>/tdd Hãy giải quyết ticket #3: Viết parser phân tích cú pháp ISO 8601.
+Quy tắc:
+1. Viết tests trong parser.test.ts kiểm tra trường hợp chuỗi rỗng, timezone lệch múi giờ, và giây nhuận.
+2. Chạy 'npx vitest run parser.test.ts' và báo cáo lỗi đỏ.
+3. Viết mã trong parser.ts vừa đủ để pass toàn bộ test.</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Glossary & ADRs -->
+      <div class="tab-panel" id="tab-glossary">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>maintain-glossary — Ngăn chặn Hiện tượng "Tam sao thất bản"</h4>
+            <p>Trong các dự án kéo dài, các nhà phát triển và agent thường dùng nhiều từ ngữ khác nhau cho cùng một khái niệm (ví dụ: khi thì gọi là <code>Account</code>, khi gọi là <code>User</code>, khi gọi là <code>Member</code>). Kỹ năng này giám sát mọi cuộc hội thoại và cập nhật file <code>GLOSSARY.md</code>:</p>
+            <ul>
+              <li><strong>Định danh duy nhất:</strong> Mỗi khái niệm nghiệp vụ gắn liền với định nghĩa chuẩn một câu duy nhất.</li>
+              <li><strong>Tiết kiệm Token Context:</strong> Khi agent có sẵn bảng từ vựng, nó không cần vòng vo giải thích ngữ cảnh, giúp giảm tới 25% token tiêu thụ trong mỗi prompt.</li>
+            </ul>
+          </div>
+          <div class="arch-layer">
+            <h4>record-architecture-decision-records (ADRs)</h4>
+            <p>Mỗi khi hệ thống phải đưa ra một lựa chọn đánh đổi (ví dụ: dùng SQLite thay vì PostgreSQL cho môi trường local, hay chọn Zustand thay vì Redux), agent tự tạo một file dạng <code>docs/adr/0004-state-management.md</code>:</p>
+            <ul>
+              <li><strong>Trạng thái:</strong> Proposed, Accepted, Superceded.</li>
+              <li><strong>Bối cảnh & Lực cản (Context & Forces):</strong> Lý do tại sao giải pháp hiện tại không còn đáp ứng được.</li>
+              <li><strong>Hệ quả (Consequences):</strong> Cả mặt tích cực lẫn các giới hạn mà nhóm chấp nhận chịu đựng.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Deep Modules -->
+      <div class="tab-panel" id="tab-deep">
+        <div class="arch-stack">
+          <div class="arch-layer">
+            <h4>improve-codebase-architecture — Triết lý Deep Modules</h4>
+            <p>Dựa trên cuốn sách kinh điển <em>A Philosophy of Software Design</em> của Giáo sư John Ousterhout, kỹ năng này phân tích mã nguồn để phát hiện hai loại module:</p>
+            <ul>
+              <li><strong>Shallow Modules (Module Nông - Cần loại bỏ):</strong> Module có interface rộng nhưng phần thân thực thi lại rất mỏng. Ví dụ: một class có 20 phương thức nhưng mỗi phương thức chỉ chuyển tiếp (pass-through) một lời gọi tới module khác. Điều này làm tăng độ phức tạp nhận thức của lập trình viên mà không mang lại giá trị trừu tượng hóa nào.</li>
+              <li><strong>Deep Modules (Module Sâu - Mục tiêu hướng tới):</strong> Module có interface cực kỳ đơn giản và kín đáo (chỉ 1 hoặc 2 phương thức rõ ràng), nhưng bên dưới che giấu một cỗ máy xử lý khổng lồ, phức tạp. Điển hình như hệ thống file I/O của Unix: chỉ với <code>open</code>, <code>read</code>, <code>write</code>, <code>close</code>, nó giấu toàn bộ logic phân bổ sector ổ đĩa, caching bộ nhớ, và quản lý driver phần cứng.</li>
+            </ul>
+          </div>
+          <div class="arch-layer">
+            <h4>Chiến lược Tái cấu trúc Tự động</h4>
+            <p>Khi gọi lệnh <code>/improve-codebase-architecture</code>, agent tiến hành quét AST (Abstract Syntax Tree) để gộp các helper vụn vặt vào bên trong boundary của service chính, loại bỏ các abstraction trung gian không cần thiết, và tạo ra ranh giới module rõ ràng, độc lập.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. Hướng dẫn bắt đầu ngay -->
-    <h2>5. Bắt đầu ngay trong 3 bước</h2>
+    <!-- 5. Hướng dẫn bắt đầu ngay trong 3 bước -->
+    <h2>5. Hướng dẫn Thực chiến Bắt đầu Ngay trong 3 Bước</h2>
     <div class="stepper-list">
       <div class="stepper-item">
         <div class="stepper-number">1</div>
         <div class="stepper-content">
-          <h4>Cài đặt bộ skill qua npx</h4>
-          <p>Tải toàn bộ bộ kỹ năng vào thư mục cấu hình của agent (hỗ trợ Claude Code, Antigravity, Cursor, Codex):</p>
+          <h4>Cài đặt Bộ Kỹ năng vào Agent Môi trường</h4>
+          <p>Tải toàn bộ 7 kỹ năng vào thư mục cấu hình agent của bạn (tương thích trực tiếp với Claude Code, Antigravity, Cursor, Codex):</p>
           <div class="code-block">
             <div class="code-block-header">
-              <span>Bash · Cài đặt Matt Pocock Skills</span>
+              <span>Terminal · Cài đặt Matt Pocock Skills</span>
               <button class="copy-btn" type="button" aria-label="Sao chép lệnh">Sao chép</button>
             </div>
             <pre><code>npx skills add mattpocock/skills</code></pre>
@@ -299,15 +396,15 @@
       <div class="stepper-item">
         <div class="stepper-number">2</div>
         <div class="stepper-content">
-          <h4>Khởi động phiên hỏi vặn trước khi làm tính năng mới</h4>
-          <p>Thay vì đưa ra yêu cầu cụ thể, hãy mở đầu bằng lệnh phỏng vấn:</p>
+          <h4>Khởi động Phiên Chất vấn Nghiệp vụ (Grilling Session)</h4>
+          <p>Thay vì đưa ra yêu cầu mơ hồ, hãy mở đầu phiên làm việc bằng lệnh phỏng vấn phản biện:</p>
           <div class="code-block">
             <div class="code-block-header">
-              <span>Prompt · Bắt đầu Grilling Session</span>
+              <span>Prompt · Bắt đầu Phiên Grilling</span>
               <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
             </div>
             <pre><code>/grill-me
-Tôi muốn xây dựng tính năng Giỏ hàng lưu tạm trên LocalStorage và tự động đồng bộ lên Database khi người dùng đăng nhập. Hãy chất vấn tôi để hoàn thiện spec.</code></pre>
+Tôi muốn xây dựng tính năng Giỏ hàng Offline-First: lưu tạm trên IndexedDB, tự động đồng bộ lên PostgreSQL khi có mạng trở lại, xử lý xung đột nếu cùng giỏ hàng bị sửa trên điện thoại. Hãy chất vấn tôi về các ca biên và giả định kiến trúc trước khi viết code.</code></pre>
           </div>
         </div>
       </div>
@@ -315,31 +412,37 @@ Tôi muốn xây dựng tính năng Giỏ hàng lưu tạm trên LocalStorage v�
       <div class="stepper-item">
         <div class="stepper-number">3</div>
         <div class="stepper-content">
-          <h4>Kích hoạt TDD để viết mã an toàn</h4>
-          <p>Sau khi có ticket, chỉ định agent thực thi bằng kiểm thử tự động:</p>
+          <h4>Ủy thác Triển khai từng Ticket bằng Kỷ luật TDD</h4>
+          <p>Sau khi có spec và ticket đã được bẻ nhỏ, chuyển sang chế độ thực thi kiểm thử tất định:</p>
           <div class="code-block">
             <div class="code-block-header">
-              <span>Prompt · Chạy TDD cho Ticket</span>
+              <span>Prompt · Chạy TDD cho Ticket Cụ thể</span>
               <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
             </div>
-            <pre><code>/tdd Hãy thực hiện ticket số 1: Viết hàm serialize giỏ hàng. Tuân thủ nghiêm ngặt chu trình: viết test đỏ trước, chạy thử để thấy lỗi, sau đó viết code cho pass.</code></pre>
+            <pre><code>/tdd Hãy thực hiện ticket #01: Thuật toán hòa giải xung đột giỏ hàng Last-Write-Wins có Vector Clock.
+Bắt buộc tuân thủ:
+1. Viết test case trong cart-resolver.test.ts bao quát 3 trường hợp: xung đột timestamp, mất kết nối giữa chừng, và sản phẩm bị xóa trên server.
+2. Chạy test xác nhận đỏ.
+3. Viết code trong cart-resolver.ts để xanh toàn bộ. Không viết thêm code ngoài phạm vi test.</code></pre>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Callout Box -->
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Lời khuyên từ Matt Pocock</strong>
-        <p>Đừng coi agent là một "máy gõ code tốc độ cao". Hãy coi nó như một lập trình viên mới vào đội ngũ: nó cần bản đặc tả rõ ràng, kiểm thử tự động để bảo đảm an toàn, và sự phản hồi liên tục thay vì những chỉ thị mơ hồ.</p>
+        <strong>Lời khuyên Vàng từ Matt Pocock</strong>
+        <p>&ldquo;Đừng đối xử với coding agent như một cỗ máy gõ phím siêu tốc vô tri. Hãy xem nó như một thực tập sinh thông minh xuất chúng nhưng cực kỳ thiếu kinh nghiệm thực tế: nó cần bản đặc tả kỹ thuật không có kẽ hở, rào chắn kiểm thử tự động để không làm sập production, và quy trình phản biện liên tục thay vì những chỉ thị tùy hứng.&rdquo;</p>
       </div>
     </div>
 
+    <!-- Bottom Navigation -->
     <div class="guide-bottom-nav">
-      <a class="nav-card" href="index.html">
-        <span class="nav-card-dir">Quay lại</span>
-        <span class="nav-card-title">← Trung tâm Guide</span>
+      <a class="nav-card" href="system-design-101.html">
+        <span class="nav-card-dir">Bài trước</span>
+        <span class="nav-card-title">← System Design 101</span>
       </a>
       <a class="nav-card next" href="vercel-agent-skills.html">
         <span class="nav-card-dir">Kế tiếp</span>

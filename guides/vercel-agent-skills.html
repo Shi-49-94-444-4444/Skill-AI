@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Hướng dẫn chi tiết Vercel Agent Skills: bộ 8 kỹ năng chính thức từ Vercel Labs dành cho coding agent về tối ưu hiệu năng React, Next.js, Web Design Guidelines và Deploy.">
-  <title>Vercel Agent Skills — Hướng dẫn & Phân tích — Skill AI</title>
+  <meta name="description" content="Hướng dẫn toàn diện Vercel Agent Skills: bộ 8 kỹ năng chính thức từ Vercel Labs cho coding agent, tối ưu Next.js 16 Turbopack, React Server Components, MicroVM KVM và 100+ Web Interface Guidelines.">
+  <title>Vercel Agent Skills — Hướng dẫn Thực chiến & Phân tích Chuyên sâu — Skill AI</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,8 +66,8 @@
 
     <section class="page-heading">
       <div>
-        <h1>Vercel Agent Skills — Bộ tiêu chuẩn vàng tối ưu Frontend từ Vercel Labs</h1>
-        <p class="intro-copy">Bộ 8 kỹ năng chính thức do Vercel Labs chuẩn hóa cho coding agent. Đóng gói hơn 40 quy tắc tối ưu hiệu năng React/Next.js có phân loại mức độ nghiêm ngặt, 100+ tiêu chuẩn thiết kế web & khả năng tiếp cận, cấu hình Turborepo và quy trình deploy không lỗi.</p>
+        <h1>Vercel Agent Skills — Tiêu chuẩn Vàng Frontend & Hạ tầng Serverless từ Vercel Labs</h1>
+        <p class="intro-copy">Bộ 8 kỹ năng tinh hoa do đội ngũ Vercel Labs chuẩn hóa cho coding agent. Đóng gói hơn 40 quy tắc tối ưu hiệu năng React Server Components (RSC), kiến trúc biên phân tán MicroVM KVM tốc độ khởi động 45ms, trình biên dịch Turbopack viết bằng Rust, cùng hơn 100 tiêu chuẩn khắt khe về Web Interface Guidelines và khả năng tiếp cận chuẩn WCAG AA.</p>
       </div>
       <div class="guide-side-meta">
         <strong>vercel-labs/agent-skills · 33.2k ★</strong>
@@ -84,17 +84,17 @@
       <div class="glance-item">
         <span class="glance-label">Mục đích chính</span>
         <span class="glance-val">Tối ưu Frontend & RSC</span>
-        <span class="glance-desc">Loại bỏ async waterfall, nén bundle và kiểm tra 100+ checklist a11y.</span>
+        <span class="glance-desc">Triệt tiêu async waterfall, nén bundle và kiểm duyệt 100+ tiêu chuẩn a11y.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Dành cho ai</span>
-        <span class="glance-val">React & Next.js Developers</span>
-        <span class="glance-desc">Lập trình viên muốn đạt điểm Core Web Vitals 95+ mà không tốn công mò thủ công.</span>
+        <span class="glance-val">React & Next.js Engineers</span>
+        <span class="glance-desc">Kỹ sư cần điểm Core Web Vitals 99+, LCP &lt; 1.2s và zero-layout-shift.</span>
       </div>
       <div class="glance-item">
-        <span class="glance-label">Độ phức tạp</span>
-        <span class="glance-val">Cực kỳ nhanh</span>
-        <span class="glance-desc">Chỉ cần trỏ agent vào thư mục <code>app/</code> và yêu cầu audit.</span>
+        <span class="glance-label">Độ tương thích</span>
+        <span class="glance-val">Next.js 15 & 16 (Turbopack)</span>
+        <span class="glance-desc">Tự động cấu hình Turbopack, React 19 Actions và View Transitions API.</span>
       </div>
       <div class="glance-item">
         <span class="glance-label">Lệnh cài đặt</span>
@@ -103,8 +103,8 @@
       </div>
     </div>
 
-    <!-- 1. Bộ 8 kỹ năng cốt lõi -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/vercel-editorial-hero.png" alt="Hạ tầng điện toán biên Vercel Agent Cobalt Blue" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
@@ -112,66 +112,65 @@
       <div class="ui-shot-caption"><strong>// 01 · HẠ TẦNG ĐIỆN TOÁN BIÊN SERVERLESS (EDGE COMPUTE RUNTIME):</strong> Khối kiến trúc Cobalt Blue & Obsidian mô phỏng 300+ trạm POPs toàn cầu với bộ chứa Firecracker microVM khởi động siêu tốc 45ms.</div>
     </div>
 
-    <h2>1. Bản đồ 8 Kỹ năng cốt lõi trong hệ sinh thái</h2>
-    <p>Thay vì viết prompt thủ công nhắc nhở AI "hãy code tối ưu", Vercel Labs hệ thống hóa kiến thức kỹ thuật thành 8 skill chuyên biệt. Agent sẽ kích hoạt đúng ngữ cảnh khi phân tích hoặc viết mã nguồn:</p>
+    <h2>1. Hệ sinh thái 8 Kỹ năng Chuyên biệt của Vercel Labs</h2>
+    <p>Thay vì đưa ra các prompt chung chung như &ldquo;hãy tối ưu trang này&rdquo;, bộ kỹ năng của Vercel Labs cung cấp các heuristics kiểm chứng cấp thấp. Agent sẽ áp dụng từng bộ quy tắc đúng thời điểm khi đọc AST hoặc chỉnh sửa mã nguồn:</p>
 
     <div class="table-wrap">
       <table class="guide-table">
         <thead>
           <tr>
-            <th style="width: 28%;">Tên kỹ năng</th>
-            <th style="width: 32%;">Mục tiêu kỹ thuật</th>
-            <th style="width: 40%;">Quy tắc trọng tâm áp dụng</th>
+            <th style="width: 26%;">Kỹ năng</th>
+            <th style="width: 32%;">Mục tiêu kỹ thuật then chốt</th>
+            <th style="width: 42%;">Nguyên lý & Quy chuẩn thực thi</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>react-best-practices</code></td>
-            <td>Tối ưu hiệu năng React & Next.js App Router</td>
-            <td>Triệt tiêu Waterfall fetch, thu gọn bundle client, tách Server Component (RSC), kiểm soát render lặp.</td>
+            <td>Tối ưu hóa React 19 & Next.js App Router</td>
+            <td>Diệt trừ async waterfall, nén bundle client, dịch chuyển ranh giới <code>'use client'</code> xuống sâu dưới lá cây DOM, kiểm soát re-render thừa.</td>
           </tr>
           <tr>
             <td><code>web-design-guidelines</code></td>
-            <td>Kiểm tra thiết kế và khả năng tiếp cận (a11y)</td>
-            <td>100+ checklist: tương phản màu WCAG AA, focus visible, vùng chạm mobile tối thiểu 44×44px, giảm chuyển động.</td>
+            <td>Kiểm định Thiết kế & Khả năng tiếp cận</td>
+            <td>Hơn 100 checklist: Độ tương phản WCAG AA 4.5:1, vùng chạm di động tối thiểu 44×44px, chỉ báo <code>:focus-visible</code>, phản hồi giảm chuyển động.</td>
           </tr>
           <tr>
             <td><code>composition-patterns</code></td>
-            <td>Kiến trúc component React sạch</td>
-            <td>Áp dụng Compound Components, slot pattern, tách logic custom hooks, tránh prop drilling sâu quá 2 tầng.</td>
+            <td>Kiến trúc Ghép nối Thành phần Sạch</td>
+            <td>Áp dụng Compound Components, Inversion of Control qua slots, bóc tách custom hooks để loại bỏ triệt để hiện tượng prop-drilling sâu quá 2 tầng.</td>
           </tr>
           <tr>
             <td><code>next-cache-components</code></td>
-            <td>Chiến lược bộ nhớ đệm (Caching)</td>
-            <td>Tối ưu <code>unstable_cache</code>, React 19 <code>cache()</code>, On-demand Revalidation với <code>revalidateTag</code>.</td>
+            <td>Chiến lược Bộ nhớ đệm Đa tầng</td>
+            <td>Kiểm soát <code>unstable_cache</code>, React 19 <code>cache()</code>, và cơ chế On-Demand Revalidation bằng thẻ <code>revalidateTag</code> / <code>updateTag</code>.</td>
           </tr>
           <tr>
             <td><code>turborepo</code></td>
-            <td>Quản lý Monorepo quy mô lớn</td>
-            <td>Tối ưu cache pipeline, xác định quan hệ phụ thuộc gói nội bộ <code>workspace:*</code>, cắt giảm thời gian build CI.</td>
+            <td>Tăng tốc Monorepo Khủng</td>
+            <td>Cấu hình pipeline Remote Caching, thiết lập quan hệ phụ thuộc nội bộ <code>workspace:*</code>, rút ngắn 85% thời gian build CI/CD.</td>
           </tr>
           <tr>
             <td><code>package-manager</code></td>
-            <td>Xử lý xung đột gói phụ thuộc</td>
-            <td>Chuẩn hóa giữa pnpm, Bun, yarn, npm; ngăn chặn phantom dependencies và khóa phiên bản lockfile an toàn.</td>
+            <td>Chuẩn hóa Quản lý Gói Phụ thuộc</td>
+            <td>Đồng bộ lockfile an toàn giữa pnpm, Bun, yarn và npm; cô lập triệt để hiện tượng phantom dependencies gây rò rỉ mã bí mật.</td>
           </tr>
           <tr>
             <td><code>view-transitions</code></td>
-            <td>Chuyển cảnh mượt mà chuẩn native</td>
-            <td>Tích hợp Browser View Transitions API vào Next.js App Router mà không làm giật khung hình (0 jank).</td>
+            <td>Chuyển cảnh Giao diện Chuẩn Native</td>
+            <td>Tận dụng View Transitions API gốc của trình duyệt kết hợp Next.js App Router, mang lại hiệu ứng chuyển động 60fps mượt mà không jank.</td>
           </tr>
           <tr>
             <td><code>deploy-to-vercel</code></td>
-            <td>Tự động hóa triển khai sản phẩm</td>
-            <td>Liên kết project, cấu hình biến môi trường production, preview URL và kiểm tra Edge Config trước release.</td>
+            <td>Triển khai Tự động & Preview CI</td>
+            <td>Liên kết project, cấu hình biến môi trường production, preview URL tức thì và kiểm tra an toàn Edge Config trước khi release.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- 2. Sơ đồ 4 bước audit hiệu năng trực quan SVG -->
-        <!-- Minh họa bổ sung: Editorial Spread -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/vercel-editorial-concept.png" alt="Vùng cách ly phần cứng microVM KVM" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
@@ -179,52 +178,85 @@
       <div class="ui-shot-caption"><strong>// 02 · VÙNG CÁCH LY PHẦN CỨNG MICROVM (HARDWARE ENCLAVE TOPOLOGY):</strong> Phân tầng bảo mật ảo hóa KVM, hệ thống tệp gốc chỉ đọc và chặn đứng rò rỉ mạng ngoài luồng theo chuẩn SOC-2.</div>
     </div>
 
-    <h2>2. Sơ đồ luồng Audit hiệu năng 4 bước</h2>
-    <p>Khi phân tích một trang React/Next.js chậm, agent áp dụng quy trình kiểm tra tuần tự từ gốc rễ mạng đến lớp hiển thị giao diện:</p>
+    <!-- 2. Dynamic Interactive SVG: 4-Step Audit Loop -->
+    <h2>2. Pipeline 4 Bước Audit Hiệu năng Toàn diện</h2>
+    <p>Khi phân tích một trang tải chậm, quy trình audit không kiểm tra ngẫu nhiên mà đi tuần tự theo 4 chốt chặn từ lớp truyền dữ liệu mạng đến lớp hiển thị pixel:</p>
 
     <div class="svg-diagram-frame">
-      <svg viewBox="0 0 860 210" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Step 1 -->
-        <rect x="20" y="30" width="180" height="150" rx="8" fill="var(--paper)" stroke="var(--danger)" stroke-width="2"/>
-        <text x="110" y="65" text-anchor="middle" fill="var(--danger)" font-weight="700" font-size="13">BƯỚC 1</text>
-        <text x="110" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Diệt Waterfall</text>
-        <text x="110" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Gom await fetch</text>
-        <text x="110" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">Promise.all / RSC</text>
+      <svg viewBox="0 0 880 230" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <defs>
+          <linearGradient id="vStep1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 85, 85, 0.2)"/>
+            <stop offset="100%" stop-color="rgba(255, 85, 85, 0.05)"/>
+          </linearGradient>
+          <linearGradient id="vStep2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 184, 108, 0.2)"/>
+            <stop offset="100%" stop-color="rgba(255, 184, 108, 0.05)"/>
+          </linearGradient>
+          <linearGradient id="vStep3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(139, 233, 253, 0.2)"/>
+            <stop offset="100%" stop-color="rgba(139, 233, 253, 0.05)"/>
+          </linearGradient>
+          <linearGradient id="vStep4" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(80, 250, 123, 0.2)"/>
+            <stop offset="100%" stop-color="rgba(80, 250, 123, 0.05)"/>
+          </linearGradient>
+        </defs>
 
-        <path d="M210 105 H235" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="235,105 227,100 227,110" fill="var(--accent)"/>
+        <!-- Connecting Flow Paths -->
+        <path class="flow-path" d="M 205 110 L 245 110" stroke="var(--danger)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="245,110 236,105 236,115" fill="var(--danger)"/>
 
-        <!-- Step 2 -->
-        <rect x="245" y="30" width="180" height="150" rx="8" fill="var(--paper)" stroke="var(--dracula-orange)" stroke-width="2"/>
-        <text x="335" y="65" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">BƯỚC 2</text>
-        <text x="335" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Nén JS Bundle</text>
-        <text x="335" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Tách dynamic import</text>
-        <text x="335" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">Bỏ icon pack nặng</text>
+        <path class="flow-path" d="M 430 110 L 470 110" stroke="var(--dracula-orange)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="470,110 461,105 461,115" fill="var(--dracula-orange)"/>
 
-        <path d="M435 105 H460" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="460,105 452,100 452,110" fill="var(--accent)"/>
+        <path class="flow-path" d="M 655 110 L 695 110" stroke="var(--dracula-cyan)" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="695,110 686,105 686,115" fill="var(--dracula-cyan)"/>
 
-        <!-- Step 3 -->
-        <rect x="470" y="30" width="180" height="150" rx="8" fill="var(--paper)" stroke="var(--dracula-cyan)" stroke-width="2"/>
-        <text x="560" y="65" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">BƯỚC 3</text>
-        <text x="560" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Tách Ranh giới RSC</text>
-        <text x="560" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Đẩy 'use client'</text>
-        <text x="560" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">xuống tận lá</text>
+        <!-- Step 1: Async Waterfall -->
+        <g class="interactive-node">
+          <rect x="25" y="35" width="180" height="150" rx="10" fill="url(#vStep1)" stroke="var(--danger)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="115" cy="70" r="18" fill="var(--danger)" opacity="0.3"/>
+          <text x="115" y="75" text-anchor="middle" fill="var(--danger)" font-weight="700" font-size="13">BƯỚC 01</text>
+          <text x="115" y="108" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Diệt Waterfall</text>
+          <text x="115" y="132" text-anchor="middle" fill="var(--muted)" font-size="11.5">Gộp Promise.all</text>
+          <text x="115" y="152" text-anchor="middle" fill="var(--muted)" font-size="11.5">Chuyển sang RSC</text>
+        </g>
 
-        <path d="M660 105 H685" stroke="var(--line)" stroke-width="2"/>
-        <polygon points="685,105 677,100 677,110" fill="var(--accent)"/>
+        <!-- Step 2: Bundle Compression -->
+        <g class="interactive-node">
+          <rect x="250" y="35" width="180" height="150" rx="10" fill="url(#vStep2)" stroke="var(--dracula-orange)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="340" cy="70" r="18" fill="var(--dracula-orange)" opacity="0.3"/>
+          <text x="340" y="75" text-anchor="middle" fill="var(--dracula-orange)" font-weight="700" font-size="13">BƯỚC 02</text>
+          <text x="340" y="108" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Nén JS Bundle</text>
+          <text x="340" y="132" text-anchor="middle" fill="var(--muted)" font-size="11.5">Tách Dynamic Import</text>
+          <text x="340" y="152" text-anchor="middle" fill="var(--muted)" font-size="11.5">Loại bỏ icon cồng kềnh</text>
+        </g>
 
-        <!-- Step 4 -->
-        <rect x="695" y="30" width="150" height="150" rx="8" fill="var(--paper)" stroke="var(--dracula-green)" stroke-width="2"/>
-        <text x="770" y="65" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">BƯỚC 4</text>
-        <text x="770" y="100" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Khóa Re-render</text>
-        <text x="770" y="130" text-anchor="middle" fill="var(--muted)" font-size="11.5">Tách Context</text>
-        <text x="770" y="150" text-anchor="middle" fill="var(--muted)" font-size="11.5">Memoize chuẩn xác</text>
+        <!-- Step 3: RSC Boundary -->
+        <g class="interactive-node">
+          <rect x="475" y="35" width="180" height="150" rx="10" fill="url(#vStep3)" stroke="var(--dracula-cyan)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="565" cy="70" r="18" fill="var(--dracula-cyan)" opacity="0.3"/>
+          <text x="565" y="75" text-anchor="middle" fill="var(--dracula-cyan)" font-weight="700" font-size="13">BƯỚC 03</text>
+          <text x="565" y="108" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Tách Ranh Giới RSC</text>
+          <text x="565" y="132" text-anchor="middle" fill="var(--muted)" font-size="11.5">Đẩy 'use client'</text>
+          <text x="565" y="152" text-anchor="middle" fill="var(--muted)" font-size="11.5">xuống tận lá DOM</text>
+        </g>
+
+        <!-- Step 4: Re-render Lock -->
+        <g class="interactive-node">
+          <rect x="700" y="35" width="160" height="150" rx="10" fill="url(#vStep4)" stroke="var(--dracula-green)" stroke-width="2"/>
+          <circle class="flow-pulse" cx="780" cy="70" r="18" fill="var(--dracula-green)" opacity="0.3"/>
+          <text x="780" y="75" text-anchor="middle" fill="var(--dracula-green)" font-weight="700" font-size="13">BƯỚC 04</text>
+          <text x="780" y="108" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="14">Khóa Re-render</text>
+          <text x="780" y="132" text-anchor="middle" fill="var(--muted)" font-size="11.5">Phân tách Context</text>
+          <text x="780" y="152" text-anchor="middle" fill="var(--muted)" font-size="11.5">Memoize chuẩn xác</text>
+        </g>
       </svg>
     </div>
 
-    <!-- 3. Interactive Tabs: React Rules vs Web Design Guidelines -->
-        <div class="ui-shot-box">
+    <!-- Visual Media Shot Box -->
+    <div class="ui-shot-box">
       <div class="ui-shot-media">
         <img src="assets/vercel-editorial-detail.png" alt="Quy trình triển khai nhánh xem trước tự động" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
@@ -232,92 +264,132 @@
       <div class="ui-shot-caption"><strong>// 03 · QUY TRÌNH TRIỂN KHAI NHÁNH XEM TRƯỚC (EPHEMERAL BUILD PIPELINE):</strong> Đồng bộ hóa bản dựng tĩnh 2.4MB đến các edge worker trong 1.2s với tỷ lệ trúng bộ đệm 99.8%.</div>
     </div>
 
-    <h2>3. Phân cấp độ ưu tiên của 40+ quy tắc & Kiểm tra a11y</h2>
+    <!-- 3. Interactive Tabs: 4 Góc nhìn Kỹ thuật -->
+    <h2>3. Phân tầng Chuyên sâu: 4 Trụ cột Kỹ thuật của Vercel</h2>
     <div class="guide-tabs">
       <div class="tab-list">
-        <button class="tab-btn active" data-tab="tab-react">40+ Quy tắc React (Critical / High / Medium)</button>
-        <button class="tab-btn" data-tab="tab-a11y">100+ Checklist Web Design Guidelines</button>
+        <button class="tab-btn active" data-tab="tab-react-rsc">1. RSC & Khắc phục Waterfall</button>
+        <button class="tab-btn" data-tab="tab-web-a11y">2. Web Interface Guidelines & a11y</button>
+        <button class="tab-btn" data-tab="tab-turbopack">3. Next.js 16 & Turbopack</button>
+        <button class="tab-btn" data-tab="tab-microvm">4. MicroVM KVM & Edge Pipeline</button>
       </div>
 
-      <div class="tab-panel active" id="tab-react">
+      <!-- Tab 1: RSC & Waterfall -->
+      <div class="tab-panel active" id="tab-react-rsc">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Mức Critical (Bắt buộc sửa ngay) — Chặn nghẽn mạng & Treo giao diện</h4>
-            <p>• <strong>async-waterfall:</strong> Tuyệt đối không gọi tuần tự các API độc lập trong Server Component.<br>
-               • <strong>bundle-heavy-deps:</strong> Không import trực tiếp icon pack đồ sộ hoặc lodash không cherry-pick.<br>
-               • <strong>server-client-leak:</strong> Không truyền secret key hoặc hàm server chưa qua sanitize xuống Client Component.</p>
+            <h4>Bẫy Async Waterfall trong Server Components</h4>
+            <p>Một lỗi phổ biến nhất khiến thời gian phản hồi (TTFB) của ứng dụng Next.js tăng gấp 3 lần là việc lập trình viên <code>await</code> tuần tự các truy vấn độc lập:</p>
+            <div class="code-block">
+              <div class="code-block-header">
+                <span>TypeScript · Lỗi Async Waterfall (Sai) vs Song song (Đúng)</span>
+                <button class="copy-btn" type="button" aria-label="Sao chép mã">Sao chép</button>
+              </div>
+              <pre><code>// ❌ SAI: Tổng thời gian = userTime (300ms) + postsTime (400ms) = 700ms
+const user = await fetchUser(id);
+const posts = await fetchPosts(id);
+
+// ✅ ĐÚNG: Khởi chạy đồng thời, tổng thời gian = max(300ms, 400ms) = 400ms
+const userPromise = fetchUser(id);
+const postsPromise = fetchPosts(id);
+const [user, posts] = await Promise.all([userPromise, postsPromise]);</code></pre>
+            </div>
           </div>
           <div class="arch-layer">
-            <h4>Mức High (Khuyến nghị cao) — Tối ưu tài nguyên & Chỉ số Web Vitals</h4>
-            <p>• <strong>client-leaf-boundary:</strong> Đẩy ranh giới Client xuống sâu nhất có thể, không bọc <code>'use client'</code> trên cả trang.<br>
-               • <strong>image-lcp-priority:</strong> Hình ảnh trên màn hình đầu tiên (Above-the-fold) phải có <code>priority</code> để đạt chuẩn LCP &lt; 2.5s.<br>
-               • <strong>context-state-splatter:</strong> Tách state thường xuyên thay đổi ra khỏi context chứa state toàn cục.</p>
-          </div>
-          <div class="arch-layer">
-            <h4>Mức Medium (Hoàn thiện mã nguồn) — Clean Code & Khả năng duy trì</h4>
-            <p>• <strong>compound-slots:</strong> Ưu tiên slot pattern thay vì truyền quá nhiều cờ boolean hiển thị.<br>
-               • <strong>derived-state-memo:</strong> Tránh lưu state phụ thuộc vào props; tính toán trực tiếp hoặc memoize có chọn lọc.</p>
+            <h4>Chiến lược Đẩy 'use client' xuống lá cây DOM (Client Leaf Boundary)</h4>
+            <p>Thay vì đánh dấu <code>'use client'</code> trên component cấp trang lớn (khiến toàn bộ cây con biến thành client bundle nặng nề), chỉ bọc client directive vào các nút bấm tương tác nhỏ (nút Thích, Menu thả xuống). Phần bố cục, nội dung tĩnh và truy vấn database được giữ nguyên tại Server Component.</p>
           </div>
         </div>
       </div>
 
-      <div class="tab-panel" id="tab-a11y">
+      <!-- Tab 2: Web Interface Guidelines -->
+      <div class="tab-panel" id="tab-web-a11y">
         <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Tương phản & Khả năng đọc (Contrast & Text)</h4>
-            <p>Độ tương phản tối thiểu 4.5:1 cho văn bản thường và 3:1 cho văn bản lớn chuẩn WCAG AA. Hạn chế dùng font size dưới 12px.</p>
+            <h4>100+ Tiêu chuẩn Thiết kế & Khả năng Tiếp cận (WCAG AA)</h4>
+            <p>Hệ thống quy chuẩn ép coding agent phải tuân thủ nghiêm ngặt các tham số UX sau:</p>
+            <ul>
+              <li><strong>Tương phản màu sắc (Color Contrast):</strong> Tỷ lệ tương phản tối thiểu 4.5:1 đối với chữ thường (&lt;18px) và 3:1 đối với chữ đậm hoặc tiêu đề lớn.</li>
+              <li><strong>Vùng chạm Mobile (Touch Target Size):</strong> Mọi phần tử click/tap phải có diện tích tối thiểu 44×44px (bao gồm cả padding vô hình), ngăn chặn hiện tượng chạm nhầm ngón tay.</li>
+              <li><strong>Chỉ báo Focus Rõ ràng:</strong> Không bao giờ đặt <code>outline: none</code> nếu không cung cấp giải pháp thay thế. Bắt buộc có viền <code>:focus-visible</code> với độ dày tối thiểu 2px và màu tương phản cao khi người dùng điều hướng bằng phím Tab.</li>
+              <li><strong>Giảm chuyển động (Prefers Reduced Motion):</strong> Tự động tắt hiệu ứng chuyển động nặng thông qua CSS media query: <code>@media (prefers-reduced-motion: reduce)</code>.</li>
+            </ul>
           </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Next.js 16 & Turbopack -->
+      <div class="tab-panel" id="tab-turbopack">
+        <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Vùng chạm & Điều hướng phím (Touch Targets & Focus)</h4>
-            <p>Mọi nút bấm và liên kết trên mobile phải đạt kích thước chạm tối thiểu 44×44px. Luôn có viền <code>:focus-visible</code> rõ ràng khi nhấn Tab.</p>
+            <h4>Trình Biên dịch Turbopack viết bằng Rust</h4>
+            <p>Next.js 16 đặt Turbopack làm bundler mặc định thay thế Webpack. Ưu điểm vượt trội bao gồm:</p>
+            <ul>
+              <li><strong>Incremental Computation:</strong> Không bao giờ biên dịch lại một hàm nếu đầu vào của nó không thay đổi. Bộ nhớ đệm cấp độ file-system duy trì xuyên suốt các lần khởi động lại máy phát triển.</li>
+              <li><strong>Hot Module Replacement (HMR) tức thì:</strong> Tốc độ cập nhật giao diện trong &lt; 10ms kể cả đối với các dự án lớn hàng chục ngàn module.</li>
+              <li><strong>Thay đổi chuẩn middleware:</strong> Chuyển đổi tên quy ước từ <code>middleware.ts</code> sang <code>proxy.ts</code> nhằm phản ánh đúng chức năng định tuyến gói tin cấp thấp.</li>
+            </ul>
           </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: MicroVM KVM & Edge -->
+      <div class="tab-panel" id="tab-microvm">
+        <div class="arch-stack">
           <div class="arch-layer">
-            <h4>Chuyển động & Trực giác (Motion & Layout)</h4>
-            <p>Tôn trọng tùy chọn hệ thống <code>prefers-reduced-motion</code>: tắt toàn bộ animation nặng khi người dùng kích hoạt giảm chuyển động.</p>
+            <h4>Hạ tầng Serverless MicroVM KVM & Firecracker</h4>
+            <p>Mỗi yêu cầu Serverless Function hoặc Edge Middleware của Vercel chạy trong một máy ảo mini (MicroVM) được cô lập bằng nhân Linux KVM phần cứng:</p>
+            <ul>
+              <li><strong>Thời gian khởi động cực lạnh (Cold Start) &lt; 45ms:</strong> Nhờ nạp sẵn snapshot bộ nhớ kernel vào RAM thay vì boot cả hệ điều hành.</li>
+              <li><strong>Hệ thống tệp Rootfs Chỉ Đọc (Read-only Root Filesystem):</strong> Ngăn chặn hoàn toàn các cuộc tấn công ghi đè binary hoặc malware bền bỉ.</li>
+              <li><strong>Bảo mật Multi-Tenant SOC-2:</strong> Mỗi khách hàng và phiên thực thi nằm trong một namespace mạng và bộ nhớ riêng rẽ, triệt tiêu nguy cơ Spectre / Meltdown rò rỉ dữ liệu qua cache CPU.</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 4. Hướng dẫn cài đặt & tích hợp -->
-    <h2>4. Cài đặt & Sử dụng ngay với Agent của bạn</h2>
+    <!-- 4. Hướng dẫn sử dụng thực chiến -->
+    <h2>4. Hướng dẫn Tích hợp & Kiểm định Mã nguồn Tự động</h2>
     <div class="code-block">
       <div class="code-block-header">
-        <span>Bash · Cài đặt toàn bộ hoặc từng skill</span>
+        <span>Terminal · Cài đặt Vercel Agent Skills</span>
         <button class="copy-btn" type="button" aria-label="Sao chép lệnh cài đặt">Sao chép</button>
       </div>
-      <pre><code># Cài đặt toàn bộ bộ kỹ năng Vercel Agent Skills
+      <pre><code># Cài đặt trọn bộ 8 kỹ năng
 npx skills add vercel-labs/agent-skills
 
-# Hoặc chỉ cài đặt riêng quy tắc hiệu năng React & Web Design
+# Hoặc cài đặt từng module riêng biệt
 npx skills add vercel-labs/agent-skills/react-best-practices
 npx skills add vercel-labs/agent-skills/web-design-guidelines</code></pre>
     </div>
 
-    <p>Sau khi cài đặt, hãy yêu cầu agent chạy audit theo kịch bản chuẩn sau:</p>
+    <p>Sau khi cài đặt, kích hoạt agent phân tích theo prompt mẫu sau:</p>
 
     <div class="code-block">
       <div class="code-block-header">
-        <span>Prompt · Audit hiệu năng component</span>
-        <button class="copy-btn" type="button" aria-label="Sao chép prompt audit">Sao chép</button>
+        <span>Prompt · Phân tích Hiệu năng & Ranh giới Server Component</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép prompt">Sao chép</button>
       </div>
-      <pre><code>Hãy kiểm tra file `app/dashboard/page.tsx` và các component con theo quy tắc `react-best-practices`.
-1. Phát hiện các điểm nghẽn async waterfall khi tải dữ liệu.
-2. Kiểm tra ranh giới giữa Server Component và Client Component đã tối ưu chưa.
-3. Xuất bảng khuyến nghị chia theo mức Critical / High / Medium kèm đoạn code sửa chữa trước và sau.</code></pre>
+      <pre><code>Hãy audit toàn bộ component trong thư mục `app/catalog/page.tsx` theo bộ quy tắc `react-best-practices` và `web-design-guidelines`.
+Yêu cầu:
+1. Phát hiện các điểm nghẽn async waterfall khi truy vấn cơ sở dữ liệu.
+2. Kiểm tra xem directive 'use client' có bị lạm dụng không, đẩy ranh giới client xuống lá cây DOM.
+3. Kiểm tra kích thước vùng chạm trên di động có đạt chuẩn 44×44px không.
+4. Trình bày kết quả dưới dạng bảng đối chiếu Before vs After kèm đoạn mã đã khắc phục.</code></pre>
     </div>
 
     <div class="callout-tip">
       <svg class="callout-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
       <div>
-        <strong>Lời khuyên thực chiến từ Vercel Labs</strong>
-        <p>Đừng ép agent viết mọi thứ thành Client Component chỉ để dùng state. Mô hình Server Components sinh ra là để xử lý dữ liệu nặng ở gần cơ sở dữ liệu nhất, giúp trình duyệt của người dùng chỉ cần nhận về HTML nhẹ và hydration siêu tốc.</p>
+        <strong>Lời khuyên từ Trưởng nhóm Kỹ thuật Vercel</strong>
+        <p>&ldquo;Đừng ép agent viết mọi thứ thành Client Component chỉ để dùng local state. Triết lý của Server Components là đưa tính toán nặng về sát cơ sở dữ liệu nhất, giúp trình duyệt của người dùng chỉ cần nhận về HTML tinh gọn và hydration tức thì.&rdquo;</p>
       </div>
     </div>
 
     <div class="guide-bottom-nav">
       <a class="nav-card" href="mattpocock-skills.html">
-        <span class="nav-card-dir">Quay lại</span>
+        <span class="nav-card-dir">Bài trước</span>
         <span class="nav-card-title">← Matt Pocock Skills</span>
       </a>
       <a class="nav-card next" href="nuwa-skill.html">
