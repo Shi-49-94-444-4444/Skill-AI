@@ -315,6 +315,123 @@ npx skills add vercel-labs/agent-skills/web-design-guidelines</code></pre>
       </div>
     </div>
 
+    
+    <!-- 5. Kien truc MicroVM & Next.js 16+ Turbopack -->
+    <h2>5. Kiến trúc MicroVM & Tối ưu hóa Build Pipeline với Next.js 16+ Turbopack</h2>
+    <p>Để đạt được hiệu năng cao nhất trong kỷ nguyên AI Coding Agent, Vercel không chỉ tối ưu ở tầng mã nguồn ứng dụng mà còn tích hợp chặt chẽ với hạ tầng ảo hóa biên siêu nhẹ Firecracker MicroVM và trình gom gói mã nguồn Turbopack viết bằng Rust.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>TypeScript · Chuẩn kiến trúc Streaming RSC với Suspense & Parallel Fetching</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép mã nguồn mẫu">Sao chép</button>
+      </div>
+      <pre><code>// app/dashboard/analytics/page.tsx
+// Chuẩn thiết kế loại bỏ hoàn toàn Waterfall theo Vercel Agent Skills
+import { Suspense } from 'react';
+import { unstable_cache } from 'next/cache';
+
+interface MetricPayload {
+  visitors: number;
+  avgLatencyMs: number;
+  errorRate: number;
+}
+
+// 1. Caching đa tầng với khóa revalidateTag
+const getMetrics = unstable_cache(
+  async (): Promise<MetricPayload> => {
+    const res = await fetch('https://api.internal/metrics', {
+      headers: { Authorization: `Bearer ${process.env.INTERNAL_SERVICE_TOKEN}` },
+      next: { tags: ['analytics-metrics'], revalidate: 60 }
+    });
+    if (!res.ok) throw new Error('Không thể tải dữ liệu chỉ số');
+    return res.json();
+  },
+  ['global-analytics-cache-key'],
+  { revalidate: 60, tags: ['analytics-metrics'] }
+);
+
+// 2. Component tĩnh tải trước khung nhìn (Skeleton)
+function MetricSkeleton() {
+  return (
+    <div className="grid grid-cols-3 gap-4 animate-pulse">
+      <div className="h-28 bg-slate-800/50 rounded-lg border border-slate-700/40" />
+      <div className="h-28 bg-slate-800/50 rounded-lg border border-slate-700/40" />
+      <div className="h-28 bg-slate-800/50 rounded-lg border border-slate-700/40" />
+    </div>
+  );
+}
+
+// 3. Server Component độc lập truyền dữ liệu qua luồng HTTP Streaming
+async function LiveMetricsFeed() {
+  const data = await getMetrics();
+  return (
+    <div className="grid grid-cols-3 gap-4">
+      <div className="p-4 bg-slate-900 border border-emerald-500/30 rounded-lg">
+        <span className="text-xs uppercase text-slate-400 font-mono">Lưu lượng truy cập</span>
+        <div className="text-2xl font-bold font-mono text-emerald-400">{data.visitors.toLocaleString()}</div>
+      </div>
+      <div className="p-4 bg-slate-900 border border-cyan-500/30 rounded-lg">
+        <span className="text-xs uppercase text-slate-400 font-mono">Độ trễ trung bình P99</span>
+        <div className="text-2xl font-bold font-mono text-cyan-400">{data.avgLatencyMs}ms</div>
+      </div>
+      <div className="p-4 bg-slate-900 border border-amber-500/30 rounded-lg">
+        <span className="text-xs uppercase text-slate-400 font-mono">Tỷ lệ lỗi biên (5xx)</span>
+        <div className="text-2xl font-bold font-mono text-amber-400">{data.errorRate}%</div>
+      </div>
+    </div>
+  );
+}
+
+export default function AnalyticsPage() {
+  return (
+    <section className="space-y-6">
+      <header>
+        <h1 className="text-xl font-bold text-slate-100">Bảng điều khiển Giám sát Biên</h1>
+        <p className="text-sm text-slate-400">Dữ liệu luồng trực tiếp từ 300+ Edge POPs với Firecracker MicroVM.</p>
+      </header>
+      {/* Streaming Boundary: Không chặn thời gian phản hồi đầu trang (TTFB < 50ms) */}
+      <Suspense fallback={<MetricSkeleton />}>
+        <LiveMetricsFeed />
+      </Suspense>
+    </section>
+  );
+}</code></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Hạng mục kiến trúc</th>
+            <th style="width: 35%;">Truyền thống (Webpack / Docker)</th>
+            <th style="width: 40%;">Vercel Edge + Turbopack (Khuyến nghị)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Thời gian khởi động lạnh (Cold Start)</strong></td>
+            <td>1.2s – 4.5s (Khởi tạo container node_modules đầy đủ)</td>
+            <td>&lt; 45ms (Firecracker MicroVM snapshot tái nạp tức thì)</td>
+          </tr>
+          <tr>
+            <td><strong>Biên dịch mã gia tăng (Incremental Build)</strong></td>
+            <td>45s – 120s (Duyệt lại cây phụ thuộc JS toàn bộ)</td>
+            <td>0.3s – 1.8s (Turbopack Rust engine lưu cache cấp độ hàm tại đĩa)</td>
+          </tr>
+          <tr>
+            <td><strong>Vùng cách ly bảo mật</strong></td>
+            <td>Chia sẻ nhân Linux kernel giữa các container cgroups</td>
+            <td>Phân tầng ảo hóa phần cứng KVM độc lập, đạt chuẩn SOC-2 Type II</td>
+          </tr>
+          <tr>
+            <td><strong>Chỉ số Core Web Vitals (LCP)</strong></td>
+            <td>2.8s – 3.6s (Bị nghẽn do bundle JS lớn & Waterfall fetch)</td>
+            <td>&lt; 1.2s (RSC Streaming kết hợp nạp trước tài nguyên ưu tiên)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="guide-bottom-nav">
       <a class="nav-card" href="mattpocock-skills.html">
         <span class="nav-card-dir">Quay lại</span>

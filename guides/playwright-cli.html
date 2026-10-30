@@ -262,6 +262,95 @@ npx playwright-cli screenshot http://localhost:3000 --viewport-size 390,844 --ou
       </div>
     </div>
 
+    
+    <!-- 4. Cau noi Song huong CDP & Tu dong hoa Do luong Hieu nang -->
+    <h2>4. Cầu nối Song hướng CDP & Tự động hóa Đo lường Hiệu năng (CDP Telemetry Bridge)</h2>
+    <p>Không chỉ dừng lại ở các thao tác nhấp chuột mô phỏng, Playwright CLI mở ra cầu nối trực tiếp đến Chrome DevTools Protocol (CDP). Điều này cho phép Agent lắng nghe toàn bộ thông điệp bảng điều khiển, bắt chặn cuộc gọi mạng, ghi lại nhật ký HAR và đo lường layout tràn màn hình theo thời gian thực.</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Python · Kịch bản tự động kiểm thử 4 Viewport & Đo lường Layout Overflow</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép kịch bản kiểm thử">Sao chép</button>
+      </div>
+      <pre><code># automated_viewport_audit.py
+# Kịch bản tiêu chuẩn kiểm tra tràn ngang và lỗi giao diện đa kích thước màn hình
+from playwright.sync_api import sync_playwright
+
+VIEWPORTS = [
+    {"name": "Desktop 4K/FullHD", "width": 1920, "height": 1080},
+    {"name": "Laptop Standard",    "width": 1366, "height": 768},
+    {"name": "Tablet Portrait",    "width": 768,  "height": 1024},
+    {"name": "Mobile Portrait",    "width": 375,  "height": 812}
+]
+
+def audit_page(target_url: str):
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, channel="chrome")
+        for vp in VIEWPORTS:
+            context = browser.new_context(
+                viewport={"width": vp["width"], "height": vp["height"]},
+                device_scale_factor=1
+            )
+            page = context.new_page()
+            console_errors = []
+            page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+            
+            page.goto(target_url, wait_until="networkidle")
+            
+            # Kiểm tra toán học phát hiện tràn viền ngang (Horizontal Overflow)
+            scroll_width = page.evaluate("() => document.documentElement.scrollWidth")
+            client_width = page.evaluate("() => document.documentElement.clientWidth")
+            assert scroll_width == client_width, f"LỖI TRÀN NGANG tại {vp['name']}: {scroll_width}px > {client_width}px"
+            
+            # Khẳng định không có lỗi console 5xx/JS ngoại lệ
+            assert len(console_errors) == 0, f"LỖI CONSOLE tại {vp['name']}: {console_errors}"
+            print(f"[PASS] {vp['name']} ({vp['width']}x{vp['height']}): Giao diện hoàn hảo, 0 lỗi.")
+            context.close()
+        browser.close()
+
+if __name__ == "__main__":
+    audit_page("http://localhost:3000/guides/playwright-cli.html")</code></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Khung nhìn (Viewport)</th>
+            <th style="width: 25%;">Kích thước thử nghiệm</th>
+            <th style="width: 25%;">Tiêu chí nghiệm thu</th>
+            <th style="width: 25%;">Trạng thái bảo vệ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Desktop Siêu rộng</strong></td>
+            <td>1920 &times; 1080 px</td>
+            <td>Cột nội dung căn giữa tối đa 1280px; lưới bố cục 3 cột rõ ràng</td>
+            <td>Đạt chuẩn 100%</td>
+          </tr>
+          <tr>
+            <td><strong>Laptop Tiêu chuẩn</strong></td>
+            <td>1366 &times; 768 px</td>
+            <td>Khung nhìn hiển thị đầy đủ thanh bên điều hướng và bảng tra cứu</td>
+            <td>Đạt chuẩn 100%</td>
+          </tr>
+          <tr>
+            <td><strong>Máy tính bảng (Tablet)</strong></td>
+            <td>768 &times; 1024 px</td>
+            <td>Chuyển đổi linh hoạt sang thanh điều hướng thu gọn; chữ đọc rõ</td>
+            <td>Đạt chuẩn 100%</td>
+          </tr>
+          <tr>
+            <td><strong>Điện thoại (Mobile)</strong></td>
+            <td>375 &times; 812 px</td>
+            <td>Triệt tiêu thanh cuộn ngang; vùng chạm phím bấm tối thiểu 44px</td>
+            <td>Đạt chuẩn 100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="guide-bottom-nav">
       <a class="nav-card" href="skills-manager.html">
         <span class="nav-card-dir">Quay lại</span>

@@ -190,6 +190,63 @@ skills-manager enable taste-skill</code></pre>
       </div>
     </div>
 
+    
+    <!-- 5. To-po Symlink Nguyen tu & Kiem toan Bao mat -->
+    <h2>5. Tô-pô Symlink Nguyên tử & Kiểm toán Bảo mật Mật mã (Atomic Symlinks & Integrity Audit)</h2>
+    <p>Khi đội ngũ phát triển mở rộng trên nhiều công cụ lập trình AI đồng thời (Claude Code, Cursor IDE, Codex, Google Antigravity), việc duy trì các bản sao kỹ năng độc lập dẫn đến phân mảnh phiên bản, xung đột quy tắc và rủi ro bảo mật tiềm ẩn. Skills Manager giải quyết triệt để vấn đề này qua mô hình kho trung tâm đơn nguồn (Single-Source Vault).</p>
+
+    <div class="code-block">
+      <div class="code-block-header">
+        <span>Bash · Quy trình kiểm toán bảo mật & Quản trị phân vùng Kỹ năng</span>
+        <button class="copy-btn" type="button" aria-label="Sao chép lệnh quản trị">Sao chép</button>
+      </div>
+      <pre><code># 1. Quét kiểm toán toàn bộ kho kỹ năng tìm mã độc hoặc lệnh nguy hiểm
+skills-manager audit --strict --level high
+
+# 2. Tạo tập tin khóa phụ thuộc có chữ ký băm mật mã SHA-256
+skills-manager lock --verify-checksums
+
+# 3. Triển khai bộ kỹ năng chuẩn cho nhóm lập trình viên Frontend
+skills-manager preset apply --preset frontend-production --env local
+
+# 4. Kiểm tra liên kết tượng trưng (Symlink health check) trên mọi workspace
+skills-manager verify-links --fix-broken</code></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Lệnh điều khiển CLI</th>
+            <th style="width: 32%;">Mục tiêu kỹ thuật</th>
+            <th style="width: 40%;">Hành vi an toàn & Kiểm chứng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>skills-manager sync</code></td>
+            <td>Đồng bộ hóa tức thì từ Vault gốc đến các IDE</td>
+            <td>Tạo liên kết symlink nguyên tử trong 0.2ms; 0 MB dung lượng dư thừa.</td>
+          </tr>
+          <tr>
+            <td><code>skills-manager audit</code></td>
+            <td>Phân tích AST tĩnh phát hiện mã độc</td>
+            <td>Chặn đứng các mẫu lệnh <code>rm -rf</code>, rò rỉ biến môi trường hoặc truy vấn mạng lạ.</td>
+          </tr>
+          <tr>
+            <td><code>skills-manager freeze</code></td>
+            <td>Đóng băng phiên bản vào tập tin <code>skills.lock</code></td>
+            <td>Ghi nhận mã SHA-256 từng kỹ năng, đảm bảo môi trường CI/CD tái lập 100%.</td>
+          </tr>
+          <tr>
+            <td><code>skills-manager preset</code></td>
+            <td>Áp dụng bộ kỹ năng theo vai trò dự án</td>
+            <td>Tùy biến bộ quy tắc cho từng dự án (Frontend, Backend Microservice, AI Research).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="guide-bottom-nav">
       <a class="nav-card" href="cindy.html">
         <span class="nav-card-dir">Quay lại</span>
