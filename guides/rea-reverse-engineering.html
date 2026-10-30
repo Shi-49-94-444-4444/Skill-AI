@@ -109,7 +109,7 @@
         <img src="assets/rea-editorial-hero.png" alt="REA Reverse Engineer Anything 400k Stars" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 01 · NỀN TẢNG DỊCH NGƯỢC ĐA TẦNG (BINARY INTROSPECTION HARNESS):</strong> Sắc đỏ Laser Crimson kết hợp đen than sâu thẳm, kết nối trực tiếp AI agent với các công cụ dịch ngược nhị phân cấp công nghiệp.</div>
+      <div class="ui-shot-caption"><strong>// 01 · THIẾT KẾ ĐẢO NGƯỢC TỰ ĐỘNG (AGENTIC REVERSE ENGINEERING HARNESS):</strong> Sắc vàng Safety Amber (#ffb700) và xanh Terminal Green (#00ff66) trên nền than Basalt, tích hợp trực tiếp cầu nối Hopper Disassembler và Ghidra Decompiler qua MCP.</div>
     </div>
 
     <h2>1. Bảng đối chiếu: Phỏng đoán tính năng vs. Dịch ngược có bằng chứng</h2>
@@ -155,7 +155,7 @@
         <img src="assets/rea-editorial-concept.png" alt="Kiểm tra nhị phân, Electron, JavaScript và Net" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 02 · KHẢO SÁT TOÀN DIỆN MỌI MÔI TRƯỜNG (FULL-SPECTRUM REVERSE ENGINEERING):</strong> Hỗ trợ từ các tệp nhị phân gốc C/C++ x86/ARM, ứng dụng Electron (Slack, VS Code, Discord) tới mã trung gian .NET.</div>
+      <div class="ui-shot-caption"><strong>// 02 · 4 TẦNG DỊCH NGƯỢC ĐA MÔI TRƯỜNG (4-TIER REVERSE ENGINEERING PIPELINE):</strong> Khảo sát xuyên suốt từ Surface DOM/UI, Network Traffic, Dynamic Process Memory (Frida Hooking) tới Native Binary Decompilation (x86_64 / ARM64).</div>
     </div>
 
     <h2>2. Bốn lớp kiến trúc phân tích của REA</h2>
@@ -182,8 +182,8 @@
         </div>
         <div class="step-card">
           <span class="step-badge">4</span>
-          <strong>.NET Assemblies & Bytecode</strong>
-          <p>Giải mã các tệp DLL trung gian và khôi phục cấu trúc lớp C# gần như nguyên gốc.</p>
+          <strong>Dynamic Memory & Frida Hooking</strong>
+          <p>Hook vào tiến trình đang chạy, can thiệp tham số hàm thời gian thực và vượt qua SSL Pinning.</p>
         </div>
       </div>
     </div>
@@ -194,10 +194,45 @@
         <img src="assets/rea-editorial-detail.png" alt="Phân tích cục bộ và tái cấu trúc mã sạch" loading="lazy" decoding="async">
         <span class="hero-zoom-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path><path d="M11 8v6M8 11h6"></path></svg> Nhấp để phóng to</span>
       </div>
-      <div class="ui-shot-caption"><strong>// 03 · QUY TRÌNH PHÒNG SẠCH (CLEAN-ROOM REBUILD FLOW):</strong> Agent giải trình rõ ràng các giới hạn và bằng chứng đằng sau mỗi kết luận trước khi tự tay viết mã triển khai mới.</div>
+      <div class="ui-shot-caption"><strong>// 03 · ĐẶC TẢ REA MCP & QUY TRÌNH PHÒNG SẠCH (MCP PROTOCOL & CLEAN-ROOM REBUILD):</strong> Chuẩn hóa các công cụ rea_decompile, rea_hook_trace và rea_packet_diff giúp tái cấu trúc mã nguồn hợp pháp, triệt tiêu nguy cơ vi phạm bản quyền.</div>
     </div>
 
-    <h2>3. Minh họa trực quan: Mô hình Clean-Room Reverse Engineering</h2>
+    <h2>3. Danh mục công cụ REA MCP cốt lõi</h2>
+    <div class="table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Tên công cụ MCP</th>
+            <th style="width: 35%;">Chức năng kỹ thuật</th>
+            <th style="width: 40%;">Đầu ra cho Agent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>rea_decompile</code></td>
+            <td>Gửi offset địa chỉ hàm tới Ghidra/Hopper để tái tạo mã giả C/Rust.</td>
+            <td>Cú pháp mã giả có chú thích thanh ghi và luồng điều khiển (CFG).</td>
+          </tr>
+          <tr>
+            <td><code>rea_unpack_asar</code></td>
+            <td>Bóc tách archive ASAR của Electron và gỡ rối webpack bundle.</td>
+            <td>Cây thư mục JavaScript/TypeScript kèm sourcemaps hoàn chỉnh.</td>
+          </tr>
+          <tr>
+            <td><code>rea_hook_trace</code></td>
+            <td>Chèn Frida script động vào PID ứng dụng để bắt giá trị return và đối số.</td>
+            <td>Dòng log JSONL thời gian thực về dữ liệu truyền qua bộ nhớ.</td>
+          </tr>
+          <tr>
+            <td><code>rea_packet_diff</code></td>
+            <td>So sánh frame dữ liệu nhị phân giữa hai trạng thái người dùng.</td>
+            <td>Đặc tả định dạng nhị phân, thuật toán checksum và serialization.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>4. Minh họa trực quan: Mô hình Clean-Room Reverse Engineering</h2>
     <p>REA vận hành nghiêm ngặt theo nguyên tắc kỹ thuật phòng sạch: hiểu rõ bản chất vấn đề, trích xuất đặc tả logic và viết mã nguồn độc lập:</p>
 
     <div class="svg-diagram-frame">
